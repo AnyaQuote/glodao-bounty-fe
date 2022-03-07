@@ -41,6 +41,12 @@ export default new Vuetify({
         background: {
           base: '#E5E5E5',
         },
+        bluePrimary: '#0276F0',
+        neutral20: '#E5E5E5',
+        neutral10: '#5F6267',
+        greenSenamatic: '#6CE08D',
+        redSenamatic: '#E35E55',
+        purple: '#6955E3',
       },
       dark: {
         primary: {
@@ -57,6 +63,12 @@ export default new Vuetify({
         background: {
           base: '#181718',
         },
+        bluePrimary: '#378CE4',
+        neutral20: '#565A5D',
+        neutral10: '#8D9095',
+        greenSenamatic: '#6CE08D',
+        redSenamatic: '#E35E55',
+        purple: '#6955E3',
       },
     },
   },
