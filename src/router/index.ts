@@ -16,6 +16,11 @@ const routes: Array<RouteConfig> = [
     name: 'Reward',
     component: () => import('@/modules/reward/pages/reward.vue'),
   },
+  {
+    path: '/hunting-history',
+    name: 'Hunting history',
+    component: () => import('@/modules/account/pages/hunting-history.vue'),
+  },
 ]
 
 const router = new VueRouter({
