@@ -2,10 +2,12 @@
   <v-container class="pa-0 ma-0 fill-width" style="max-width: 100% !important">
     <v-row dense no-gutters>
       <v-col>
-        <v-sheet height="336" class="page-title-container text-uppercase">
-          <div>Bounty</div>
-          <div class="mt-4 font-italic">Hunter</div>
-        </v-sheet>
+        <v-container>
+          <v-sheet height="336" class="page-title-container text-uppercase">
+            <div>Bounty</div>
+            <div class="mt-4 font-italic">Hunter</div>
+          </v-sheet>
+        </v-container>
         <v-divider />
       </v-col>
     </v-row>
@@ -98,7 +100,7 @@ export default class Farming extends Vue {
   line-height: 24px;
 }
 .page-title-container {
-  padding: 86px 0 106px 178px;
+  padding: 86px 0 106px 0;
   font-size: 72px;
   line-height: 64px;
   font-weight: 700;
