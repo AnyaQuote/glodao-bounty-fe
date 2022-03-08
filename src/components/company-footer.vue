@@ -5,7 +5,7 @@
       footer: $vuetify.breakpoint.smAndUp,
     }"
   >
-    <v-container class="px-6 py-8">
+    <v-container class="px-6 py-7">
       <v-row>
         <v-col cols="12" sm="6" class="d-flex flex-column">
           <!-- <v-img
