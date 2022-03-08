@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar height="89px" class="navigation-bar" app flat>
+  <v-app-bar height="80px" class="navigation-bar" app flat>
     <div class="nav-container mx-auto" style="width: 100%">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="2"> </v-col>
@@ -10,7 +10,7 @@
             </template>
             <span>Coming Soon!</span>
           </v-tooltip>
-          <router-link to="/staking" class="text-decoration-none px-4" active-class="active">
+          <router-link to="/bounty" class="text-decoration-none px-4" active-class="active">
             <div class="text-none nav-btn-text">Bounty Hunter</div>
           </router-link>
           <v-tooltip bottom>
@@ -84,8 +84,8 @@ export default class Staking extends Vue {
 }
 .nav-btn-text {
   font-style: normal;
-  font-weight: 700;
-  font-size: 18px !important;
+  font-weight: 600;
+  font-size: 16px !important;
   line-height: 24px;
   letter-spacing: 0.02em !important;
 }
