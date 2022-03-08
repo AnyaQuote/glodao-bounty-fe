@@ -9,10 +9,7 @@
         <div class="pt-4 px-4 position-relative">
           <v-img height="236" src="https://picsum.photos/200"></v-img>
           <div class="start-date-container"></div>
-          <div
-            class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600"
-            style="opacity: 1; background: transparent"
-          >
+          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600">
             Start in Jan 21st 2022 10:00 pm 🔥
           </div>
           <div class="position-absolute custom-chevron-flag-container rounded-0">
