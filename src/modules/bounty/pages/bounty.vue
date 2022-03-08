@@ -1,76 +1,70 @@
 <template>
-  <v-container class="pa-0 ma-0 fill-width" style="max-width: 100% !important">
-    <v-row dense no-gutters>
-      <v-col>
-        <v-container>
-          <v-sheet height="336" class="page-title-container text-uppercase">
-            <div>Bounty</div>
-            <div class="mt-4 font-italic">Hunter</div>
-          </v-sheet>
-        </v-container>
-        <v-divider />
-      </v-col>
-    </v-row>
-    <v-row dense no-gutters>
-      <v-col>
-        <v-container>
-          <v-row>
-            <v-col class="mt-10 section-big-title-text font-weight-bold" cols="12">Your current task</v-col>
-            <v-col lg="3" md="6" sm="12" cols="12">
-              <current-task />
-            </v-col>
-            <v-col lg="3" md="6" sm="12" cols="12">
-              <current-task />
-            </v-col>
-            <v-col lg="3" md="6" sm="12" cols="12">
-              <current-task />
-            </v-col>
-            <v-col lg="3" md="6" sm="12" cols="12">
-              <current-task />
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-divider class="mt-8" />
-      </v-col>
-    </v-row>
-    <v-row dense>
-      <v-col>
-        <v-container class="mt-10">
-          <v-row>
-            <v-col>
-              <div class="section-big-title-text font-weight-bold">Bounty hunters (32)</div>
-            </v-col>
-            <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-              <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select>
-            </v-col>
-            <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-              <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
-            </v-col>
-          </v-row>
-          <v-row class="mt-8">
-            <v-col md="4" sm="6" cols="12">
-              <bounty-card />
-            </v-col>
-            <v-col md="4" sm="6" cols="12">
-              <bounty-card />
-            </v-col>
-            <v-col md="4" sm="6" cols="12">
-              <bounty-card />
-            </v-col>
-          </v-row>
-          <v-row dense no-gutters>
-            <v-col>
-              <div class="my-10 d-flex justify-center align-center">
-                <v-btn outlined class="rounded-0 font-weight-600 button-small text-capitalize">
-                  Loadmore (118 bounty hunters)
-                </v-btn>
-              </div>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row>
+    <v-col cols="12">
+      <v-container>
+        <v-sheet height="336" class="page-title-container text-uppercase">
+          <div>Bounty</div>
+          <div class="mt-4 font-italic">Hunter</div>
+        </v-sheet>
+      </v-container>
+      <v-divider />
+    </v-col>
+    <v-col cols="12">
+      <v-container>
+        <v-row>
+          <v-col class="mt-10 section-big-title-text font-weight-bold" cols="12">Your current task</v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <current-task />
+          </v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <current-task />
+          </v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <current-task />
+          </v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <current-task />
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-divider class="mt-8" />
+    </v-col>
+    <v-col cols="12">
+      <v-container>
+        <v-row class="mt-10">
+          <v-col>
+            <div class="section-big-title-text font-weight-bold">Bounty hunters (32)</div>
+          </v-col>
+          <v-col cols="12" lg="2" md="3" sm="3" xs="4">
+            <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select>
+          </v-col>
+          <v-col cols="12" lg="2" md="3" sm="3" xs="4">
+            <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
+          </v-col>
+        </v-row>
+        <v-row class="mt-8">
+          <v-col md="4" sm="6" cols="12">
+            <bounty-card />
+          </v-col>
+          <v-col md="4" sm="6" cols="12">
+            <bounty-card />
+          </v-col>
+          <v-col md="4" sm="6" cols="12">
+            <bounty-card />
+          </v-col>
+        </v-row>
+        <v-row dense no-gutters>
+          <v-col>
+            <div class="my-10 d-flex justify-center align-center">
+              <v-btn outlined class="rounded-0 font-weight-600 button-small text-capitalize">
+                Loadmore (118 bounty hunters)
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
