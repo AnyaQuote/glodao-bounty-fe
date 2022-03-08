@@ -71,7 +71,6 @@ export default class Farming extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import url('~@/modules/reward/styles/index.scss');
 .small-label {
   font-size: 14px;
   line-height: 18px;

@@ -56,7 +56,6 @@ export default class Farming extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import url('~@/modules/reward/styles/index.scss');
 .congratulation-title-text {
   font-size: 20px;
   line-height: 20px;

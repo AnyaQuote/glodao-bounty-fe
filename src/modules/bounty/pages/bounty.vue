@@ -88,7 +88,6 @@ export default class Farming extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import url('~@/modules/bounty/styles/index.scss');
 .button-small {
   font-size: 14px;
   line-height: 24px;

@@ -43,7 +43,6 @@ export default class CurrentTask extends Vue {}
 </script>
 
 <style scoped lang="scss">
-@import url('~@/modules/bounty/styles/index.scss');
 .custom-flag-container {
   position: absolute;
   top: 0;
