@@ -46,6 +46,7 @@ export default new Vuetify({
         neutral10: '#5F6267',
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
+        orangeSenamatic: '#F9AF40',
         purple: '#6955E3',
       },
       dark: {
@@ -68,6 +69,7 @@ export default new Vuetify({
         neutral10: '#8D9095',
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
+        orangeSenamatic: '#F9AF40',
         purple: '#6955E3',
       },
     },
