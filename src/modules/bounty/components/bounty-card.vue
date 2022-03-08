@@ -64,7 +64,6 @@ export default class CurrentTask extends Vue {}
 </script>
 
 <style scoped lang="scss">
-@import url('~@/modules/bounty/styles/index.scss');
 .backdrop-hover-overlay {
   filter: blur(8px);
   z-index: -1;

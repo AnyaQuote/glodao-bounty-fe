@@ -11,6 +11,11 @@ const routes: Array<RouteConfig> = [
     name: 'Bounty',
     component: () => import('@/modules/bounty/pages/bounty.vue'),
   },
+  {
+    path: '/reward',
+    name: 'Reward',
+    component: () => import('@/modules/reward/pages/reward.vue'),
+  },
 ]
 
 const router = new VueRouter({
