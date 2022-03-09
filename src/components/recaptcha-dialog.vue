@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" class="rounded-0" max-width="400">
-    <v-sheet outlined class="position-relative pa-6 text-center dialog-normal-text">
+    <v-sheet outlined class="position-relative pa-6 text-center dialog-normal-text overflow-hidden">
       <div class="mb-6 font-weight-600 dialog-title-text d-flex align-center">
         <v-avatar size="32" color="blue"></v-avatar>
         <div class="d-flex align-center ml-4">The Peaky Blinder</div>

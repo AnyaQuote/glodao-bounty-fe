@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialog" class="rounded-0" max-width="450">
-    <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text position-relative">
+    <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text position-relative overflow-hidden">
       <v-sheet min-height="300" class="d-flex align-center justify-center" v-if="!logined">
         <v-sheet>
           <div class="d-flex justify-center">
