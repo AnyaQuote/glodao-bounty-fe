@@ -307,6 +307,12 @@ tbody {
   font-weight: 600;
 }
 
+.mt-20 {
+  margin-top: 80px;
+}
+.pt-20 {
+  padding-top: 80px;
+}
 @font-face {
   font-family: 'Proxima Nova';
   src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Black.ttf) format('truetype');
