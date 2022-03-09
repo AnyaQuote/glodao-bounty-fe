@@ -179,9 +179,6 @@ export default class App extends Vue {
 .v-sheet.v-card.rounded-lg {
   border-radius: 16px !important;
 }
-.v-dialog {
-  border-radius: 24px !important;
-}
 .full-width {
   width: 100% !important;
 }
