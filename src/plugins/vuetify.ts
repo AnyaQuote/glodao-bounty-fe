@@ -30,7 +30,7 @@ export default new Vuetify({
           lighten1: '#dff5de',
         },
         secondary: '#424242',
-        twitter: '#4686F5',
+        twitter: '#039BE5',
         accent: '#0EB2E5',
         error: '#F44336',
         info: '#2196F3',
@@ -56,7 +56,7 @@ export default new Vuetify({
         success: {
           base: '#5FCD5B',
         },
-        twitter: '#4686F5',
+        twitter: '#039BE5',
         lightGray: '#969696',
         grey1: '#B9B9B1',
         subtitle: '#969696',
