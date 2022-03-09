@@ -37,16 +37,18 @@
         </div>
         <div class="mt-6"><a href="#" class="blue-diversity--text">View access</a></div>
         <v-btn
-          class="mt-6 text-capitalize background-blue-diversity white--text rounded-0 fill-width dialog-button dialog-normal-text"
+          class="mt-6 text-capitalize background-blue-diversity white--text rounded-0 dialog-button dialog-normal-text"
           depressed
           height="40"
+          block
         >
           Continue as Tommy
         </v-btn>
         <v-btn
-          class="mt-3 text-capitalize background-neutral neutral10--text rounded-0 fill-width dialog-button dialog-normal-text"
+          class="mt-3 text-capitalize background-neutral neutral10--text rounded-0 dialog-button dialog-normal-text"
           depressed
           height="40"
+          block
         >
           Cancel
         </v-btn>
