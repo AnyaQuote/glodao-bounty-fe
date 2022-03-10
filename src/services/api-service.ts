@@ -140,7 +140,7 @@ export class ApiHandlerJWT<T> {
     let res: any
     if (id) {
       res = await this.axios.put(`${this.route}/${id}`, model, {
-        headers: { Authorization: `Bearer ${walletStore.jwt}` },
+        headers: { Authorization: `Bearer ${authStore.jwt}` },
       })
     } else {
       res = await this.axios.put(

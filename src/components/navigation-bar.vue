@@ -50,12 +50,12 @@
               class="rounded-0 blue-diversity--text"
               height="40"
               width="110"
-              v-if="!logined"
-              @click="loginWithTwitter"
+              v-if="!authStore.jwt"
+              @click="authStore.changeTwitterLoginDialog(true)"
             >
               <v-icon class="mr-2">mdi-twitter</v-icon> Log in
             </v-btn>
-            <v-menu offset-y v-if="logined">
+            <v-menu offset-y v-else>
               <template v-slot:activator="{ on, attrs }">
                 <v-avatar size="40" v-bind="attrs" v-on="on">
                   <img src="https://picsum.photos/200" alt="Avatar" />
@@ -98,6 +98,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
+import { authStore } from '@/stores/auth-store'
+
 import { Observer } from 'mobx-vue'
 
 @Observer
@@ -108,6 +110,7 @@ import { Observer } from 'mobx-vue'
 })
 export default class Staking extends Vue {
   wallet = walletStore
+  authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
   logined = false
   loginWithTwitter() {

@@ -3,6 +3,7 @@
     <snack-bar />
     <alert />
     <global-loading />
+    <twitter-login-dialog />
     <navigation-drawer />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <mobile-navigation-bar v-else />
@@ -19,6 +20,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Provide, Vue } from 'vue-property-decorator'
 import { AppProvider, appProvider } from './app-providers'
 import { walletStore } from './stores/wallet-store'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -30,6 +32,7 @@ import { walletStore } from './stores/wallet-store'
     'navigation-bar': () => import('@/components/navigation-bar.vue'),
     'company-footer': () => import('./components/company-footer.vue'),
     'mobile-navigation-bar': () => import('@/components/mobile-navigation-bar.vue'),
+    'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
   },
 })
 export default class App extends Vue {
