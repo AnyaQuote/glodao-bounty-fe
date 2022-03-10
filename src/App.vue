@@ -306,6 +306,9 @@ tbody {
 .font-weight-600 {
   font-weight: 600;
 }
+.blue-diversity--text {
+  color: var(--v-bluePrimary-base) !important;
+}
 
 .mt-20 {
   margin-top: 80px;
