@@ -1,49 +1,73 @@
 <template>
   <v-container>
     <v-row no-gutters dense>
+      <v-col cols="12">
+        <v-sheet height="50">
+          <v-breadcrumbs :items="breadcrumbs" divider=">" class="pa-0">
+            <template v-slot:item="{ item }">
+              <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+                <template v-slot:default>
+                  <span :class="item.text === 'Bounty hunter' ? 'bluePrimary-text' : ''">{{ item.text }}</span>
+                </template>
+                {{ item.text }}
+              </v-breadcrumbs-item>
+            </template>
+            <template v-slot:divider>
+              <v-icon size="22"> chevron_right </v-icon>
+            </template>
+          </v-breadcrumbs>
+        </v-sheet>
+      </v-col>
       <v-col cols="12" lg="4">
         <v-sheet class="d-flex align-center mb-4">
-          <v-sheet width="40" height="40" class="violet rounded-circle d-flex justify-center align-center">
-            <v-icon color="white" size="18"> mdi-twitter </v-icon>
+          <v-sheet width="32" height="32" class="violet rounded-circle d-flex justify-center align-center">
+            <v-img :src="require('@/assets/icons/logo.svg')" max-width="19"></v-img>
           </v-sheet>
           <div class="text-h5 ml-3">The Peaky Blinder</div>
         </v-sheet>
         <v-sheet class="mb-4">
           <v-img src="https://picsum.photos/id/11/500/300"></v-img>
         </v-sheet>
-        <v-sheet class="mb-4 text-body-2">
+        <v-sheet class="mb-4 card-subtitle-1">
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
           standard dummy text ever since the 1500s
         </v-sheet>
         <v-sheet>
-          <div class="text-subtitle-1 font-weight-medium">Time to hunting</div>
+          <div class="card-title-text font-weight-medium">Time to hunting</div>
           <ul>
-            <li class="text-subtitle-2">From: Jan 21st 2022, 10:00 am</li>
-            <li class="text-subtitle-2">To: Feb 26th 2022, 10:00 am</li>
+            <li class="card-subtitle-1 font-weight-medium">From: Jan 21st 2022, 10:00 am</li>
+            <li class="card-subtitle-1 font-weight-medium">To: Feb 26th 2022, 10:00 am</li>
           </ul>
         </v-sheet>
       </v-col>
-      <v-col cols="12" lg="8">
+      <v-col cols="12" lg="8" class="mt-4 mt-lg-0">
         <v-sheet class="ml-lg-5">
           <v-sheet outlined>
             <v-tabs v-model="tab">
-              <v-tab v-for="(item, index) in items" :key="index"> {{ item }}</v-tab>
+              <v-tab v-for="(item, index) in items" :key="index" :disabled="index !== 0"> {{ item }}</v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab" class="">
               <v-tab-item>
                 <v-row dense no-gutters justify="center">
-                  <v-col cols="12" lg="10" class="mt-4">
-                    <div class="text-subtitle-2">Reward for twitter task: 1000 DVT</div>
-                    <div class="text-body-2">
+                  <v-col cols="12" lg="10" class="mt-6">
+                    <div class="card-subtitle-1 font-weight-medium">Reward for twitter task: 1000 DVT</div>
+                    <div class="card-subtitle-1">
                       Please ensure you join our Twitter channel to be eligible. Our moderators will check through all
                       submissions and take action to reward or reject.
                     </div>
+                    <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
+                    <div class="text-center my-4">
+                      <v-btn tile outlined color="greenSenamatic">
+                        <v-icon left size="20">mdi-timelapse </v-icon>
+                        <span class="black--text text-none"> Your hunting process has begun! </span>
+                      </v-btn>
+                    </div>
                   </v-col>
                   <v-col cols="12" lg="9">
-                    <v-divider class="my-4"></v-divider>
+                    <div class="divider-2 mb-7"></div>
 
                     <!-- one -->
-                    <v-row dense no-gutters class="pb-4">
+                    <v-row dense no-gutters class="mb-4">
                       <v-col cols="1">
                         <v-sheet class="pb-1">
                           <v-radio-group dense hide-details class="ma-0 pa-0 text-center">
@@ -69,7 +93,7 @@
                               </v-sheet>
                               <div class="text-caption text-weight-400 line-height">Completed</div>
                             </div>
-                            <div>
+                            <div class="mb-4">
                               <div class="text-subtitle-2 font-weight-medium">Time to hunting</div>
                               <ul>
                                 <li class="text-caption">
@@ -77,8 +101,13 @@
                                 </li>
                               </ul>
                             </div>
-                            <div class="text-end mt-2">
-                              <v-btn elevation="0" color="bluePrimary white--text text-caption px-3 mt-2" tile small>
+                            <div class="text-end">
+                              <v-btn
+                                elevation="0"
+                                color="text-none bluePrimary white--text text-caption px-3 mt-2"
+                                tile
+                                small
+                              >
                                 <v-icon left dark> mdi-twitter </v-icon>
                                 Twitter follow
                               </v-btn>
@@ -86,9 +115,11 @@
                           </v-container>
                         </v-sheet>
                       </v-col>
-                      <v-col cols="1">
-                        <v-sheet outlined class="fill-height ml-3 d-flex justify-center align-center">
-                          <v-icon>mdi-check</v-icon>
+                      <v-col cols="1" class="">
+                        <v-sheet class="fill-height ml-3 ba-dotted">
+                          <v-sheet outlined class="fill-height d-flex justify-center align-center neutral20 lighten-1">
+                            <v-icon>mdi-check</v-icon>
+                          </v-sheet>
                         </v-sheet>
                       </v-col>
                     </v-row>
@@ -129,7 +160,7 @@
                               </ul>
                             </div>
 
-                            <v-sheet class="mt-5">
+                            <v-sheet class="mt-4">
                               <v-row dense no-gutters>
                                 <v-col cols="10">
                                   <v-sheet outlined>
@@ -148,7 +179,7 @@
                                     elevation="0"
                                     tile
                                     color="bluePrimary"
-                                    class="fill-width white--text"
+                                    class="fill-width white--text text-none"
                                     height="100%"
                                   >
                                     Submit
@@ -160,20 +191,22 @@
                         </v-sheet>
                       </v-col>
                       <v-col cols="1">
-                        <v-sheet outlined class="fill-height ml-3 d-flex justify-center align-center">
-                          <v-icon>mdi-check</v-icon>
+                        <v-sheet class="fill-height ml-3 ba-dotted">
+                          <v-sheet outlined class="fill-height d-flex justify-center align-center neutral20 lighten-1">
+                            <v-icon>mdi-check</v-icon>
+                          </v-sheet>
                         </v-sheet>
                       </v-col>
                     </v-row>
 
-                    <v-sheet class="my-8">
-                      <v-divider></v-divider>
+                    <v-sheet class="my-7">
+                      <div class="divider-2"></div>
                     </v-sheet>
 
                     <!-- button -->
                     <v-row dense no-gutters class="mb-8">
                       <v-col cols="12" class="text-center">
-                        <v-btn elevation="0" color="bluePrimary" class="normal-character white--text" tile>
+                        <v-btn elevation="0" color="bluePrimary" class="text-none white--text" tile>
                           Confirm and earn reward
                         </v-btn>
                       </v-col>
@@ -181,12 +214,16 @@
                   </v-col>
                 </v-row>
               </v-tab-item>
-              <v-tab-item>2</v-tab-item>
-              <v-tab-item>3</v-tab-item>
+              <v-tab-item></v-tab-item>
+              <v-tab-item></v-tab-item>
             </v-tabs-items>
           </v-sheet>
           <v-sheet class="my-10">
             <v-divider></v-divider>
+          </v-sheet>
+
+          <v-sheet class="my-4">
+            <div class="card-big-title-text font-weight-bold">Current Twitter shares</div>
           </v-sheet>
           <v-sheet>
             <v-row no-gutters dense>
@@ -258,6 +295,7 @@
 
           <v-sheet outlined class="mt-4">
             <v-data-table :headers="headers" :items="vm.accounts" class="elevation-0" hide-default-footer>
+              <template> </template>
               <template v-slot:[`item.account`]="{ item }">
                 <v-row dense no-gutters align="center" class="ma-2">
                   <v-avatar>
@@ -295,6 +333,18 @@ export default class BountyDetail extends Vue {
   tab = null
   items = ['Twitter task', 'Telegram task', 'Discord task']
 
+  breadcrumbs = [
+    {
+      text: 'Bounty hunter',
+      disabled: false,
+      href: 'bounty',
+    },
+    {
+      text: 'The Peaky Blinder',
+      disabled: false,
+      href: 'bounty-detail',
+    },
+  ]
   headers = [
     {
       text: '@Account',
@@ -306,7 +356,7 @@ export default class BountyDetail extends Vue {
     {
       text: 'Share time',
       value: 'time',
-      align: 'start',
+      align: 'center',
       sortable: false,
       class: ['bluePrimary lighten-1'],
     },
@@ -331,6 +381,10 @@ export default class BountyDetail extends Vue {
   padding-top: 30px;
 }
 
+.divider-2 {
+  border-top: 1px dashed var(--v-neutral20-base);
+}
+
 .ba-secondary {
   border: 1px;
   border-style: solid;
@@ -345,7 +399,11 @@ export default class BountyDetail extends Vue {
   border: 1px solid var(--v-bluePrimary-base);
 }
 
-.normal-character {
-  text-transform: unset;
+.bluePrimary-text {
+  color: var(--v-bluePrimary-base);
+}
+
+.ba-dotted {
+  border: 1px dashed var(--v-neutral20-base);
 }
 </style>

@@ -41,13 +41,20 @@ export default new Vuetify({
         background: {
           base: '#E5E5E5',
         },
-        bluePrimary: '#0276F0',
-        neutral20: '#E5E5E5',
+        bluePrimary: {
+          base: '#0276F0',
+          lighten1: '#E6F1FE',
+        },
+        neutral20: {
+          base: '#E5E5E5',
+          lighten1: '#F9F9F9',
+        },
         neutral10: '#5F6267',
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
         orangeSenamatic: '#F9AF40',
         purple: '#6955E3',
+        violet: '#252D72',
       },
       dark: {
         primary: {

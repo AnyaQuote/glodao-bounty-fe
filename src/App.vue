@@ -268,6 +268,10 @@ tbody {
   font-size: 16px;
   line-height: 24px;
 }
+.card-subtitle-1 {
+  font-size: 14px;
+  line-height: 21px;
+}
 .card-big-title-text {
   font-size: 20px;
   line-height: 24px;
