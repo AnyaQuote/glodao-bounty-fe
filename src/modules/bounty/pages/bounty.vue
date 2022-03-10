@@ -3,8 +3,8 @@
     <v-col cols="12">
       <v-container>
         <v-sheet height="336" class="page-title-container text-uppercase">
-          <div>Bounty</div>
-          <div class="mt-4 font-italic">Hunter</div>
+          <!-- <div>Bounty</div> -->
+          <!-- <div class="mt-4 font-italic">Hunter</div> -->
         </v-sheet>
       </v-container>
       <v-divider />
@@ -115,9 +115,12 @@ export default class Farming extends Vue {
   line-height: 24px;
 }
 .page-title-container {
-  padding: 86px 0 106px 0;
+  // padding: 86px 0 106px 0;
   font-size: 72px;
   line-height: 64px;
   font-weight: 700;
+  background-image: url('~@/assets/images/task-list-cover-bg.svg');
+  background-size: cover;
+  background-position: center;
 }
 </style>
