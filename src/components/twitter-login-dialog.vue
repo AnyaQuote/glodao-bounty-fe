@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" class="rounded-0" max-width="450">
+  <v-dialog v-model="authStore.twitterLoginDialog" class="rounded-0" max-width="450" persistent>
     <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text position-relative overflow-hidden">
       <v-sheet min-height="300" class="d-flex align-center justify-center" v-if="!logined">
         <v-sheet>
@@ -11,7 +11,7 @@
           <div class="mt-3 font-weight-bold card-big-title-text">Connect Twitter</div>
           <div class="mt-1 card-title-text">To complete task & earn reward</div>
           <div class="mt-4">
-            <v-btn outlined depressed class="rounded-pill black--text login-btn" @click="changeLoginState">
+            <v-btn outlined depressed class="rounded-pill black--text login-btn" @click="authStore.handleLogin()">
               <span> Log in with Twitter </span>
             </v-btn>
           </div>
@@ -58,7 +58,7 @@
           Diversity's <a class="blue-diversity--text" href="#">Privacy Policy</a>
         </div>
       </v-sheet>
-      <v-icon class="close-icon">mdi-window-close</v-icon>
+      <v-icon class="close-icon" @click="authStore.changeTwitterLoginDialog(false)">mdi-window-close</v-icon>
     </v-sheet>
   </v-dialog>
 </template>
@@ -66,6 +66,7 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import { Component, Vue } from 'vue-property-decorator'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -74,6 +75,7 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class TwitterLoginDialog extends Vue {
   dialog = true
   logined = false
+  authStore = authStore
 
   changeLoginState() {
     this.logined = !this.logined

@@ -23,7 +23,7 @@
             <div class="rounded-circle d-flex justify-center card-project-medium-icon background-blue-diversity">
               <v-icon color="white">mdi-minus</v-icon>
             </div>
-            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">The Peaky Blinder</div>
+            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">{{ name }}</div>
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
@@ -42,11 +42,11 @@
       >
         <v-btn width="152" height="124">
           <div>
-            <div>
-              <v-icon>mdi-crown</v-icon>
+            <div class="d-flex justify-center">
+              <v-img :src="require('@/assets/icons/crown-black.svg')" max-height="50" max-width="50"></v-img>
             </div>
             <br />
-            <div class="text-capitalize font-weight-bold card-big-title-text">Start hunting</div>
+            <div class="text-none font-weight-bold card-big-title-text">Start hunting</div>
           </div>
         </v-btn>
       </div>
@@ -60,7 +60,9 @@ import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
 
 @Observer
 @Component
-export default class CurrentTask extends Vue {}
+export default class BountyCard extends Vue {
+  @Prop({ required: true }) name!: string
+}
 </script>
 
 <style scoped lang="scss">
