@@ -100,10 +100,6 @@ export class ApiHandlerJWT<T> {
     return res.data
   }
 
-  async getTier(address: any) {
-    const res = await axios.get(`get-tier/${address}`)
-    return res.data
-  }
   async find<T>(params?: any, settings: { _sort?: string; _limit?: number; _start?: number } = {}): Promise<T[]> {
     const settingDefault = { _sort: 'createdAt:DESC', _limit: 25, _start: 0 }
     params = { ...settingDefault, ...settings, ...(params ?? {}) }
