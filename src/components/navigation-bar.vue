@@ -2,19 +2,19 @@
   <v-app-bar height="80px" class="navigation-bar" app flat>
     <div class="nav-container mx-auto" style="width: 100%">
       <v-row class="d-flex align-center justify-space-between">
-        <v-col col="12" sm="12" md="2">
+        <v-col col="12" sm="12" md="3">
           <div class="pl-4">
             <v-img :src="require('@/assets/images/cyberk-demo.svg')" max-height="33" max-width="155"></v-img>
           </div>
         </v-col>
-        <v-col col="12" sm="12" md="7" class="d-flex align-center justify-space-between">
+        <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div class="nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launch Pad</div>
             </template>
             <span>Coming Soon!</span>
           </v-tooltip>
-          <router-link to="/bounty" class="text-decoration-none px-4" active-class="active">
+          <router-link to="/bounty" class="text-decoration-none px-4" active-class="blue-diversity--text">
             <div class="text-none nav-btn-text">Bounty Hunter</div>
           </router-link>
           <v-tooltip bottom>
