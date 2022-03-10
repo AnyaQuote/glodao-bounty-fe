@@ -26,8 +26,8 @@
             <span>Coming Soon!</span>
           </v-tooltip>
         </v-col>
-        <v-col col="12" sm="12" md="2">
-          <div class="d-flex align-center justify-end">
+        <v-col col="12" sm="12" md="3">
+          <div class="d-flex align-center justify-end pr-6">
             <!-- <connect-metamask :requiredChainId="chainId">
               <v-menu open-on-hover offset-y v-if="wallet.connected">
                 <template v-slot:activator="{ on, attrs }">
@@ -44,6 +44,50 @@
                 </template>
               </v-menu>
             </connect-metamask> -->
+            <v-btn
+              depressed
+              outlined
+              class="rounded-0 blue-diversity--text"
+              height="40"
+              width="110"
+              v-if="!logined"
+              @click="loginWithTwitter"
+            >
+              <v-icon class="mr-2">mdi-twitter</v-icon> Log in
+            </v-btn>
+            <v-menu offset-y v-if="logined">
+              <template v-slot:activator="{ on, attrs }">
+                <v-avatar size="40" v-bind="attrs" v-on="on">
+                  <img src="https://picsum.photos/200" alt="Avatar" />
+                </v-avatar>
+              </template>
+              <v-sheet width="240" outlined>
+                <v-sheet class="d-flex align-center pa-4">
+                  <v-avatar size="32" v-bind="attrs" v-on="on">
+                    <img src="https://picsum.photos/200" alt="Avatar" />
+                  </v-avatar>
+                  <div class="ml-3 font-weight-600">Tommy_Shelby</div>
+                </v-sheet>
+                <v-divider></v-divider>
+                <v-sheet>
+                  <v-btn plain block class="menu-btn" height="40" depressed>
+                    <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
+                  </v-btn>
+                  <v-btn plain block class="menu-btn" height="40" depressed>
+                    <!-- <v-icon class="mr-2">mdi-wallet-outline</v-icon> -->
+                    <v-img
+                      :src="require('../assets/icons/crown-mini.svg')"
+                      max-height="22"
+                      max-width="22"
+                      class="mr-2 ml-0"
+                    ></v-img>
+
+                    Hunting history
+                  </v-btn>
+                  <v-btn plain block class="menu-btn" height="40" depressed> Log out </v-btn>
+                </v-sheet>
+              </v-sheet>
+            </v-menu>
           </div>
         </v-col>
       </v-row>
@@ -65,6 +109,10 @@ import { Observer } from 'mobx-vue'
 export default class Staking extends Vue {
   wallet = walletStore
   chainId = process.env.VUE_APP_CHAIN_ID
+  logined = false
+  loginWithTwitter() {
+    this.logined = true
+  }
   openLink(url) {
     window.open(url, '_blank')
   }
@@ -72,6 +120,17 @@ export default class Staking extends Vue {
 </script>
 
 <style scoped>
+.menu-btn {
+  border-radius: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+  text-transform: unset;
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  color: var(--v-neutral10-base);
+}
 .navigation-bar {
   background: var(--v-background-base) !important;
 }
@@ -91,5 +150,8 @@ export default class Staking extends Vue {
 }
 .active {
   color: var(--v-twitter-base) !important;
+}
+.blue-diversity--text {
+  color: var(--v-bluePrimary-base);
 }
 </style>
