@@ -112,10 +112,6 @@ export default class Staking extends Vue {
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
-  logined = false
-  loginWithTwitter() {
-    this.logined = true
-  }
   openLink(url) {
     window.open(url, '_blank')
   }
