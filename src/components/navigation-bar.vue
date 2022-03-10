@@ -76,7 +76,7 @@
                   <v-btn plain block class="menu-btn" height="40" depressed>
                     <!-- <v-icon class="mr-2">mdi-wallet-outline</v-icon> -->
                     <v-img
-                      :src="require('../assets/icons/crown-mini.svg')"
+                      :src="require('@/assets/icons/crown-mini.svg')"
                       max-height="22"
                       max-width="22"
                       class="mr-2 ml-0"
