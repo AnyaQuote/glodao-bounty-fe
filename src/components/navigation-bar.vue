@@ -2,7 +2,11 @@
   <v-app-bar height="80px" class="navigation-bar" app flat>
     <div class="nav-container mx-auto" style="width: 100%">
       <v-row class="d-flex align-center justify-space-between">
-        <v-col col="12" sm="12" md="2"> </v-col>
+        <v-col col="12" sm="12" md="2">
+          <div class="pl-4">
+            <v-img :src="require('@/assets/images/cyberk-demo.svg')" max-height="33" max-width="155"></v-img>
+          </div>
+        </v-col>
         <v-col col="12" sm="12" md="7" class="d-flex align-center justify-space-between">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
