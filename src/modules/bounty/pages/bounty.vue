@@ -12,7 +12,14 @@
     <v-col cols="12">
       <v-container>
         <v-row>
-          <v-col class="mt-10 section-big-title-text font-weight-bold" cols="12">Your current task</v-col>
+          <v-col cols="12">
+            <div class="d-flex justify-space-between align-center">
+              <div class="section-big-title-text font-weight-bold">Your current task</div>
+              <div class="card-title-text font-weight-600">
+                <a href="#" class="blue-diversity--text">View all</a> <v-icon>mdi-chevron-right</v-icon>
+              </div>
+            </div>
+          </v-col>
           <v-col lg="3" md="6" sm="12" cols="12">
             <current-task />
           </v-col>
@@ -31,9 +38,9 @@
     </v-col>
     <v-col cols="12">
       <v-container>
-        <v-row class="mt-10">
+        <v-row>
           <v-col>
-            <div class="section-big-title-text font-weight-bold">Bounty hunters (32)</div>
+            <div class="section-big-title-text font-weight-bold">Bounty hunters ({{ vm.bountyCount }})</div>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
             <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select>
@@ -42,22 +49,20 @@
             <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
           </v-col>
         </v-row>
-        <v-row class="mt-8">
-          <v-col md="4" sm="6" cols="12">
-            <bounty-card />
-          </v-col>
-          <v-col md="4" sm="6" cols="12">
-            <bounty-card />
-          </v-col>
-          <v-col md="4" sm="6" cols="12">
-            <bounty-card />
+        <v-row>
+          <v-col md="4" sm="6" cols="12" v-for="bounty in vm.bountyList" :key="bounty.id">
+            <bounty-card :name="bounty.name" :id="bounty.id" />
           </v-col>
         </v-row>
-        <v-row dense no-gutters>
+        <v-row dense no-gutters v-if="vm.remainingBounty > 0">
           <v-col>
             <div class="my-10 d-flex justify-center align-center">
-              <v-btn outlined class="rounded-0 font-weight-600 button-small text-capitalize">
-                Loadmore (118 bounty hunters)
+              <v-btn
+                outlined
+                class="rounded-0 font-weight-600 button-small text-capitalize"
+                @click="vm.getBountyListByPage()"
+              >
+                Loadmore ({{ vm.remainingBounty }} bounty hunters)
               </v-btn>
             </div>
           </v-col>
@@ -72,6 +77,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter-viewmodel'
+import { reaction } from 'mobx'
 
 @Observer
 @Component({
@@ -84,6 +90,22 @@ export default class Farming extends Vue {
   @Provide() vm = new BountyHunterViewModel()
   walletStore = walletStore
   items = ['Foo', 'Bar', 'Fizz', 'Buzz']
+  _supcription: any[] = []
+
+  mounted() {
+    this._supcription = [
+      reaction(
+        () => this.vm.bountyList,
+        () => {
+          console.log('change')
+        }
+      ),
+    ]
+  }
+
+  beforeDestroy() {
+    this._supcription.forEach((d) => d())
+  }
 }
 </script>
 
