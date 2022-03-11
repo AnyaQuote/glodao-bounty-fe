@@ -23,7 +23,7 @@
         <div class="pa-4">
           <div>
             <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-              <chain-logo :chain="chainId" />
+              <chain-logo :chain="chainId" class="fill-width fill-height" />
             </div>
             <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">{{ name }}</div>
             <div class="custom-dash-divider my-3"></div>
