@@ -67,7 +67,7 @@
               </template>
               <v-sheet width="240" outlined>
                 <v-sheet class="d-flex align-center pa-4">
-                  <v-avatar size="32" v-bind="attrs" v-on="on">
+                  <v-avatar size="32">
                     <img src="https://picsum.photos/200" alt="Avatar" />
                   </v-avatar>
                   <div class="ml-3 font-weight-600">Tommy_Shelby</div>
