@@ -59,6 +59,7 @@
               :chainId="bounty.chainId"
               :metadata="bounty.metadata"
               :types="bounty.types"
+              :maxParticipant="bounty.maxParticipant"
             />
           </v-col>
         </v-row>

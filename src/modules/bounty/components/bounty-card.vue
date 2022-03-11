@@ -31,6 +31,10 @@
               <div>Total reward</div>
               <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} TVN</div>
             </div>
+            <div class="d-flex justify-space-between mt-2">
+              <div>Max participant</div>
+              <div class="font-weight-bold">{{ maxParticipant }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +61,6 @@
 </template>
 
 <script lang="ts">
-import { authStore } from '@/stores/auth-store'
 import { Observer } from 'mobx-vue'
 import moment from 'moment'
 import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
@@ -76,13 +79,12 @@ export default class BountyCard extends Vue {
   @Prop({ required: true }) metadata!: any
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) types!: string[]
+  @Prop({ required: true }) maxParticipant!: number
   coverImage = this.metadata?.coverImage ?? 'https://picsum.photos/200'
   isStarted = moment(this.startTime).isBefore(moment())
 
   openLink() {
-    if (!authStore.jwt) {
-      authStore.changeTwitterLoginDialog(true)
-    } else this.$router.push(`bounty/${this.id}`)
+    this.$router.push(`bounty/${this.id}`)
   }
 }
 </script>
