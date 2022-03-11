@@ -53,6 +53,7 @@ export class BountyHunterViewModel {
         chainId: bounty.chainId,
         metadata: bounty.metadata,
         types: keys(bounty.data),
+        maxParticipant: bounty.maxParticipant,
       }
     })
   }
