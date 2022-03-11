@@ -74,7 +74,14 @@
                 </v-sheet>
                 <v-divider></v-divider>
                 <v-sheet>
-                  <v-btn plain block class="menu-btn" height="40" depressed>
+                  <v-btn
+                    plain
+                    block
+                    class="menu-btn"
+                    height="40"
+                    depressed
+                    @click="authStore.changeAttachWalletDialog(true)"
+                  >
                     <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
                   </v-btn>
                   <v-btn plain block class="menu-btn" height="40" depressed>
@@ -88,7 +95,7 @@
 
                     Hunting history
                   </v-btn>
-                  <v-btn plain block class="menu-btn" height="40" depressed> Log out </v-btn>
+                  <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()"> Log out </v-btn>
                 </v-sheet>
               </v-sheet>
             </v-menu>
