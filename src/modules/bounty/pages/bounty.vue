@@ -9,28 +9,30 @@
       </v-container>
       <v-divider />
     </v-col>
-    <v-col cols="12">
+    <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
       <v-container>
         <v-row>
           <v-col cols="12">
             <div class="d-flex justify-space-between align-center">
               <div class="section-big-title-text font-weight-bold">Your current task</div>
               <div class="card-title-text font-weight-600">
-                <a href="#" class="blue-diversity--text">View all</a> <v-icon>mdi-chevron-right</v-icon>
+                <router-link to="/hunting-history" class="blue-diversity--text">View all</router-link>
+                <v-icon>mdi-chevron-right</v-icon>
               </div>
             </div>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
-            <current-task />
-          </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
-            <current-task />
-          </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
-            <current-task />
-          </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
-            <current-task />
+
+          <v-col lg="3" md="6" sm="12" cols="12" v-for="task in vm.currentTaskList" :key="task.id">
+            <current-task
+              :id="task.id"
+              :currentStep="task.currentStep"
+              :totalStep="task.totalStep"
+              :type="task.type"
+              :shortDescription="task.shortDescription"
+              :status="task.status"
+              :name="task.name"
+              :chainId="task.chainId"
+            />
           </v-col>
         </v-row>
       </v-container>
@@ -85,8 +87,8 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
+import { authStore } from '@/stores/auth-store'
 import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter-viewmodel'
-import { reaction } from 'mobx'
 
 @Observer
 @Component({
@@ -95,30 +97,30 @@ import { reaction } from 'mobx'
     'bounty-card': () => import('@/modules/bounty/components/bounty-card.vue'),
   },
 })
-export default class Farming extends Vue {
+export default class BountyPage extends Vue {
   @Provide() vm = new BountyHunterViewModel()
   walletStore = walletStore
+  authStore = authStore
   items = ['Foo', 'Bar', 'Fizz', 'Buzz']
-  _supcription: any[] = []
 
   mounted() {
-    this._supcription = [
-      reaction(
-        () => this.vm.bountyList,
-        () => {
-          console.log('change')
-        }
-      ),
-    ]
+    this.vm.initReaction()
+  }
+
+  goToHuntingHistory() {
+    this.$router.push('hunting-history')
   }
 
   beforeDestroy() {
-    this._supcription.forEach((d) => d())
+    this.vm.destroyReaction()
   }
 }
 </script>
 
 <style scoped lang="scss">
+.v-main__wrap > .row > .col.col-12 {
+  padding-right: 0;
+}
 .button-small {
   font-size: 14px;
   line-height: 24px;

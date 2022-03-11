@@ -1,24 +1,42 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
+import { authStore } from '@/stores/auth-store'
 import { keys } from 'lodash-es'
-import { computed, observable } from 'mobx'
-import { asyncAction } from 'mobx-utils'
+import { action, computed, observable, reaction, _getAdministration } from 'mobx'
+import { asyncAction, IDisposer } from 'mobx-utils'
 
 const PAGE_LIMIT = 6
 export class BountyHunterViewModel {
   @observable bountyList: any[] = []
   @observable bountyCount = 0
   @observable page = 1
+  @observable currentApplies: any[] = []
+  _disposers: IDisposer[] = []
 
   constructor() {
     //
     this.getBountyListByPage()
     this.getTotalBountyCount()
+    this.getCurrentTask()
+  }
+
+  initReaction() {
+    this._disposers = [
+      reaction(
+        () => authStore.jwt,
+        () => {
+          if (authStore.jwt) this.getCurrentTask()
+        }
+      ),
+    ]
+  }
+
+  destroyReaction() {
+    this._disposers.forEach((d) => d())
   }
 
   @asyncAction *getAllTask() {
     const task = yield apiService.tasks.find('', { _limit: PAGE_LIMIT, _start: 0 })
-    console.log(task)
   }
 
   @asyncAction *getBountyListByPage(page?: number) {
@@ -39,6 +57,17 @@ export class BountyHunterViewModel {
     this.bountyCount = yield apiService.tasks.count()
   }
 
+  @asyncAction *getCurrentTask() {
+    try {
+      if (!authStore.jwt) return
+      const res = yield apiService.applies.find({ 'hunter.id': authStore.user.hunter.id }, { _limit: 4 })
+      this.currentApplies = res
+    } catch (error) {
+      this.currentApplies = []
+      snackController.error(error as string)
+    }
+  }
+
   @computed get remainingBounty() {
     return this.bountyCount - this.bountyList.length
   }
@@ -54,6 +83,24 @@ export class BountyHunterViewModel {
         metadata: bounty.metadata,
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
+      }
+    })
+  }
+
+  @computed get currentTaskList() {
+    return this.currentApplies.map((apply) => {
+      const task = apply.task
+      const types = keys(task.data)
+      const firstTask = apply.data[types[0]]
+      return {
+        id: apply.id,
+        status: apply.status,
+        name: task.name,
+        shortDescription: task.metadata?.shortDescription,
+        chainId: task.chainId,
+        type: types[0],
+        currentStep: firstTask.filter((step) => step.finished === true).length,
+        totalStep: firstTask.length,
       }
     })
   }

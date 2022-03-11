@@ -1,45 +1,90 @@
 <template>
-  <v-sheet height="140" outlined class="pa-3 pb-2 card-text" style="position: relative">
+  <v-sheet outlined class="pa-3 pb-2 card-text" style="position: relative">
     <div class="custom-flag-container">
-      <div class="custom-flag-css d-flex justify-end align-center background-blue-diversity pb-2 flex-column">
-        <v-icon color="white" size="18"> mdi-twitter </v-icon>
+      <div
+        class="custom-flag-css d-flex justify-end align-center pb-2 flex-column"
+        :style="`background-color: var(--v-${flagColor}-base)`"
+      >
+        <v-icon color="white" size="18"> {{ `mdi-${type}` }} </v-icon>
       </div>
     </div>
     <div>
       <div class="rounded-circle d-flex justify-center card-project-small-icon">
-        <v-icon color="white">mdi-minus</v-icon>
+        <chain-logo :chain="chainId" class="fill-width fill-height" />
       </div>
-      <div class="mt-1 font-family-proxima font-weight-bold card-title-text">The Peaky Blinder</div>
-      <div class="mt-1 card-text">Short description about social tasks of project</div>
+      <div class="mt-1 font-family-proxima font-weight-bold card-title-text">{{ name }}</div>
+      <div class="mt-1 card-text short-description">{{ shortDescription }}</div>
       <div class="d-flex justify-end mt-4 align-center">
-        <div class="rounded-circle mr-1 d-flex justify-center align-center progress-icon-container">
-          <v-icon size="8" color="black" class="font-weight-600">mdi-dots-horizontal</v-icon>
+        <div class="rounded-circle mr-1 d-flex justify-center align-center progress-icon-container" v-if="statusIcon">
+          <v-icon size="8" color="black" class="font-weight-600">{{ this.statusIcon }}</v-icon>
         </div>
-        <div class="mr-2 font-italic font-weight-600">Processing</div>
+        <div class="mr-2 font-italic font-weight-600 text-capitalize">{{ status }}</div>
         <v-sheet
           width="18"
           height="18"
           class="font-weight-bold d-flex align-center justify-center line-height-6 card-text background-neutral"
         >
-          <span>3/5</span>
+          <span>{{ currentStep }}/{{ totalStep }}</span>
         </v-sheet>
       </div>
       <div class="mt-1 d-flex justify-space-between">
-        <v-sheet v-for="i in 3" class="progress-step background-blue-diversity" :key="i"> </v-sheet>
-        <v-sheet class="background-neutral progress-step"> </v-sheet>
-        <v-sheet class="background-neutral progress-step"> </v-sheet>
+        <v-sheet v-for="i in currentStep" class="progress-step background-blue-diversity" :key="`currentStep${i}`">
+        </v-sheet>
+        <v-sheet
+          v-for="i in totalStep - currentStep"
+          class="background-neutral progress-step"
+          :key="`unfinishedStep${i}`"
+        >
+        </v-sheet>
       </div>
     </div>
   </v-sheet>
 </template>
 
 <script lang="ts">
+import { lowerCase } from 'lodash'
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
 
 @Observer
-@Component
-export default class CurrentTask extends Vue {}
+@Component({
+  components: {
+    'chain-logo': () => import('@/components/chain-logo.vue'),
+  },
+})
+export default class CurrentTask extends Vue {
+  @Prop({ required: true }) id!: string
+  @Prop({ required: true }) currentStep!: number
+  @Prop({ required: true }) totalStep!: number
+  @Prop({ required: true }) type!: string
+  @Prop({ required: true }) shortDescription!: string
+  @Prop({ required: true }) status!: string
+  @Prop({ required: true }) name!: string
+  @Prop({ required: true }) chainId!: string
+
+  statusIcon = ''
+  flagColor = ''
+  mounted() {
+    const lowercaseStatus = lowerCase(this.status)
+    switch (lowercaseStatus) {
+      case 'completed':
+        this.flagColor = 'greenSenamatic'
+        this.statusIcon = 'mdi-check'
+        break
+      case 'rejected':
+        this.flagColor = 'redSenamatic'
+        this.statusIcon = 'mdi-exclamation'
+        break
+      case 'processing':
+        this.flagColor = 'bluePrimary'
+        this.statusIcon = 'mdi-dots-horizontal'
+        break
+      default:
+        this.flagColor = 'purple'
+        break
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -65,12 +110,16 @@ export default class CurrentTask extends Vue {}
 .card-project-small-icon {
   width: 28px;
   height: 28px;
-  background-color: var(--v-bluePrimary-base);
   color: white;
 }
 .progress-icon-container {
   width: 10px;
   height: 10px;
   border: 1px solid black;
+}
+.short-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
