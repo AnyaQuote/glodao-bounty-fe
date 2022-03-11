@@ -309,6 +309,11 @@ tbody {
 .blue-diversity--text {
   color: var(--v-bluePrimary-base) !important;
 }
+.flex-center-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .mt-20 {
   margin-top: 80px;

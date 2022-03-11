@@ -7,27 +7,33 @@
         }"
       >
         <div class="pt-4 px-4 position-relative">
-          <v-img height="236" src="https://picsum.photos/200"></v-img>
-          <div class="start-date-container"></div>
-          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600">
-            Start in Jan 21st 2022 10:00 pm 🔥
+          <v-img height="236" :src="coverImage"></v-img>
+          <div class="start-date-container" v-if="!isStarted"></div>
+          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600" v-if="!isStarted">
+            Start in {{ startTime | datetime }} 🔥
           </div>
           <div class="position-absolute custom-chevron-flag-container rounded-0">
             <div class="custom-chevron-flag d-flex flex-column justify-center align-center pt-6 pb-3 elavation-10">
-              <v-icon color="white" size="14" class="mb-2"> mdi-twitter </v-icon>
+              <v-icon color="white" size="14" class="mb-2" v-for="type in types" :key="type">
+                {{ `mdi-${type}` }}
+              </v-icon>
             </div>
           </div>
         </div>
         <div class="pa-4">
           <div>
-            <div class="rounded-circle d-flex justify-center card-project-medium-icon background-blue-diversity">
-              <v-icon color="white">mdi-minus</v-icon>
+            <div class="rounded-circle d-flex justify-center card-project-medium-icon">
+              <chain-logo :chain="chainId" />
             </div>
             <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">{{ name }}</div>
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
-              <div class="font-weight-bold">1000 TVN</div>
+              <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} TVN</div>
+            </div>
+            <div class="d-flex justify-space-between mt-2">
+              <div>Max participant</div>
+              <div class="font-weight-bold">{{ maxParticipant }}</div>
             </div>
           </div>
         </div>
@@ -40,7 +46,7 @@
           'd-none': !hover,
         }"
       >
-        <v-btn width="152" height="124">
+        <v-btn width="152" height="124" @click="openLink()">
           <div>
             <div class="d-flex justify-center">
               <v-img :src="require('@/assets/icons/crown-black.svg')" max-height="50" max-width="50"></v-img>
@@ -56,12 +62,30 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
+import moment from 'moment'
 import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
 
 @Observer
-@Component
+@Component({
+  components: {
+    'chain-logo': () => import('@/components/chain-logo.vue'),
+  },
+})
 export default class BountyCard extends Vue {
   @Prop({ required: true }) name!: string
+  @Prop({ required: true }) startTime!: string
+  @Prop({ required: true }) rewardAmount!: number
+  @Prop({ required: true }) chainId!: number
+  @Prop({ required: true }) metadata!: any
+  @Prop({ required: true }) id!: string
+  @Prop({ required: true }) types!: string[]
+  @Prop({ required: true }) maxParticipant!: number
+  coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
+  isStarted = moment(this.startTime).isBefore(moment())
+
+  openLink() {
+    this.$router.push(`bounty/${this.id}`)
+  }
 }
 </script>
 

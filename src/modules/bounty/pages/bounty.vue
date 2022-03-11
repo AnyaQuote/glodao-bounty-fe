@@ -50,8 +50,17 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col md="4" sm="6" cols="12" v-for="bounty in vm.bountyList" :key="bounty.id">
-            <bounty-card :name="bounty.name" :id="bounty.id" />
+          <v-col md="4" sm="6" cols="12" v-for="bounty in vm.convertedBountyList" :key="bounty.id">
+            <bounty-card
+              :name="bounty.name"
+              :id="bounty.id"
+              :startTime="bounty.startTime"
+              :rewardAmount="bounty.rewardAmount"
+              :chainId="bounty.chainId"
+              :metadata="bounty.metadata"
+              :types="bounty.types"
+              :maxParticipant="bounty.maxParticipant"
+            />
           </v-col>
         </v-row>
         <v-row dense no-gutters v-if="vm.remainingBounty > 0">

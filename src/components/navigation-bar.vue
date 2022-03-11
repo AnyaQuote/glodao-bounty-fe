@@ -4,7 +4,7 @@
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="3">
           <div class="pl-4">
-            <v-img :src="require('@/assets/images/cyberk-demo.svg')" max-height="33" max-width="155"></v-img>
+            <v-img :src="require('@/assets/images/glodao-logo.svg')" max-height="50" max-width="75"></v-img>
           </div>
         </v-col>
         <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">

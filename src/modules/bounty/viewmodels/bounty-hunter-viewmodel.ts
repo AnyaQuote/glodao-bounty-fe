@@ -1,5 +1,6 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
+import { keys } from 'lodash-es'
 import { computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 
@@ -30,6 +31,7 @@ export class BountyHunterViewModel {
       this.page += 1
     } catch (error) {
       this.bountyList = []
+      snackController.error(error as string)
     }
   }
 
@@ -39,5 +41,20 @@ export class BountyHunterViewModel {
 
   @computed get remainingBounty() {
     return this.bountyCount - this.bountyList.length
+  }
+
+  @computed get convertedBountyList() {
+    return this.bountyList.map((bounty) => {
+      return {
+        name: bounty.name,
+        id: bounty.id,
+        startTime: bounty.startTime,
+        rewardAmount: bounty.rewardAmount,
+        chainId: bounty.chainId,
+        metadata: bounty.metadata,
+        types: keys(bounty.data),
+        maxParticipant: bounty.maxParticipant,
+      }
+    })
   }
 }
