@@ -16,15 +16,30 @@
               <v-sheet height="160" outlined style="flex: 2">
                 <v-row dense no-gutters class="d-flex align-center fill-height pl-6">
                   <v-col cols="4">
-                    <v-sheet class="number-count-text">100</v-sheet>
+                    <v-sheet class="number-count-text d-flex align-center">
+                      <div>
+                        <v-icon style="opacity: 0.8">mdi-bullseye-arrow</v-icon>
+                      </div>
+                      <div class="d-flex align-center ml-2">100</div>
+                    </v-sheet>
                     <v-sheet class="caption-text">Successful task</v-sheet>
                   </v-col>
                   <v-col cols="4">
-                    <v-sheet class="number-count-text">100</v-sheet>
+                    <v-sheet class="number-count-text d-flex align-center">
+                      <div>
+                        <v-img :src="require('@/assets/icons/processing-spiral.svg')" width="20" height="20"></v-img>
+                      </div>
+                      <div class="d-flex align-center ml-2">100</div>
+                    </v-sheet>
                     <v-sheet class="caption-text">Processing task</v-sheet>
                   </v-col>
                   <v-col cols="4">
-                    <v-sheet class="number-count-text">$234,123.00</v-sheet>
+                    <v-sheet class="number-count-text d-flex align-center">
+                      <div>
+                        <v-img :src="require('@/assets/icons/crown-mini.svg')" width="20" height="20"></v-img>
+                      </div>
+                      <div class="d-flex align-center ml-2">$234,123.00</div>
+                    </v-sheet>
                     <v-sheet class="caption-text">Bounty earned</v-sheet>
                   </v-col>
                 </v-row>
@@ -52,10 +67,13 @@
             </v-select>
           </v-col>
           <v-col cols="12" sm="6" md="2">
-            <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select>
+            <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select>
           </v-col>
           <v-col cols="12" sm="6" md="2">
-            <v-select
+            <!-- <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select> -->
+          </v-col>
+          <v-col cols="12" sm="6" md="2">
+            <!-- <v-select
               v-model="socialsModel"
               :items="socials"
               label="Social task"
@@ -68,11 +86,9 @@
                 <span v-if="index === 0">{{ item }}</span>
                 <span v-if="index === 1" class="grey--text text-caption"> &nbsp;(+{{ socialsModel.length - 1 }}) </span>
               </template>
-            </v-select>
+            </v-select> -->
           </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select>
-          </v-col>
+
           <v-col cols="2"> </v-col>
           <v-col cols="12" md="2">
             <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>

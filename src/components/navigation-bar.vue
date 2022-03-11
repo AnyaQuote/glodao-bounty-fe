@@ -67,17 +67,24 @@
               </template>
               <v-sheet width="240" outlined>
                 <v-sheet class="d-flex align-center pa-4">
-                  <v-avatar size="32" v-bind="attrs" v-on="on">
+                  <v-avatar size="32">
                     <img src="https://picsum.photos/200" alt="Avatar" />
                   </v-avatar>
                   <div class="ml-3 font-weight-600">Tommy_Shelby</div>
                 </v-sheet>
                 <v-divider></v-divider>
                 <v-sheet>
-                  <v-btn plain block class="menu-btn" height="40" depressed>
+                  <v-btn
+                    plain
+                    block
+                    class="menu-btn"
+                    height="40"
+                    depressed
+                    @click="authStore.changeAttachWalletDialog(true)"
+                  >
                     <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
                   </v-btn>
-                  <v-btn plain block class="menu-btn" height="40" depressed>
+                  <v-btn plain block class="menu-btn" height="40" depressed @click="goToHuntingHistoryScreen()">
                     <!-- <v-icon class="mr-2">mdi-wallet-outline</v-icon> -->
                     <v-img
                       :src="require('@/assets/icons/crown-mini.svg')"
@@ -88,7 +95,9 @@
 
                     Hunting history
                   </v-btn>
-                  <v-btn plain block class="menu-btn" height="40" depressed> Log out </v-btn>
+                  <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()">
+                    Log out
+                  </v-btn>
                 </v-sheet>
               </v-sheet>
             </v-menu>
@@ -118,6 +127,10 @@ export default class Staking extends Vue {
   chainId = process.env.VUE_APP_CHAIN_ID
   openLink(url) {
     window.open(url, '_blank')
+  }
+
+  goToHuntingHistoryScreen() {
+    this.$router.push('hunting-history')
   }
 }
 </script>
