@@ -61,7 +61,6 @@
 </template>
 
 <script lang="ts">
-import { authStore } from '@/stores/auth-store'
 import { Observer } from 'mobx-vue'
 import moment from 'moment'
 import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
@@ -85,9 +84,7 @@ export default class BountyCard extends Vue {
   isStarted = moment(this.startTime).isBefore(moment())
 
   openLink() {
-    if (!authStore.jwt) {
-      authStore.changeTwitterLoginDialog(true)
-    } else this.$router.push(`bounty/${this.id}`)
+    this.$router.push(`bounty/${this.id}`)
   }
 }
 </script>
