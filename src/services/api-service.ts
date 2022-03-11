@@ -155,8 +155,6 @@ export class ApiHandlerJWT<T> {
 
   async login(username: string, password: string) {
     const res = await this.axios.post(`auth/local`, { identifier: username, password: password })
-    console.log(res)
-
     return res.data
   }
 }

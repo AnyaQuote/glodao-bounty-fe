@@ -46,7 +46,6 @@ export class AuthStore {
   @asyncAction *handleLogin() {
     try {
       const { jwt, user } = yield apiService.users.login('daoqtoan@gmail.com', '12345678')
-      console.log(jwt, user)
       this.changeJwt(jwt)
       this.changeUser(user)
       this.changeTwitterLoginDialog(false)
