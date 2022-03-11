@@ -52,10 +52,13 @@
             </v-select>
           </v-col>
           <v-col cols="12" sm="6" md="2">
-            <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select>
+            <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select>
           </v-col>
           <v-col cols="12" sm="6" md="2">
-            <v-select
+            <!-- <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select> -->
+          </v-col>
+          <v-col cols="12" sm="6" md="2">
+            <!-- <v-select
               v-model="socialsModel"
               :items="socials"
               label="Social task"
@@ -68,11 +71,9 @@
                 <span v-if="index === 0">{{ item }}</span>
                 <span v-if="index === 1" class="grey--text text-caption"> &nbsp;(+{{ socialsModel.length - 1 }}) </span>
               </template>
-            </v-select>
+            </v-select> -->
           </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select>
-          </v-col>
+
           <v-col cols="2"> </v-col>
           <v-col cols="12" md="2">
             <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
