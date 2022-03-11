@@ -8,14 +8,14 @@
     <v-container class="px-6 py-7">
       <v-row>
         <v-col cols="12" sm="6" class="d-flex flex-column">
-          <!-- <v-img
+          <v-img
             alt="Vuetify Logo"
             class="shrink mr-2"
             contain
-            :src="require(`../assets/waggle-logo.${providers.themeType}.svg`)"
+            :src="require(`@/assets/images/glodao-logo.svg`)"
             transition="scale-transition"
-            width="160"
-          /> -->
+            width="75"
+          />
         </v-col>
         <v-col
           cols="12"
