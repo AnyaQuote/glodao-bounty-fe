@@ -44,6 +44,7 @@ export default new Vuetify({
         bluePrimary: {
           base: '#0276F0',
           lighten1: '#E6F1FE',
+          lighten2: '#55ACE3',
         },
         neutral20: {
           base: '#E5E5E5',
@@ -55,6 +56,9 @@ export default new Vuetify({
         orangeSenamatic: '#F9AF40',
         purple: '#6955E3',
         violet: '#252D72',
+        green: {
+          base: '#6CE08D',
+        },
       },
       dark: {
         primary: {

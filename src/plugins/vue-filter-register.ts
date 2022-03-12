@@ -19,7 +19,9 @@ export const vueFilterRegister = () => {
   Vue.filter('dd.mm.yyyy', (isoStr: number) => (isoStr ? moment(isoStr).format('DD.MM.YYYY') : ''))
   Vue.filter('ddmmyyyyhhmm', (isoStr: number) => (isoStr ? moment(isoStr).format('DD/MM/YYYY HH:mm') : ''))
   Vue.filter('ddmmyyyyhhmmss', (isoStr: string) => (isoStr ? moment(isoStr).format('DD/MM/YYYY HH:mm:ss') : ''))
+  Vue.filter('MMMddYYYYhhmm', (isoStr: number) => (isoStr ? moment(isoStr).format('MMM DD YYYY, hh:mm') : ''))
   Vue.filter('formatDateFromUnix', (isoStr: number) => (isoStr ? moment.unix(isoStr).format('DD/MM/YYYY') : ''))
+  Vue.filter('statusColor', (status: string) => (status === 'live' ? 'green' : 'red'))
 
   Vue.filter('_get', (any: any, path: string, defaultValue = '') => {
     return get(any, path, defaultValue)

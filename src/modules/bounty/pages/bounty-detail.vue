@@ -21,22 +21,41 @@
       <v-col cols="12" lg="4">
         <v-sheet class="d-flex align-center mb-4">
           <v-sheet width="32" height="32" class="violet rounded-circle d-flex justify-center align-center">
-            <v-img :src="require('@/assets/icons/logo.svg')" max-width="19"></v-img>
+            <chain-logo :chain="vm.data | _get('chainId')" class="logo-chain" />
           </v-sheet>
-          <div class="text-h5 ml-3">The Peaky Blinder</div>
+          <div class="d-flex align-center ml-3 mt-1 section-big-title-text font-weight-bold">
+            {{ vm.data | _get('name') }}
+            <v-sheet width="10" height="10" class="rounded-circle mx-4" color="bluePrimary"></v-sheet>
+            <div class="text-uppercase">
+              {{ vm.data | _get('chainId') }}
+            </div>
+          </div>
         </v-sheet>
-        <v-sheet class="mb-4">
-          <v-img src="https://picsum.photos/id/11/500/300"></v-img>
+
+        <!-- image -->
+        <v-sheet class="mb-4 position-relative">
+          <v-img :src="vm.data | _get('metadata.coverImage')" class="rounded-lg"></v-img>
+          <!-- status -->
+          <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
+            <v-sheet
+              class="rounded-circle flex-center-box"
+              style="background: transparent; border: thin solid var(--v-green-base)"
+            >
+              <v-sheet width="10" height="10" class="rounded-circle ma-1" style="background-color: var(--v-green-base)">
+              </v-sheet>
+            </v-sheet>
+            <div class="text-uppercase ml-2 mr-1">{{ vm.data | _get('status') | stautsColor }}</div>
+          </div>
         </v-sheet>
+
         <v-sheet class="mb-4 card-subtitle-1">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-          standard dummy text ever since the 1500s
+          {{ vm.data | _get('metadata.caption') }}
         </v-sheet>
         <v-sheet>
           <div class="card-title-text font-weight-medium">Time to hunting</div>
           <ul>
-            <li class="card-subtitle-1 font-weight-medium">From: Jan 21st 2022, 10:00 am</li>
-            <li class="card-subtitle-1 font-weight-medium">To: Feb 26th 2022, 10:00 am</li>
+            <li class="card-subtitle-1 font-weight-medium">From: {{ vm.data.startTime | MMMddYYYYhhmm }}</li>
+            <li class="card-subtitle-1 font-weight-medium">To: {{ vm.data.endTime | MMMddYYYYhhmm }}</li>
           </ul>
         </v-sheet>
       </v-col>
@@ -50,21 +69,36 @@
               <v-tab-item>
                 <v-row dense no-gutters justify="center">
                   <v-col cols="12" lg="10" class="mt-6">
-                    <div class="card-subtitle-1 font-weight-medium">Reward for twitter task: 1000 DVT</div>
+                    <div class="card-subtitle-1 font-weight-medium">
+                      Reward for twitter task: {{ vm.data | _get('rewardAmount') }} DVT
+                    </div>
                     <div class="card-subtitle-1">
                       Please ensure you join our Twitter channel to be eligible. Our moderators will check through all
                       submissions and take action to reward or reject.
                     </div>
                     <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
                     <div class="text-center my-4">
-                      <v-btn tile outlined color="greenSenamatic">
-                        <v-icon left size="20">mdi-timelapse </v-icon>
-                        <span class="black--text text-none"> Your hunting process has begun! </span>
+                      <v-btn
+                        elevation="0"
+                        tile
+                        :outlined="vm.statusHunting.text !== 'Start hunting'"
+                        :color="vm.statusHunting.color"
+                        @click="vm.startHunting"
+                        :class="vm.statusHunting.text === 'Start hunting' ? 'white--text' : ''"
+                      >
+                        <v-icon left size="20"> {{ vm.statusHunting.icon }} </v-icon>
+                        <span
+                          :class="`${
+                            vm.statusHunting.text === 'Start hunting' ? 'white--text' : 'black--text'
+                          } text-none`"
+                        >
+                          {{ vm.statusHunting.text }}</span
+                        >
                       </v-btn>
                     </div>
                   </v-col>
                   <v-col cols="12" lg="9">
-                    <div class="divider-2 mb-7"></div>
+                    <div class="custom-dash-divider mb-7"></div>
 
                     <!-- one -->
                     <v-row dense no-gutters class="mb-4">
@@ -101,16 +135,32 @@
                                 </li>
                               </ul>
                             </div>
-                            <div class="text-end">
+                            <div class="d-flex justify-end">
                               <v-btn
+                                v-if="vm.status !== HUNTING.start"
                                 elevation="0"
-                                color="text-none bluePrimary white--text text-caption px-3 mt-2"
+                                color="text-none bluePrimary white--text text-caption px-3 mt-2 position-relative"
                                 tile
                                 small
+                                @click="vm.followTwitter"
+                                :disabled="vm.status === HUNTING.start"
                               >
-                                <v-icon left dark> mdi-twitter </v-icon>
-                                Twitter follow
+                                <div
+                                  class="rounded-circle d-flex justify-center align-center mr-1"
+                                  style="width: 20px; height: 20px; border: 1px solid white"
+                                >
+                                  <v-icon color="white" size="10">mdi-twitter</v-icon>
+                                </div>
+
+                                <div class="text-none">Twitter follow</div>
                               </v-btn>
+                              <v-sheet width="107" height="30">
+                                <v-row align="center">
+                                  <div class="rounded-circle customer-icon d-flex justify-center align-center">
+                                    <v-icon color="greenSenamatic">mdi-check</v-icon>
+                                  </div>
+                                </v-row>
+                              </v-sheet>
                             </div>
                           </v-container>
                         </v-sheet>
@@ -118,7 +168,7 @@
                       <v-col cols="1" class="">
                         <v-sheet class="fill-height ml-3 ba-dotted">
                           <v-sheet outlined class="fill-height d-flex justify-center align-center neutral20 lighten-1">
-                            <v-icon>mdi-check</v-icon>
+                            <v-icon v-if="vm.status">mdi-check</v-icon>
                           </v-sheet>
                         </v-sheet>
                       </v-col>
@@ -200,7 +250,7 @@
                     </v-row>
 
                     <v-sheet class="my-7">
-                      <div class="divider-2"></div>
+                      <div class="custom-dash-divider"></div>
                     </v-sheet>
 
                     <!-- button -->
@@ -323,15 +373,25 @@
 </template>
 
 <script lang="ts">
+import { autorun, IReactionDisposer } from 'mobx'
 import { Observer } from 'mobx-vue'
-import { Component, Provide, Vue } from 'vue-property-decorator'
-import { BountyDetailViewModel } from '../viewmodels/bounty-detail-viewmodel'
+import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
+import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-viewmodel'
 
 @Observer
-@Component
+@Component({
+  components: {
+    'chain-logo': () => import('@/components/chain-logo.vue'),
+  },
+})
 export default class BountyDetail extends Vue {
-  tab = null
-  items = ['Twitter task', 'Telegram task', 'Discord task']
+  @Provide() vm = new BountyDetailViewModel()
+
+  @Watch('$route.params.bountyId', { immediate: true }) onIdChanged(val: string) {
+    if (val) {
+      this.vm.setId(val)
+    }
+  }
 
   breadcrumbs = [
     {
@@ -345,6 +405,12 @@ export default class BountyDetail extends Vue {
       href: 'bounty-detail',
     },
   ]
+
+  HUNTING = HUNTING
+
+  items = ['Twitter task', 'Telegram task', 'Discord task']
+  tab = null
+
   headers = [
     {
       text: '@Account',
@@ -368,11 +434,8 @@ export default class BountyDetail extends Vue {
       class: ['bluePrimary lighten-1'],
     },
   ]
-
-  @Provide() vm = new BountyDetailViewModel()
 }
 </script>
-
 <style scoped>
 .divider {
   border-left: 1px solid grey;
@@ -381,14 +444,8 @@ export default class BountyDetail extends Vue {
   padding-top: 30px;
 }
 
-.divider-2 {
-  border-top: 1px dashed var(--v-neutral20-base);
-}
-
 .ba-secondary {
-  border: 1px;
-  border-style: solid;
-  border-color: var(--v-neutral20-base);
+  border: 1px solid var(--v-neutral20-base);
 }
 
 .line-height {
@@ -405,5 +462,30 @@ export default class BountyDetail extends Vue {
 
 .ba-dotted {
   border: 1px dashed var(--v-neutral20-base);
+}
+
+.outline--white {
+  border: 1px solid white;
+}
+
+.customer-icon {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--v-greenSenamatic-base);
+}
+
+.logo-chain {
+  width: 32px;
+  height: 32px;
+}
+
+.card-status {
+  top: 18px;
+  left: 18px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.text-green {
+  color: var(--v-green-base);
 }
 </style>

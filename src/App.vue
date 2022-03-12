@@ -264,7 +264,7 @@ tbody {
   overflow: hidden !important;
 }
 .font-family-proxima {
-  font-family: 'Proxima Nova';
+  font-family: 'Proxima Nova' !important;
 }
 .font-family-poppins {
   font-family: 'Poppins';
