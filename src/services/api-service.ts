@@ -155,15 +155,13 @@ export class ApiHandlerJWT<T> {
 
   async login(username: string, password: string) {
     const res = await this.axios.post(`auth/local`, { identifier: username, password: password })
-    console.log(res)
-
     return res.data
   }
 }
 
 export class ApiService {
   // fixedPool = new ApiHandler<FixedPoolModel>(axios, 'pool')
-  // applies = new ApiHandlerJWT<ApplyModel>(axiosStrapi, 'applies')
+  applies = new ApiHandlerJWT<any>(axios, 'applies')
   users = new ApiHandlerJWT<any>(axios, 'users')
   tasks = new ApiHandlerJWT<any>(axios, 'tasks')
 

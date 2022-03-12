@@ -4,6 +4,7 @@
     <alert />
     <global-loading />
     <twitter-login-dialog />
+    <attach-wallet-dialog />
     <navigation-drawer />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <mobile-navigation-bar v-else />
@@ -30,9 +31,10 @@ import { authStore } from '@/stores/auth-store'
     'global-loading': () => import('@/components/global-loading/global-loading.vue'),
     'navigation-drawer': () => import('@/components/navigation-drawer.vue'),
     'navigation-bar': () => import('@/components/navigation-bar.vue'),
-    'company-footer': () => import('./components/company-footer.vue'),
+    'company-footer': () => import('@/components/company-footer.vue'),
     'mobile-navigation-bar': () => import('@/components/mobile-navigation-bar.vue'),
     'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
+    'attach-wallet-dialog': () => import('@/components/attach-wallet-dialog.vue'),
   },
 })
 export default class App extends Vue {

@@ -23,7 +23,7 @@
         <div class="pa-4">
           <div>
             <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-              <chain-logo :chain="chainId" />
+              <chain-logo :chain="chainId" class="fill-width fill-height" />
             </div>
             <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">{{ name }}</div>
             <div class="custom-dash-divider my-3"></div>
@@ -80,7 +80,7 @@ export default class BountyCard extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) maxParticipant!: number
-  coverImage = this.metadata?.coverImage ?? 'https://picsum.photos/200'
+  coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   isStarted = moment(this.startTime).isBefore(moment())
 
   openLink() {
