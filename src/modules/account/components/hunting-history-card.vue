@@ -15,13 +15,18 @@
             'bounty-image-sm': $vuetify.breakpoint.smAndDown,
             'bounty-image-md': $vuetify.breakpoint.mdAndUp,
           }"
-          src="https://picsum.photos/200"
+          :src="coverImage"
         ></v-img>
       </v-col>
       <v-col cols="6" md="3" class="d-flex align-center">
         <div>
-          <div><v-avatar color="primary" size="26"></v-avatar></div>
-          <div class="card-title-text mt-2 font-weight-600">The Peaky Blinder</div>
+          <div>
+            <v-sheet width="26" height="26">
+              <chain-logo :chain="chainId" class="fill-width fill-height" />
+            </v-sheet>
+            <!-- <v-avatar color="primary" size="26"></v-avatar> -->
+          </div>
+          <div class="card-title-text mt-2 font-weight-600">{{ name }}</div>
         </div>
       </v-col>
       <v-col
@@ -47,9 +52,9 @@
               height="20"
               class="rounded-circle background-blue-diversity d-flex justify-center align-center"
             >
-              <v-icon color="white" size="10">mdi-twitter</v-icon>
+              <v-icon color="white" size="10">mdi-{{ type }}</v-icon>
             </v-sheet>
-            <div class="ml-1 medium-caption-text font-weight-bold">Twitter</div>
+            <div class="ml-1 medium-caption-text font-weight-bold text-capitalize">{{ type }}</div>
           </div>
         </div>
       </v-col>
@@ -64,7 +69,7 @@
       >
         <div>
           <div class="small-caption-text">Bounty earned</div>
-          <div class="medium-caption-text font-weight-bold mt-2">100,000 TPB</div>
+          <div class="medium-caption-text font-weight-bold mt-2">{{ bountyEarn | formatNumber(2, 0) }} TPB</div>
         </div>
       </v-col>
       <v-col
@@ -84,18 +89,33 @@
           >
             Time
           </div>
-          <div class="medium-caption-text font-weight-bold mt-2">Jan 22nd, 10:00 pm</div>
+          <div class="medium-caption-text font-weight-bold mt-2">{{ startTime | datetime }}</div>
         </div>
       </v-col>
       <v-col
         cols="12"
         md="2"
-        class="d-flex align-center"
+        class="d-flex align-center justify-end"
         :class="{
           'justify-center mt-4': $vuetify.breakpoint.smAndDown,
         }"
       >
-        <v-btn outlined color="success" class="text-capitalize">Completed</v-btn>
+        <v-btn
+          class="text-capitalize"
+          outlined
+          :style="`border: thin solid var(--v-${buttonColor}-base); color: var(--v-${buttonColor}-base)`"
+        >
+          <v-sheet
+            v-if="statusIcon"
+            width="16"
+            height="16"
+            class="flex-center-box rounded-circle mr-1"
+            :style="`border: thin solid var(--v-${buttonColor}-base)`"
+          >
+            <v-icon size="14" :style="`color: var(--v-${buttonColor}-base)`">{{ statusIcon }}</v-icon>
+          </v-sheet>
+          {{ status }}</v-btn
+        >
       </v-col>
     </v-row>
   </v-sheet>
@@ -103,15 +123,51 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
+import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
+import { lowerCase } from 'lodash'
 
 @Observer
 @Component({
-  components: {},
+  components: {
+    'chain-logo': () => import('@/components/chain-logo.vue'),
+  },
 })
 export default class HuntingHistoryCard extends Vue {
   walletStore = walletStore
+  @Prop({ required: true }) coverImage!: string
+  @Prop({ required: true }) id!: string
+  @Prop({ required: true }) name!: string
+  @Prop({ required: true }) startTime!: string
+  @Prop({ required: true }) chainId!: string
+  @Prop({ required: true }) status!: string
+  @Prop({ required: true }) totalStep!: number
+  @Prop({ required: true }) currentStep!: number
+  @Prop({ required: true }) bountyEarn!: number
+  @Prop({ required: true }) type!: string
+
+  statusIcon = ''
+  buttonColor = ''
+  mounted() {
+    const lowercaseStatus = lowerCase(this.status)
+    switch (lowercaseStatus) {
+      case 'completed':
+        this.buttonColor = 'greenSenamatic'
+        this.statusIcon = 'mdi-check'
+        break
+      case 'rejected':
+        this.buttonColor = 'redSenamatic'
+        this.statusIcon = 'mdi-exclamation'
+        break
+      case 'processing':
+        this.buttonColor = 'bluePrimary'
+        this.statusIcon = 'mdi-dots-horizontal'
+        break
+      default:
+        this.buttonColor = 'orangeSenamatic'
+        break
+    }
+  }
 }
 </script>
 

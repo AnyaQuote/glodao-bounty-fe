@@ -118,9 +118,6 @@ export default class BountyPage extends Vue {
 </script>
 
 <style scoped lang="scss">
-.v-main__wrap > .row > .col.col-12 {
-  padding-right: 0;
-}
 .button-small {
   font-size: 14px;
   line-height: 24px;
