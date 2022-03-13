@@ -1,7 +1,7 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { ceil, floor, keys } from 'lodash-es'
+import { ceil, keys } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 
@@ -49,7 +49,7 @@ export class HuntingHistoryViewModel {
       if (!authStore.jwt) return
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.applies.find('', { _limit: PAGE_LIMIT, _start: _start })
+      const res = yield apiService.applies.find(params, { _limit: PAGE_LIMIT, _start: _start })
       this.huntingList = res
     } catch (error) {
       this.huntingList = []
@@ -62,7 +62,6 @@ export class HuntingHistoryViewModel {
       if (!authStore.jwt) return
       const res = yield apiService.applies.count(params)
       this.huntingCount = res
-      console.log(res)
     } catch (error) {
       snackController.error(error as string)
     }
