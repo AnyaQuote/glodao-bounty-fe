@@ -110,6 +110,7 @@
                 :status="task.status"
                 :totalStep="task.totalStep"
                 :type="task.type"
+                :rewardToken="task.rewardToken"
               />
             </div>
           </v-col>
