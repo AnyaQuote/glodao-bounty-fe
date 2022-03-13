@@ -70,7 +70,7 @@
                   <v-avatar size="32">
                     <img src="https://picsum.photos/200" alt="Avatar" />
                   </v-avatar>
-                  <div class="ml-3 font-weight-600">Tommy_Shelby</div>
+                  <div class="ml-3 font-weight-600">{{ authStore.user.hunter.name }}</div>
                 </v-sheet>
                 <v-divider></v-divider>
                 <v-sheet>
