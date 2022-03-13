@@ -69,7 +69,9 @@
       >
         <div>
           <div class="small-caption-text">Bounty earned</div>
-          <div class="medium-caption-text font-weight-bold mt-2">{{ bountyEarn | formatNumber(2, 0) }} TPB</div>
+          <div class="medium-caption-text font-weight-bold mt-2">
+            {{ bountyEarn | formatNumber(2, 0) }} {{ rewardToken }}
+          </div>
         </div>
       </v-col>
       <v-col
@@ -145,6 +147,7 @@ export default class HuntingHistoryCard extends Vue {
   @Prop({ required: true }) currentStep!: number
   @Prop({ required: true }) bountyEarn!: number
   @Prop({ required: true }) type!: string
+  @Prop({ required: true }) rewardToken!: string
 
   statusIcon = ''
   buttonColor = ''

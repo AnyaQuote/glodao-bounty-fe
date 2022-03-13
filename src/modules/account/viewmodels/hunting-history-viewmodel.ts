@@ -88,6 +88,7 @@ export class HuntingHistoryViewModel {
         coverImage: task.metadata?.coverImage,
         startTime: apply.createdAt,
         bountyEarn: apply.bounty ?? 0,
+        rewardToken: task.metadata?.rewardToken,
       }
     })
   }
