@@ -96,15 +96,33 @@
         </v-row>
         <v-row dense no-gutters>
           <v-col>
-            <hunting-history-card />
-            <hunting-history-card class="mt-2" />
-            <hunting-history-card class="mt-2" />
+            <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
+              <hunting-history-card
+                :coverImage="task.coverImage"
+                :id="task.id"
+                :chainId="task.chainId"
+                :bountyEarn="task.bountyEarn"
+                :currentStep="task.currentStep"
+                :name="task.name"
+                :startTime="task.startTime"
+                :status="task.status"
+                :totalStep="task.totalStep"
+                :type="task.type"
+              />
+            </div>
           </v-col>
           <!-- <v-col cols="12">
             <no-items />
           </v-col> -->
           <v-col cols="12" class="my-8">
-            <v-pagination v-model="page" :length="15" :total-visible="7" color="blue"></v-pagination>
+            <v-pagination
+              v-model="vm.page"
+              :length="vm.totalPageCount"
+              :total-visible="7"
+              color="blue"
+              :value="vm.page"
+              v-if="vm.page > 1"
+            ></v-pagination>
           </v-col>
         </v-row>
       </v-container>
@@ -116,6 +134,7 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
+import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-history-viewmodel'
 
 @Observer
 @Component({
@@ -125,13 +144,21 @@ import { walletStore } from '@/stores/wallet-store'
   },
 })
 export default class HuntingHistory extends Vue {
+  @Provide() vm = new HuntingHistoryViewModel()
   walletStore = walletStore
   items = ['Foo', 'Bar', 'Fizz', 'Buzz']
   status = ['Processing', 'Awarded', 'Completed', 'Rejected']
   statusModel = []
   socials = ['Twitter', 'Discord', 'Telegram']
   socialsModel = []
-  page = 1
+
+  mounted() {
+    this.vm.initReaction()
+  }
+
+  beforeDestroy() {
+    this.vm.destroyReaction()
+  }
 }
 </script>
 
