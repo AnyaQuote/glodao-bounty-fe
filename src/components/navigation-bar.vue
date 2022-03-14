@@ -62,13 +62,13 @@
             <v-menu offset-y v-else>
               <template v-slot:activator="{ on, attrs }">
                 <v-avatar size="40" v-bind="attrs" v-on="on">
-                  <img src="https://picsum.photos/200" alt="Avatar" />
+                  <img :src="authStore.user.hunter.metadata.avatar" alt="Avatar" />
                 </v-avatar>
               </template>
               <v-sheet width="240" outlined>
                 <v-sheet class="d-flex align-center pa-4">
                   <v-avatar size="32">
-                    <img src="https://picsum.photos/200" alt="Avatar" />
+                    <img :src="authStore.user.hunter.metadata.avatar" alt="Avatar" />
                   </v-avatar>
                   <div class="ml-3 font-weight-600">{{ authStore.user.hunter.name }}</div>
                 </v-sheet>
