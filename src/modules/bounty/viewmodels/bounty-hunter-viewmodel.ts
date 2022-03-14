@@ -2,8 +2,9 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { keys } from 'lodash-es'
-import { action, computed, observable, reaction, _getAdministration } from 'mobx'
+import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
+import moment from 'moment'
 
 const PAGE_LIMIT = 6
 export class BountyHunterViewModel {
@@ -11,8 +12,12 @@ export class BountyHunterViewModel {
   @observable bountyCount = 0
   @observable page = 1
   @observable currentApplies: any[] = []
-  sortList = ['Recently added', 'Total reward ascending', 'Total reward descending']
+
   @observable sortValue = ''
+  sortList = ['Recently added', 'Total reward ascending', 'Total reward descending']
+
+  @observable dateRanges = []
+  @observable dateRangeDialog = false
   _disposers: IDisposer[] = []
 
   constructor() {
@@ -36,6 +41,13 @@ export class BountyHunterViewModel {
           this.getBountyListByPage(1)
         }
       ),
+      reaction(
+        () => this.dateRanges,
+        () => {
+          this.getBountyListByPage(1)
+          this.getTotalBountyCount()
+        }
+      ),
     ]
   }
 
@@ -51,7 +63,11 @@ export class BountyHunterViewModel {
     try {
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.tasks.find('', { _limit: PAGE_LIMIT, _start: _start, _sort: this.sortParam })
+      const res = yield apiService.tasks.find(this.dateRangeFilterParams, {
+        _limit: PAGE_LIMIT,
+        _start: _start,
+        _sort: this.sortParams,
+      })
       if (this.page === 1) this.bountyList = res
       else this.bountyList = [...this.bountyList, ...res]
       this.page += 1
@@ -62,7 +78,7 @@ export class BountyHunterViewModel {
   }
 
   @asyncAction *getTotalBountyCount() {
-    this.bountyCount = yield apiService.tasks.count()
+    this.bountyCount = yield apiService.tasks.count(this.dateRangeFilterParams)
   }
 
   @asyncAction *getCurrentTask() {
@@ -74,6 +90,14 @@ export class BountyHunterViewModel {
       this.currentApplies = []
       snackController.error(error as string)
     }
+  }
+
+  @action.bound changeDateRangeDialog(value: boolean) {
+    this.dateRangeDialog = value
+  }
+
+  @action.bound changeDateRange(value) {
+    this.dateRanges = value
   }
 
   @computed get remainingBounty() {
@@ -113,7 +137,7 @@ export class BountyHunterViewModel {
     })
   }
 
-  @computed get sortParam() {
+  @computed get sortParams() {
     switch (this.sortValue) {
       case 'Recently added':
         return 'createdAt:DESC'
@@ -124,5 +148,32 @@ export class BountyHunterViewModel {
       default:
         return 'createdAt:DESC'
     }
+  }
+
+  @computed get dateRangeFilterParams() {
+    const sortedDateRanges = this.dateRanges.sort()
+    let result: any = {
+      _where: [],
+    }
+    if (this.dateRanges.length > 0)
+      result = {
+        _where: [
+          ...result._where,
+          {
+            createdAt_gte: moment.utc(sortedDateRanges[0]).toISOString(),
+          },
+        ],
+      }
+    if (this.dateRanges.length > 1) {
+      result = {
+        _where: [
+          ...result._where,
+          {
+            createdAt_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
+          },
+        ],
+      }
+    }
+    return result
   }
 }

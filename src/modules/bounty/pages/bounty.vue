@@ -45,17 +45,20 @@
             <div class="section-big-title-text font-weight-bold">Bounty pools ({{ vm.bountyCount }})</div>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select>
+            <!-- <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select> -->
+            <v-btn
+              outlined
+              depressed
+              class="fill-width text-none text-start font-weight-regular d-flex justify-start align-center"
+              height="40"
+              @click="vm.changeDateRangeDialog(true)"
+              style="border: thin solid rgba(0, 0, 0, 0.38) !important"
+            >
+              Filter by date
+            </v-btn>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <v-select
-              :items="vm.sortList"
-              label="Sort"
-              outlined
-              dense
-              class="rounded-0"
-              v-model="vm.sortValue"
-            ></v-select>
+            <v-select :items="vm.sortList" label="Sort" outlined dense v-model="vm.sortValue" height="40"></v-select>
           </v-col>
         </v-row>
         <v-row>
@@ -87,12 +90,25 @@
         </v-row>
       </v-container>
     </v-col>
+    <v-dialog v-model="vm.dateRangeDialog" width="300" persistent>
+      <v-sheet>
+        <v-sheet class="d-flex justify-center">
+          <v-date-picker v-model="dates" range no-title></v-date-picker>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between pa-4">
+          <v-btn class="rounded-0" depressed @click="closeDialog()">Cancel</v-btn>
+          <v-btn class="rounded-0 background-blue-diversity white--text" depressed @click="changeDateRange()">
+            Select
+          </v-btn>
+        </v-sheet>
+      </v-sheet>
+    </v-dialog>
   </v-row>
 </template>
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
+import { Component, Vue, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter-viewmodel'
@@ -109,6 +125,7 @@ export default class BountyPage extends Vue {
   walletStore = walletStore
   authStore = authStore
   items = ['Recently added', 'Total reward ascending', 'Total reward descending']
+  dates = []
 
   mounted() {
     this.vm.initReaction()
@@ -116,6 +133,17 @@ export default class BountyPage extends Vue {
 
   goToHuntingHistory() {
     this.$router.push('hunting-history')
+  }
+
+  closeDialog() {
+    this.vm.changeDateRangeDialog(false)
+    if (this.vm.dateRanges.length > 0) this.dates = this.vm.dateRanges
+    else this.dates = []
+  }
+
+  changeDateRange() {
+    this.vm.changeDateRange(this.dates)
+    this.vm.changeDateRangeDialog(false)
   }
 
   beforeDestroy() {
