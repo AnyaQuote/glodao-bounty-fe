@@ -24,7 +24,7 @@
                       <div>
                         <v-icon style="opacity: 0.8">mdi-bullseye-arrow</v-icon>
                       </div>
-                      <div class="d-flex align-center ml-2">100</div>
+                      <div class="d-flex align-center ml-2">{{ vm.completedTaskCount }}</div>
                     </v-sheet>
                     <v-sheet class="caption-text">Successful task</v-sheet>
                   </v-col>
@@ -33,7 +33,7 @@
                       <div>
                         <v-img :src="require('@/assets/icons/processing-spiral.svg')" width="20" height="20"></v-img>
                       </div>
-                      <div class="d-flex align-center ml-2">100</div>
+                      <div class="d-flex align-center ml-2">{{ vm.processingTaskCount }}</div>
                     </v-sheet>
                     <v-sheet class="caption-text">Processing task</v-sheet>
                   </v-col>
