@@ -1,11 +1,18 @@
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
+import qs from 'qs'
 
 import Axios from 'axios'
 export type ApiRouteType = 'applies' | 'hunters' | 'logs' | 'pool-regists' | 'pools' | 'tasks' | 'users'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
-
+axios.interceptors.request.use((config) => {
+  config.paramsSerializer = (params) => {
+    if ('_where' in params) return qs.stringify(params)
+    else return qs.stringify(params, { arrayFormat: 'repeat' })
+  }
+  return config
+})
 export class ApiHandler<T> {
   constructor(private axios, private route: ApiRouteType) {}
 
