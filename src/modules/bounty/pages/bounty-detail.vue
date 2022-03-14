@@ -95,7 +95,7 @@
               <v-col cols="6" md="3">
                 <v-sheet outlined rounded class="pa-4">
                   <div class="card-subtitle-1">Max participant</div>
-                  <div class="card-big-title-text font-weight-bold">{{ vm.data | _get('maxParticipant') }}</div>
+                  <div class="card-big-title-text font-weight-bold">{{ vm.data | _get('maxParticipant', 0) }}</div>
                 </v-sheet>
               </v-col>
               <v-col cols="6" md="3">
@@ -248,6 +248,34 @@
                             class="fill-height d-flex justify-center align-center neutral20 lighten-1"
                           >
                             <v-icon v-if="vm.status">mdi-check</v-icon>
+                          </v-sheet>
+
+                          <v-sheet class="mt-4">
+                            <v-row dense no-gutters>
+                              <v-col cols="10">
+                                <v-sheet outlined>
+                                  <v-text-field
+                                    hide-details
+                                    dense
+                                    flat
+                                    solo
+                                    class="ma-0 pa-0"
+                                    placeholder="https://www.waggle.network/v=gJJzlpw8fG8"
+                                  ></v-text-field>
+                                </v-sheet>
+                              </v-col>
+                              <v-col cols="2">
+                                <v-btn
+                                  elevation="0"
+                                  tile
+                                  color="bluePrimary"
+                                  class="fill-width white--text text-none"
+                                  height="100%"
+                                >
+                                  Submit
+                                </v-btn>
+                              </v-col>
+                            </v-row>
                           </v-sheet>
                         </v-sheet>
                       </v-col>

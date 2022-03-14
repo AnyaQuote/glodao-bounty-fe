@@ -29,7 +29,7 @@ export const vueFilterRegister = () => {
   )
   Vue.filter('titleTask', (twitterTask: any) => {
     if (twitterTask.type === 'follow') {
-      return 'Like a Twitter post'
+      return 'Follow a Twitter post'
     }
     if (twitterTask.type === 'tweet') {
       return 'Share a Twitter post'
