@@ -1,6 +1,5 @@
 import { apiService } from '@/services/api-service'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
-import { actionAsync } from 'mobx-utils'
 
 export enum HUNTING {
   start,
@@ -42,6 +41,14 @@ export class BountyDetailViewModel {
       link: 'https://fb.com',
     },
   ]
+  completed = 900
+
+  @computed get percent() {
+    if (!this.data?.maxParticipant) {
+      return 0
+    }
+    return (this.completed / this.data?.maxParticipant) * 100
+  }
 
   @observable data: any = {}
 
@@ -62,12 +69,7 @@ export class BountyDetailViewModel {
     ]
   }
 
-  handleBountyChange = async () => {
-    this.data = await apiService.tasks.findOne(this.bountyId)
-    console.log(this.data)
-  }
-
-  @action setId(bountyId: string) {
+  @action bountyIdChange(bountyId: string) {
     this.bountyId = bountyId
   }
 
@@ -98,33 +100,11 @@ export class BountyDetailViewModel {
     //
   }
 
-  @computed get statusHunting() {
-    switch (this.status) {
-      case HUNTING.start:
-        return {
-          text: 'Start hunting',
-          icon: 'power_settings_new',
-          color: 'bluePrimary',
-        }
-      case HUNTING.hunting:
-        return {
-          text: 'Your hunting process has begun! ',
-          icon: 'timelapse',
-          color: 'greenSenamatic',
-        }
-      case HUNTING.finish:
-        return {
-          text: 'Your hunting process has finished! ',
-          icon: 'error_outline',
-          color: 'redSenamatic',
-        }
-    }
+  @computed get twitterTasks() {
+    return !this.data.data ? [] : this.data.data.twitter
   }
 
-  @computed get radioColor() {
-    if (!this.data) {
-      return ''
-    }
-    return this.data.status === 'live' ? 'green' : 'red'
+  handleBountyChange = async () => {
+    this.data = await apiService.tasks.findOne(this.bountyId)
   }
 }

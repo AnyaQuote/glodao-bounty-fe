@@ -1,13 +1,14 @@
 <template>
   <v-container>
     <v-row no-gutters dense>
+      <!-- breadcrumbs -->
       <v-col cols="12">
         <v-sheet height="50">
           <v-breadcrumbs :items="breadcrumbs" divider=">" class="pa-0">
             <template v-slot:item="{ item }">
               <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
                 <template v-slot:default>
-                  <span :class="item.text === 'Bounty hunter' ? 'bluePrimary-text' : ''">{{ item.text }}</span>
+                  <span :class="item.text === 'Bounty hunter' ? 'blue--text' : ''">{{ item.text }}</span>
                 </template>
                 {{ item.text }}
               </v-breadcrumbs-item>
@@ -18,7 +19,9 @@
           </v-breadcrumbs>
         </v-sheet>
       </v-col>
-      <v-col cols="12" lg="4">
+
+      <!-- BOUNTY NAME -->
+      <v-col cols="12">
         <v-sheet class="d-flex align-center mb-4">
           <v-sheet width="32" height="32" class="violet rounded-circle d-flex justify-center align-center">
             <chain-logo :chain="vm.data | _get('chainId')" class="logo-chain" />
@@ -31,23 +34,34 @@
             </div>
           </div>
         </v-sheet>
+      </v-col>
 
-        <!-- image -->
+      <!-- LEFT -->
+      <v-col cols="12" md="4">
         <v-sheet class="mb-4 position-relative">
-          <v-img :src="vm.data | _get('metadata.coverImage')" class="rounded-lg"></v-img>
+          <!-- image -->
+          <v-img :src="vm.data | _get('metadata.coverImage')" class="rounded-md"></v-img>
           <!-- status -->
           <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
             <v-sheet
-              class="rounded-circle flex-center-box"
-              style="background: transparent; border: thin solid var(--v-green-base)"
+              class="rounded-circle flex-center-box background-transparent"
+              :class="vm.data | _get('status') | statusBorder"
             >
-              <v-sheet width="10" height="10" class="rounded-circle ma-1" style="background-color: var(--v-green-base)">
+              <v-sheet
+                width="10"
+                height="10"
+                class="rounded-circle ma-1"
+                :class="vm.data | _get('status') | statusBackground"
+              >
               </v-sheet>
             </v-sheet>
-            <div class="text-uppercase ml-2 mr-1">{{ vm.data | _get('status') | stautsColor }}</div>
+            <div :class="vm.data | _get('status') | statusColor" class="text-uppercase ml-2 mr-1 green--text">
+              {{ vm.data | _get('status') }}
+            </div>
           </div>
         </v-sheet>
 
+        <!-- subtitle -->
         <v-sheet class="mb-4 card-subtitle-1">
           {{ vm.data | _get('metadata.caption') }}
         </v-sheet>
@@ -59,16 +73,83 @@
           </ul>
         </v-sheet>
       </v-col>
-      <v-col cols="12" lg="8" class="mt-4 mt-lg-0">
-        <v-sheet class="ml-lg-5">
-          <v-sheet outlined>
-            <v-tabs v-model="tab">
+
+      <!-- RIGHT -->
+      <v-col cols="12" md="8" class="mt-4 mt-md-0">
+        <v-sheet class="ml-md-5">
+          <!-- LIST -->
+          <v-sheet class="mb-4">
+            <v-row dense>
+              <v-col cols="6" md="3">
+                <v-sheet outlined rounded class="pa-4">
+                  <div class="card-subtitle-1">Total reward (TPB)</div>
+                  <div class="card-big-title-text font-weight-bold">1000</div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="6" md="3">
+                <v-sheet outlined rounded class="pa-4">
+                  <div class="card-subtitle-1">Remaining (TPB)</div>
+                  <div class="card-big-title-text font-weight-bold">1000</div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="6" md="3">
+                <v-sheet outlined rounded class="pa-4">
+                  <div class="card-subtitle-1">Max participant</div>
+                  <div class="card-big-title-text font-weight-bold">{{ vm.data | _get('maxParticipant') }}</div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="6" md="3">
+                <v-sheet outlined rounded class="pa-4">
+                  <div class="card-subtitle-1">Slot left</div>
+                  <div class="card-big-title-text font-weight-bold">1000</div>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-sheet>
+
+          <!-- POOL ENDS IN -->
+          <v-sheet rounded class="pa-6 mb-4" color="blue">
+            <v-row dense>
+              <v-col cols="12">
+                <div class="white--text">POOR ENDS IN</div>
+              </v-col>
+              <v-col cols="12" md="6">
+                <div class="d-flex">
+                  <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">10</div>
+                  </v-sheet>
+                  <div class="flex-center-box mx-3 white--text">:</div>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">10</div>
+                  </v-sheet>
+                  <div class="flex-center-box mx-3 white--text">:</div>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">10</div>
+                  </v-sheet>
+                  <div class="flex-center-box mx-3 white--text">:</div>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">10</div>
+                  </v-sheet>
+                </div>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-progress-linear :value="vm.percent" color="white" height="36" class="rounded font-weight-bold">
+                  Progess: {{ `${vm.completed}/${vm.data.maxParticipant} ` }} ({{ vm.percent | formatNumber(2) }}%)
+                </v-progress-linear>
+              </v-col>
+            </v-row>
+          </v-sheet>
+
+          <!-- TASK -->
+          <v-sheet outlined rounded>
+            <v-tabs v-model="tab" color="blue">
               <v-tab v-for="(item, index) in items" :key="index" :disabled="index !== 0"> {{ item }}</v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab" class="">
               <v-tab-item>
                 <v-row dense no-gutters justify="center">
-                  <v-col cols="12" lg="10" class="mt-6">
+                  <v-col cols="12" md="10" class="mt-6">
                     <div class="card-subtitle-1 font-weight-medium">
                       Reward for twitter task: {{ vm.data | _get('rewardAmount') }} DVT
                     </div>
@@ -78,30 +159,30 @@
                     </div>
                     <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
                     <div class="text-center my-4">
-                      <v-btn
-                        elevation="0"
-                        tile
-                        :outlined="vm.statusHunting.text !== 'Start hunting'"
-                        :color="vm.statusHunting.color"
-                        @click="vm.startHunting"
-                        :class="vm.statusHunting.text === 'Start hunting' ? 'white--text' : ''"
-                      >
-                        <v-icon left size="20"> {{ vm.statusHunting.icon }} </v-icon>
-                        <span
-                          :class="`${
-                            vm.statusHunting.text === 'Start hunting' ? 'white--text' : 'black--text'
-                          } text-none`"
-                        >
-                          {{ vm.statusHunting.text }}</span
-                        >
-                      </v-btn>
+                      <div v-if="vm.status === HUNTING.start">
+                        <v-btn elevation color="bluePrimary" class="white--text" @click="vm.startHunting">
+                          <v-icon left>power_settings_new</v-icon>
+                          Start hunting
+                        </v-btn>
+                      </div>
+                      <div v-else-if="vm.status === HUNTING.hunting">
+                        <v-btn elevation outlined color="green">
+                          <v-icon left>timelapse</v-icon>
+                          Your hunting process has begun!
+                        </v-btn>
+                      </div>
+                      <div v-else>
+                        <v-btn elevation outlined color="red">
+                          <v-icon left>error_outline</v-icon>
+                          Your hunting process has finished!
+                        </v-btn>
+                      </div>
                     </div>
                   </v-col>
-                  <v-col cols="12" lg="9">
+                  <v-col cols="12" md="9">
                     <div class="custom-dash-divider mb-7"></div>
-
-                    <!-- one -->
-                    <v-row dense no-gutters class="mb-4">
+                    <!-- ONE -->
+                    <v-row dense no-gutters class="mb-4" v-for="(twitterTask, index) in vm.twitterTasks" :key="index">
                       <v-col cols="1">
                         <v-sheet class="pb-1">
                           <v-radio-group dense hide-details class="ma-0 pa-0 text-center">
@@ -114,7 +195,7 @@
                       </v-col>
 
                       <v-col cols="10">
-                        <v-sheet outlined>
+                        <v-sheet outlined rounded>
                           <v-container fluid>
                             <div class="d-flex align-center">
                               <v-sheet
@@ -128,53 +209,44 @@
                               <div class="text-caption text-weight-400 line-height">Completed</div>
                             </div>
                             <div class="mb-4">
-                              <div class="text-subtitle-2 font-weight-medium">Time to hunting</div>
-                              <ul>
+                              <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
+                              <ul v-if="twitterTask.type === 'follow'">
                                 <li class="text-caption">
-                                  Please follow “The Peaky Blinder” Twitter page to complete this task.
+                                  Please follow “{{ vm.data | _get('name') }}” Twitter page to complete this task.
                                 </li>
+                              </ul>
+                              <ul v-if="twitterTask.type === 'tweet'">
+                                <li class="text-caption">
+                                  Post a Tweet using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
+                                  >, share why you want to have this project’s primary market exposure.
+                                </li>
+                                <li class="text-caption">Please enter your share link post to complete task.</li>
                               </ul>
                             </div>
                             <div class="d-flex justify-end">
-                              <v-btn
-                                v-if="vm.status !== HUNTING.start"
-                                elevation="0"
-                                color="text-none bluePrimary white--text text-caption px-3 mt-2 position-relative"
-                                tile
-                                small
-                                @click="vm.followTwitter"
-                                :disabled="vm.status === HUNTING.start"
-                              >
-                                <div
-                                  class="rounded-circle d-flex justify-center align-center mr-1"
-                                  style="width: 20px; height: 20px; border: 1px solid white"
-                                >
-                                  <v-icon color="white" size="10">mdi-twitter</v-icon>
-                                </div>
-
-                                <div class="text-none">Twitter follow</div>
+                              <v-btn color="blue" class="white--text" @click="vm">
+                                <v-icon left>mdi-twitter</v-icon>
+                                Twitter hunting
                               </v-btn>
-                              <v-sheet width="107" height="30">
-                                <v-row align="center">
-                                  <div class="rounded-circle customer-icon d-flex justify-center align-center">
-                                    <v-icon color="greenSenamatic">mdi-check</v-icon>
-                                  </div>
-                                </v-row>
-                              </v-sheet>
                             </div>
                           </v-container>
                         </v-sheet>
                       </v-col>
+
                       <v-col cols="1" class="">
-                        <v-sheet class="fill-height ml-3 ba-dotted">
-                          <v-sheet outlined class="fill-height d-flex justify-center align-center neutral20 lighten-1">
+                        <v-sheet rounded class="fill-height ml-3 ba-dotted">
+                          <v-sheet
+                            outlined
+                            rounded
+                            class="fill-height d-flex justify-center align-center neutral20 lighten-1"
+                          >
                             <v-icon v-if="vm.status">mdi-check</v-icon>
                           </v-sheet>
                         </v-sheet>
                       </v-col>
                     </v-row>
 
-                    <!-- two -->
+                    <!-- TWO -->
                     <v-row dense no-gutters>
                       <v-col cols="1">
                         <v-sheet class="pb-1">
@@ -256,9 +328,7 @@
                     <!-- button -->
                     <v-row dense no-gutters class="mb-8">
                       <v-col cols="12" class="text-center">
-                        <v-btn elevation="0" color="bluePrimary" class="text-none white--text" tile>
-                          Confirm and earn reward
-                        </v-btn>
+                        <v-btn elevation="0" color="bluePrimary" class="white--text"> Confirm and earn reward </v-btn>
                       </v-col>
                     </v-row>
                   </v-col>
@@ -268,6 +338,8 @@
               <v-tab-item></v-tab-item>
             </v-tabs-items>
           </v-sheet>
+
+          <!-- divider -->
           <v-sheet class="my-10">
             <v-divider></v-divider>
           </v-sheet>
@@ -373,7 +445,6 @@
 </template>
 
 <script lang="ts">
-import { autorun, IReactionDisposer } from 'mobx'
 import { Observer } from 'mobx-vue'
 import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-viewmodel'
@@ -389,7 +460,7 @@ export default class BountyDetail extends Vue {
 
   @Watch('$route.params.bountyId', { immediate: true }) onIdChanged(val: string) {
     if (val) {
-      this.vm.setId(val)
+      this.vm.bountyIdChange(val)
     }
   }
 
@@ -417,35 +488,35 @@ export default class BountyDetail extends Vue {
       value: 'account',
       align: 'center',
       sortable: false,
-      class: ['bluePrimary lighten-1'],
+      class: ['blue lighten-1'],
     },
     {
       text: 'Share time',
       value: 'time',
       align: 'center',
       sortable: false,
-      class: ['bluePrimary lighten-1'],
+      class: ['blue lighten-1'],
     },
     {
       text: 'Share link',
       value: 'link',
       align: 'end',
       sortable: false,
-      class: ['bluePrimary lighten-1'],
+      class: ['blue lighten-1'],
     },
   ]
 }
 </script>
 <style scoped>
 .divider {
-  border-left: 1px solid grey;
+  border-left: 1px solid var(--v-grey-lighten1);
   height: 100%;
   margin-left: 11px;
   padding-top: 30px;
 }
 
 .ba-secondary {
-  border: 1px solid var(--v-neutral20-base);
+  border: 1px solid var(--v-grey-base);
 }
 
 .line-height {
@@ -456,22 +527,8 @@ export default class BountyDetail extends Vue {
   border: 1px solid var(--v-bluePrimary-base);
 }
 
-.bluePrimary-text {
-  color: var(--v-bluePrimary-base);
-}
-
 .ba-dotted {
   border: 1px dashed var(--v-neutral20-base);
-}
-
-.outline--white {
-  border: 1px solid white;
-}
-
-.customer-icon {
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--v-greenSenamatic-base);
 }
 
 .logo-chain {
@@ -484,8 +541,16 @@ export default class BountyDetail extends Vue {
   left: 18px;
   background-color: rgba(255, 255, 255, 0.3);
 }
-
-.text-green {
-  color: var(--v-green-base);
+.green-border-custom {
+  border: thin solid var(--v-green-base);
+}
+.red-border-custom {
+  border: thin solid var(--v-red-base);
+}
+.green-background-color {
+  background-color: var(--v-green-base);
+}
+.red-background-color {
+  background-color: var(--v-red-base);
 }
 </style>

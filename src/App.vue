@@ -320,7 +320,9 @@ tbody {
   justify-content: center;
   align-items: center;
 }
-
+.background-transparent {
+  background: transparent !important;
+}
 .mt-20 {
   margin-top: 80px;
 }

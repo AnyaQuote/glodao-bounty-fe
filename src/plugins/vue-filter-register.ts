@@ -21,7 +21,21 @@ export const vueFilterRegister = () => {
   Vue.filter('ddmmyyyyhhmmss', (isoStr: string) => (isoStr ? moment(isoStr).format('DD/MM/YYYY HH:mm:ss') : ''))
   Vue.filter('MMMddYYYYhhmm', (isoStr: number) => (isoStr ? moment(isoStr).format('MMM DD YYYY, hh:mm') : ''))
   Vue.filter('formatDateFromUnix', (isoStr: number) => (isoStr ? moment.unix(isoStr).format('DD/MM/YYYY') : ''))
-  Vue.filter('statusColor', (status: string) => (status === 'live' ? 'green' : 'red'))
+
+  Vue.filter('statusColor', (status: string) => (status === 'live' ? 'green--text' : 'red--text'))
+  Vue.filter('statusBorder', (status: string) => (status === 'live' ? 'green-border-custom' : 'red-border-custom'))
+  Vue.filter('statusBackground', (status: string) =>
+    status === 'live' ? 'green-background-color' : 'red-background-color'
+  )
+  Vue.filter('titleTask', (twitterTask: any) => {
+    if (twitterTask.type === 'follow') {
+      return 'Like a Twitter post'
+    }
+    if (twitterTask.type === 'tweet') {
+      return 'Share a Twitter post'
+    }
+    return ''
+  })
 
   Vue.filter('_get', (any: any, path: string, defaultValue = '') => {
     return get(any, path, defaultValue)
