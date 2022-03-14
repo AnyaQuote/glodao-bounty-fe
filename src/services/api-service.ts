@@ -186,6 +186,7 @@ export class ApiService {
   // fixedPool = new ApiHandler<FixedPoolModel>(axios, 'pool')
   applies = new ApiHandlerJWT<any>(axios, 'applies')
   users = new ApiHandlerJWT<any>(axios, 'users')
+  hunters = new ApiHandlerJWT<any>(axios, 'hunters')
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false })
 
   async getFile(id: any) {
