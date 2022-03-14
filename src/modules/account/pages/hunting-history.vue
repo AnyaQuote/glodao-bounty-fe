@@ -7,7 +7,9 @@
             <v-col cols="12" md="4" lg="4">
               <v-sheet height="160" outlined style="flex: 1">
                 <div class="mt-6 d-flex justify-center">
-                  <v-avatar color="primary" size="68"></v-avatar>
+                  <v-avatar size="68">
+                    <img :src="authStore.user.hunter.metadata.avatar" alt="Avatar" />
+                  </v-avatar>
                 </div>
                 <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
                   {{ authStore.user.hunter.name }}
@@ -22,7 +24,7 @@
                       <div>
                         <v-icon style="opacity: 0.8">mdi-bullseye-arrow</v-icon>
                       </div>
-                      <div class="d-flex align-center ml-2">100</div>
+                      <div class="d-flex align-center ml-2">{{ vm.completedTaskCount }}</div>
                     </v-sheet>
                     <v-sheet class="caption-text">Successful task</v-sheet>
                   </v-col>
@@ -31,7 +33,7 @@
                       <div>
                         <v-img :src="require('@/assets/icons/processing-spiral.svg')" width="20" height="20"></v-img>
                       </div>
-                      <div class="d-flex align-center ml-2">100</div>
+                      <div class="d-flex align-center ml-2">{{ vm.processingTaskCount }}</div>
                     </v-sheet>
                     <v-sheet class="caption-text">Processing task</v-sheet>
                   </v-col>
@@ -40,7 +42,7 @@
                       <div>
                         <v-img :src="require('@/assets/icons/crown-mini.svg')" width="20" height="20"></v-img>
                       </div>
-                      <div class="d-flex align-center ml-2">$234,123.00</div>
+                      <div class="d-flex align-center ml-2">$0.00</div>
                     </v-sheet>
                     <v-sheet class="caption-text">Bounty earned</v-sheet>
                   </v-col>

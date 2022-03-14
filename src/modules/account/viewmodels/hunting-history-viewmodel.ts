@@ -12,12 +12,13 @@ export class HuntingHistoryViewModel {
   @observable huntingCount = 0
   @observable page = 1
   @observable currentApplies: any[] = []
+  @observable completedTaskCount = 0
+  @observable processingTaskCount = 0
   _disposers: IDisposer[] = []
 
   constructor() {
     //
-    this.getHuntingListByPage()
-    this.getTotalHuntingCount()
+    this.fetchData()
   }
 
   initReaction() {
@@ -25,10 +26,7 @@ export class HuntingHistoryViewModel {
       reaction(
         () => authStore.jwt,
         () => {
-          if (authStore.jwt) {
-            this.getHuntingListByPage()
-            this.getTotalHuntingCount()
-          }
+          if (authStore.jwt) this.fetchData()
         }
       ),
       reaction(
@@ -42,6 +40,12 @@ export class HuntingHistoryViewModel {
 
   destroyReaction() {
     this._disposers.forEach((d) => d())
+  }
+
+  @action fetchData() {
+    this.getHuntingListByPage()
+    this.getTotalHuntingCount()
+    this.getProcessingAndCompletedTaskCount()
   }
 
   @asyncAction *getHuntingListByPage(page?: number) {
@@ -62,6 +66,27 @@ export class HuntingHistoryViewModel {
       if (!authStore.jwt) return
       const res = yield apiService.applies.count(params)
       this.huntingCount = res
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *getProcessingAndCompletedTaskCount() {
+    try {
+      if (!authStore.jwt) return
+      const completedTaskCountParams = {
+        _where: [
+          { ...params },
+          {
+            _or: [{ status: 'completed' }, { status: 'awarded' }],
+          },
+        ],
+      }
+      const processingTaskCountParams = {
+        _where: [{ ...params, status: 'processing' }],
+      }
+      this.completedTaskCount = yield apiService.applies.count(completedTaskCountParams)
+      this.processingTaskCount = yield apiService.applies.count(processingTaskCountParams)
     } catch (error) {
       snackController.error(error as string)
     }
