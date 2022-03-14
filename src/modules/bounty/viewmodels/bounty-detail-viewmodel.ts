@@ -1,4 +1,5 @@
 import { apiService } from '@/services/api-service'
+import { authStore } from '@/stores/auth-store'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 
 export enum HUNTING {
@@ -6,6 +7,7 @@ export enum HUNTING {
   hunting,
   finish,
 }
+
 export class BountyDetailViewModel {
   @observable bountyId = ''
   @observable status: HUNTING = HUNTING.start
@@ -103,6 +105,8 @@ export class BountyDetailViewModel {
   @computed get twitterTasks() {
     return !this.data.data ? [] : this.data.data.twitter
   }
+
+  @observable applies: any
 
   handleBountyChange = async () => {
     this.data = await apiService.tasks.findOne(this.bountyId)

@@ -224,7 +224,14 @@
                               </ul>
                             </div>
                             <div class="d-flex justify-end">
-                              <v-btn color="blue" class="white--text" @click="vm">
+                              <v-btn
+                                v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
+                                color="blue"
+                                class="white--text"
+                                @click="vm"
+                                :disabled="vm.status === HUNTING.start"
+                                elevation="0"
+                              >
                                 <v-icon left>mdi-twitter</v-icon>
                                 Twitter hunting
                               </v-btn>
