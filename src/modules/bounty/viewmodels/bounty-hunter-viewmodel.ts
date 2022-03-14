@@ -11,6 +11,8 @@ export class BountyHunterViewModel {
   @observable bountyCount = 0
   @observable page = 1
   @observable currentApplies: any[] = []
+  sortList = ['Recently added', 'Total reward ascending', 'Total reward descending']
+  @observable sortValue = ''
   _disposers: IDisposer[] = []
 
   constructor() {
@@ -28,6 +30,12 @@ export class BountyHunterViewModel {
           if (authStore.jwt) this.getCurrentTask()
         }
       ),
+      reaction(
+        () => this.sortValue,
+        () => {
+          this.getBountyListByPage(1)
+        }
+      ),
     ]
   }
 
@@ -43,7 +51,7 @@ export class BountyHunterViewModel {
     try {
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.tasks.find('', { _limit: PAGE_LIMIT, _start: _start })
+      const res = yield apiService.tasks.find('', { _limit: PAGE_LIMIT, _start: _start, _sort: this.sortParam })
       if (this.page === 1) this.bountyList = res
       else this.bountyList = [...this.bountyList, ...res]
       this.page += 1
@@ -103,5 +111,18 @@ export class BountyHunterViewModel {
         totalStep: firstTask.length,
       }
     })
+  }
+
+  @computed get sortParam() {
+    switch (this.sortValue) {
+      case 'Recently added':
+        return 'createdAt:DESC'
+      case 'Total reward ascending':
+        return 'rewardAmount:ASC'
+      case 'Total reward descending':
+        return 'rewardAmount:DESC'
+      default:
+        return 'createdAt:DESC'
+    }
   }
 }

@@ -42,13 +42,20 @@
       <v-container>
         <v-row>
           <v-col>
-            <div class="section-big-title-text font-weight-bold">Bounty hunters ({{ vm.bountyCount }})</div>
+            <div class="section-big-title-text font-weight-bold">Bounty pools ({{ vm.bountyCount }})</div>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
             <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
+            <v-select
+              :items="vm.sortList"
+              label="Sort"
+              outlined
+              dense
+              class="rounded-0"
+              v-model="vm.sortValue"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row>
@@ -101,7 +108,7 @@ export default class BountyPage extends Vue {
   @Provide() vm = new BountyHunterViewModel()
   walletStore = walletStore
   authStore = authStore
-  items = ['Foo', 'Bar', 'Fizz', 'Buzz']
+  items = ['Recently added', 'Total reward ascending', 'Total reward descending']
 
   mounted() {
     this.vm.initReaction()
