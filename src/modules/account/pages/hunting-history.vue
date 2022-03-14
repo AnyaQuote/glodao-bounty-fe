@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12">
+    <v-col cols="12" class="hunter-info-container">
       <v-container class="d-flex justify-center mt-20">
         <v-sheet elevation="2" class="fill-width">
           <v-row dense no-gutters>
@@ -9,7 +9,9 @@
                 <div class="mt-6 d-flex justify-center">
                   <v-avatar color="primary" size="68"></v-avatar>
                 </div>
-                <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">Tommy_Shelby</div>
+                <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
+                  {{ authStore.user.hunter.name }}
+                </div>
               </v-sheet>
             </v-col>
             <v-col>
@@ -53,7 +55,7 @@
 
     <v-col cols="12">
       <v-container>
-        <v-row class="mt-10" :dense="$vuetify.breakpoint.smAndDown" :no-gutters="$vuetify.breakpoint.smAndDown">
+        <v-row :dense="$vuetify.breakpoint.smAndDown" :no-gutters="$vuetify.breakpoint.smAndDown">
           <v-col cols="12">
             <div class="section-big-title-text font-weight-bold text-capitalize">Bounty Hunting History</div>
           </v-col>
@@ -96,15 +98,34 @@
         </v-row>
         <v-row dense no-gutters>
           <v-col>
-            <hunting-history-card />
-            <hunting-history-card class="mt-2" />
-            <hunting-history-card class="mt-2" />
+            <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
+              <hunting-history-card
+                :coverImage="task.coverImage"
+                :id="task.id"
+                :chainId="task.chainId"
+                :bountyEarn="task.bountyEarn"
+                :currentStep="task.currentStep"
+                :name="task.name"
+                :startTime="task.startTime"
+                :status="task.status"
+                :totalStep="task.totalStep"
+                :type="task.type"
+                :rewardToken="task.rewardToken"
+              />
+            </div>
           </v-col>
           <!-- <v-col cols="12">
             <no-items />
           </v-col> -->
           <v-col cols="12" class="my-8">
-            <v-pagination v-model="page" :length="15" :total-visible="7" color="blue"></v-pagination>
+            <v-pagination
+              v-model="vm.page"
+              :length="vm.totalPageCount"
+              :total-visible="7"
+              color="blue"
+              :value="vm.page"
+              v-if="vm.page > 1"
+            ></v-pagination>
           </v-col>
         </v-row>
       </v-container>
@@ -116,6 +137,8 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
+import { authStore } from '@/stores/auth-store'
+import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-history-viewmodel'
 
 @Observer
 @Component({
@@ -125,17 +148,31 @@ import { walletStore } from '@/stores/wallet-store'
   },
 })
 export default class HuntingHistory extends Vue {
+  @Provide() vm = new HuntingHistoryViewModel()
   walletStore = walletStore
+  authStore = authStore
   items = ['Foo', 'Bar', 'Fizz', 'Buzz']
   status = ['Processing', 'Awarded', 'Completed', 'Rejected']
   statusModel = []
   socials = ['Twitter', 'Discord', 'Telegram']
   socialsModel = []
-  page = 1
+
+  mounted() {
+    this.vm.initReaction()
+  }
+
+  beforeDestroy() {
+    this.vm.destroyReaction()
+  }
 }
 </script>
 
 <style scoped lang="scss">
+.hunter-info-container {
+  background-image: url('~@/assets/images/blue-bg.svg');
+  background-size: cover;
+  padding-bottom: 0;
+}
 .username-lg-text {
   font-size: 24px;
   line-height: 32px;

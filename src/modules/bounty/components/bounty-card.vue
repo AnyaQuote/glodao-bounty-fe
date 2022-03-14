@@ -29,7 +29,7 @@
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
-              <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} TVN</div>
+              <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
               <div>Max participant</div>
@@ -81,6 +81,7 @@ export default class BountyCard extends Vue {
   @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) maxParticipant!: number
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
+  rewardTokenName = this.metadata?.rewardToken ?? ''
   isStarted = moment(this.startTime).isBefore(moment())
 
   openLink() {
