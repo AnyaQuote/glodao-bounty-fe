@@ -107,7 +107,7 @@
             </v-row>
           </v-sheet>
 
-          <!-- POOL ENDS IN -->
+          <!-- COUNTDOWN -->
           <v-sheet rounded class="pa-6 mb-4" color="blue">
             <v-row dense>
               <v-col cols="12">
@@ -182,179 +182,110 @@
                   <v-col cols="12" md="9">
                     <div class="custom-dash-divider mb-7"></div>
                     <!-- ONE -->
-                    <v-row dense no-gutters class="mb-4" v-for="(twitterTask, index) in vm.twitterTasks" :key="index">
-                      <v-col cols="1">
-                        <v-sheet class="pb-1">
-                          <v-radio-group dense hide-details class="ma-0 pa-0 text-center">
-                            <v-radio></v-radio>
-                          </v-radio-group>
-                        </v-sheet>
-                        <v-sheet class="fill-height pb-7">
-                          <div class="divider"></div>
-                        </v-sheet>
-                      </v-col>
-
-                      <v-col cols="10">
-                        <v-sheet outlined rounded>
-                          <v-container fluid>
-                            <div class="d-flex align-center">
-                              <v-sheet
-                                width="10"
-                                height="10"
-                                outlined
-                                class="rounded-circle ba-secondary d-flex justify-center align-center mr-1"
-                              >
-                                <v-icon size="8" color="black">mdi-check</v-icon>
-                              </v-sheet>
-                              <div class="text-caption text-weight-400 line-height">Completed</div>
-                            </div>
-                            <div class="mb-4">
-                              <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
-                              <ul v-if="twitterTask.type === 'follow'">
-                                <li class="text-caption">
-                                  Please follow “{{ vm.data | _get('name') }}” Twitter page to complete this task.
-                                </li>
-                              </ul>
-                              <ul v-if="twitterTask.type === 'tweet'">
-                                <li class="text-caption">
-                                  Post a Tweet using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
-                                  >, share why you want to have this project’s primary market exposure.
-                                </li>
-                                <li class="text-caption">Please enter your share link post to complete task.</li>
-                              </ul>
-                            </div>
-                            <div class="d-flex justify-end">
-                              <v-btn
-                                v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
-                                color="blue"
-                                class="white--text"
-                                @click="vm"
-                                :disabled="vm.status === HUNTING.start"
-                                elevation="0"
-                              >
-                                <v-icon left>mdi-twitter</v-icon>
-                                Twitter hunting
-                              </v-btn>
-                            </div>
-                          </v-container>
-                        </v-sheet>
-                      </v-col>
-
-                      <v-col cols="1" class="">
-                        <v-sheet rounded class="fill-height ml-3 ba-dotted">
-                          <v-sheet
-                            outlined
-                            rounded
-                            class="fill-height d-flex justify-center align-center neutral20 lighten-1"
-                          >
-                            <v-icon v-if="vm.status">mdi-check</v-icon>
+                    <div v-for="(twitterTask, index) in vm.twitterTasks" :key="index">
+                      <v-row dense no-gutters class="mb-4" v-if="twitterTask.type !== 'retweet'">
+                        <v-col cols="1">
+                          <v-sheet class="pb-1">
+                            <v-radio-group dense hide-details class="ma-0 pa-0 text-center">
+                              <v-radio></v-radio>
+                            </v-radio-group>
                           </v-sheet>
+                          <v-sheet class="fill-height pb-7">
+                            <div class="divider"></div>
+                          </v-sheet>
+                        </v-col>
 
-                          <v-sheet class="mt-4">
-                            <v-row dense no-gutters>
-                              <v-col cols="10">
-                                <v-sheet outlined>
-                                  <v-text-field
-                                    hide-details
-                                    dense
-                                    flat
-                                    solo
-                                    class="ma-0 pa-0"
-                                    placeholder="https://www.waggle.network/v=gJJzlpw8fG8"
-                                  ></v-text-field>
-                                </v-sheet>
-                              </v-col>
-                              <v-col cols="2">
-                                <v-btn
-                                  elevation="0"
-                                  tile
-                                  color="bluePrimary"
-                                  class="fill-width white--text text-none"
-                                  height="100%"
+                        <v-col cols="10">
+                          <v-sheet outlined rounded>
+                            <v-container fluid>
+                              <!-- title -->
+                              <div class="d-flex align-center">
+                                <v-sheet
+                                  width="10"
+                                  height="10"
+                                  outlined
+                                  class="rounded-circle ba-secondary d-flex justify-center align-center mr-1"
                                 >
-                                  Submit
+                                  <v-icon size="8" color="black">mdi-check</v-icon>
+                                </v-sheet>
+                                <div class="text-caption text-weight-400 line-height">Completed</div>
+                              </div>
+                              <!-- content -->
+                              <div class="mb-4">
+                                <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
+                                <ul v-if="twitterTask.type === 'follow'">
+                                  <li class="text-caption">
+                                    Please follow “{{ vm.data | _get('name') }}” Twitter page to complete this task.
+                                  </li>
+                                </ul>
+                                <ul v-if="twitterTask.type === 'tweet'">
+                                  <li class="text-caption">
+                                    Post a Tweet using
+                                    <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
+                                    >, share why you want to have this project’s primary market exposure.
+                                  </li>
+                                  <li class="text-caption">Please enter your share link post to complete task.</li>
+                                </ul>
+                              </div>
+                              <!-- control -->
+                              <div class="text-end">
+                                <v-btn
+                                  v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
+                                  color="blue"
+                                  class="white--text"
+                                  @click="vm"
+                                  :disabled="vm.status === HUNTING.start"
+                                  elevation="0"
+                                >
+                                  <v-icon left>mdi-twitter</v-icon>
+                                  Twitter hunting
                                 </v-btn>
-                              </v-col>
-                            </v-row>
+                                <v-sheet v-if="twitterTask.type === 'tweet'" class="mt-4">
+                                  <v-row dense no-gutters>
+                                    <v-col cols="10">
+                                      <v-sheet outlined>
+                                        <v-text-field
+                                          hide-details
+                                          dense
+                                          flat
+                                          solo
+                                          class="ma-0 pa-0"
+                                          placeholder="https://www.waggle.network/v=gJJzlpw8fG8"
+                                        ></v-text-field>
+                                      </v-sheet>
+                                    </v-col>
+                                    <v-col cols="2">
+                                      <v-btn
+                                        elevation="0"
+                                        tile
+                                        color="blue"
+                                        class="fill-width white--text"
+                                        height="100%"
+                                        :disabled="vm.status === HUNTING.start"
+                                      >
+                                        Submit
+                                      </v-btn>
+                                    </v-col>
+                                  </v-row>
+                                </v-sheet>
+                              </div>
+                            </v-container>
                           </v-sheet>
-                        </v-sheet>
-                      </v-col>
-                    </v-row>
+                        </v-col>
 
-                    <!-- TWO -->
-                    <v-row dense no-gutters>
-                      <v-col cols="1">
-                        <v-sheet class="pb-1">
-                          <v-radio-group dense hide-details class="ma-0 pa-0 text-center">
-                            <v-radio></v-radio>
-                          </v-radio-group>
-                        </v-sheet>
-                        <v-sheet class="fill-height pb-7">
-                          <div class="divider"></div>
-                        </v-sheet>
-                      </v-col>
-                      <v-col cols="10">
-                        <v-sheet outlined>
-                          <v-container fluid>
-                            <div class="d-flex align-center">
-                              <v-sheet
-                                width="10"
-                                height="10"
-                                class="rounded-circle ba-secondary d-flex justify-center align-center mr-1"
-                              >
-                                <v-icon size="8" color="black">mdi-check</v-icon>
-                              </v-sheet>
-                              <div class="text-caption text-weight-400 line-height">Processing</div>
-                            </div>
-                            <div>
-                              <div class="text-subtitle-2 font-weight-medium">Share a Twitter post</div>
-                              <ul>
-                                <li class="text-caption">
-                                  Post a Tweet using #PeakyBlinder, share why you want to have this project’s primary
-                                  market exposure.
-                                </li>
-                                <li class="text-caption">Please enter your share link post to complete task.</li>
-                              </ul>
-                            </div>
-
-                            <v-sheet class="mt-4">
-                              <v-row dense no-gutters>
-                                <v-col cols="10">
-                                  <v-sheet outlined>
-                                    <v-text-field
-                                      hide-details
-                                      dense
-                                      flat
-                                      solo
-                                      class="ma-0 pa-0"
-                                      placeholder="https://www.waggle.network/v=gJJzlpw8fG8"
-                                    ></v-text-field>
-                                  </v-sheet>
-                                </v-col>
-                                <v-col cols="2">
-                                  <v-btn
-                                    elevation="0"
-                                    tile
-                                    color="bluePrimary"
-                                    class="fill-width white--text text-none"
-                                    height="100%"
-                                  >
-                                    Submit
-                                  </v-btn>
-                                </v-col>
-                              </v-row>
+                        <v-col cols="1" class="">
+                          <v-sheet rounded class="fill-height ml-3 ba-dotted">
+                            <v-sheet
+                              outlined
+                              rounded
+                              class="fill-height d-flex justify-center align-center neutral20 lighten-1"
+                            >
+                              <v-icon v-if="vm.status">mdi-check</v-icon>
                             </v-sheet>
-                          </v-container>
-                        </v-sheet>
-                      </v-col>
-                      <v-col cols="1">
-                        <v-sheet class="fill-height ml-3 ba-dotted">
-                          <v-sheet outlined class="fill-height d-flex justify-center align-center neutral20 lighten-1">
-                            <v-icon>mdi-check</v-icon>
                           </v-sheet>
-                        </v-sheet>
-                      </v-col>
-                    </v-row>
+                        </v-col>
+                      </v-row>
+                    </div>
 
                     <v-sheet class="my-7">
                       <div class="custom-dash-divider"></div>
@@ -363,7 +294,14 @@
                     <!-- button -->
                     <v-row dense no-gutters class="mb-8">
                       <v-col cols="12" class="text-center">
-                        <v-btn elevation="0" color="bluePrimary" class="white--text"> Confirm and earn reward </v-btn>
+                        <v-btn
+                          elevation="0"
+                          color="bluePrimary"
+                          class="white--text"
+                          :disabled="vm.status === HUNTING.start"
+                        >
+                          Confirm and earn reward
+                        </v-btn>
                       </v-col>
                     </v-row>
                   </v-col>
@@ -451,14 +389,13 @@
           </v-sheet>
 
           <v-sheet outlined class="mt-4">
-            <v-data-table :headers="headers" :items="vm.accounts" class="elevation-0" hide-default-footer>
-              <template> </template>
-              <template v-slot:[`item.account`]="{ item }">
+            <v-data-table :headers="headers" :items="vm.hunterList" class="elevation-0" hide-default-footer>
+              <template v-slot:[`item.name`]="{ item }">
                 <v-row dense no-gutters align="center" class="ma-2">
                   <v-avatar>
-                    <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
+                    <img :src="item.avatar" alt="John" />
                   </v-avatar>
-                  <div class="ml-4 font-weight-medium">{{ `@${item.account}` }}</div>
+                  <div class="ml-4 font-weight-medium">{{ `@${item.name}` }}</div>
                 </v-row>
               </template>
               <template v-slot:[`item.time`]="{ item }">
@@ -520,7 +457,7 @@ export default class BountyDetail extends Vue {
   headers = [
     {
       text: '@Account',
-      value: 'account',
+      value: 'name',
       align: 'center',
       sortable: false,
       class: ['blue lighten-1'],

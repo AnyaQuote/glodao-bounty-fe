@@ -1,6 +1,8 @@
+import { CountdownHelper, countdownHelper } from '@/helpers/countdown-helper'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
+import moment from 'moment'
 
 export enum HUNTING {
   start,
@@ -8,49 +10,18 @@ export enum HUNTING {
   finish,
 }
 
+export interface SharePerson {
+  avatar: string
+  name: string
+  time: string
+  link: string
+}
+
 export class BountyDetailViewModel {
   @observable bountyId = ''
   @observable status: HUNTING = HUNTING.start
-  @observable accounts = [
-    {
-      id: 1,
-      account: 'Tommy_Shelby',
-      time: Date.now(),
-      link: 'https://fb.com',
-    },
-    {
-      id: 2,
-      account: 'Tommy_Shelb',
-      time: Date.now(),
-      link: 'https://fb.com',
-    },
-    {
-      id: 3,
-      account: 'Tommy_Shelb',
-      time: Date.now(),
-      link: 'https://fb.com',
-    },
-    {
-      id: 4,
-      account: 'Tommy_Shelb',
-      time: Date.now(),
-      link: 'https://fb.com',
-    },
-    {
-      id: 5,
-      account: 'Tommy_Shelb',
-      time: Date.now(),
-      link: 'https://fb.com',
-    },
-  ]
+  @observable hunters: any = []
   completed = 900
-
-  @computed get percent() {
-    if (!this.data?.maxParticipant) {
-      return 0
-    }
-    return (this.completed / this.data?.maxParticipant) * 100
-  }
 
   @observable data: any = {}
 
@@ -102,13 +73,31 @@ export class BountyDetailViewModel {
     //
   }
 
+  @computed get percent() {
+    if (!this.data?.maxParticipant) {
+      return 0
+    }
+    return (this.completed / this.data?.maxParticipant) * 100
+  }
+
   @computed get twitterTasks() {
     return !this.data.data ? [] : this.data.data.twitter
   }
 
-  @observable applies: any
+  @computed get hunterList() {
+    return this.hunters.map((hunter) => {
+      const info = hunter.hunter
+      return {
+        avatar: info.metadata.avatar,
+        name: info.name,
+        time: moment(info.createdAt),
+        link: '',
+      }
+    })
+  }
 
   handleBountyChange = async () => {
     this.data = await apiService.tasks.findOne(this.bountyId)
+    this.hunters = await apiService.applies.find({ task: this.bountyId })
   }
 }
