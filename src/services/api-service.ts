@@ -72,10 +72,18 @@ export class ApiHandler<T> {
 
 export class ApiHandlerJWT<T> {
   private headers = {}
+  private jwtOptions = {
+    count: true,
+    create: true,
+    delete: true,
+    find: true,
+    findOne: true,
+    update: true,
+  }
   constructor(
     private axios,
     private route: ApiRouteType,
-    private jwtOptions: {
+    private options: {
       count?: boolean
       create?: boolean
       delete?: boolean
@@ -94,6 +102,7 @@ export class ApiHandlerJWT<T> {
     this.headers = {
       ...axios.defaults.headers,
     }
+    this.jwtOptions = { ...this.jwtOptions, ...options }
   }
   async count(params?: any): Promise<number> {
     let headers = this.headers
@@ -151,7 +160,7 @@ export class ApiHandlerJWT<T> {
   async update(id: any, model?: any): Promise<T> {
     let res: any
     let headers = this.headers
-    if (this.jwtOptions.findOne) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
+    if (this.jwtOptions.update) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
     if (id) {
       res = await this.axios.put(`${this.route}/${id}`, model, {
         headers,
