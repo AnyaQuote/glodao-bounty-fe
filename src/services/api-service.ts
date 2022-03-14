@@ -71,14 +71,36 @@ export class ApiHandler<T> {
 }
 
 export class ApiHandlerJWT<T> {
-  constructor(private axios, private route: ApiRouteType) {}
+  private headers = {}
+  constructor(
+    private axios,
+    private route: ApiRouteType,
+    private jwtOptions: {
+      count?: boolean
+      create?: boolean
+      delete?: boolean
+      find?: boolean
+      findOne?: boolean
+      update?: boolean
+    } = {
+      count: true,
+      create: true,
+      delete: true,
+      find: true,
+      findOne: true,
+      update: true,
+    }
+  ) {
+    this.headers = {
+      ...axios.defaults.headers,
+    }
+  }
   async count(params?: any): Promise<number> {
+    let headers = this.headers
+    if (this.jwtOptions.count) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
     const res = await this.axios.get(`${this.route}/count`, {
       params,
-      headers: {
-        ...axios.defaults.headers,
-        // Authorization: `Bearer ${authStore.jwt}`,
-      },
+      headers,
     })
     return res.data
   }
@@ -103,12 +125,11 @@ export class ApiHandlerJWT<T> {
   async find<T>(params?: any, settings: { _sort?: string; _limit?: number; _start?: number } = {}): Promise<T[]> {
     const settingDefault = { _sort: 'createdAt:DESC', _limit: 25, _start: 0 }
     params = { ...settingDefault, ...settings, ...(params ?? {}) }
+    let headers = this.headers
+    if (this.jwtOptions.find) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
     const res = await this.axios.get(this.route, {
       params,
-      headers: {
-        ...axios.defaults.headers,
-        // Authorization: `Bearer ${authStore.jwt}`,
-      },
+      headers,
     })
     const lst = res.data
     return lst
@@ -116,17 +137,12 @@ export class ApiHandlerJWT<T> {
 
   async findOne<T>(id: any): Promise<T> {
     let res: any
+    let headers = this.headers
+    if (this.jwtOptions.findOne) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
     if (id) {
-      res = await this.axios.get(
-        `${this.route}/${id}`
-        // ,
-        //  { headers: { Authorization: `Bearer ${authStore.jwt}` } }
-      )
+      res = await this.axios.get(`${this.route}/${id}`, { headers })
     } else {
-      res = await this.axios.get(
-        `${this.route}`
-        // , { headers: { Authorization: `Bearer ${authStore.jwt}` } }
-      )
+      res = await this.axios.get(`${this.route}`, { headers })
     }
     const result = res.data
     return result
@@ -134,16 +150,14 @@ export class ApiHandlerJWT<T> {
 
   async update(id: any, model?: any): Promise<T> {
     let res: any
+    let headers = this.headers
+    if (this.jwtOptions.findOne) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
     if (id) {
       res = await this.axios.put(`${this.route}/${id}`, model, {
-        headers: { Authorization: `Bearer ${authStore.jwt}` },
+        headers,
       })
     } else {
-      res = await this.axios.put(
-        `${this.route}`,
-        model
-        // , { headers: { Authorization: `Bearer ${walletStore.jwt}` } }
-      )
+      res = await this.axios.put(`${this.route}`, model, { headers })
     }
     return res.data
   }
@@ -154,7 +168,7 @@ export class ApiHandlerJWT<T> {
   }
 
   async login(username: string, password: string) {
-    const res = await this.axios.post(`auth/local`, { identifier: username, password: password })
+    const res = await this.axios.post(`auth/local`, { identifier: username, password })
     return res.data
   }
 }
@@ -163,7 +177,7 @@ export class ApiService {
   // fixedPool = new ApiHandler<FixedPoolModel>(axios, 'pool')
   applies = new ApiHandlerJWT<any>(axios, 'applies')
   users = new ApiHandlerJWT<any>(axios, 'users')
-  tasks = new ApiHandlerJWT<any>(axios, 'tasks')
+  tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false })
 
   async getFile(id: any) {
     const res = await axios.get(`upload/files/${id}`)
