@@ -22,6 +22,7 @@
           class="dialog-btn rounded-0 white--text background-blue-diversity"
           depressed
           @click="authStore.saveAttachWallet()"
+          :loading="authStore.isWalletUpdating"
           >Done</v-btn
         >
       </div>
@@ -30,10 +31,16 @@
           class="dialog-btn rounded-0 black--text background-neutral"
           depressed
           @click="authStore.changeAttachWalletDialog(false)"
+          :disabled="authStore.isWalletUpdating"
           >Ok, I'll set later</v-btn
         >
       </div>
-      <v-icon class="close-icon" @click="authStore.changeAttachWalletDialog(false)">mdi-window-close</v-icon>
+      <v-icon
+        class="close-icon"
+        @click="authStore.changeAttachWalletDialog(false)"
+        :disabled="authStore.isWalletUpdating"
+        >mdi-window-close</v-icon
+      >
     </v-sheet>
   </v-dialog>
 </template>
