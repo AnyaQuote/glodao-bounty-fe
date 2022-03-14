@@ -4,9 +4,10 @@
       <v-col
         cols="12"
         md="2"
-        class="mb-2"
+        class=""
         :class="{
           'pr-7': $vuetify.breakpoint.mdAndUp,
+          'mb-2': $vuetify.breakpoint.smAndDown,
         }"
       >
         <v-img
