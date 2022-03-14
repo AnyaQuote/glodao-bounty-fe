@@ -42,7 +42,7 @@
                       <div>
                         <v-img :src="require('@/assets/icons/crown-mini.svg')" width="20" height="20"></v-img>
                       </div>
-                      <div class="d-flex align-center ml-2">$234,123.00</div>
+                      <div class="d-flex align-center ml-2">$0.00</div>
                     </v-sheet>
                     <v-sheet class="caption-text">Bounty earned</v-sheet>
                   </v-col>
