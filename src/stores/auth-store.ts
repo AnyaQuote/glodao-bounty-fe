@@ -2,6 +2,8 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
+import { localdata } from '@/helpers/local-data'
+import router from '@/router'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -13,6 +15,8 @@ export class AuthStore {
 
   constructor() {
     //
+    if (localdata.jwt) this.changeJwt(localdata.jwt)
+    if (localdata.user) this.changeUser(localdata.user)
   }
 
   @action.bound changeAttachWalletDialog(value: boolean) {
@@ -32,12 +36,14 @@ export class AuthStore {
   }
   @action.bound changeJwt(value: string) {
     this.jwt = value
+    localdata.jwt = value
   }
   @action.bound resetJwt() {
     this.jwt = ''
   }
   @action.bound changeUser(user: any) {
     this.user = user
+    localdata.user = user
   }
   @action.bound resetUser() {
     this.user = {}
@@ -56,8 +62,10 @@ export class AuthStore {
 
   @asyncAction *logout() {
     try {
-      yield this.resetJwt()
+      yield router.push('/bounty')
+      this.resetJwt()
       this.resetUser()
+      localdata.reset()
     } catch (error) {
       snackController.error(error as string)
     }
