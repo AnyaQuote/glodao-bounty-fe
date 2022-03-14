@@ -1,4 +1,4 @@
-import { CountdownHelper, countdownHelper } from '@/helpers/countdown-helper'
+import { CountdownHelper } from '@/helpers/countdown-helper'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
@@ -23,7 +23,7 @@ export class BountyDetailViewModel {
   @observable hunters: any = []
   completed = 900
 
-  @observable data: any = {}
+  @observable tasks: any = {}
 
   @observable statistical = {
     total: 100,
@@ -49,13 +49,26 @@ export class BountyDetailViewModel {
   @action.bound startHunting() {
     if (this.status === HUNTING.start) {
       this.status = HUNTING.hunting
+      this.hunting()
     }
+  }
+
+  async hunting() {
+    const params = {
+      hunter: authStore.user.hunter,
+      task: this.tasks,
+      status: 'processing',
+      ID: authStore.user.hunter.id + '_' + this.tasks._id,
+      data: this.tasks.data,
+    }
+    const dataTask = thit
+    const res = await apiService.applies.create(params)
+    console.log(res)
   }
 
   @action.bound startFlow(type: string) {
     switch (type) {
       case 'follow':
-        this.followTwitter()
         break
       case 'like':
         this.likeTwitter()
@@ -65,23 +78,23 @@ export class BountyDetailViewModel {
     }
   }
 
-  followTwitter() {
-    //
-  }
-
   likeTwitter() {
     //
   }
 
+  followTwitter() {
+    //
+  }
+
   @computed get percent() {
-    if (!this.data?.maxParticipant) {
+    if (!this.tasks?.maxParticipant) {
       return 0
     }
-    return (this.completed / this.data?.maxParticipant) * 100
+    return (this.completed / this.tasks?.maxParticipant) * 100
   }
 
   @computed get twitterTasks() {
-    return !this.data.data ? [] : this.data.data.twitter
+    return !this.tasks.data ? [] : this.tasks.data.twitter
   }
 
   @computed get hunterList() {
@@ -97,7 +110,7 @@ export class BountyDetailViewModel {
   }
 
   handleBountyChange = async () => {
-    this.data = await apiService.tasks.findOne(this.bountyId)
+    this.tasks = await apiService.tasks.findOne(this.bountyId)
     this.hunters = await apiService.applies.find({ task: this.bountyId })
   }
 }

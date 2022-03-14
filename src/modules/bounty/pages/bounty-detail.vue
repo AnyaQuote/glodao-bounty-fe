@@ -24,13 +24,13 @@
       <v-col cols="12">
         <v-sheet class="d-flex align-center mb-4">
           <v-sheet width="32" height="32" class="violet rounded-circle d-flex justify-center align-center">
-            <chain-logo :chain="vm.data | _get('chainId')" class="logo-chain" />
+            <chain-logo :chain="vm.tasks | _get('chainId')" class="logo-chain" />
           </v-sheet>
           <div class="d-flex align-center ml-3 mt-1 section-big-title-text font-weight-bold">
-            {{ vm.data | _get('name') }}
+            {{ vm.tasks | _get('name') }}
             <v-sheet width="10" height="10" class="rounded-circle mx-4" color="bluePrimary"></v-sheet>
             <div class="text-uppercase">
-              {{ vm.data | _get('chainId') }}
+              {{ vm.tasks | _get('chainId') }}
             </div>
           </div>
         </v-sheet>
@@ -40,36 +40,36 @@
       <v-col cols="12" md="4">
         <v-sheet class="mb-4 position-relative">
           <!-- image -->
-          <v-img :src="vm.data | _get('metadata.coverImage')" class="rounded-md"></v-img>
+          <v-img :src="vm.tasks | _get('metadata.coverImage')" class="rounded-md"></v-img>
           <!-- status -->
           <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
             <v-sheet
               class="rounded-circle flex-center-box background-transparent"
-              :class="vm.data | _get('status') | statusBorder"
+              :class="vm.tasks | _get('status') | statusBorder"
             >
               <v-sheet
                 width="10"
                 height="10"
                 class="rounded-circle ma-1"
-                :class="vm.data | _get('status') | statusBackground"
+                :class="vm.tasks | _get('status') | statusBackground"
               >
               </v-sheet>
             </v-sheet>
-            <div :class="vm.data | _get('status') | statusColor" class="text-uppercase ml-2 mr-1 green--text">
-              {{ vm.data | _get('status') }}
+            <div :class="vm.tasks | _get('status') | statusColor" class="text-uppercase ml-2 mr-1 green--text">
+              {{ vm.tasks | _get('status') }}
             </div>
           </div>
         </v-sheet>
 
         <!-- subtitle -->
         <v-sheet class="mb-4 card-subtitle-1">
-          {{ vm.data | _get('metadata.caption') }}
+          {{ vm.tasks | _get('metadata.caption') }}
         </v-sheet>
         <v-sheet>
           <div class="card-title-text font-weight-medium">Time to hunting</div>
           <ul>
-            <li class="card-subtitle-1 font-weight-medium">From: {{ vm.data.startTime | MMMddYYYYhhmm }}</li>
-            <li class="card-subtitle-1 font-weight-medium">To: {{ vm.data.endTime | MMMddYYYYhhmm }}</li>
+            <li class="card-subtitle-1 font-weight-medium">From: {{ vm.tasks.startTime | MMMddYYYYhhmm }}</li>
+            <li class="card-subtitle-1 font-weight-medium">To: {{ vm.tasks.endTime | MMMddYYYYhhmm }}</li>
           </ul>
         </v-sheet>
       </v-col>
@@ -95,7 +95,7 @@
               <v-col cols="6" md="3">
                 <v-sheet outlined rounded class="pa-4">
                   <div class="card-subtitle-1">Max participant</div>
-                  <div class="card-big-title-text font-weight-bold">{{ vm.data | _get('maxParticipant', 0) }}</div>
+                  <div class="card-big-title-text font-weight-bold">{{ vm.tasks | _get('maxParticipant', 0) }}</div>
                 </v-sheet>
               </v-col>
               <v-col cols="6" md="3">
@@ -135,7 +135,7 @@
               </v-col>
               <v-col cols="12" md="6">
                 <v-progress-linear :value="vm.percent" color="white" height="36" class="rounded font-weight-bold">
-                  Progess: {{ `${vm.completed}/${vm.data.maxParticipant} ` }} ({{ vm.percent | formatNumber(2) }}%)
+                  Progess: {{ `${vm.completed}/${vm.tasks.maxParticipant} ` }} ({{ vm.percent | formatNumber(2) }}%)
                 </v-progress-linear>
               </v-col>
             </v-row>
@@ -151,7 +151,7 @@
                 <v-row dense no-gutters justify="center">
                   <v-col cols="12" md="10" class="mt-6">
                     <div class="card-subtitle-1 font-weight-medium">
-                      Reward for twitter task: {{ vm.data | _get('rewardAmount') }} DVT
+                      Reward for twitter task: {{ vm.tasks | _get('rewardAmount') }} DVT
                     </div>
                     <div class="card-subtitle-1">
                       Please ensure you join our Twitter channel to be eligible. Our moderators will check through all
@@ -215,7 +215,7 @@
                                 <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
                                 <ul v-if="twitterTask.type === 'follow'">
                                   <li class="text-caption">
-                                    Please follow “{{ vm.data | _get('name') }}” Twitter page to complete this task.
+                                    Please follow “{{ vm.tasks | _get('name') }}” Twitter page to complete this task.
                                   </li>
                                 </ul>
                                 <ul v-if="twitterTask.type === 'tweet'">
@@ -233,7 +233,7 @@
                                   v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
                                   color="blue"
                                   class="white--text"
-                                  @click="vm"
+                                  @click="vm.followTwitter"
                                   :disabled="vm.status === HUNTING.start"
                                   elevation="0"
                                 >
