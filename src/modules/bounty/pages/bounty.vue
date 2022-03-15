@@ -53,7 +53,7 @@
               @click="vm.changeDateRangeDialog(true)"
               style="border: thin solid rgba(0, 0, 0, 0.38) !important"
             >
-              Filter by date
+              Filter by start time
             </v-btn>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">

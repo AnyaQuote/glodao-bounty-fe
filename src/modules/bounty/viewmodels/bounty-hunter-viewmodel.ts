@@ -160,7 +160,7 @@ export class BountyHunterViewModel {
         _where: [
           ...result._where,
           {
-            createdAt_gte: moment.utc(sortedDateRanges[0]).toISOString(),
+            startTime_gte: moment.utc(sortedDateRanges[0]).toISOString(),
           },
         ],
       }
@@ -169,7 +169,7 @@ export class BountyHunterViewModel {
         _where: [
           ...result._where,
           {
-            createdAt_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
+            startTime_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
           },
         ],
       }
