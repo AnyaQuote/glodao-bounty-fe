@@ -93,9 +93,16 @@
             </v-select> -->
           </v-col>
 
-          <v-col cols="2"> </v-col>
-          <v-col cols="12" md="2">
-            <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
+          <v-col cols="1"> </v-col>
+          <v-col cols="12" md="3">
+            <v-select
+              :items="vm.sortList"
+              label="Sort"
+              outlined
+              dense
+              height="40"
+              @change="vm.onSortConditionChange"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row dense no-gutters>

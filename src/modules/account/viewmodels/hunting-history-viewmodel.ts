@@ -16,6 +16,22 @@ export class HuntingHistoryViewModel {
   @observable processingTaskCount = 0
   _disposers: IDisposer[] = []
 
+  @observable sortParams = 'createdAt:DESC'
+  sortList = [
+    {
+      text: 'Recently added',
+      value: 'createdAt:DESC',
+    },
+    {
+      text: 'Total reward ascending',
+      value: 'task.rewardAmount:ASC',
+    },
+    {
+      text: 'Total reward descending',
+      value: 'task.rewardAmount:DESC',
+    },
+  ]
+
   constructor() {
     //
     this.fetchData()
@@ -35,6 +51,12 @@ export class HuntingHistoryViewModel {
           this.getHuntingListByPage(this.page)
         }
       ),
+      reaction(
+        () => this.sortParams,
+        () => {
+          this.getHuntingListByPage(1)
+        }
+      ),
     ]
   }
 
@@ -48,12 +70,16 @@ export class HuntingHistoryViewModel {
     this.getProcessingAndCompletedTaskCount()
   }
 
+  @action.bound onSortConditionChange(value: string) {
+    this.sortParams = value
+  }
+
   @asyncAction *getHuntingListByPage(page?: number) {
     try {
       if (!authStore.jwt) return
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.applies.find(params, { _limit: PAGE_LIMIT, _start: _start })
+      const res = yield apiService.applies.find(params, { _limit: PAGE_LIMIT, _start: _start, _sort: this.sortParams })
       this.huntingList = res
     } catch (error) {
       this.huntingList = []
