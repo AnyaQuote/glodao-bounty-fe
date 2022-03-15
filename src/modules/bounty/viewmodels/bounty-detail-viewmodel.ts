@@ -1,4 +1,4 @@
-import { CountdownHelper } from '@/helpers/countdown-helper'
+import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
@@ -54,16 +54,52 @@ export class BountyDetailViewModel {
   }
 
   async hunting() {
-    const params = {
-      hunter: authStore.user.hunter,
-      task: this.tasks,
-      status: 'processing',
-      ID: authStore.user.hunter.id + '_' + this.tasks._id,
-      data: this.tasks.data,
+    try {
+      const id = authStore.user.hunter.id + '_' + this.tasks._id
+      const count = await apiService.applies.count({ ID: id })
+      if (count === 0) {
+        let twitterTasks = this.tasks.data.twitter
+        let telegramTasks = this.tasks.data.telegram
+
+        twitterTasks = twitterTasks.map((twitterTask) => {
+          return twitterTask.type !== 'follow'
+            ? {
+                type: twitterTask.type,
+                finished: false,
+                link: '',
+              }
+            : {
+                type: twitterTask.type,
+                finished: false,
+              }
+        })
+        telegramTasks = telegramTasks.map((twitterTask) => {
+          return twitterTask.type !== 'follow'
+            ? {
+                type: twitterTask.type,
+                finished: false,
+                link: '',
+              }
+            : {
+                type: twitterTask.type,
+                finished: false,
+              }
+        })
+
+        const params = {
+          hunter: authStore.user.hunter,
+          task: this.tasks,
+          status: 'processing',
+          ID: authStore.user.hunter.id + '_' + this.tasks._id,
+          data: { twitterTasks, telegramTasks },
+        }
+        await apiService.applies.create(params)
+      } else {
+        snackController.error('You cannot hunt this task twice')
+      }
+    } catch (error) {
+      snackController.error(error as string)
     }
-    const dataTask = thit
-    const res = await apiService.applies.create(params)
-    console.log(res)
   }
 
   @action.bound startFlow(type: string) {
