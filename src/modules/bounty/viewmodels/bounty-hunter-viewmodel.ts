@@ -151,7 +151,7 @@ export class BountyHunterViewModel {
   }
 
   @computed get dateRangeFilterParams() {
-    const sortedDateRanges = this.dateRanges.sort()
+    const sortedDateRanges = this.dateRanges.slice().sort()
     let result: any = {
       _where: [],
     }
