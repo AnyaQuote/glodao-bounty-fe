@@ -45,7 +45,6 @@
             <div class="section-big-title-text font-weight-bold">Bounty pools ({{ vm.bountyCount }})</div>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <!-- <v-select :items="items" label="Start time" outlined dense class="rounded-0"></v-select> -->
             <v-btn
               outlined
               depressed
@@ -131,7 +130,6 @@ export default class BountyPage extends Vue {
   @Provide() vm = new BountyHunterViewModel()
   walletStore = walletStore
   authStore = authStore
-  items = ['Recently added', 'Total reward ascending', 'Total reward descending']
   dates = []
 
   mounted() {
