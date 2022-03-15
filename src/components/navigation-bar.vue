@@ -130,7 +130,7 @@ export default class Staking extends Vue {
   }
 
   goToHuntingHistoryScreen() {
-    this.$router.push('hunting-history').catch(() => {
+    this.$router.push('/hunting-history').catch(() => {
       //
     })
   }
