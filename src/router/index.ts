@@ -21,6 +21,11 @@ const routes: Array<RouteConfig> = [
     name: 'Hunting history',
     component: () => import('@/modules/account/pages/hunting-history.vue'),
   },
+  {
+    path: '/bounty/:bountyId',
+    name: 'BountyDetail',
+    component: () => import('@/modules/bounty/pages/bounty-detail.vue'),
+  },
 ]
 
 const router = new VueRouter({

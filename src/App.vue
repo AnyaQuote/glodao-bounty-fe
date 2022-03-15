@@ -264,7 +264,7 @@ tbody {
   overflow: hidden !important;
 }
 .font-family-proxima {
-  font-family: 'Proxima Nova';
+  font-family: 'Proxima Nova' !important;
 }
 .font-family-poppins {
   font-family: 'Poppins';
@@ -272,6 +272,10 @@ tbody {
 .card-title-text {
   font-size: 16px;
   line-height: 24px;
+}
+.card-subtitle-1 {
+  font-size: 14px;
+  line-height: 21px;
 }
 .card-big-title-text {
   font-size: 20px;
@@ -316,7 +320,9 @@ tbody {
   justify-content: center;
   align-items: center;
 }
-
+.background-transparent {
+  background: transparent !important;
+}
 .mt-20 {
   margin-top: 80px;
 }
