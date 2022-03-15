@@ -58,7 +58,14 @@
             </v-btn>
           </v-col>
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <v-select :items="vm.sortList" label="Sort" outlined dense v-model="vm.sortValue" height="40"></v-select>
+            <v-select
+              :items="vm.sortList"
+              label="Sort"
+              outlined
+              dense
+              height="40"
+              @change="vm.onSortConditionChange"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row>

@@ -13,8 +13,21 @@ export class BountyHunterViewModel {
   @observable page = 1
   @observable currentApplies: any[] = []
 
-  @observable sortValue = ''
-  sortList = ['Recently added', 'Total reward ascending', 'Total reward descending']
+  @observable sortParams = 'createdAt:DESC'
+  sortList = [
+    {
+      text: 'Recently added',
+      value: 'createdAt:DESC',
+    },
+    {
+      text: 'Total reward ascending',
+      value: 'rewardAmount:ASC',
+    },
+    {
+      text: 'Total reward descending',
+      value: 'rewardAmount:DESC',
+    },
+  ]
 
   @observable dateRanges = []
   @observable dateRangeDialog = false
@@ -36,7 +49,7 @@ export class BountyHunterViewModel {
         }
       ),
       reaction(
-        () => this.sortValue,
+        () => this.sortParams,
         () => {
           this.getBountyListByPage(1)
         }
@@ -100,6 +113,10 @@ export class BountyHunterViewModel {
     this.dateRanges = value
   }
 
+  @action.bound onSortConditionChange(value: string) {
+    this.sortParams = value
+  }
+
   @computed get remainingBounty() {
     return this.bountyCount - this.bountyList.length
   }
@@ -135,19 +152,6 @@ export class BountyHunterViewModel {
         totalStep: firstTask.length,
       }
     })
-  }
-
-  @computed get sortParams() {
-    switch (this.sortValue) {
-      case 'Recently added':
-        return 'createdAt:DESC'
-      case 'Total reward ascending':
-        return 'rewardAmount:ASC'
-      case 'Total reward descending':
-        return 'rewardAmount:DESC'
-      default:
-        return 'createdAt:DESC'
-    }
   }
 
   @computed get dateRangeFilterParams() {
