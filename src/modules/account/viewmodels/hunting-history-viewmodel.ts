@@ -1,9 +1,10 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { ceil, keys } from 'lodash-es'
+import { ceil, keys, lowerCase } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
+import moment from 'moment'
 
 const PAGE_LIMIT = 6
 const params = { 'hunter.id': authStore.user.hunter.id }
@@ -16,8 +17,29 @@ export class HuntingHistoryViewModel {
   @observable processingTaskCount = 0
   _disposers: IDisposer[] = []
 
+  @observable sortParams = 'createdAt:DESC'
+  sortList = [
+    {
+      text: 'Recently added',
+      value: 'createdAt:DESC',
+    },
+    {
+      text: 'Total reward ascending',
+      value: 'task.rewardAmount:ASC',
+    },
+    {
+      text: 'Total reward descending',
+      value: 'task.rewardAmount:DESC',
+    },
+  ]
+
+  @observable status = ['Processing', 'Awarded', 'Completed', 'Rejected']
+  @observable statusModel = []
+
+  @observable dateRanges = []
+  @observable dateRangeDialog = false
+
   constructor() {
-    //
     this.fetchData()
   }
 
@@ -35,6 +57,18 @@ export class HuntingHistoryViewModel {
           this.getHuntingListByPage(this.page)
         }
       ),
+      reaction(
+        () => this.sortParams,
+        () => {
+          this.getHuntingListByPage(1)
+        }
+      ),
+      reaction(
+        () => this.filterParams,
+        () => {
+          this.getHuntingListByPage(1)
+        }
+      ),
     ]
   }
 
@@ -48,12 +82,32 @@ export class HuntingHistoryViewModel {
     this.getProcessingAndCompletedTaskCount()
   }
 
+  @action.bound onSortConditionChange(value: string) {
+    this.sortParams = value
+  }
+
+  @action.bound onStatusFilterChange(value: string) {
+    console.log(value)
+  }
+
+  @action.bound changeDateRangeDialog(value: boolean) {
+    this.dateRangeDialog = value
+  }
+
+  @action.bound changeDateRange(value) {
+    this.dateRanges = value
+  }
+
   @asyncAction *getHuntingListByPage(page?: number) {
     try {
       if (!authStore.jwt) return
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.applies.find(params, { _limit: PAGE_LIMIT, _start: _start })
+      const res = yield apiService.applies.find(this.filterParams, {
+        _limit: PAGE_LIMIT,
+        _start: _start,
+        _sort: this.sortParams,
+      })
       this.huntingList = res
     } catch (error) {
       this.huntingList = []
@@ -64,7 +118,7 @@ export class HuntingHistoryViewModel {
   @asyncAction *getTotalHuntingCount() {
     try {
       if (!authStore.jwt) return
-      const res = yield apiService.applies.count(params)
+      const res = yield apiService.applies.count(this.filterParams)
       this.huntingCount = res
     } catch (error) {
       snackController.error(error as string)
@@ -120,5 +174,34 @@ export class HuntingHistoryViewModel {
 
   @computed get totalPageCount() {
     return ceil(this.huntingCount / PAGE_LIMIT)
+  }
+
+  @computed get statusFilterParams() {
+    const _or: any[] = []
+    this.statusModel.forEach((statusString) => {
+      _or.push({ status: lowerCase(statusString) })
+    })
+    return _or
+  }
+
+  @computed get dateRangeFilterParams() {
+    const sortedDateRanges = this.dateRanges.slice().sort()
+    let result: any = []
+    if (this.dateRanges.length > 0)
+      result = [...result, { createdAt_gte: moment.utc(sortedDateRanges[0]).toISOString() }]
+    if (this.dateRanges.length > 1) {
+      result = [...result, { createdAt_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString() }]
+    }
+    return result
+  }
+
+  @computed get filterParams() {
+    return {
+      _where: [
+        { 'hunter.id': authStore.user.hunter.id },
+        ...this.dateRangeFilterParams,
+        { _or: [...this.statusFilterParams] },
+      ],
+    }
   }
 }

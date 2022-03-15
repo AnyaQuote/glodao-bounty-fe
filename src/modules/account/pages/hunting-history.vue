@@ -62,16 +62,26 @@
             <div class="section-big-title-text font-weight-bold text-capitalize">Bounty Hunting History</div>
           </v-col>
 
-          <v-col cols="12" sm="6" md="2">
-            <v-select v-model="statusModel" :items="status" label="Status" outlined dense class="rounded-0" multiple>
+          <v-col cols="12" sm="6" md="3">
+            <v-select v-model="vm.statusModel" :items="vm.status" label="Status" outlined dense multiple>
               <template v-slot:selection="{ item, index }">
                 <span v-if="index === 0">{{ item }}</span>
-                <span v-if="index === 1" class="grey--text text-caption"> &nbsp;(+{{ statusModel.length - 1 }}) </span>
+                <span v-if="index === 1" class="text-caption"> &nbsp;(+{{ vm.statusModel.length - 1 }}) </span>
               </template>
             </v-select>
           </v-col>
           <v-col cols="12" sm="6" md="2">
-            <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select>
+            <!-- <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select> -->
+            <v-btn
+              outlined
+              depressed
+              class="fill-width text-none text-start font-weight-regular d-flex justify-start align-center"
+              height="40"
+              @click="vm.changeDateRangeDialog(true)"
+              style="border: thin solid rgba(0, 0, 0, 0.38) !important"
+            >
+              Filter by date
+            </v-btn>
           </v-col>
           <v-col cols="12" sm="6" md="2">
             <!-- <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select> -->
@@ -93,13 +103,19 @@
             </v-select> -->
           </v-col>
 
-          <v-col cols="2"> </v-col>
-          <v-col cols="12" md="2">
-            <v-select :items="items" label="Recently added" outlined dense class="rounded-0"></v-select>
+          <v-col cols="12" md="3">
+            <v-select
+              :items="vm.sortList"
+              label="Sort"
+              outlined
+              dense
+              height="40"
+              @change="vm.onSortConditionChange"
+            ></v-select>
           </v-col>
         </v-row>
         <v-row dense no-gutters>
-          <v-col>
+          <v-col v-if="vm.convertedHuntingHistoryList.length > 0">
             <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
               <hunting-history-card
                 :coverImage="task.coverImage"
@@ -116,9 +132,9 @@
               />
             </div>
           </v-col>
-          <!-- <v-col cols="12">
+          <v-col cols="12" v-else>
             <no-items />
-          </v-col> -->
+          </v-col>
           <v-col cols="12" class="my-8">
             <v-pagination
               v-model="vm.page"
@@ -132,6 +148,19 @@
         </v-row>
       </v-container>
     </v-col>
+    <v-dialog v-model="vm.dateRangeDialog" width="300" persistent>
+      <v-sheet>
+        <v-sheet class="d-flex justify-center">
+          <v-date-picker v-model="dates" range no-title></v-date-picker>
+        </v-sheet>
+        <v-sheet class="d-flex justify-space-between pa-4">
+          <v-btn class="rounded-0" depressed @click="closeDialog()">Cancel</v-btn>
+          <v-btn class="rounded-0 background-blue-diversity white--text" depressed @click="changeDateRange()">
+            Select
+          </v-btn>
+        </v-sheet>
+      </v-sheet>
+    </v-dialog>
   </v-row>
 </template>
 
@@ -158,9 +187,21 @@ export default class HuntingHistory extends Vue {
   statusModel = []
   socials = ['Twitter', 'Discord', 'Telegram']
   socialsModel = []
+  dates = []
 
   mounted() {
     this.vm.initReaction()
+  }
+
+  closeDialog() {
+    this.vm.changeDateRangeDialog(false)
+    if (this.vm.dateRanges.length > 0) this.dates = this.vm.dateRanges
+    else this.dates = []
+  }
+
+  changeDateRange() {
+    this.vm.changeDateRange(this.dates)
+    this.vm.changeDateRangeDialog(false)
   }
 
   beforeDestroy() {
