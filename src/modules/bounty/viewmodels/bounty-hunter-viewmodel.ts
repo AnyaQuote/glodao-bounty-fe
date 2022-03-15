@@ -68,10 +68,6 @@ export class BountyHunterViewModel {
     this._disposers.forEach((d) => d())
   }
 
-  @asyncAction *getAllTask() {
-    const task = yield apiService.tasks.find('', { _limit: PAGE_LIMIT, _start: 0 })
-  }
-
   @asyncAction *getBountyListByPage(page?: number) {
     try {
       if (page) this.page = page
