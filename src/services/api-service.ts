@@ -194,7 +194,7 @@ export class ApiService {
   applies = new ApiHandlerJWT<any>(axios, 'applies')
   users = new ApiHandlerJWT<any>(axios, 'users')
   hunters = new ApiHandlerJWT<any>(axios, 'hunters')
-  tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false })
+  tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
 
   async getFile(id: any) {
     const res = await axios.get(`upload/files/${id}`)
