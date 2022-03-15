@@ -2,7 +2,7 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { ceil, keys, lowerCase } from 'lodash-es'
-import { action, computed, observable, reaction, autorun } from 'mobx'
+import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
 
@@ -40,7 +40,6 @@ export class HuntingHistoryViewModel {
   @observable dateRangeDialog = false
 
   constructor() {
-    //
     this.fetchData()
   }
 
