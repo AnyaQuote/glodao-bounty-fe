@@ -54,6 +54,8 @@ export class BountyDetailViewModel {
   }
 
   async hunting() {
+    console.log('hunting')
+
     try {
       const id = authStore.user.hunter.id + '_' + this.tasks._id
       const count = await apiService.applies.count({ ID: id })
@@ -93,7 +95,8 @@ export class BountyDetailViewModel {
           ID: authStore.user.hunter.id + '_' + this.tasks._id,
           data: { twitterTasks, telegramTasks },
         }
-        await apiService.applies.create(params)
+        const something = await apiService.applies.create(params)
+        console.log(something)
       } else {
         snackController.error('You cannot hunt this task twice')
       }

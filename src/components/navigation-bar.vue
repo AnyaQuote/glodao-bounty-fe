@@ -112,6 +112,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
+
 import { Observer } from 'mobx-vue'
 
 @Observer
@@ -126,14 +127,6 @@ export default class Staking extends Vue {
   chainId = process.env.VUE_APP_CHAIN_ID
   openLink(url) {
     window.open(url, '_blank')
-  }
-
-  mounted() {
-    // const access_token = this.$route.query.access_token as string
-    // const access_secret = this.$route.query.access_secret as string
-    // if (access_token && access_secret) {
-    //   // this.authStore.fetchUser(access_token, access_secret)
-    // }
   }
 
   goToHuntingHistoryScreen() {

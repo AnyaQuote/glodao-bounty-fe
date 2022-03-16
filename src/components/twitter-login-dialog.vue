@@ -15,7 +15,7 @@
               outlined
               depressed
               class="rounded-pill black--text login-btn"
-              href="http://localhost:1337/connect/twitter"
+              :href="`https://diversity-api.contracts.dev/connect/twitter`"
             >
               <span> Log in with Twitter </span>
             </v-btn>

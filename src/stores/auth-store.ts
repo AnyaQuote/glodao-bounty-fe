@@ -76,11 +76,22 @@ export class AuthStore {
 
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
-      const { jwt, user } = yield apiService.users.fetch(access_token, access_secret)
-      // console.log(user)
-      // this.changeJwt(jwt)
-      // this.changeUser(user)
-      // this.changeTwitterLoginDialog(false)
+      const res = yield apiService.fetchUser(access_token, access_secret)
+      if (!res.user.hunter) {
+        const params = {
+          name: res.user.username,
+          status: 'active',
+          user: res.user.id,
+          metadata: {
+            avatar: res.user.avatar,
+          },
+        }
+        yield apiService.hunters.create(params, res.jwt)
+        res.user = yield apiService.users.findOne(res.user.id, res.jwt)
+      }
+      this.changeJwt(res.jwt)
+      this.changeUser(res.user)
+      this.changeTwitterLoginDialog(false)
     } catch (error) {
       snackController.error(error as string)
     }
