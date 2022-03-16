@@ -1,8 +1,7 @@
-import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
+import Axios from 'axios'
 import qs from 'qs'
 
-import Axios from 'axios'
 export type ApiRouteType = 'applies' | 'hunters' | 'logs' | 'pool-regists' | 'pools' | 'tasks' | 'users'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
@@ -185,6 +184,13 @@ export class ApiHandlerJWT<T> {
 
   async login(username: string, password: string) {
     const res = await this.axios.post(`auth/local`, { identifier: username, password })
+    return res.data
+  }
+
+  async fetch(access_token: string, access_secret: string) {
+    const res = await this.axios.get('http://localhost:1337/auth/twitter/callback', {
+      params: { access_token: access_token, access_secret: access_secret },
+    })
     return res.data
   }
 }

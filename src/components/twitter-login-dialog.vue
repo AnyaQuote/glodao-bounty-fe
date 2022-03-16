@@ -11,7 +11,12 @@
           <div class="mt-3 font-weight-bold card-big-title-text">Connect Twitter</div>
           <div class="mt-1 card-title-text">To complete task & earn reward</div>
           <div class="mt-4">
-            <v-btn outlined depressed class="rounded-pill black--text login-btn" @click="authStore.handleLogin()">
+            <v-btn
+              outlined
+              depressed
+              class="rounded-pill black--text login-btn"
+              href="http://localhost:1337/connect/twitter"
+            >
               <span> Log in with Twitter </span>
             </v-btn>
           </div>
