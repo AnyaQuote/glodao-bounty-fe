@@ -181,20 +181,32 @@
                   </v-col>
                   <v-col cols="12" md="9">
                     <div class="custom-dash-divider mb-7"></div>
-                    <!-- ONE -->
                     <div v-for="(twitterTask, index) in vm.twitterTasks" :key="index">
-                      <v-row dense no-gutters class="mb-4" v-if="twitterTask.type !== 'retweet'">
+                      <v-row dense no-gutters class="mb-4" v-if="vm.twitterTasks.length > 0">
+                        <!-- TASK COL 1 -->
                         <v-col cols="1">
                           <v-sheet class="pb-1">
-                            <v-radio-group dense hide-details class="ma-0 pa-0 text-center">
-                              <v-radio></v-radio>
-                            </v-radio-group>
+                            <v-sheet
+                              width="18"
+                              height="18"
+                              class="rounded-circle flex-center-box background-transparent"
+                              style="border: 1px solid black"
+                            >
+                              <v-sheet
+                                width="10"
+                                height="10"
+                                class="rounded-circle"
+                                color="black"
+                                v-if="index === 0 || (index > 0 && (twitterTask ? twitterTask.finsihed : false))"
+                              >
+                              </v-sheet>
+                            </v-sheet>
                           </v-sheet>
                           <v-sheet class="fill-height pb-7">
                             <div class="divider"></div>
                           </v-sheet>
                         </v-col>
-
+                        <!-- TASK COL 2 -->
                         <v-col cols="10">
                           <v-sheet outlined rounded>
                             <v-container fluid>
@@ -213,11 +225,13 @@
                               <!-- content -->
                               <div class="mb-4">
                                 <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
+                                <!-- follow -->
                                 <ul v-if="twitterTask.type === 'follow'">
                                   <li class="text-caption">
                                     Please follow “{{ vm.tasks | _get('name') }}” Twitter page to complete this task.
                                   </li>
                                 </ul>
+                                <!-- weet -->
                                 <ul v-if="twitterTask.type === 'tweet'">
                                   <li class="text-caption">
                                     Post a Tweet using
@@ -225,6 +239,11 @@
                                     >, share why you want to have this project’s primary market exposure.
                                   </li>
                                   <li class="text-caption">Please enter your share link post to complete task.</li>
+                                </ul>
+                                <!-- retweet -->
+                                <ul v-if="twitterTask.type === 'retweet'">
+                                  <li class="text-caption">Share and referral with your friend.</li>
+                                  <li class="text-caption">Please enter your referral link to complete task.</li>
                                 </ul>
                               </div>
                               <!-- control -->
@@ -268,11 +287,39 @@
                                     </v-col>
                                   </v-row>
                                 </v-sheet>
+                                <v-sheet v-if="twitterTask.type === 'retweet'" class="mt-4">
+                                  <v-row dense no-gutters>
+                                    <v-col cols="10">
+                                      <v-sheet outlined>
+                                        <v-text-field
+                                          hide-details
+                                          dense
+                                          flat
+                                          solo
+                                          class="ma-0 pa-0"
+                                          placeholder="https://www.waggle.network/v=gJJzlpw8fG8"
+                                        ></v-text-field>
+                                      </v-sheet>
+                                    </v-col>
+                                    <v-col cols="2">
+                                      <v-btn
+                                        elevation="0"
+                                        tile
+                                        color="blue"
+                                        class="fill-width white--text"
+                                        height="100%"
+                                        :disabled="vm.status === HUNTING.start"
+                                      >
+                                        Submit
+                                      </v-btn>
+                                    </v-col>
+                                  </v-row>
+                                </v-sheet>
                               </div>
                             </v-container>
                           </v-sheet>
                         </v-col>
-
+                        <!-- TASK COL 3 -->
                         <v-col cols="1" class="">
                           <v-sheet rounded class="fill-height ml-3 ba-dotted">
                             <v-sheet
@@ -280,7 +327,7 @@
                               rounded
                               class="fill-height d-flex justify-center align-center neutral20 lighten-1"
                             >
-                              <v-icon v-if="vm.status">mdi-check</v-icon>
+                              <v-icon v-if="twitterTask ? twitterTask.finished : false">mdi-check </v-icon>
                             </v-sheet>
                           </v-sheet>
                         </v-col>
@@ -430,9 +477,9 @@ import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-view
 export default class BountyDetail extends Vue {
   @Provide() vm = new BountyDetailViewModel()
 
-  @Watch('$route.params.bountyId', { immediate: true }) onIdChanged(val: string) {
+  @Watch('$route.params.taskId', { immediate: true }) onIdChanged(val: string) {
     if (val) {
-      this.vm.bountyIdChange(val)
+      this.vm.taskIdChange(val)
     }
   }
 
@@ -483,7 +530,7 @@ export default class BountyDetail extends Vue {
 .divider {
   border-left: 1px solid var(--v-grey-lighten1);
   height: 100%;
-  margin-left: 11px;
+  margin-left: 9px;
   padding-top: 30px;
 }
 
