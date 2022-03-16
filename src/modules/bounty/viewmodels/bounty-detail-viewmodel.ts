@@ -57,7 +57,6 @@ export class BountyDetailViewModel {
 
       let twitter = this.tasks.data.twitter
       let telegram = this.tasks.data.telegram
-      console.log('BBBBB')
 
       twitter = twitter.map((twitterTask) => {
         return twitterTask.type !== 'follow'
@@ -122,12 +121,20 @@ export class BountyDetailViewModel {
   }
 
   @computed get twitterTasks() {
-    if (this.applyStepData.twitter && this.tasks?.data) {
+    const twitter = this.tasks.data?.twitter
+    const applies = this.applyStepData?.twitter
+
+    if (applies && twitter) {
       this.applyStepData.twitter.forEach((twitterInfo, index) => {
-        this.tasks.data.twitter[index].finished = twitterInfo.finished
+        twitter[index].finished = twitterInfo.finished
       })
+      return twitter
     }
-    return this.tasks?.data?.twitter ?? []
+    return []
+  }
+
+  @computed get twitters() {
+    return this.tasks.data?.twitter ?? []
   }
 
   getStatus(status: any) {
