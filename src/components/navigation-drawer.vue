@@ -13,7 +13,6 @@
       class="rounded-0 blue-diversity--text"
       height="40"
       block
-      width="110"
       v-if="!authStore.jwt"
       @click="authStore.changeTwitterLoginDialog(true)"
     >
