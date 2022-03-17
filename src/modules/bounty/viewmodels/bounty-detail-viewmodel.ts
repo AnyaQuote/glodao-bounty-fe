@@ -56,10 +56,6 @@ export class BountyDetailViewModel {
           // this.handleTaskIdChange()
         }
       ),
-      // reaction(
-      //   () => this.hunterId,
-      //   () => this.hunterIdChange()
-      // ),
     ]
   }
 
