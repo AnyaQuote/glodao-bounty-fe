@@ -1,12 +1,12 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card class="mx-auto" elevation="3" rounded outlined>
+    <v-card class="mx-auto overflow-hidden border-radius-8px" elevation="3" outlined>
       <div
         :class="{
           'backdrop-hover-overlay': hover,
         }"
       >
-        <div class="pt-4 px-4 position-relative">
+        <div class="position-relative">
           <v-img height="236" :src="coverImage"></v-img>
           <div class="start-date-container" v-if="!isStarted"></div>
           <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600" v-if="!isStarted">
@@ -97,6 +97,9 @@ export default class BountyCard extends Vue {
 </script>
 
 <style scoped lang="scss">
+.border-radius-8px {
+  border-radius: 8px !important;
+}
 .backdrop-hover-overlay {
   filter: blur(2px);
   z-index: -1;
@@ -119,7 +122,7 @@ export default class BountyCard extends Vue {
 }
 .custom-chevron-flag {
   clip-path: polygon(100% 0, 100% 100%, 50% 82%, 0 100%, 0% 0%);
-  background: var(--v-bluePrimary-base);
+  background-image: linear-gradient(to bottom, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
   width: 24px;
   min-height: 50px;
 }
