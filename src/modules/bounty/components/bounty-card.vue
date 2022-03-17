@@ -40,12 +40,13 @@
       </div>
 
       <div
-        class="justify-center align-center"
+        class="justify-center align-center position-relative"
         :class="{
           'd-flex  card-hover-overlay': hover,
           'd-none': !hover,
         }"
       >
+        <div class="position-absolute linear-background-blue-main fill-width fill-height" style="opacity: 0.3"></div>
         <v-btn width="152" height="124" @click="openLink()">
           <div>
             <div class="d-flex justify-center">
@@ -92,14 +93,14 @@ export default class BountyCard extends Vue {
 
 <style scoped lang="scss">
 .backdrop-hover-overlay {
-  filter: blur(8px);
+  filter: blur(2px);
   z-index: -1;
 }
 .card-hover-overlay {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
+  // background-color: rgba(255, 255, 255, 0.6);
   top: 0;
   left: 0;
   z-index: 2;
