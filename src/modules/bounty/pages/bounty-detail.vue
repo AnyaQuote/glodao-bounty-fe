@@ -4,11 +4,13 @@
       <!-- breadcrumbs -->
       <v-col cols="12">
         <v-sheet height="50">
-          <v-breadcrumbs :items="breadcrumbs" divider=">" class="pa-0">
+          <v-breadcrumbs :items="vm.breadcrumbsItems" divider=">" class="pa-0">
             <template v-slot:item="{ item }">
-              <v-breadcrumbs-item :href="item.href" :disabled="item.disabled">
+              <v-breadcrumbs-item :disabled="item.disabled">
                 <template v-slot:default>
-                  <span :class="item.text === 'Bounty hunter' ? 'blue--text' : ''">{{ item.text }}</span>
+                  <router-link :to="item.href">
+                    <span :class="item.text === 'Bounty hunter' ? 'blue--text' : ''">{{ item.text }}</span>
+                  </router-link>
                 </template>
                 {{ item.text }}
               </v-breadcrumbs-item>
@@ -473,27 +475,13 @@ import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-view
 })
 export default class BountyDetail extends Vue {
   @Provide() vm = new BountyDetailViewModel()
+  HUNTING = HUNTING
 
   @Watch('$route.params.taskId', { immediate: true }) onIdChanged(val: string) {
     if (val) {
       this.vm.taskIdChange(val)
     }
   }
-
-  breadcrumbs = [
-    {
-      text: 'Bounty hunter',
-      disabled: false,
-      href: '/bounty',
-    },
-    {
-      text: 'The Peaky Blinder',
-      disabled: false,
-      href: '/bounty-detail',
-    },
-  ]
-
-  HUNTING = HUNTING
 
   items = ['Twitter task', 'Telegram task', 'Discord task']
   tab = null

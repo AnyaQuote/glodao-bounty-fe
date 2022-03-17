@@ -17,6 +17,14 @@ const APPLY_STATUS = {
   COMPLETED: 'completed',
 }
 
+const DEFAULT_BREADCRUMBS = [
+  {
+    text: 'Bounty hunter',
+    disabled: false,
+    href: '/bounty',
+  },
+]
+
 export interface SharePerson {
   avatar: string
   name: string
@@ -25,6 +33,7 @@ export interface SharePerson {
 }
 
 export class BountyDetailViewModel {
+  @observable breadcrumbsItems = DEFAULT_BREADCRUMBS
   @observable taskId = ''
   @observable status: HUNTING = HUNTING.start
   @observable hunters: any = []
@@ -59,6 +68,12 @@ export class BountyDetailViewModel {
           // this.handleTaskIdChange()
         }
       ),
+      reaction(
+        () => this.task,
+        () => {
+          this.generateBreadcrumbsItems()
+        }
+      ),
     ]
     this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
@@ -66,6 +81,17 @@ export class BountyDetailViewModel {
   destroyReaction() {
     this.disposes.forEach((d) => d())
     if (this.currentTimeInterval) clearInterval(this.currentTimeInterval)
+  }
+
+  @action.bound generateBreadcrumbsItems() {
+    this.breadcrumbsItems = [
+      ...DEFAULT_BREADCRUMBS,
+      {
+        text: this.task.name,
+        disabled: true,
+        href: '#',
+      },
+    ]
   }
 
   @action setCurrentTime() {
