@@ -17,6 +17,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/reward/pages/reward.vue'),
   },
   {
+    path: '/twitter-auth',
+    name: 'TwitterAuthentication',
+    component: () => import('@/modules/auth/pages/twitter-auth.vue'),
+  },
+  {
     path: '/hunting-history',
     name: 'Hunting history',
     component: () => import('@/modules/account/pages/hunting-history.vue'),

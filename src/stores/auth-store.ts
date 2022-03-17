@@ -1,9 +1,9 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
-import { apiService } from '@/services/api-service'
-import { action, computed, observable } from 'mobx'
-import { asyncAction } from 'mobx-utils'
 import { localdata } from '@/helpers/local-data'
 import router from '@/router'
+import { apiService } from '@/services/api-service'
+import { action, observable } from 'mobx'
+import { asyncAction } from 'mobx-utils'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -71,6 +71,33 @@ export class AuthStore {
       this.changeTwitterLoginDialog(false)
     } catch (error) {
       snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *fetchUser(access_token: string, access_secret: string) {
+    try {
+      const res = yield apiService.fetchUser(access_token, access_secret)
+      if (!res.user.hunter) {
+        const params = {
+          name: res.user.username,
+          status: 'active',
+          user: res.user.id,
+          metadata: {
+            avatar: res.user.avatar,
+          },
+        }
+        yield apiService.hunters.create(params, res.jwt)
+        res.user = yield apiService.users.findOne(res.user.id, res.jwt)
+      }
+      this.changeJwt(res.jwt)
+      this.changeUser(res.user)
+      this.changeTwitterLoginDialog(false)
+    } catch (error) {
+      snackController.error(error as string)
+    } finally {
+      router.push('/bounty').catch(() => {
+        //
+      })
     }
   }
 
