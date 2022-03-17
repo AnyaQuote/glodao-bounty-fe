@@ -2,7 +2,9 @@
   <v-dialog v-model="vm.reCaptchaDialog" class="rounded-0" max-width="400" persistent>
     <v-sheet outlined class="position-relative pa-6 text-center dialog-normal-text overflow-hidden">
       <div class="mb-6 font-weight-600 dialog-title-text d-flex align-center">
-        <v-avatar size="32" color="blue"></v-avatar>
+        <v-avatar size="32">
+          <chain-logo class="fill-width fill-height" :chain="vm.task.chainId" />
+        </v-avatar>
         <div class="d-flex align-center ml-4">{{ vm.task.name }}</div>
       </div>
       <div class="d-flex justify-center mb-4">
@@ -32,6 +34,7 @@ import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail
 @Component({
   components: {
     VueRecaptcha,
+    'chain-logo': () => import('@/components/chain-logo.vue'),
   },
 })
 export default class RecaptchaDialog extends Vue {
