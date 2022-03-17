@@ -40,13 +40,16 @@
       </div>
 
       <div
-        class="justify-center align-center position-relative"
+        class="justify-center align-center position-relative rounded-0"
         :class="{
           'd-flex  card-hover-overlay': hover,
           'd-none': !hover,
         }"
       >
-        <div class="position-absolute linear-background-blue-main fill-width fill-height" style="opacity: 0.3"></div>
+        <div
+          class="position-absolute linear-background-blue-main fill-width fill-height rounded-0"
+          style="opacity: 0.3"
+        ></div>
         <v-btn width="152" height="124" @click="openLink()">
           <div>
             <div class="d-flex justify-center">
