@@ -21,7 +21,6 @@
               </div>
             </div>
           </v-col>
-
           <v-col lg="3" md="6" sm="12" cols="12" v-for="task in vm.currentTaskList" :key="task.id">
             <current-task
               :id="task.id"
@@ -65,6 +64,20 @@
               height="40"
               @change="vm.onSortConditionChange"
             ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <info-card type="missions" :info="vm.bountyCount"></info-card>
+          </v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <info-card type="rewards" :info="'10000' | formatNumber(2, 0)"></info-card>
+          </v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <info-card type="users" :info="'100' | formatNumber(2, 0)"></info-card>
+          </v-col>
+          <v-col lg="3" md="6" sm="12" cols="12">
+            <info-card type="participants" :info="'1000' | formatNumber(2, 0)"></info-card>
           </v-col>
         </v-row>
         <v-row>
@@ -124,6 +137,7 @@ import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter
   components: {
     'current-task': () => import('@/modules/bounty/components/current-task.vue'),
     'bounty-card': () => import('@/modules/bounty/components/bounty-card.vue'),
+    'info-card': () => import('@/modules/bounty/components/info-card.vue'),
   },
 })
 export default class BountyPage extends Vue {

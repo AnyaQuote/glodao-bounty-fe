@@ -54,6 +54,9 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.linear-background-blue-main {
+  background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
+}
 .theme--light {
   .markdown-li a {
     color: black !important;

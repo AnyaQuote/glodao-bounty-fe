@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card class="mx-auto rounded-0" outlined>
+    <v-card class="mx-auto" elevation="3" rounded outlined>
       <div
         :class="{
           'backdrop-hover-overlay': hover,
