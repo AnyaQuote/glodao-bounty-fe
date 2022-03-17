@@ -25,7 +25,9 @@
             <div class="rounded-circle d-flex justify-center card-project-medium-icon">
               <chain-logo :chain="chainId" class="fill-width fill-height" />
             </div>
-            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">{{ name }}</div>
+            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
+              {{ name }}
+            </div>
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
