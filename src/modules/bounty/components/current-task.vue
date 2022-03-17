@@ -1,5 +1,5 @@
 <template>
-  <v-sheet outlined class="pa-3 pb-2 card-text" style="position: relative">
+  <v-sheet outlined class="pa-3 pb-2 card-text" rounded elevation="3" style="position: relative">
     <div class="custom-flag-container">
       <div
         class="custom-flag-css d-flex justify-end align-center pb-2 flex-column"
