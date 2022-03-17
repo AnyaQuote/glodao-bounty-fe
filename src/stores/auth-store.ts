@@ -94,6 +94,10 @@ export class AuthStore {
       this.changeTwitterLoginDialog(false)
     } catch (error) {
       snackController.error(error as string)
+    } finally {
+      router.push('/bounty').catch(() => {
+        //
+      })
     }
   }
 

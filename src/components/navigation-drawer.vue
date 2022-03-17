@@ -80,14 +80,6 @@ export default class Staking extends Vue {
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
 
-  mounted() {
-    const access_token = this.$route.query.access_token as string
-    const access_secret = this.$route.query.access_secret as string
-    if (access_token && access_secret) {
-      this.authStore.fetchUser(access_token, access_secret)
-    }
-  }
-
   openLink(url) {
     window.open(url, '_blank')
   }
