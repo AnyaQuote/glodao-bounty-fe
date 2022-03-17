@@ -77,6 +77,12 @@ export class BountyDetailViewModel {
           this.generateBreadcrumbsItems()
         }
       ),
+      reaction(
+        () => this.twitterSharedLinkList,
+        () => {
+          console.log(this.twitterSharedLinkList)
+        }
+      ),
     ]
     this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
@@ -288,6 +294,38 @@ export class BountyDetailViewModel {
 
   @computed get isTaskEnded() {
     return moment(this.currentTime).isAfter(this.task.endTime)
+  }
+
+  @computed get twitterSharedLinkList() {
+    const flatRelatedAppliesTwitterData = this.relatedApplies.map((apply) => {
+      if (apply.data?.twitter?.length > 0)
+        return {
+          hunterName: apply.hunter.name,
+          hunterAvatar: apply.hunter.metadata.avatar,
+          data: apply.data.twitter,
+        }
+    })
+    const result: any[] = []
+    flatRelatedAppliesTwitterData.forEach((applyData) => {
+      const stepData = applyData?.data
+      for (let index = 0; index < stepData.length; index++) {
+        const task = stepData[index]
+        if (task.type === 'follow') continue
+        if (task.finished && task.link && task.shareTime) {
+          result.push({
+            hunterName: applyData?.hunterName,
+            hunterAvatar: applyData?.hunterAvatar,
+            shareTime: task.shareTime,
+            link: task.link,
+          })
+        }
+      }
+    })
+    return result
+  }
+
+  @computed get totalTwitterShare() {
+    return this.twitterSharedLinkList.length ?? 0
   }
 
   handleTaskIdChange = async () => {

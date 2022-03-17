@@ -366,9 +366,9 @@
             <div class="card-big-title-text font-weight-bold">Current Twitter shares</div>
           </v-sheet>
           <v-sheet class="neutral15-background">
-            <v-row no-gutters dense>
+            <v-row>
               <!-- 1 -->
-              <v-col cols="4" class="pr-4">
+              <v-col cols="12" sm="4" md="4" lg="4">
                 <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
@@ -381,7 +381,7 @@
                     <div>
                       <v-sheet class="text-subtitle-2">Total share</v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">{{
-                        vm.statistical.total | formatNumber(0)
+                        vm.totalTwitterShare | formatNumber(0)
                       }}</v-sheet>
                     </div>
                   </v-row>
@@ -389,7 +389,7 @@
               </v-col>
 
               <!-- 2 -->
-              <v-col cols="4" class="pl-2 pr-2">
+              <v-col cols="12" sm="4" md="4" lg="4">
                 <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
@@ -410,7 +410,7 @@
               </v-col>
 
               <!-- 3 -->
-              <v-col cols="4" class="pl-4">
+              <v-col cols="12" sm="4" md="4" lg="4">
                 <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
@@ -433,23 +433,28 @@
           </v-sheet>
 
           <v-sheet outlined class="mt-4" rounded>
-            <v-data-table :headers="headers" :items="vm.hunterList" class="elevation-0 rounded-lg" hide-default-footer>
+            <v-data-table
+              :headers="headers"
+              :items="vm.twitterSharedLinkList"
+              class="elevation-0 rounded-lg"
+              :hide-default-footer="vm.totalTwitterShare < 10"
+            >
               <template v-slot:[`item.name`]="{ item }">
-                <v-row dense no-gutters align="center" class="ma-2">
+                <v-row dense no-gutters justify="center" align="center" class="ma-2">
                   <v-avatar>
-                    <img :src="item.avatar" alt="John" />
+                    <img :src="item.hunterAvatar" alt="Avatar" />
                   </v-avatar>
-                  <div class="ml-4 font-weight-medium">{{ `@${item.name}` }}</div>
+                  <div class="ml-4 font-weight-medium">{{ `@${item.hunterName}` }}</div>
                 </v-row>
               </template>
               <template v-slot:[`item.time`]="{ item }">
-                <div>{{ item.time | normalizeTimeDuration }}</div>
+                <div>{{ item.shareTime | normalizeTimeDuration }}</div>
               </template>
               <template v-slot:[`item.link`]="{ item }">
-                <v-row no-gutters dense justify="end">
-                  <a :href="item.link" target="_blank" class="blue--text">
+                <v-row no-gutters dense justify="center">
+                  <div class="blue--text" @click="openLink(item.link)">
                     Link<v-icon size="14" color="bluePrimary" class="ml-2">mdi-open-in-new</v-icon>
-                  </a>
+                  </div>
                 </v-row>
               </template>
             </v-data-table>
@@ -508,13 +513,15 @@ export default class BountyDetail extends Vue {
     {
       text: 'Share link',
       value: 'link',
-      align: 'end',
+      align: 'center',
       sortable: false,
       class: ['blue lighten-1'],
     },
   ]
-  openLink(url) {
-    window.open(url, '_blank')
+  openLink(link: string) {
+    const url = link.trim()
+    if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
+    else window.open('https://' + url, '_blank')
   }
   beforeDestroy() {
     this.vm.destroyReaction()
@@ -536,6 +543,9 @@ export default class BountyDetail extends Vue {
 }
 .font-size-12 {
   font-size: 12px;
+}
+.font-size-12-important {
+  font-size: 12px !important;
 }
 .font-size-14 {
   font-size: 14px;
