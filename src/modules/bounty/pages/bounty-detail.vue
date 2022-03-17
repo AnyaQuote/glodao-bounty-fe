@@ -402,7 +402,7 @@
                     <div>
                       <v-sheet class="text-subtitle-2">Daily share</v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">{{
-                        vm.statistical.daily | formatNumber(0)
+                        vm.dailyTwitterShareCount | formatNumber(0)
                       }}</v-sheet>
                     </div>
                   </v-row>
@@ -423,7 +423,7 @@
                     <div>
                       <v-sheet class="text-subtitle-2">Twitter account </v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">
-                        {{ vm.statistical.twitter | formatNumber(0) }}
+                        {{ vm.uniqueTwitterAccountCount | formatNumber(0) }}
                       </v-sheet>
                     </div>
                   </v-row>

@@ -1,7 +1,7 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { keys, merge, sumBy } from 'lodash-es'
+import { keys, merge, sumBy, uniqBy } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
@@ -326,6 +326,26 @@ export class BountyDetailViewModel {
 
   @computed get totalTwitterShare() {
     return this.twitterSharedLinkList.length ?? 0
+  }
+
+  @computed get uniqueTwitterAccountCount() {
+    const uniqByName = uniqBy(this.twitterSharedLinkList, 'hunterName')
+    return uniqByName.length
+  }
+
+  @computed get dailyTwitterShareCount() {
+    let count = 0
+    this.twitterSharedLinkList.forEach((data) => {
+      const momentObj = moment(data.shareTime)
+      const currentDate = Date.now()
+      if (
+        momentObj.isSame(currentDate, 'day') &&
+        momentObj.isSame(currentDate, 'month') &&
+        momentObj.isSame(currentDate, 'year')
+      )
+        count++
+    })
+    return count
   }
 
   handleTaskIdChange = async () => {
