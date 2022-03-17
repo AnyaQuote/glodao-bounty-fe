@@ -1,14 +1,20 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { keys } from 'lodash-es'
+import { keys, merge, sumBy } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
+import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
 
 export enum HUNTING {
   start,
   hunting,
   finish,
+}
+
+const APPLY_STATUS = {
+  PROCESSING: 'processing',
+  COMPLETED: 'completed',
 }
 
 export interface SharePerson {
@@ -23,12 +29,15 @@ export class BountyDetailViewModel {
   @observable status: HUNTING = HUNTING.start
   @observable hunters: any = []
 
-  @observable tasks: any = {}
+  @observable task: any = {}
+  @observable relatedApplies: any[] = []
   @observable hunterId = authStore.user?.hunter?.id ?? ''
 
-  @observable applies: any = {}
-
+  @observable apply: any = {}
   @observable applyStepData: any = {}
+
+  @observable reCaptchaDialog = false
+  @observable confirmCaptcha = false
 
   @observable statistical = {
     total: 100,
@@ -42,21 +51,192 @@ export class BountyDetailViewModel {
     this.disposes = [
       reaction(
         () => this.taskId,
-        () => this.handleTaskIdChange()
+        () => {
+          this.supaFetch()
+          // this.handleTaskIdChange()
+        }
       ),
-      reaction(
-        () => this.hunterId,
-        () => this.hunterIdChange()
-      ),
+      // reaction(
+      //   () => this.hunterId,
+      //   () => this.hunterIdChange()
+      // ),
     ]
+  }
+
+  destroyReaction() {
+    this.disposes.forEach((d) => d())
+  }
+
+  @action reset() {
+    this.taskId = ''
+    this.task = {}
+    this.apply = {}
+    this.applyStepData = {}
+  }
+
+  @asyncAction *supaFetch() {
+    yield this.getTaskData()
+    yield this.getApplyData()
+  }
+
+  @asyncAction *getTaskData() {
+    try {
+      const res = yield apiService.tasks.findOne(this.taskId)
+      console.log(res)
+      this.task = res
+      this.initEmptyStepData()
+      apiService.applies
+        .find({
+          'task.id': this.taskId,
+        })
+        .then((res) => (this.relatedApplies = res))
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @action initEmptyStepData() {
+    const tempStepData: any = {}
+    for (const key in this.task?.data) {
+      if (Object.prototype.hasOwnProperty.call(this.task?.data, key)) {
+        const seperateTaskData = this.task?.data[key]
+        console.log(seperateTaskData)
+        tempStepData[key] = seperateTaskData.map((miniTask) => {
+          return { type: miniTask.type, link: '', finished: false }
+        })
+      }
+    }
+    this.applyStepData = tempStepData
+  }
+
+  @asyncAction *getApplyData() {
+    try {
+      if (!authStore.jwt || !this.taskId) return
+      const res = yield apiService.applies.find({
+        'task.id': this.taskId,
+        'hunter.id': this.hunterId,
+      })
+      if (res.length > 0 && res[0].data) {
+        const apply = res[0]
+        console.log(res[0].data)
+        this.applyStepData = merge(this.applyStepData, res[0].data)
+        console.log(this.displayedData)
+        if (apply.status === APPLY_STATUS.PROCESSING) this.status = HUNTING.hunting
+        else this.status = HUNTING.finish
+        this.apply = apply
+      }
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @computed get displayedData() {
+    const stepTypes = keys(this.applyStepData)
+    const tempStepData: any = {}
+
+    stepTypes.forEach((type) => {
+      tempStepData[type] = this.applyStepData[type].map((step) => {
+        const result = { ...step, stepLink: step.link }
+        if (Object.prototype.hasOwnProperty.call(result, 'link')) delete result.link
+        return result
+      })
+    })
+    const res = merge(tempStepData, this.task.data)
+    console.log(res)
+
+    return res
+  }
+
+  @computed get displayedTwitterData() {
+    const result =
+      this.displayedData?.twitter?.map((task) => {
+        return { ...task, activeStep: false }
+      }) ?? []
+    result[0].activeStep = true
+    for (let index = 1; index < result.length; index++) {
+      if (result[index - 1].finished) {
+        result[index].activeStep = true
+        result[index - 1].activeStep = false
+      }
+    }
+
+    return result ?? []
+  }
+
+  @action.bound submitLink(type: string, link: string, stepIndex: number) {
+    const temp = JSON.parse(JSON.stringify(this.applyStepData))
+    temp[type][stepIndex].link = link
+    temp[type][stepIndex].finished = true
+    temp[type][stepIndex].shareTime = Date.now()
+    console.log(temp[type][stepIndex])
+    const tempApply = JSON.parse(JSON.stringify(this.apply))
+    try {
+      apiService.applies.update(this.apply.id, { ...tempApply, data: temp }).then((res) => {
+        if (res) {
+          this.applyStepData = temp
+          this.apply = res
+        }
+      })
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @action.bound submitTaskConfirmation(type: string) {
+    // TODO: Need change - confirmation dialog
+    try {
+      const tempApply = JSON.parse(JSON.stringify(this.apply))
+      apiService.applies.update(this.apply.id, { ...tempApply, status: APPLY_STATUS.COMPLETED }).then((res) => {
+        this.apply = res
+        this.status = HUNTING.finish
+      })
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @action.bound changeRecaptchaDialog(value: boolean) {
+    this.reCaptchaDialog = value
+  }
+  @action.bound changeRecaptchaConfirm(value: boolean) {
+    this.confirmCaptcha = value
+    if (value) {
+      setTimeout(() => {
+        this.changeRecaptchaDialog(false)
+        this.createApply()
+      }, 500)
+    }
+  }
+
+  @computed get remainingSlot() {
+    if (this.task?.maxParticipant) return this.task.maxParticipant - this.relatedApplies.length
+    return 'Unlimited'
+  }
+
+  @computed get remainingReward() {
+    if (!this.task?.rewardAmount) return 0
+    const totalSpentReward = sumBy(this.relatedApplies, (apply) => {
+      if (apply.bounty) return apply.bounty
+      else return 0
+    })
+
+    return this.task.rewardAmount - totalSpentReward
+  }
+
+  @computed get taskProgressPercentage() {
+    return (this.relatedApplies.length / this.task.maxParticipant) * 100
+  }
+
+  @computed get currentParticipant() {
+    return this.relatedApplies.length
   }
 
   handleTaskIdChange = async () => {
     try {
-      this.tasks = await apiService.tasks.findOne(this.taskId)
+      this.task = await apiService.tasks.findOne(this.taskId)
 
-      let twitter = this.tasks.data.twitter
-      let telegram = this.tasks.data.telegram
+      let twitter = this.task.data.twitter
+      let telegram = this.task.data.telegram
 
       twitter = twitter.map((twitterTask) => {
         return twitterTask.type !== 'follow'
@@ -104,8 +284,8 @@ export class BountyDetailViewModel {
         'hunter.id': this.hunterId,
       })) as any
       if (res) {
-        this.applies = res[0]
-        this.applyStepData = this.applies.data
+        this.apply = res[0]
+        this.applyStepData = this.apply.data
         this.status = HUNTING.hunting
       }
     } catch (error) {
@@ -114,14 +294,14 @@ export class BountyDetailViewModel {
   }
 
   @action statusHunting() {
-    this.tasks.data.forEach((objects) => {
+    this.task.data.forEach((objects) => {
       const allComplete = Object.values(objects).every((object: any) => object.finished)
       if (allComplete) this.status = HUNTING.finish
     })
   }
 
   @computed get twitterTasks() {
-    const twitter = this.tasks.data?.twitter
+    const twitter = this.task.data?.twitter
     const applies = this.applyStepData?.twitter
 
     if (applies && twitter) {
@@ -134,7 +314,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get twitters() {
-    return this.tasks.data?.twitter ?? []
+    return this.task.data?.twitter ?? []
   }
 
   getStatus(status: any) {
@@ -145,21 +325,21 @@ export class BountyDetailViewModel {
   }
 
   @action injectTaskCompleted() {
-    const objectKeys = keys(this.tasks.data)
+    const objectKeys = keys(this.task.data)
     objectKeys.forEach((key) => {
-      const objects = this.tasks.data[key]
+      const objects = this.task.data[key]
       objects.forEach((object) => {
-        const ob = this.applies[key].find((e) => e.type === object.type)
+        const ob = this.apply[key].find((e) => e.type === object.type)
         object.finished = ob.finished
       })
     })
   }
 
   createApplies() {
-    const objectKeys = keys(this.tasks.data)
-    this.applies = []
+    const objectKeys = keys(this.task.data)
+    this.apply = []
     objectKeys.forEach((key) => {
-      const objectTasksByKey = this.tasks.data[key].map((e) => {
+      const objectTasksByKey = this.task.data[key].map((e) => {
         return e.type !== 'follow'
           ? {
               type: e.type,
@@ -171,18 +351,18 @@ export class BountyDetailViewModel {
               finished: false,
             }
       })
-      this.applies[key] = objectTasksByKey
+      this.apply[key] = objectTasksByKey
     })
   }
 
   @action.bound getStatusApply(twitterTask: any) {
     const type = twitterTask.type
-    return this.applies.twitterTasks.find((e) => e.type === type).finished
+    return this.apply.twitterTasks.find((e) => e.type === type).finished
   }
 
   handleTasksChange() {
-    let twitterTasks = this.tasks.data.twitter
-    let telegramTasks = this.tasks.data.telegram
+    let twitterTasks = this.task.data.twitter
+    let telegramTasks = this.task.data.telegram
 
     twitterTasks = twitterTasks.map((twitterTask) => {
       return twitterTask.type !== 'follow'
@@ -209,7 +389,7 @@ export class BountyDetailViewModel {
           }
     })
 
-    this.applies = { twitterTasks, telegramTasks }
+    this.apply = { twitterTasks, telegramTasks }
   }
 
   hunterIdChange() {
@@ -218,12 +398,49 @@ export class BountyDetailViewModel {
 
   @action taskIdChange(taskId: string) {
     this.taskId = taskId
+    console.log(this.taskId)
   }
 
   @action.bound startHunting() {
-    if (this.status === HUNTING.start) {
-      this.status = HUNTING.hunting
-      this.hunting()
+    if (!authStore.jwt) {
+      authStore.changeTwitterLoginDialog(true)
+      return
+    }
+    try {
+      apiService.applies
+        .count({
+          'task.id': this.taskId,
+          'hunter.id': this.hunterId,
+        })
+        .then((res) => {
+          if (res === 0) {
+            console.log('abc')
+            this.changeRecaptchaDialog(true)
+            // this.createApply()
+          }
+        })
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *createApply() {
+    //
+    try {
+      const res = yield apiService.applies.create({
+        data: this.applyStepData,
+        ID: `${this.taskId}_${authStore.user.hunter.id}`,
+        hunter: authStore.user.hunter.id,
+        task: this.taskId,
+        status: APPLY_STATUS.PROCESSING,
+      })
+
+      if (res) {
+        this.apply = res
+        this.status = HUNTING.hunting
+      }
+    } catch (error) {
+      snackController.error(error as string)
     }
   }
 
@@ -252,10 +469,10 @@ export class BountyDetailViewModel {
   }
 
   @computed get percent() {
-    if (!this.tasks?.maxParticipant) {
+    if (!this.task?.maxParticipant) {
       return 0
     }
-    return (900 / this.tasks?.maxParticipant) * 100
+    return (900 / this.task?.maxParticipant) * 100
   }
 
   @computed get hunterList() {
