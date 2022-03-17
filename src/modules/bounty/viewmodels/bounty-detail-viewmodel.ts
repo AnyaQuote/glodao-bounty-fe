@@ -39,6 +39,9 @@ export class BountyDetailViewModel {
   @observable reCaptchaDialog = false
   @observable confirmCaptcha = false
 
+  @observable currentTime = Date.now()
+  currentTimeInterval: NodeJS.Timer
+
   @observable statistical = {
     total: 100,
     daily: 10000,
@@ -57,10 +60,16 @@ export class BountyDetailViewModel {
         }
       ),
     ]
+    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
 
   destroyReaction() {
     this.disposes.forEach((d) => d())
+    if (this.currentTimeInterval) clearInterval(this.currentTimeInterval)
+  }
+
+  @action setCurrentTime() {
+    this.currentTime = Date.now()
   }
 
   @action reset() {
@@ -230,11 +239,11 @@ export class BountyDetailViewModel {
   }
 
   @computed get isTaskStarted() {
-    return moment().isAfter(this.task.startTime)
+    return moment(this.currentTime).isAfter(this.task.startTime)
   }
 
   @computed get isTaskEnded() {
-    return moment().isAfter(this.task.endTime)
+    return moment(this.currentTime).isAfter(this.task.endTime)
   }
 
   handleTaskIdChange = async () => {

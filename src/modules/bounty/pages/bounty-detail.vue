@@ -40,7 +40,7 @@
       <v-col cols="12" md="4">
         <v-sheet class="mb-4 position-relative">
           <!-- image -->
-          <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-md"></v-img>
+          <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg"></v-img>
           <!-- status -->
           <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
             <v-sheet
@@ -115,24 +115,7 @@
                 <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDed</div>
               </v-col>
               <v-col cols="12" md="6">
-                <div class="d-flex" v-if="!vm.isTaskEnded">
-                  <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">10</div>
-                  </v-sheet>
-                  <div class="flex-center-box mx-3 white--text">:</div>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">10</div>
-                  </v-sheet>
-                  <div class="flex-center-box mx-3 white--text">:</div>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">10</div>
-                  </v-sheet>
-                  <div class="flex-center-box mx-3 white--text">:</div>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">10</div>
-                  </v-sheet>
-                </div>
+                <countdown v-if="!vm.isTaskEnded" :targetDate="vm.task.endTime" />
                 <div class="d-flex" v-if="vm.isTaskEnded">
                   <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
                   <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
@@ -485,6 +468,7 @@ import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-view
     'chain-logo': () => import('@/components/chain-logo.vue'),
     'link-submit': () => import('@/modules/bounty/components/link-submit.vue'),
     'recaptcha-dialog': () => import('@/modules/bounty/components/recaptcha-dialog.vue'),
+    countdown: () => import('@/modules/bounty/components/countdown.vue'),
   },
 })
 export default class BountyDetail extends Vue {
