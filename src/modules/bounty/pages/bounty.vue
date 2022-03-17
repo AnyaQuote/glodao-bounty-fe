@@ -67,16 +67,16 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="missions" :info="vm.bountyCount"></info-card>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="rewards" :info="'10000' | formatNumber(2, 0)"></info-card>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="users" :info="'100' | formatNumber(2, 0)"></info-card>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="participants" :info="'1000' | formatNumber(2, 0)"></info-card>
           </v-col>
         </v-row>
