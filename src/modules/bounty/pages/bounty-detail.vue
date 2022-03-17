@@ -419,7 +419,7 @@
                       <v-icon color="white" size="20"> mdi-twitter </v-icon>
                     </v-sheet>
                     <div>
-                      <v-sheet class="text-subtitle-2">Twitter account {{ vm.isTaskStarted }}</v-sheet>
+                      <v-sheet class="text-subtitle-2">Twitter account </v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">
                         {{ vm.statistical.twitter | formatNumber }}
                       </v-sheet>
