@@ -1,8 +1,7 @@
-import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
+import Axios from 'axios'
 import qs from 'qs'
 
-import Axios from 'axios'
 export type ApiRouteType = 'applies' | 'hunters' | 'logs' | 'pool-regists' | 'pools' | 'tasks' | 'users'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
@@ -121,11 +120,11 @@ export class ApiHandlerJWT<T> {
     return res.data
   }
 
-  async create(model: T): Promise<T> {
+  async create(model: T, jwt?: string): Promise<T> {
     const res = await this.axios.post(this.route, model, {
       headers: {
         ...axios.defaults.headers,
-        Authorization: `Bearer ${authStore.jwt}`,
+        Authorization: `Bearer ${jwt ?? authStore.jwt}`,
       },
     })
     return res.data
@@ -151,10 +150,10 @@ export class ApiHandlerJWT<T> {
     return lst
   }
 
-  async findOne<T>(id: any): Promise<T> {
+  async findOne<T>(id: any, jwt?: string): Promise<T> {
     let res: any
     let headers = this.headers
-    if (this.jwtOptions.findOne) headers = { ...headers, Authorization: `Bearer ${authStore.jwt}` }
+    if (this.jwtOptions.findOne) headers = { ...headers, Authorization: `Bearer ${jwt ?? authStore.jwt}` }
     if (id) {
       res = await this.axios.get(`${this.route}/${id}`, { headers })
     } else {
@@ -198,6 +197,13 @@ export class ApiService {
 
   async getFile(id: any) {
     const res = await axios.get(`upload/files/${id}`)
+    return res.data
+  }
+
+  async fetchUser(access_token: string, access_secret: string) {
+    const res = await axios.get('auth/twitter/callback', {
+      params: { access_token: access_token, access_secret: access_secret },
+    })
     return res.data
   }
 }
