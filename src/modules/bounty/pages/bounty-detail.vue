@@ -3,7 +3,7 @@
     <v-row no-gutters dense>
       <!-- breadcrumbs -->
       <v-col cols="12">
-        <v-sheet height="50">
+        <v-sheet height="50" class="neutral15">
           <v-breadcrumbs :items="vm.breadcrumbsItems" divider=">" class="pa-0">
             <template v-slot:item="{ item }">
               <v-breadcrumbs-item :disabled="item.disabled">
@@ -24,7 +24,7 @@
 
       <!-- BOUNTY NAME -->
       <v-col cols="12">
-        <v-sheet class="d-flex align-center mb-4">
+        <v-sheet class="d-flex align-center mb-4 neutral15">
           <v-sheet width="32" height="32" class="rounded-circle d-flex justify-center align-center">
             <chain-logo :chain="vm.task | _get('chainId')" class="logo-chain" />
           </v-sheet>
@@ -64,10 +64,10 @@
         </v-sheet>
 
         <!-- subtitle -->
-        <v-sheet class="mb-4 card-subtitle-1">
+        <v-sheet class="mb-4 card-subtitle-1 neutral15">
           {{ vm.task | _get('metadata.caption') }}
         </v-sheet>
-        <v-sheet>
+        <v-sheet class="neutral15">
           <div class="card-title-text font-weight-medium">Time to hunting</div>
           <ul>
             <li class="card-subtitle-1 font-weight-medium">From: {{ vm.task.startTime | MMMddYYYYhhmm }}</li>
@@ -77,31 +77,31 @@
       </v-col>
 
       <!-- RIGHT -->
-      <v-col cols="12" md="8" class="mt-4 mt-md-0">
-        <v-sheet class="ml-md-5">
+      <v-col cols="12" md="8" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)">
+        <v-sheet class="ml-md-5" style="background-color: var(--v-neutral-15-base)">
           <!-- LIST -->
-          <v-sheet class="mb-4">
+          <v-sheet class="mb-4 neutral15">
             <v-row dense>
               <v-col cols="6" md="3">
-                <v-sheet outlined rounded class="pa-4">
+                <v-sheet outlined rounded class="pa-4" elevation="3">
                   <div class="card-subtitle-1">Total reward ({{ vm.task | _get('metadata.rewardToken', 0) }})</div>
                   <div class="card-big-title-text font-weight-bold">{{ vm.task | _get('rewardAmount', 0) }}</div>
                 </v-sheet>
               </v-col>
               <v-col cols="6" md="3">
-                <v-sheet outlined rounded class="pa-4">
+                <v-sheet outlined rounded class="pa-4" elevation="3">
                   <div class="card-subtitle-1">Remaining ({{ vm.task | _get('metadata.rewardToken', 0) }})</div>
                   <div class="card-big-title-text font-weight-bold">{{ vm.remainingReward }}</div>
                 </v-sheet>
               </v-col>
               <v-col cols="6" md="3">
-                <v-sheet outlined rounded class="pa-4">
+                <v-sheet outlined rounded class="pa-4" elevation="3">
                   <div class="card-subtitle-1">Max participant</div>
                   <div class="card-big-title-text font-weight-bold">{{ vm.task | _get('maxParticipant', 0) }}</div>
                 </v-sheet>
               </v-col>
               <v-col cols="6" md="3">
-                <v-sheet outlined rounded class="pa-4">
+                <v-sheet outlined rounded class="pa-4" elevation="3">
                   <div class="card-subtitle-1">Slot left</div>
                   <div class="card-big-title-text font-weight-bold">{{ vm.remainingSlot }}</div>
                 </v-sheet>
@@ -110,7 +110,7 @@
           </v-sheet>
 
           <!-- COUNTDOWN -->
-          <v-sheet rounded class="pa-6 mb-4" color="blue" v-if="vm.isTaskStarted">
+          <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" v-if="vm.isTaskStarted" elevation="3">
             <v-row dense>
               <v-col cols="12">
                 <div class="white--text text-uppercase" v-if="!vm.isTaskEnded">POOL ENDS IN</div>
@@ -153,8 +153,8 @@
           </v-sheet>
 
           <!-- TASK -->
-          <v-sheet outlined rounded>
-            <v-tabs v-model="tab" color="blue">
+          <v-sheet class="rounded-lg" elevation="3">
+            <v-tabs v-model="tab" color="blue" class="rounded-lg">
               <v-tab
                 v-for="(item, index) in items"
                 :key="index"
@@ -198,7 +198,11 @@
                     <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
                     <div class="text-center my-4">
                       <div v-if="vm.status === HUNTING.start">
-                        <v-btn elevation color="bluePrimary" class="white--text text-none" @click="vm.startHunting">
+                        <v-btn
+                          elevation
+                          class="white--text text-none linear-background-blue-main"
+                          @click="vm.startHunting"
+                        >
                           <v-icon left>power_settings_new</v-icon>
                           Start hunting
                         </v-btn>
@@ -299,7 +303,6 @@
                               <div class="text-end">
                                 <v-btn
                                   v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
-                                  color="blue"
                                   class="white--text text-none"
                                   :disabled="
                                     vm.status === HUNTING.start || vm.status === HUNTING.finish || twitterTask.finished
@@ -359,25 +362,25 @@
           <!-- divider -->
           <v-divider class="my-10"></v-divider>
 
-          <v-sheet class="my-4">
+          <v-sheet class="my-4 neutral15">
             <div class="card-big-title-text font-weight-bold">Current Twitter shares</div>
           </v-sheet>
-          <v-sheet>
+          <v-sheet class="neutral15-background">
             <v-row no-gutters dense>
               <!-- 1 -->
               <v-col cols="4" class="pr-4">
-                <v-sheet outlined height="80" class="pa-4">
+                <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
                       width="48"
                       height="48"
-                      class="rounded-circle bluePrimary mr-4 d-flex justify-center align-center"
+                      class="rounded-circle mr-4 flex-center-box linear-background-blue-main"
                     >
                       <v-icon color="white">mdi-share-all</v-icon>
                     </v-sheet>
                     <div>
                       <v-sheet class="text-subtitle-2">Total share</v-sheet>
-                      <v-sheet class="text-h6 line-heightm font-weight-black">{{
+                      <v-sheet class="text-h6 line-height font-weight-black">{{
                         vm.statistical.total | formatNumber
                       }}</v-sheet>
                     </div>
@@ -387,15 +390,14 @@
 
               <!-- 2 -->
               <v-col cols="4" class="pl-2 pr-2">
-                <v-sheet outlined height="80" class="pa-4">
+                <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
-                      outlined
                       width="48"
                       height="48"
-                      class="rounded-circle mr-4 d-flex justify-center align-center border-color"
+                      class="rounded-circle mr-4 flex-center-box linear-background-blue-main"
                     >
-                      <v-icon color="blue" size="25">mdi-share-all-outline</v-icon>
+                      <v-icon color="white">mdi-share-all-outline</v-icon>
                     </v-sheet>
                     <div>
                       <v-sheet class="text-subtitle-2">Daily share</v-sheet>
@@ -409,12 +411,12 @@
 
               <!-- 3 -->
               <v-col cols="4" class="pl-4">
-                <v-sheet outlined height="80" class="pa-4">
+                <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
                       width="48"
                       height="48"
-                      class="rounded-circle bluePrimary mr-4 d-flex justify-center align-center"
+                      class="rounded-circle mr-4 flex-center-box linear-background-blue-main"
                     >
                       <v-icon color="white" size="20"> mdi-twitter </v-icon>
                     </v-sheet>
@@ -430,8 +432,8 @@
             </v-row>
           </v-sheet>
 
-          <v-sheet outlined class="mt-4">
-            <v-data-table :headers="headers" :items="vm.hunterList" class="elevation-0" hide-default-footer>
+          <v-sheet outlined class="mt-4" rounded>
+            <v-data-table :headers="headers" :items="vm.hunterList" class="elevation-0 rounded-lg" hide-default-footer>
               <template v-slot:[`item.name`]="{ item }">
                 <v-row dense no-gutters align="center" class="ma-2">
                   <v-avatar>
@@ -518,6 +520,12 @@ export default class BountyDetail extends Vue {
 }
 </script>
 <style scoped>
+.neutral15-background {
+  background-color: var(--v-neutral15-base);
+}
+.v-btn.disabled {
+  background-image: none;
+}
 .black--border-thin {
   border: thin solid black;
 }
