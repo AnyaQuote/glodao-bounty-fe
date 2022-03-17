@@ -21,7 +21,7 @@
           elevation="0"
           tile
           color="blue"
-          class="fill-width white--text text-none font-size-14"
+          class="fill-width white--text text-none font-size-14 linear-background-blue-main"
           height="100%"
           :disabled="vm.status === HUNTING.start || vm.status === HUNTING.finish || twitterTask.finished"
           @click="submitLink"
@@ -67,6 +67,9 @@ export default class BountyDetail extends Vue {
 }
 </script>
 <style scoped>
+.v-btn--disabled {
+  background-image: none !important;
+}
 .black--border-thin {
   border: thin solid black;
 }

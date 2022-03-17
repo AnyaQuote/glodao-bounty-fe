@@ -48,6 +48,9 @@ export class BountyDetailViewModel {
   @observable reCaptchaDialog = false
   @observable confirmCaptcha = false
 
+  @observable earnDialog = false
+  @observable earnDialogWalletInput = ''
+
   @observable currentTime = Date.now()
   currentTimeInterval: NodeJS.Timer
 
@@ -92,6 +95,15 @@ export class BountyDetailViewModel {
         href: '#',
       },
     ]
+  }
+
+  @action.bound changeEarnDialog(value: boolean) {
+    this.earnDialog = value
+    console.log(this.earnDialog)
+  }
+
+  @action.bound changeEarnDialogWalletInput(value: string) {
+    this.earnDialogWalletInput = value
   }
 
   @action setCurrentTime() {
@@ -216,13 +228,19 @@ export class BountyDetailViewModel {
   }
 
   @action.bound submitTaskConfirmation(type: string) {
-    // TODO: Need change - confirmation dialog
     try {
       const tempApply = JSON.parse(JSON.stringify(this.apply))
-      apiService.applies.update(this.apply.id, { ...tempApply, status: APPLY_STATUS.COMPLETED }).then((res) => {
-        this.apply = res
-        this.status = HUNTING.finish
-      })
+      apiService.applies
+        .update(this.apply.id, {
+          ...tempApply,
+          status: APPLY_STATUS.COMPLETED,
+          walletAddress: this.earnDialogWalletInput,
+        })
+        .then((res) => {
+          this.apply = res
+          this.status = HUNTING.finish
+          this.changeEarnDialog(false)
+        })
     } catch (error) {
       snackController.error(error as string)
     }

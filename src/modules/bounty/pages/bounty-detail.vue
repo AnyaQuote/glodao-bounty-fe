@@ -203,19 +203,19 @@
                           class="white--text text-none linear-background-blue-main"
                           @click="vm.startHunting"
                         >
-                          <v-icon left>power_settings_new</v-icon>
+                          <v-icon left>mdi-power</v-icon>
                           Start hunting
                         </v-btn>
                       </div>
                       <div v-else-if="vm.status === HUNTING.hunting">
                         <v-btn elevation outlined color="green" class="text-none">
-                          <v-icon left>timelapse</v-icon>
+                          <v-icon left>mdi-timelapse</v-icon>
                           Your hunting process has begun!
                         </v-btn>
                       </div>
                       <div v-else>
                         <v-btn elevation outlined color="red" class="text-none">
-                          <v-icon left>error_outline</v-icon>
+                          <v-icon left>mdi-alert-circle-outline</v-icon>
                           {{ vm.isTaskEnded ? 'The pool had ended' : 'Your hunting process has finished!' }}
                         </v-btn>
                       </div>
@@ -303,7 +303,7 @@
                               <div class="text-end">
                                 <v-btn
                                   v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
-                                  class="white--text text-none"
+                                  class="white--text text-none linear-background-blue-main"
                                   :disabled="
                                     vm.status === HUNTING.start || vm.status === HUNTING.finish || twitterTask.finished
                                   "
@@ -343,9 +343,9 @@
                         <v-btn
                           elevation="0"
                           color="bluePrimary"
-                          class="white--text text-none"
+                          class="white--text text-none linear-background-blue-main"
                           :disabled="vm.status === HUNTING.start || vm.status === HUNTING.finish"
-                          @click="vm.submitTaskConfirmation('twitter')"
+                          @click="vm.changeEarnDialog(true)"
                         >
                           Confirm and earn reward
                         </v-btn>
@@ -381,7 +381,7 @@
                     <div>
                       <v-sheet class="text-subtitle-2">Total share</v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">{{
-                        vm.statistical.total | formatNumber
+                        vm.statistical.total | formatNumber(0)
                       }}</v-sheet>
                     </div>
                   </v-row>
@@ -402,7 +402,7 @@
                     <div>
                       <v-sheet class="text-subtitle-2">Daily share</v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">{{
-                        vm.statistical.daily | formatNumber
+                        vm.statistical.daily | formatNumber(0)
                       }}</v-sheet>
                     </div>
                   </v-row>
@@ -423,7 +423,7 @@
                     <div>
                       <v-sheet class="text-subtitle-2">Twitter account </v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">
-                        {{ vm.statistical.twitter | formatNumber }}
+                        {{ vm.statistical.twitter | formatNumber(0) }}
                       </v-sheet>
                     </div>
                   </v-row>
@@ -458,6 +458,7 @@
       </v-col>
     </v-row>
     <recaptcha-dialog />
+    <confirm-and-earn-dialog />
   </v-container>
 </template>
 
@@ -472,6 +473,7 @@ import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-view
     'chain-logo': () => import('@/components/chain-logo.vue'),
     'link-submit': () => import('@/modules/bounty/components/link-submit.vue'),
     'recaptcha-dialog': () => import('@/modules/bounty/components/recaptcha-dialog.vue'),
+    'confirm-and-earn-dialog': () => import('@/modules/bounty/components/confirm-and-earn-dialog.vue'),
     countdown: () => import('@/modules/bounty/components/countdown.vue'),
   },
 })
@@ -519,12 +521,12 @@ export default class BountyDetail extends Vue {
   }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 .neutral15-background {
   background-color: var(--v-neutral15-base);
 }
-.v-btn.disabled {
-  background-image: none;
+.v-btn--disabled {
+  background-image: none !important;
 }
 .black--border-thin {
   border: thin solid black;
