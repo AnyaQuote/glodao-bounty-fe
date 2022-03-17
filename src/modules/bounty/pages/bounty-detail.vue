@@ -16,7 +16,7 @@
               </v-breadcrumbs-item>
             </template>
             <template v-slot:divider>
-              <v-icon size="22"> chevron_right </v-icon>
+              <v-icon size="22"> mdi-chevron-right </v-icon>
             </template>
           </v-breadcrumbs>
         </v-sheet>
