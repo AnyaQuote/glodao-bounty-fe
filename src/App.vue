@@ -8,7 +8,7 @@
     <navigation-drawer />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <mobile-navigation-bar v-else />
-    <v-main class="d-flex flex-column">
+    <v-main class="d-flex flex-column neutral15">
       <router-view></router-view>
     </v-main>
     <v-divider></v-divider>
@@ -331,6 +331,9 @@ tbody {
 }
 .pt-20 {
   padding-top: 80px;
+}
+.linear-background-blue-main {
+  background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
 }
 @font-face {
   font-family: 'Proxima Nova';

@@ -50,6 +50,9 @@ export default new Vuetify({
           base: '#E5E5E5',
           lighten1: '#F9F9F9',
         },
+        neutral15: {
+          base: '#F9FBFD',
+        },
         neutral10: '#5F6267',
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
