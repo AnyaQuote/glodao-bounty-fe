@@ -67,7 +67,7 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import moment from 'moment'
-import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Observer
 @Component({
