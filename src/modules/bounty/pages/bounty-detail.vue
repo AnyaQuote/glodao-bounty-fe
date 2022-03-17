@@ -108,13 +108,14 @@
           </v-sheet>
 
           <!-- COUNTDOWN -->
-          <v-sheet rounded class="pa-6 mb-4" color="blue">
+          <v-sheet rounded class="pa-6 mb-4" color="blue" v-if="vm.isTaskStarted">
             <v-row dense>
               <v-col cols="12">
-                <div class="white--text">POOR ENDS IN</div>
+                <div class="white--text text-uppercase" v-if="!vm.isTaskEnded">POOL ENDS IN</div>
+                <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDed</div>
               </v-col>
               <v-col cols="12" md="6">
-                <div class="d-flex">
+                <div class="d-flex" v-if="!vm.isTaskEnded">
                   <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
                   <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
                     <div class="font-weight-bold">10</div>
@@ -130,6 +131,24 @@
                   <div class="flex-center-box mx-3 white--text">:</div>
                   <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
                     <div class="font-weight-bold">10</div>
+                  </v-sheet>
+                </div>
+                <div class="d-flex" v-if="vm.isTaskEnded">
+                  <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">0</div>
+                  </v-sheet>
+                  <div class="flex-center-box mx-3 white--text">:</div>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">0</div>
+                  </v-sheet>
+                  <div class="flex-center-box mx-3 white--text">:</div>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">0</div>
+                  </v-sheet>
+                  <div class="flex-center-box mx-3 white--text">:</div>
+                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
+                    <div class="font-weight-bold">0</div>
                   </v-sheet>
                 </div>
               </v-col>
@@ -208,7 +227,7 @@
                       <div v-else>
                         <v-btn elevation outlined color="red" class="text-none">
                           <v-icon left>error_outline</v-icon>
-                          Your hunting process has finished!
+                          {{ vm.isTaskEnded ? 'The pool had ended' : 'Your hunting process has finished!' }}
                         </v-btn>
                       </div>
                     </div>
@@ -415,7 +434,7 @@
                       <v-icon color="white" size="20"> mdi-twitter </v-icon>
                     </v-sheet>
                     <div>
-                      <v-sheet class="text-subtitle-2">Twitter account</v-sheet>
+                      <v-sheet class="text-subtitle-2">Twitter account {{ vm.isTaskStarted }}</v-sheet>
                       <v-sheet class="text-h6 line-height font-weight-black">
                         {{ vm.statistical.twitter | formatNumber }}
                       </v-sheet>

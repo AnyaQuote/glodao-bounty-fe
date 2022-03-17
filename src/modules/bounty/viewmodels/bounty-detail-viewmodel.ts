@@ -125,6 +125,8 @@ export class BountyDetailViewModel {
         else this.status = HUNTING.finish
         this.apply = apply
       }
+      if (!this.isTaskStarted) this.status = HUNTING.start
+      else if (this.isTaskEnded) this.status = HUNTING.finish
     } catch (error) {
       snackController.error(error as string)
     }
@@ -229,6 +231,14 @@ export class BountyDetailViewModel {
 
   @computed get currentParticipant() {
     return this.relatedApplies.length
+  }
+
+  @computed get isTaskStarted() {
+    return moment().isAfter(this.task.startTime)
+  }
+
+  @computed get isTaskEnded() {
+    return moment().isAfter(this.task.endTime)
   }
 
   handleTaskIdChange = async () => {
@@ -404,6 +414,10 @@ export class BountyDetailViewModel {
   @action.bound startHunting() {
     if (!authStore.jwt) {
       authStore.changeTwitterLoginDialog(true)
+      return
+    }
+    if (!this.isTaskStarted) {
+      snackController.error('The pool has not started yet!')
       return
     }
     try {
