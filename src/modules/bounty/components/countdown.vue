@@ -1,22 +1,21 @@
 <template>
-  <div class="d-flex">
-    <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
+  <v-sheet class="d-flex justify-space-between rounded-lg px-3 py-1">
     <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
       <div class="font-weight-bold">{{ days | twoDigits }}</div>
     </v-sheet>
-    <div class="flex-center-box mx-3 white--text">:</div>
+    <div class="flex-center-box mx-3">:</div>
     <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
       <div class="font-weight-bold">{{ hours | twoDigits }}</div>
     </v-sheet>
-    <div class="flex-center-box mx-3 white--text">:</div>
+    <div class="flex-center-box mx-3">:</div>
     <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
       <div class="font-weight-bold">{{ minutes | twoDigits }}</div>
     </v-sheet>
-    <div class="flex-center-box mx-3 white--text">:</div>
+    <div class="flex-center-box mx-3">:</div>
     <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
       <div class="font-weight-bold">{{ seconds | twoDigits }}</div>
     </v-sheet>
-  </div>
+  </v-sheet>
 </template>
 
 <style scoped></style>

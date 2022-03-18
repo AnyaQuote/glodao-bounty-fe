@@ -110,12 +110,12 @@
           </v-sheet>
 
           <!-- COUNTDOWN -->
-          <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" v-if="vm.isTaskStarted" elevation="3">
-            <v-row dense>
+          <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" elevation="3">
+            <!-- <v-row dense>
               <v-col cols="12">
                 <div class="white--text text-uppercase" v-if="!vm.isTaskEnded">POOL ENDS IN</div>
-                <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDed</div>
-              </v-col>
+                <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDED</div>
+              </v-col>  
               <v-col cols="12" md="6">
                 <countdown v-if="!vm.isTaskEnded" :targetDate="vm.task.endTime" />
                 <div class="d-flex" v-if="vm.isTaskEnded">
@@ -148,6 +148,37 @@
                     vm.taskProgressPercentage | formatNumber(2, 0)
                   }}%)
                 </v-progress-linear>
+              </v-col>
+            </v-row> -->
+
+            <v-row>
+              <v-col v-if="!vm.isTaskEnded">
+                <v-sheet class="d-flex flex-column justify-space-between transparent" height="100%">
+                  <v-sheet class="white--text text-uppercase transparent mb-3">POOL ENDS IN</v-sheet>
+                  <countdown :targetDate="vm.task.endTime" />
+                </v-sheet>
+              </v-col>
+              <v-col v-else>
+                <v-sheet
+                  class="d-flex justify-center align-center white text-uppercase rounded-lg bluePrimary--text"
+                  width="100%"
+                  height="100%"
+                >
+                  <v-icon color="bluePrimary">mdi-camera-control</v-icon>
+                  <div>the hunting has ended</div>
+                </v-sheet>
+              </v-col>
+              <v-col>
+                <v-sheet
+                  class="d-flex flex-column justify-space-between white--text font-family-proxima transparent"
+                  height="100%"
+                >
+                  <div class="text-uppercase">time for mission</div>
+                  <ul>
+                    <li>From: Jan 21st 2022, 10:00 am</li>
+                    <li>26th 2022, 10:00 am</li>
+                  </ul>
+                </v-sheet>
               </v-col>
             </v-row>
           </v-sheet>
