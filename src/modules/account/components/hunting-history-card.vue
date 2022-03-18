@@ -11,6 +11,7 @@
         }"
       >
         <v-img
+          class="rounded-lg"
           min-height="70"
           :class="{
             'bounty-image-sm': $vuetify.breakpoint.smAndDown,
@@ -104,14 +105,13 @@
         }"
       >
         <v-btn
-          class="text-capitalize"
+          class="text-capitalize rounded-lg"
           outlined
+          small
           :style="`border: thin solid var(--v-${buttonColor}-base); color: var(--v-${buttonColor}-base)`"
         >
           <v-sheet
             v-if="statusIcon"
-            width="16"
-            height="16"
             class="flex-center-box rounded-circle mr-1"
             :style="`border: thin solid var(--v-${buttonColor}-base)`"
           >
