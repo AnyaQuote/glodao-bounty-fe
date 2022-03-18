@@ -1,12 +1,12 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card class="mx-auto" elevation="3" rounded outlined>
+    <v-card class="mx-auto overflow-hidden border-radius-8px" elevation="3" outlined>
       <div
         :class="{
           'backdrop-hover-overlay': hover,
         }"
       >
-        <div class="pt-4 px-4 position-relative">
+        <div class="position-relative">
           <v-img height="236" :src="coverImage"></v-img>
           <div class="start-date-container" v-if="!isStarted"></div>
           <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600" v-if="!isStarted">
@@ -25,7 +25,9 @@
             <div class="rounded-circle d-flex justify-center card-project-medium-icon">
               <chain-logo :chain="chainId" class="fill-width fill-height" />
             </div>
-            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text">{{ name }}</div>
+            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
+              {{ name }}
+            </div>
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
@@ -40,12 +42,16 @@
       </div>
 
       <div
-        class="justify-center align-center"
+        class="justify-center align-center position-relative border-radius-8px"
         :class="{
           'd-flex  card-hover-overlay': hover,
           'd-none': !hover,
         }"
       >
+        <div
+          class="position-absolute linear-background-blue-main fill-width fill-height rounded-0"
+          style="opacity: 0.3"
+        ></div>
         <v-btn width="152" height="124" @click="openLink()">
           <div>
             <div class="d-flex justify-center">
@@ -63,7 +69,7 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import moment from 'moment'
-import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Observer
 @Component({
@@ -91,15 +97,18 @@ export default class BountyCard extends Vue {
 </script>
 
 <style scoped lang="scss">
+.border-radius-8px {
+  border-radius: 8px !important;
+}
 .backdrop-hover-overlay {
-  filter: blur(8px);
+  filter: blur(2px);
   z-index: -1;
 }
 .card-hover-overlay {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
+  // background-color: rgba(255, 255, 255, 0.6);
   top: 0;
   left: 0;
   z-index: 2;
@@ -113,7 +122,7 @@ export default class BountyCard extends Vue {
 }
 .custom-chevron-flag {
   clip-path: polygon(100% 0, 100% 100%, 50% 82%, 0 100%, 0% 0%);
-  background: var(--v-bluePrimary-base);
+  background-image: linear-gradient(to bottom, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
   width: 24px;
   min-height: 50px;
 }

@@ -9,7 +9,7 @@
     <div class="icon-container d-flex justify-center align-center" :class="`custom-bg-${type}`">
       <v-icon color="white"> {{ typeInfo.icon }} </v-icon>
     </div>
-    <v-sheet class="d-flex flex-column twitter">
+    <v-sheet class="d-flex flex-column">
       <v-sheet class="label-font text-end">
         {{ typeInfo.label }}
       </v-sheet>
@@ -85,7 +85,7 @@ export default class CurrentTask extends Vue {
   background: linear-gradient(90deg, #21da6b 0%, #caef62 113.65%);
 }
 .label-font {
-  font-family: 'Proxima Nova Alt';
+  font-family: 'Proxima Nova';
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -93,7 +93,7 @@ export default class CurrentTask extends Vue {
   color: #5f6267;
 }
 .info-font {
-  font-family: 'Proxima Nova Alt';
+  font-family: 'Proxima Nova';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;

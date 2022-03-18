@@ -1,12 +1,10 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-container>
-        <v-sheet height="336" class="page-title-container text-uppercase">
-          <!-- <div>Bounty</div> -->
-          <!-- <div class="mt-4 font-italic">Hunter</div> -->
-        </v-sheet>
-      </v-container>
+      <v-sheet height="336" class="page-title-container text-uppercase">
+        <!-- <div>Bounty</div> -->
+        <!-- <div class="mt-4 font-italic">Hunter</div> -->
+      </v-sheet>
       <v-divider />
     </v-col>
     <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
@@ -67,16 +65,16 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="missions" :info="vm.bountyCount"></info-card>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="rewards" :info="'10000' | formatNumber(2, 0)"></info-card>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="users" :info="'100' | formatNumber(2, 0)"></info-card>
           </v-col>
-          <v-col lg="3" md="6" sm="12" cols="12">
+          <v-col lg="3" md="6" sm="6" cols="12">
             <info-card type="participants" :info="'1000' | formatNumber(2, 0)"></info-card>
           </v-col>
         </v-row>
