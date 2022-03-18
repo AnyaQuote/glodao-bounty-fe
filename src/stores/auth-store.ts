@@ -64,17 +64,6 @@ export class AuthStore {
     this.user = {}
   }
 
-  @asyncAction *handleLogin() {
-    try {
-      const { jwt, user } = yield apiService.users.login('daoqtoan@gmail.com', '12345678')
-      this.changeJwt(jwt)
-      this.changeUser(user)
-      this.changeTwitterLoginDialog(false)
-    } catch (error) {
-      snackController.error(error as string)
-    }
-  }
-
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
       const res = yield apiService.fetchUser(access_token, access_secret)
