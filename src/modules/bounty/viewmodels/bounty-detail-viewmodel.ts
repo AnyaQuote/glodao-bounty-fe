@@ -17,6 +17,8 @@ const APPLY_STATUS = {
   COMPLETED: 'completed',
 }
 
+const ACCOUNT_MIN_AGE_IN_DAYS = 180
+
 const DEFAULT_BREADCRUMBS = [
   {
     text: 'Bounty hunter',
@@ -49,7 +51,7 @@ export class BountyDetailViewModel {
   @observable confirmCaptcha = false
 
   @observable earnDialog = false
-  @observable earnDialogWalletInput = ''
+  @observable earnDialogWalletInput = authStore.user?.hunter?.address ?? ''
 
   @observable currentTime = Date.now()
   currentTimeInterval: NodeJS.Timer
@@ -74,6 +76,12 @@ export class BountyDetailViewModel {
         () => this.task,
         () => {
           this.generateBreadcrumbsItems()
+        }
+      ),
+      reaction(
+        () => authStore.user.hunter.address,
+        () => {
+          this.changeEarnDialogWalletInput(authStore.user.hunter.address)
         }
       ),
     ]
@@ -157,6 +165,7 @@ export class BountyDetailViewModel {
       if (res) {
         this.apply = res
         this.status = HUNTING.hunting
+        this.fetchData()
       }
     } catch (error) {
       snackController.error(error as string)
@@ -165,6 +174,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *fetchData() {
     yield this.getTaskData()
+    this.initEmptyStepData()
     yield this.getApplyData()
   }
 
@@ -172,7 +182,6 @@ export class BountyDetailViewModel {
     try {
       const res = yield apiService.tasks.findOne(this.taskId)
       this.task = res
-      this.initEmptyStepData()
       apiService.applies
         .find({
           'task.id': this.taskId,
@@ -228,6 +237,7 @@ export class BountyDetailViewModel {
         if (res) {
           this.applyStepData = temp
           this.apply = res
+          this.getTaskData()
         }
       })
     } catch (error) {
@@ -388,5 +398,9 @@ export class BountyDetailViewModel {
       return 0
     }
     return (900 / this.task?.maxParticipant) * 100
+  }
+
+  @computed get isAccountAgeQualify() {
+    return authStore.accountAge > ACCOUNT_MIN_AGE_IN_DAYS
   }
 }

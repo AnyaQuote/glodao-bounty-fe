@@ -197,11 +197,15 @@
                     </div>
                     <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
                     <div class="text-center my-4">
+                      <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify">
+                        Your account does not qualify for task hunting
+                      </div>
                       <div v-if="vm.status === HUNTING.start">
                         <v-btn
                           elevation
                           class="white--text text-none linear-background-blue-main"
                           @click="vm.startHunting"
+                          :disabled="!vm.isAccountAgeQualify"
                         >
                           <v-icon left>mdi-power</v-icon>
                           Start hunting
@@ -308,7 +312,7 @@
                                     vm.status === HUNTING.start || vm.status === HUNTING.finish || twitterTask.finished
                                   "
                                   elevation="0"
-                                  @click="vm.submitLink('twitter', '', index)"
+                                  @click="openFollowTwitterLink(twitterTask.link, index)"
                                 >
                                   <v-icon left>mdi-twitter</v-icon>
                                   Twitter follow
@@ -523,6 +527,10 @@ export default class BountyDetail extends Vue {
     if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
     else window.open('https://' + url, '_blank')
   }
+  openFollowTwitterLink(link: string, index: number) {
+    this.openLink(link)
+    this.vm.submitLink('twitter', '', index)
+  }
   beforeDestroy() {
     this.vm.destroyReaction()
   }
@@ -531,6 +539,10 @@ export default class BountyDetail extends Vue {
 <style scoped lang="scss">
 .neutral15-background {
   background-color: var(--v-neutral15-base);
+}
+.unqualify-msg {
+  color: var(--v-redSenamatic-base);
+  font-size: 12px;
 }
 .v-btn--disabled {
   background-image: none !important;

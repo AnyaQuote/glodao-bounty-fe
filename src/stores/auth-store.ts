@@ -2,8 +2,9 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { localdata } from '@/helpers/local-data'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
+import moment from 'moment'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -33,8 +34,9 @@ export class AuthStore {
       this.isWalletUpdating = true
       const hunter = this.user.hunter
       apiService.hunters.update(hunter.id, { ...hunter, address: this.walletDialogInput })
-      this.user.hunter = { ...hunter, address: this.walletDialogInput }
+      this.changeUser({ ...this.user, hunter: { ...hunter, address: this.walletDialogInput } })
       snackController.updateSuccess()
+      this.changeAttachWalletDialog(false)
     } catch (error) {
       snackController.error(error as string)
     } finally {
@@ -61,17 +63,6 @@ export class AuthStore {
   }
   @action.bound resetUser() {
     this.user = {}
-  }
-
-  @asyncAction *handleLogin() {
-    try {
-      const { jwt, user } = yield apiService.users.login('daoqtoan@gmail.com', '12345678')
-      this.changeJwt(jwt)
-      this.changeUser(user)
-      this.changeTwitterLoginDialog(false)
-    } catch (error) {
-      snackController.error(error as string)
-    }
   }
 
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
@@ -110,6 +101,11 @@ export class AuthStore {
     } catch (error) {
       snackController.error(error as string)
     }
+  }
+
+  @computed get accountAge() {
+    if (!this.user?.twitterCreatedTime) return 0
+    else return moment().diff(moment(this.user.twitterCreatedTime), 'days')
   }
 }
 

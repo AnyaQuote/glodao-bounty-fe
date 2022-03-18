@@ -9,11 +9,11 @@
         <div>
           <ul class="card-title-text">
             <li>You have done successfully the Twitter task!</li>
-            <li>Your total reward: <span class="card-title-text font-weight-600">1000 DVT</span></li>
+            <!-- <li>Your total reward: <span class="card-title-text font-weight-600">1000 DVT</span></li> -->
           </ul>
         </div>
         <!-- <div class="mt-8 small-label">Please enter your reward address and perform KYC to reward</div> -->
-        <div class="mt-8 small-label">Please enter your reward address to earn reward</div>
+        <div class="mt-8 small-label">Please submit your wallet address to earn reward</div>
         <v-sheet class="mt-4 py-1 px-2 d-flex align-center" rounded outlined>
           <v-text-field
             hide-details
@@ -47,7 +47,7 @@
             :disabled="!vm.earnDialogWalletInput.trim()"
             @click="vm.submitTaskConfirmation('twitter')"
           >
-            <span class="btn-span text-capitalize">Reward</span>
+            <span class="btn-span text-capitalize">submit</span>
           </v-btn>
         </div>
       </div>
