@@ -51,7 +51,7 @@ export class BountyDetailViewModel {
   @observable confirmCaptcha = false
 
   @observable earnDialog = false
-  @observable earnDialogWalletInput = ''
+  @observable earnDialogWalletInput = authStore.user?.hunter?.address ?? ''
 
   @observable currentTime = Date.now()
   currentTimeInterval: NodeJS.Timer
@@ -76,6 +76,12 @@ export class BountyDetailViewModel {
         () => this.task,
         () => {
           this.generateBreadcrumbsItems()
+        }
+      ),
+      reaction(
+        () => authStore.user.hunter.address,
+        () => {
+          this.changeEarnDialogWalletInput(authStore.user.hunter.address)
         }
       ),
     ]

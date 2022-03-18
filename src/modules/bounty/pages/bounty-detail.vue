@@ -312,7 +312,7 @@
                                     vm.status === HUNTING.start || vm.status === HUNTING.finish || twitterTask.finished
                                   "
                                   elevation="0"
-                                  @click="vm.submitLink('twitter', '', index)"
+                                  @click="openFollowTwitterLink(twitterTask.link, index)"
                                 >
                                   <v-icon left>mdi-twitter</v-icon>
                                   Twitter follow
@@ -526,6 +526,10 @@ export default class BountyDetail extends Vue {
     const url = link.trim()
     if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
     else window.open('https://' + url, '_blank')
+  }
+  openFollowTwitterLink(link: string, index: number) {
+    this.openLink(link)
+    this.vm.submitLink('twitter', '', index)
   }
   beforeDestroy() {
     this.vm.destroyReaction()
