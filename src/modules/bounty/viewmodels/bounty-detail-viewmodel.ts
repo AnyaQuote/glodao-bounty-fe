@@ -157,6 +157,7 @@ export class BountyDetailViewModel {
       if (res) {
         this.apply = res
         this.status = HUNTING.hunting
+        this.fetchData()
       }
     } catch (error) {
       snackController.error(error as string)
@@ -165,6 +166,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *fetchData() {
     yield this.getTaskData()
+    this.initEmptyStepData()
     yield this.getApplyData()
   }
 
@@ -172,7 +174,6 @@ export class BountyDetailViewModel {
     try {
       const res = yield apiService.tasks.findOne(this.taskId)
       this.task = res
-      this.initEmptyStepData()
       apiService.applies
         .find({
           'task.id': this.taskId,
@@ -228,6 +229,7 @@ export class BountyDetailViewModel {
         if (res) {
           this.applyStepData = temp
           this.apply = res
+          this.getTaskData()
         }
       })
     } catch (error) {
