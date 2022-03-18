@@ -33,8 +33,9 @@ export class AuthStore {
       this.isWalletUpdating = true
       const hunter = this.user.hunter
       apiService.hunters.update(hunter.id, { ...hunter, address: this.walletDialogInput })
-      this.user.hunter = { ...hunter, address: this.walletDialogInput }
+      this.changeUser({ ...this.user, hunter: { ...hunter, address: this.walletDialogInput } })
       snackController.updateSuccess()
+      this.changeAttachWalletDialog(false)
     } catch (error) {
       snackController.error(error as string)
     } finally {
