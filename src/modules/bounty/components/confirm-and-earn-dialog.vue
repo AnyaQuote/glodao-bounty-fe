@@ -9,7 +9,7 @@
         <div>
           <ul class="card-title-text">
             <li>You have done successfully the Twitter task!</li>
-            <li>Your total reward: <span class="card-title-text font-weight-600">1000 DVT</span></li>
+            <!-- <li>Your total reward: <span class="card-title-text font-weight-600">1000 DVT</span></li> -->
           </ul>
         </div>
         <!-- <div class="mt-8 small-label">Please enter your reward address and perform KYC to reward</div> -->
