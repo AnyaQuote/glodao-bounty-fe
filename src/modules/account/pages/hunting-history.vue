@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12" class="hunter-info-container">
       <v-container class="d-flex justify-center mt-20">
-        <v-sheet elevation="2" class="fill-width">
+        <v-sheet class="overflow-hidden rounded-lg" width="100%" elevation="3">
           <v-row dense no-gutters>
             <v-col cols="12" md="4" lg="4">
               <v-sheet height="160" outlined style="flex: 1">
@@ -31,7 +31,7 @@
                   <v-col cols="4">
                     <v-sheet class="number-count-text d-flex align-center">
                       <div>
-                        <v-img :src="require('@/assets/icons/processing-spiral.svg')" width="20" height="20"></v-img>
+                        <v-img src="@/assets/icons/processing-spiral.svg" width="20" height="20"></v-img>
                       </div>
                       <div class="d-flex align-center ml-2">{{ vm.processingTaskCount }}</div>
                     </v-sheet>
@@ -40,7 +40,7 @@
                   <v-col cols="4">
                     <v-sheet class="number-count-text d-flex align-center">
                       <div>
-                        <v-img :src="require('@/assets/icons/crown-mini.svg')" width="20" height="20"></v-img>
+                        <v-img src="@/assets/icons/crown-mini.svg" width="20" height="20"></v-img>
                       </div>
                       <div class="d-flex align-center ml-2">$0.00</div>
                     </v-sheet>

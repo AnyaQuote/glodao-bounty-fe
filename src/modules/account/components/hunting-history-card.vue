@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="fill-width pa-4" outlined min-height="102px">
+  <v-sheet class="fill-width pa-4 rounded-lg" outlined min-height="102px">
     <v-row dense no-gutters>
       <v-col
         cols="12"
