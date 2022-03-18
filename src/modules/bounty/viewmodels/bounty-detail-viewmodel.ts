@@ -17,6 +17,8 @@ const APPLY_STATUS = {
   COMPLETED: 'completed',
 }
 
+const ACCOUNT_MIN_AGE_IN_DAYS = 180
+
 const DEFAULT_BREADCRUMBS = [
   {
     text: 'Bounty hunter',
@@ -390,5 +392,9 @@ export class BountyDetailViewModel {
       return 0
     }
     return (900 / this.task?.maxParticipant) * 100
+  }
+
+  @computed get isAccountAgeQualify() {
+    return authStore.accountAge > ACCOUNT_MIN_AGE_IN_DAYS
   }
 }

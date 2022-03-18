@@ -2,8 +2,9 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { localdata } from '@/helpers/local-data'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
-import { action, observable } from 'mobx'
+import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
+import moment from 'moment'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -100,6 +101,11 @@ export class AuthStore {
     } catch (error) {
       snackController.error(error as string)
     }
+  }
+
+  @computed get accountAge() {
+    if (!this.user?.twitterCreatedTime) return 0
+    else return moment().diff(moment(this.user.twitterCreatedTime), 'days')
   }
 }
 
