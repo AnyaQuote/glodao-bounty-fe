@@ -1,12 +1,10 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-container>
-        <v-sheet height="336" class="page-title-container text-uppercase">
-          <!-- <div>Bounty</div> -->
-          <!-- <div class="mt-4 font-italic">Hunter</div> -->
-        </v-sheet>
-      </v-container>
+      <v-sheet height="336" class="page-title-container text-uppercase">
+        <!-- <div>Bounty</div> -->
+        <!-- <div class="mt-4 font-italic">Hunter</div> -->
+      </v-sheet>
       <v-divider />
     </v-col>
     <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
