@@ -1,7 +1,9 @@
 <template>
   <v-dialog v-model="authStore.attachWalletDialog" class="rounded-0" max-width="450" persistent>
     <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text overflow-hidden">
-      <v-avatar size="48" color="blue"></v-avatar>
+      <v-avatar size="48">
+        <img :src="authStore.user.avatar" alt="Avatar" />
+      </v-avatar>
       <div class="mt-3 card-title-text font-weight-600">Set the attached wallet</div>
       <div class="mt-6 font-weight-600">Please enter your wallet address to setting</div>
       <v-sheet class="mt-4 py-1 px-2 d-flex align-center" outlined>

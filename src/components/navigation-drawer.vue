@@ -21,7 +21,7 @@
     <v-sheet class="fill-width" v-else>
       <v-sheet class="d-flex align-center pa-4">
         <v-avatar size="32">
-          <img :src="authStore.user.hunter.metadata.avatar" alt="Avatar" />
+          <img :src="authStore.user.avatar" alt="Avatar" />
         </v-avatar>
         <div class="ml-3 font-weight-600">{{ authStore.user.hunter.name }}</div>
       </v-sheet>

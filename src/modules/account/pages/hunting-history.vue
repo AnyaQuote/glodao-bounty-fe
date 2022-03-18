@@ -8,7 +8,7 @@
               <v-sheet height="160" outlined style="flex: 1">
                 <div class="mt-6 d-flex justify-center">
                   <v-avatar size="68">
-                    <img :src="authStore.user.hunter.metadata.avatar" alt="Avatar" />
+                    <img :src="authStore.user.avatar" alt="Avatar" />
                   </v-avatar>
                 </div>
                 <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
