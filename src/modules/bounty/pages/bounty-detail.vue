@@ -68,11 +68,27 @@
           {{ vm.task | _get('metadata.caption') }}
         </v-sheet>
         <v-sheet class="neutral15">
-          <div class="card-title-text font-weight-medium">Time to hunting</div>
-          <ul>
-            <li class="card-subtitle-1 font-weight-medium">From: {{ vm.task.startTime | MMMddYYYYhhmm }}</li>
-            <li class="card-subtitle-1 font-weight-medium">To: {{ vm.task.endTime | MMMddYYYYhhmm }}</li>
-          </ul>
+          <v-sheet class="d-flex transparent mb-3">
+            <v-sheet class="transparent title-2">Website:</v-sheet>
+            <a class="blue--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
+              {{ vm.task | _get('metadata.website') }}
+            </a>
+          </v-sheet>
+          <v-sheet class="d-flex align-center transparent">
+            <v-sheet class="transparent title-2">Social link:</v-sheet>
+            <v-btn
+              v-for="(value, key) in vm.task.metadata.socialLinks"
+              :key="key"
+              class="blue ml-3"
+              fab
+              width="24"
+              height="24"
+              :href="value"
+              target="_blank"
+            >
+              <v-icon color="white" dark size="16"> {{ `mdi-${key}` }}</v-icon>
+            </v-btn>
+          </v-sheet>
         </v-sheet>
       </v-col>
 
@@ -110,12 +126,12 @@
           </v-sheet>
 
           <!-- COUNTDOWN -->
-          <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" v-if="vm.isTaskStarted" elevation="3">
-            <v-row dense>
+          <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" elevation="3">
+            <!-- <v-row dense>
               <v-col cols="12">
                 <div class="white--text text-uppercase" v-if="!vm.isTaskEnded">POOL ENDS IN</div>
-                <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDed</div>
-              </v-col>
+                <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDED</div>
+              </v-col>  
               <v-col cols="12" md="6">
                 <countdown v-if="!vm.isTaskEnded" :targetDate="vm.task.endTime" />
                 <div class="d-flex" v-if="vm.isTaskEnded">
@@ -148,6 +164,96 @@
                     vm.taskProgressPercentage | formatNumber(2, 0)
                   }}%)
                 </v-progress-linear>
+              </v-col>
+            </v-row> -->
+
+            <v-row>
+              <v-col v-if="!vm.isTaskEnded">
+                <v-sheet class="d-flex flex-column justify-space-between transparent" height="100%">
+                  <v-sheet class="title-2 white--text text-uppercase transparent mb-3">POOL ENDS IN</v-sheet>
+                  <countdown :targetDate="vm.task.endTime" />
+                </v-sheet>
+              </v-col>
+              <v-col v-else>
+                <v-sheet
+                  class="d-flex justify-center align-center white text-uppercase rounded-lg bluePrimary--text"
+                  width="100%"
+                  height="100%"
+                >
+                  <v-icon color="bluePrimary" size="32">mdi-camera-control</v-icon>
+                  <div class="title-1 ml-1">the hunting has ended</div>
+                </v-sheet>
+              </v-col>
+              <v-col>
+                <v-sheet
+                  class="d-flex flex-column justify-space-between white--text font-family-proxima transparent"
+                  height="100%"
+                >
+                  <div class="text-uppercase title-2">
+                    {{ !vm.isTaskEnded ? 'time for mission' : 'time to hunting' }}
+                  </div>
+                  <ul class="li-text">
+                    <li>From: {{ vm.task.startTime | MMMddYYYYhhmm }}</li>
+                    <li>To: {{ vm.task.endTime | MMMddYYYYhhmm }}</li>
+                  </ul>
+                </v-sheet>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-sheet
+                  class="d-flex flex-column justify-space-between align-center white rounded-lg pa-5"
+                  width="100%"
+                  height="100%"
+                >
+                  <v-sheet class="d-flex mb-3" width="100%">
+                    <v-sheet class="text-uppercase black--text mr-3" height="100%">priority pool</v-sheet>
+                    <v-chip class="blue-lighten1 black--text font-italic" small>For GDAO stakers</v-chip>
+                  </v-sheet>
+                  <v-sheet class="d-flex flex-column" width="100%">
+                    <v-sheet class="d-flex justify-space-between">
+                      <v-sheet class="neutral10--text card-subtitle-1">Max participants:</v-sheet>
+                      <v-sheet class="black--text number-font">300</v-sheet>
+                    </v-sheet>
+                    <v-sheet class="d-flex justify-space-between">
+                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
+                      <v-sheet class="black--text number-font">$300</v-sheet>
+                    </v-sheet>
+                    <v-sheet class="d-flex justify-space-between">
+                      <v-sheet class="neutral10--text card-subtitle-1">Personal reward:</v-sheet>
+                      <v-sheet class="black--text number-font">$1</v-sheet>
+                    </v-sheet>
+                  </v-sheet>
+                </v-sheet>
+              </v-col>
+              <v-col>
+                <v-sheet
+                  class="d-flex flex-column justify-space-between align-center white rounded-lg pa-5"
+                  width="100%"
+                  height="100%"
+                >
+                  <v-sheet class="d-flex mb-3" width="100%">
+                    <v-sheet class="text-uppercase black--text mr-3" height="100%">community pool</v-sheet>
+                    <v-chip class="blue-lighten1 black--text font-italic" small>For community</v-chip>
+                  </v-sheet>
+                  <v-sheet class="d-flex flex-column" width="100%">
+                    <v-sheet class="d-flex justify-space-between">
+                      <v-sheet class="neutral10--text card-subtitle-1">Max participants:</v-sheet>
+                      <v-sheet class="black--text number-font">700</v-sheet>
+                    </v-sheet>
+                    <v-sheet class="d-flex justify-space-between">
+                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
+                      <v-sheet class="black--text number-font">--/--</v-sheet>
+                    </v-sheet>
+                    <v-sheet class="d-flex justify-space-between">
+                      <v-sheet class="neutral10--text card-subtitle-1">Personal reward:</v-sheet>
+                      <v-sheet class="black--text number-font">
+                        Sharing pool mission
+                        <v-icon color="black" size="10">mdi-help-circle-outline</v-icon>
+                      </v-sheet>
+                    </v-sheet>
+                  </v-sheet>
+                </v-sheet>
               </v-col>
             </v-row>
           </v-sheet>
@@ -606,5 +712,25 @@ export default class BountyDetail extends Vue {
 }
 .red-background-color {
   background-color: var(--v-red-base);
+}
+.title-1 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 130%;
+}
+.title-2 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 150%;
+}
+.li-text {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 170%;
+}
+.number-font {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 150%;
 }
 </style>
