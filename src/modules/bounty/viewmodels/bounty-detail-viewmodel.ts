@@ -233,13 +233,18 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].shareTime = Date.now()
     const tempApply = JSON.parse(JSON.stringify(this.apply))
     try {
-      apiService.applies.update(this.apply.id, { ...tempApply, data: temp }).then((res) => {
-        if (res) {
-          this.applyStepData = temp
-          this.apply = res
-          this.getTaskData()
-        }
-      })
+      apiService.applies
+        .update(this.apply.id, { ...tempApply, data: temp })
+        .then((res) => {
+          if (res) {
+            this.applyStepData = temp
+            this.apply = res
+            this.getTaskData()
+          }
+        })
+        .catch((error) => {
+          snackController.error(error.response.data.message as string)
+        })
     } catch (error) {
       snackController.error(error as string)
     }
