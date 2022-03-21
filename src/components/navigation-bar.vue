@@ -38,7 +38,7 @@
             <v-btn
               depressed
               outlined
-              class="rounded-0 blue-diversity--text"
+              class="rounded blue-diversity--text"
               height="40"
               width="110"
               v-if="!authStore.jwt"

@@ -163,7 +163,7 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 .address-container {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid var(--v-primary-base);
   padding: 8px 14px;
 }
