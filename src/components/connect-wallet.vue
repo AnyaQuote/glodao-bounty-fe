@@ -132,7 +132,11 @@ import { AppProvider, appProvider } from '../app-providers'
 import { alertController } from './alert/alert-controller'
 
 @Observer
-@Component
+@Component({
+  components: {
+    'address-copy-board': () => import('@/components/address-copy-board.vue'),
+  },
+})
 export default class extends Vue {
   @Provide() providers: AppProvider = appProvider
   @Provide() walletStore = walletStore
