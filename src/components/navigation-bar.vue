@@ -2,7 +2,7 @@
   <v-app-bar height="80px" class="navigation-bar" app flat>
     <div class="nav-container mx-auto" style="width: 100%">
       <v-row class="d-flex align-center justify-space-between">
-        <v-col col="12" sm="12" md="3">
+        <v-col col="12" sm="12" md="1">
           <div class="pl-4">
             <v-img :src="require('@/assets/images/glodao-logo.svg')" max-height="50" max-width="75"></v-img>
           </div>
@@ -30,24 +30,11 @@
             <span>Coming Soon!</span>
           </v-tooltip>
         </v-col>
-        <v-col col="12" sm="12" md="3">
+        <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
+          <connect-wallet />
+        </v-col>
+        <v-col col="12" sm="12" md="1">
           <div class="d-flex align-center justify-end pr-6">
-            <!-- <connect-metamask :requiredChainId="chainId">
-              <v-menu open-on-hover offset-y v-if="wallet.connected">
-                <template v-slot:activator="{ on, attrs }">
-                  <div
-                    class="d-flex align-center connect-wallet border-radius-8 text-none py-2 px-5 transparent-bg"
-                    v-bind="attrs"
-                    v-on="on"
-                    large
-                  >
-                    <div class="accent--text font-weight-bold">
-                      {{ wallet.shortAccount }}
-                    </div>
-                  </div>
-                </template>
-              </v-menu>
-            </connect-metamask> -->
             <v-btn
               depressed
               outlined
@@ -118,7 +105,7 @@ import { Observer } from 'mobx-vue'
 @Observer
 @Component({
   components: {
-    'connect-metamask': () => import('@/components/connect-metamask.vue'),
+    'connect-wallet': () => import('@/components/connect-wallet.vue'),
   },
 })
 export default class Staking extends Vue {
