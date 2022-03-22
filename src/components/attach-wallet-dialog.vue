@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="authStore.attachWalletDialog" class="rounded-0" max-width="450" persistent>
+  <v-dialog v-model="authStore.attachWalletDialog" class="rounded-0" max-width="500" persistent>
     <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text overflow-hidden">
       <v-avatar size="48">
         <img :src="authStore.user.avatar" alt="Avatar" />
@@ -15,20 +15,22 @@
           solo
           class="ma-0 pa-0"
           @input="authStore.changeWalletDialogInput"
-          :value="authStore.walletDialogInput"
+          :value="walletStore.account"
+          readonly
         ></v-text-field>
         <!-- <v-icon>mdi-wallet-outline</v-icon> -->
       </v-sheet>
       <div class="mt-3">
         <v-btn
-          class="dialog-btn rounded-0 white--text background-blue-diversity"
+          class="dialog-btn rounded white--text linear-background-blue-main"
           depressed
           @click="authStore.saveAttachWallet()"
           :loading="authStore.isWalletUpdating"
-          >Done</v-btn
         >
+          Done
+        </v-btn>
       </div>
-      <div class="mt-3">
+      <!-- <div class="mt-3">
         <v-btn
           class="dialog-btn rounded-0 black--text background-neutral"
           depressed
@@ -36,6 +38,9 @@
           :disabled="authStore.isWalletUpdating"
           >Ok, I'll set later</v-btn
         >
+      </div> -->
+      <div class="mt-3">
+        <connect-wallet btnClass="fill-width" />
       </div>
       <v-icon
         class="close-icon"
@@ -51,13 +56,17 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { authStore } from '@/stores/auth-store'
+import { walletStore } from '@/stores/wallet-store'
 
 @Observer
 @Component({
-  components: {},
+  components: {
+    'connect-wallet': () => import('@/components/connect-wallet.vue'),
+  },
 })
 export default class AttachWalletDialog extends Vue {
   authStore = authStore
+  walletStore = walletStore
 }
 </script>
 
