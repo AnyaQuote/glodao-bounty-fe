@@ -22,6 +22,13 @@ class NumberHelper {
   isFloatNumber = (input) => {
     return /^(?!0\d)\d*(\.\d+)?$/gi.test(input)
   }
+  /**
+   * Generate random nonce number
+   * @returns A random nonce number
+   */
+  generateRandomNonce = () => {
+    return Math.floor(Math.random() * 1000000) + ''
+  }
 }
 
 export const numberHelper = new NumberHelper()
