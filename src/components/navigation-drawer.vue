@@ -60,6 +60,10 @@
         </v-list-item>
       </v-list>
     </div>
+    <v-divider></v-divider>
+    <div>
+      <connect-wallet></connect-wallet>
+    </div>
   </v-navigation-drawer>
 </template>
 
@@ -72,7 +76,7 @@ import { Observer } from 'mobx-vue'
 @Observer
 @Component({
   components: {
-    ConnectMetamask: () => import('@/components/connect-metamask.vue'),
+    'connect-wallet': () => import('@/components/connect-wallet.vue'),
   },
 })
 export default class Staking extends Vue {
