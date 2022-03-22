@@ -14,6 +14,8 @@
           class="rounded linear-background-blue-main white--text"
           large
           :block="$vuetify.breakpoint.xs"
+          :class="btnClass"
+          height="40"
         >
           Connect Wallet
         </v-btn>
@@ -127,7 +129,7 @@
 <script lang="ts">
 import { walletStore } from '@/stores/wallet-store'
 import { Observer } from 'mobx-vue'
-import { Component, Provide, Vue } from 'vue-property-decorator'
+import { Component, Prop, Provide, Vue } from 'vue-property-decorator'
 import { AppProvider, appProvider } from '../app-providers'
 import { alertController } from './alert/alert-controller'
 
@@ -141,6 +143,7 @@ export default class extends Vue {
   @Provide() providers: AppProvider = appProvider
   @Provide() walletStore = walletStore
   private readonly SOLLET_WALLET_NAME = 'Sollet'
+  @Prop({ default: '' }) btnClass?: string
 
   copyAddress() {
     navigator.clipboard.writeText(this.walletStore?.account || '')
@@ -169,7 +172,7 @@ export default class extends Vue {
 .address-container {
   border-radius: 4px;
   border: 1px solid var(--v-primary-base);
-  padding: 8px 14px;
+  padding: 4px 14px;
 }
 .wallet-card {
   cursor: pointer;
