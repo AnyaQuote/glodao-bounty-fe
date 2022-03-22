@@ -206,6 +206,16 @@ export class ApiService {
     })
     return res.data
   }
+
+  async verifySignMessage(walletAddress: string, signature: string, chain: string, id: string) {
+    const res = await axios.post('hunters/verifySignMessage', {
+      walletAddress,
+      signature,
+      chain,
+      id,
+    })
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
