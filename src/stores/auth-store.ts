@@ -38,7 +38,7 @@ export class AuthStore {
     try {
       this.isWalletUpdating = true
       const signature = yield this.signMessage(walletStore.account, 'bsc', get(this.user, 'hunter.nonce', 0))
-      const updatedHunter = yield apiService.verifySignMessage(
+      const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
         signature,
         'bsc',

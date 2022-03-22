@@ -208,12 +208,37 @@ export class ApiService {
   }
 
   async verifySignMessage(walletAddress: string, signature: string, chain: string, id: string) {
-    const res = await axios.post('hunters/verifySignMessage', {
-      walletAddress,
-      signature,
-      chain,
-      id,
-    })
+    const res = await axios.post(
+      'hunters/verifySignMessage',
+      {
+        walletAddress,
+        signature,
+        chain,
+        id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
+  async updateWalletAddress(walletAddress: string, signature: string, chain: string, id: string) {
+    const res = await axios.post(
+      'hunters/updateWalletAddress',
+      {
+        walletAddress,
+        signature,
+        chain,
+        id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
     return res.data
   }
 }
