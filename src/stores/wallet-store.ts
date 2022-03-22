@@ -63,6 +63,8 @@ export class WalletStore {
   @observable isLoggingInTelegram = false
   @observable jwt = ''
 
+  @observable navigationDrawer = false
+
   private _bnbBalanceSubscription: Subscription | undefined
 
   constructor() {
@@ -88,6 +90,10 @@ export class WalletStore {
   }
   @action.bound resetJwt() {
     this.jwt = ''
+  }
+
+  @action.bound setNavigationDrawer(val: boolean) {
+    this.navigationDrawer = val
   }
 
   @asyncAction *start() {
