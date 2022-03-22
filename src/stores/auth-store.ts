@@ -5,6 +5,9 @@ import { apiService } from '@/services/api-service'
 import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
+import { walletStore } from '@/stores/wallet-store'
+import { numberHelper } from '@/helpers/number.hepler'
+import { get } from 'lodash-es'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -22,19 +25,27 @@ export class AuthStore {
   }
 
   @action.bound changeAttachWalletDialog(value: boolean) {
+    if (!value && !this.user.hunter.address) {
+      snackController.error('You need to set your main wallet')
+      return
+    }
     this.attachWalletDialog = value
-    if (!value) this.changeWalletDialogInput(this.user.hunter.address)
   }
   @action.bound changeWalletDialogInput(value: string) {
     this.walletDialogInput = value
   }
-  @action.bound saveAttachWallet() {
+  @asyncAction *saveAttachWallet() {
     try {
-      if (!this.walletDialogInput) return
       this.isWalletUpdating = true
-      const hunter = this.user.hunter
-      apiService.hunters.update(hunter.id, { ...hunter, address: this.walletDialogInput })
-      this.changeUser({ ...this.user, hunter: { ...hunter, address: this.walletDialogInput } })
+      const signature = yield this.signMessage(walletStore.account, 'bsc', get(this.user, 'hunter.nonce', 0))
+      console.log(signature)
+      const updatedHunter = yield apiService.verifySignMessage(
+        walletStore.account,
+        signature,
+        'bsc',
+        get(this.user, 'hunter.id', '')
+      )
+      this.changeUser({ ...this.user, hunter: updatedHunter })
       snackController.updateSuccess()
       this.changeAttachWalletDialog(false)
     } catch (error) {
@@ -59,7 +70,7 @@ export class AuthStore {
   @action.bound changeUser(user: any) {
     this.user = user
     localdata.user = user
-    this.changeWalletDialogInput(user.hunter?.address ?? '')
+    if (this.user.id && !get(user, 'hunter.address', '')) this.changeAttachWalletDialog(true)
   }
   @action.bound resetUser() {
     this.user = {}
@@ -76,6 +87,7 @@ export class AuthStore {
           metadata: {
             avatar: res.user.avatar,
           },
+          nonce: numberHelper.generateRandomNonce(),
         }
         yield apiService.hunters.create(params, res.jwt)
         res.user = yield apiService.users.findOne(res.user.id, res.jwt)
@@ -100,6 +112,34 @@ export class AuthStore {
       localdata.reset()
     } catch (error) {
       snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *signMessage(wallet, chainType, nonce, selectedAdapter: any = null) {
+    if (!wallet) return ''
+    const message = `https://glodao.io/bounty wants to: \n Sign message with account \n ${wallet} - One time nonce: ${nonce}`
+    // const data = new TextEncoder().encode(message)
+    if (chainType === 'sol') {
+      //solana sign message
+      // const a = (selectedAdapter || this.selectedAdapter) as any
+      // let res
+      // if (a.signMessage) {
+      //   res = yield a.signMessage(data)
+      // } else {
+      //   res = yield a._wallet.signMessage(data)
+      // }
+      // return Object.values(res?.signature || res)
+    } else {
+      //bsc sign message
+      if (typeof window === 'undefined') {
+        return ''
+      }
+      if (window.ethereum) {
+        const request = { method: 'personal_sign', params: [message, wallet] }
+        return yield window.ethereum.request(request)
+      } else {
+        throw new Error('Plugin Metamask is not installed!')
+      }
     }
   }
 
