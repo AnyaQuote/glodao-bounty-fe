@@ -26,6 +26,7 @@
           depressed
           @click="authStore.saveAttachWallet()"
           :loading="authStore.isWalletUpdating"
+          :disabled="!walletStore.account"
         >
           Done
         </v-btn>
@@ -83,5 +84,8 @@ export default class AttachWalletDialog extends Vue {
   position: absolute;
   top: 0;
   right: 0;
+}
+.v-btn--disabled {
+  background-image: none;
 }
 </style>
