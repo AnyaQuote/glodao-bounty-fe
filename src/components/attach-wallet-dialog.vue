@@ -5,7 +5,7 @@
         <img :src="authStore.user.avatar" alt="Avatar" />
       </v-avatar>
       <div class="mt-3 card-title-text font-weight-600">Set the attached wallet</div>
-      <div class="mt-6 font-weight-600">Please enter your wallet address to setting</div>
+      <div class="mt-6 font-weight-600">Please connect your wallet to continue</div>
       <v-sheet class="mt-4 py-1 px-2 d-flex align-center" outlined>
         <v-text-field
           hide-details
