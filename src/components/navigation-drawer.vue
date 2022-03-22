@@ -62,7 +62,7 @@
     </div>
     <v-divider></v-divider>
     <div>
-      <connect-wallet></connect-wallet>
+      <connect-wallet btnClass="rounded-0 fill-width"></connect-wallet>
     </div>
   </v-navigation-drawer>
 </template>
