@@ -34,7 +34,7 @@ export const vueFilterRegister = () => {
     if (twitterTask.type === 'tweet') {
       return 'Share a Twitter post'
     }
-    if (twitterTask.type === 'retweet') {
+    if (twitterTask.type === 'referral') {
       return 'Referral Twitter link'
     }
     return ''
