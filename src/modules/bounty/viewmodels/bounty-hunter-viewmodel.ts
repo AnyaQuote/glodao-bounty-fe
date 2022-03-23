@@ -1,7 +1,7 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { keys } from 'lodash-es'
+import { get, keys } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
@@ -39,7 +39,7 @@ export class BountyHunterViewModel {
   constructor() {
     //
     this.getBountyListByPage()
-    this.getAllLiveBounty();
+    this.getAllLiveBounty()
     this.getTopUpcomingBounty()
     this.getTotalBountyCount()
     this.getCurrentTask()
@@ -163,6 +163,7 @@ export class BountyHunterViewModel {
         name: bounty.name,
         id: bounty.id,
         startTime: bounty.startTime,
+        endTime: bounty.endTime,
         rewardAmount: bounty.rewardAmount,
         chainId: bounty.chainId,
         metadata: bounty.metadata,
@@ -177,11 +178,19 @@ export class BountyHunterViewModel {
         name: bounty.name,
         id: bounty.id,
         startTime: bounty.startTime,
+        endTime: bounty.endTime,
         rewardAmount: bounty.rewardAmount,
+        tokenName: get(bounty, 'metadata.rewardToken', ''),
         chainId: bounty.chainId,
-        metadata: bounty.metadata,
+        metadata: get(bounty, 'metadata', {}),
+        coverImage: get(
+          bounty,
+          'metadata.coverImage',
+          'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
+        ),
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
+        participant: bounty.totalParticipants,
       }
     })
   }

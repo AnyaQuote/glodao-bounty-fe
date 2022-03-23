@@ -108,17 +108,22 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col md="6" sm="6" cols="12">
-            <hunting-time-card></hunting-time-card>
-          </v-col>
-          <v-col md="6" sm="6" cols="12">
-            <hunting-time-card></hunting-time-card>
+          <v-col lg="4" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
+            <hunting-time-card
+              :coverImageUrl="bounty.coverImage"
+              :endTime="bounty.endTime"
+              :name="bounty.name"
+              :rewardAmount="bounty.rewardAmount"
+              :tokenName="bounty.tokenName"
+              :participant="bounty.participant"
+              :id="bounty.id"
+            ></hunting-time-card>
           </v-col>
         </v-row>
       </v-container>
     </v-col>
 
-    <v-col cols="12">
+    <!-- <v-col cols="12">
       <v-divider class="my-4"></v-divider>
       <v-container>
         <v-row>
@@ -141,7 +146,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-col>
+    </v-col> -->
 
     <v-col cols="12">
       <v-divider class="my-4"></v-divider>
@@ -246,7 +251,7 @@ import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter
     'bounty-card': () => import('@/modules/bounty/components/bounty-card.vue'),
     'info-card': () => import('@/modules/bounty/components/info-card.vue'),
     'bounty-banner': () => import('@/modules/bounty/components/bounty-banner.vue'),
-    'hunting-time-card': () => import('@/modules/bounty/components/hunting-time-card.vue'),
+    'hunting-time-card': () => import('@/modules/bounty/components/hunting-card.vue'),
   },
 })
 export default class BountyPage extends Vue {
