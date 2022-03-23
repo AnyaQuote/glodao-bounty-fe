@@ -1,7 +1,8 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { keys, merge, sumBy, uniqBy } from 'lodash-es'
+import { walletStore } from '@/stores/wallet-store'
+import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
@@ -15,6 +16,11 @@ export enum HUNTING {
 const APPLY_STATUS = {
   PROCESSING: 'processing',
   COMPLETED: 'completed',
+}
+
+const POOL_TYPES = {
+  PRIORITY: 'priority',
+  COMMUNITY: 'community',
 }
 
 const ACCOUNT_MIN_AGE_IN_DAYS = 180
@@ -283,6 +289,16 @@ export class BountyDetailViewModel {
     }
   }
 
+  @asyncAction *applyForPriorityPool() {
+    try {
+      console.log('apply for priority pool')
+      yield 0
+    } catch (error) {
+      console.log(error)
+      snackController.error('Fail to enter priority pool')
+    }
+  }
+
   @computed get displayedData() {
     const stepTypes = keys(this.applyStepData)
     const tempStepData: any = {}
@@ -407,5 +423,110 @@ export class BountyDetailViewModel {
 
   @computed get isAccountAgeQualify() {
     return authStore.accountAge > ACCOUNT_MIN_AGE_IN_DAYS
+  }
+
+  @computed get rewardToken() {
+    return get(this.task, 'metadata.rewardToken', 'USDT')
+  }
+
+  @computed get rewardAmount() {
+    return get(this.task, 'rewardAmount', 0)
+  }
+
+  @computed get currentPriorityParticipants() {
+    return (
+      this.relatedApplies.filter((apply) => isEqual(get(apply, 'poolType', 'community'), POOL_TYPES.PRIORITY)).length ??
+      0
+    )
+  }
+
+  @computed get maxPriorityParticipants() {
+    return this.task.maxPriorityParticipants ?? 0
+  }
+
+  @computed get totalPriorityReward() {
+    return this.task.priorityRewardAmount ?? 0
+  }
+
+  @computed get singlePriorityReward() {
+    return divide(this.totalPriorityReward, this.maxPriorityParticipants)
+  }
+
+  @computed get totalCommunityReward() {
+    return subtract(this.rewardAmount, this.totalPriorityReward)
+  }
+
+  @computed get currentCommunityParticipants() {
+    return subtract(this.relatedApplies.length, this.currentPriorityParticipants) ?? 0
+  }
+
+  @computed get totalParticipants() {
+    return this.relatedApplies.length
+  }
+
+  @computed get isCurrentWalletMatchRegistered() {
+    if (!walletStore.account || !authStore.registeredWallet) return false
+    return isEqual(walletStore.account, authStore.registeredWallet)
+  }
+
+  @computed get currentWallet() {
+    return walletStore.account
+  }
+
+  @computed get isPriorityPoolFull() {
+    return gte(this.currentPriorityParticipants, this.maxPriorityParticipants)
+  }
+
+  @computed get currentPoolType() {
+    return get(this.apply, 'poolType', POOL_TYPES.COMMUNITY)
+  }
+
+  @computed get isInPriorityPool() {
+    return isEqual(this.currentPoolType, POOL_TYPES.PRIORITY)
+  }
+
+  @computed get isStaker() {
+    return false
+  }
+
+  @computed get shouldShowStakeSuggestion() {
+    return !this.isInPriorityPool && !this.isStaker && !this.isPriorityPoolFull
+  }
+
+  @computed get isPriorityPoolAvailable() {
+    return (
+      this.isCurrentWalletMatchRegistered &&
+      !this.isInPriorityPool &&
+      !this.isPriorityPoolFull &&
+      this.isStaker &&
+      this.isTaskStarted &&
+      this.isHuntingProcessStarted
+    )
+  }
+
+  @computed get isUserTaskCompleted() {
+    return isEqual(get(this.apply, 'status', 'processing'), APPLY_STATUS.COMPLETED)
+  }
+
+  @computed get isHuntingProcessStarted() {
+    return get(this.apply, 'id', '') && isEqual(get(this.apply, 'status', 'processing'), APPLY_STATUS.PROCESSING)
+  }
+
+  @computed get isHuntingProcessEnded() {
+    return this.isTaskEnded || this.isUserTaskCompleted
+  }
+
+  @computed get earnedReward() {
+    return get(this.apply, 'bounty', 0)
+  }
+
+  @computed get shouldDisableTaskProcessing() {
+    return (
+      this.isTaskEnded ||
+      !this.isTaskStarted ||
+      !this.isCurrentWalletMatchRegistered ||
+      this.isHuntingProcessEnded ||
+      !this.isHuntingProcessStarted
+    )
   }
 }

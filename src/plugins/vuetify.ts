@@ -90,7 +90,11 @@ export default new Vuetify({
         background: {
           base: '#181718',
         },
-        bluePrimary: '#378CE4',
+        bluePrimary: {
+          base: '#0276F0',
+          lighten1: '#E6F1FE',
+          lighten2: '#55ACE3',
+        },
         neutral20: '#565A5D',
         neutral10: '#8D9095',
         greenSenamatic: '#6CE08D',

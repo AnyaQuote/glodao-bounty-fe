@@ -98,30 +98,49 @@
           <!-- LIST -->
           <v-sheet class="mb-4 neutral15">
             <v-row dense>
-              <v-col cols="6" md="3">
+              <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4" elevation="3">
-                  <div class="card-subtitle-1">Total reward ({{ vm.task | _get('metadata.rewardToken', 0) }})</div>
-                  <div class="card-big-title-text font-weight-bold">{{ vm.task | _get('rewardAmount', 0) }}</div>
+                  <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
+                  <div class="card-big-title-text font-weight-bold d-flex align-center">
+                    <v-img
+                      :src="require('@/assets/icons/crypto.svg')"
+                      max-height="19"
+                      max-width="19"
+                      class="mr-1"
+                    ></v-img>
+                    {{ vm.rewardAmount }}
+                  </div>
                 </v-sheet>
               </v-col>
-              <v-col cols="6" md="3">
+              <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4" elevation="3">
-                  <div class="card-subtitle-1">Remaining ({{ vm.task | _get('metadata.rewardToken', 0) }})</div>
-                  <div class="card-big-title-text font-weight-bold">{{ vm.remainingReward }}</div>
+                  <div class="card-subtitle-1">Remaining ({{ vm.rewardToken }})</div>
+                  <div class="card-big-title-text font-weight-bold d-flex align-center">
+                    <v-img
+                      :src="require('@/assets/icons/crypto.svg')"
+                      max-height="19"
+                      max-width="19"
+                      class="mr-1"
+                    ></v-img>
+                    {{ vm.remainingReward }}
+                  </div>
                 </v-sheet>
               </v-col>
-              <v-col cols="6" md="3">
+              <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4" elevation="3">
-                  <div class="card-subtitle-1">Max participant</div>
-                  <div class="card-big-title-text font-weight-bold">{{ vm.task | _get('maxParticipant', 0) }}</div>
+                  <div class="card-subtitle-1">Participants</div>
+                  <div class="card-big-title-text font-weight-bold d-flex align-center">
+                    <v-icon size="20" class="mr-1" color="bluePrimary">mdi-account-circle</v-icon>
+                    {{ vm.totalParticipants }}
+                  </div>
                 </v-sheet>
               </v-col>
-              <v-col cols="6" md="3">
+              <!-- <v-col cols="6" md="3">
                 <v-sheet outlined rounded class="pa-4" elevation="3">
                   <div class="card-subtitle-1">Slot left</div>
                   <div class="card-big-title-text font-weight-bold">{{ vm.remainingSlot }}</div>
                 </v-sheet>
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-sheet>
 
@@ -184,7 +203,11 @@
                   <div class="title-1 ml-1">the hunting has ended</div>
                 </v-sheet>
               </v-col>
-              <v-col>
+              <v-col
+                :class="{
+                  'col-12': !$vuetify.breakpoint.smAndUp,
+                }"
+              >
                 <v-sheet
                   class="d-flex flex-column justify-space-between white--text font-family-proxima transparent"
                   height="100%"
@@ -208,20 +231,26 @@
                 >
                   <v-sheet class="d-flex mb-3" width="100%">
                     <v-sheet class="text-uppercase black--text mr-3" height="100%">priority pool</v-sheet>
-                    <v-chip class="blue-lighten1 black--text font-italic" small>For GDAO stakers</v-chip>
+                    <v-chip class="bluePrimary lighten-1 black--text font-italic" small>For GDAO stakers</v-chip>
                   </v-sheet>
                   <v-sheet class="d-flex flex-column" width="100%">
                     <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Max participants:</v-sheet>
-                      <v-sheet class="black--text number-font">300</v-sheet>
+                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
+                      <v-sheet class="black--text number-font">
+                        {{ vm.totalPriorityReward }} {{ vm.rewardToken }}
+                      </v-sheet>
                     </v-sheet>
                     <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
-                      <v-sheet class="black--text number-font">$300</v-sheet>
+                      <v-sheet class="neutral10--text card-subtitle-1">Participants:</v-sheet>
+                      <v-sheet class="black--text number-font">
+                        {{ vm.currentPriorityParticipants }}/{{ vm.maxPriorityParticipants }}
+                      </v-sheet>
                     </v-sheet>
                     <v-sheet class="d-flex justify-space-between">
                       <v-sheet class="neutral10--text card-subtitle-1">Personal reward:</v-sheet>
-                      <v-sheet class="black--text number-font">$1</v-sheet>
+                      <v-sheet class="black--text number-font">
+                        {{ vm.singlePriorityReward | formatNumber(2, 0) }} {{ vm.rewardToken }}
+                      </v-sheet>
                     </v-sheet>
                   </v-sheet>
                 </v-sheet>
@@ -234,16 +263,18 @@
                 >
                   <v-sheet class="d-flex mb-3" width="100%">
                     <v-sheet class="text-uppercase black--text mr-3" height="100%">community pool</v-sheet>
-                    <v-chip class="blue-lighten1 black--text font-italic" small>For community</v-chip>
+                    <v-chip class="bluePrimary lighten-1 black--text font-italic" small>For community</v-chip>
                   </v-sheet>
                   <v-sheet class="d-flex flex-column" width="100%">
                     <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Max participants:</v-sheet>
-                      <v-sheet class="black--text number-font">700</v-sheet>
+                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
+                      <v-sheet class="black--text number-font">
+                        {{ vm.totalCommunityReward }} {{ vm.rewardToken }}
+                      </v-sheet>
                     </v-sheet>
                     <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
-                      <v-sheet class="black--text number-font">--/--</v-sheet>
+                      <v-sheet class="neutral10--text card-subtitle-1">Participants:</v-sheet>
+                      <v-sheet class="black--text number-font">{{ vm.currentCommunityParticipants }}</v-sheet>
                     </v-sheet>
                     <v-sheet class="d-flex justify-space-between">
                       <v-sheet class="neutral10--text card-subtitle-1">Personal reward:</v-sheet>
@@ -258,6 +289,11 @@
             </v-row>
           </v-sheet>
 
+          <v-row dense no-gutters v-if="vm.currentWallet">
+            <v-col cols="12">
+              <wallet-sheet></wallet-sheet>
+            </v-col>
+          </v-row>
           <!-- TASK -->
           <v-sheet class="rounded-lg" elevation="3">
             <v-tabs v-model="tab" color="blue" class="rounded-lg">
@@ -311,32 +347,26 @@
                           elevation
                           class="white--text text-none linear-background-blue-main"
                           @click="vm.startHunting"
-                          :disabled="!vm.isAccountAgeQualify"
+                          :disabled="!vm.isAccountAgeQualify || !vm.currentWallet"
                         >
                           <v-icon left>mdi-power</v-icon>
                           Start hunting
                         </v-btn>
                       </div>
-                      <div v-else-if="vm.status === HUNTING.hunting">
-                        <v-btn elevation outlined color="green" class="text-none">
-                          <v-icon left>mdi-timelapse</v-icon>
-                          Your hunting process has begun!
-                        </v-btn>
-                      </div>
-                      <div v-else>
-                        <v-btn elevation outlined color="red" class="text-none">
-                          <v-icon left>mdi-alert-circle-outline</v-icon>
-                          {{ vm.isTaskEnded ? 'The pool had ended' : 'Your hunting process has finished!' }}
-                        </v-btn>
-                      </div>
+                      <hunting-status v-else />
                     </div>
                   </v-col>
                   <v-col cols="12" md="9">
                     <div class="custom-dash-divider mb-7"></div>
                     <div v-for="(twitterTask, index) in vm.displayedTwitterData" :key="index">
-                      <v-row dense no-gutters class="mb-4" v-if="vm.displayedTwitterData.length > 0">
+                      <v-row
+                        dense
+                        no-gutters
+                        class="mb-4"
+                        v-if="vm.displayedTwitterData.length > 0 && twitterTask.type !== 'retweet'"
+                      >
                         <!-- TASK COL 1 -->
-                        <v-col cols="1">
+                        <v-col cols="1" v-if="$vuetify.breakpoint.smAndUp">
                           <v-sheet class="pb-1">
                             <v-sheet
                               width="18"
@@ -359,7 +389,7 @@
                           </v-sheet>
                         </v-col>
                         <!-- TASK COL 2 -->
-                        <v-col cols="10">
+                        <v-col :cols="$vuetify.breakpoint.smAndUp ? 10 : 12">
                           <v-sheet outlined rounded>
                             <v-container fluid>
                               <!-- title -->
@@ -404,7 +434,7 @@
                                   <li class="text-caption">Please enter your share link post to complete task.</li>
                                 </ul>
                                 <!-- retweet -->
-                                <ul v-if="twitterTask.type === 'retweet'">
+                                <ul v-if="twitterTask.type === 'referral'">
                                   <li class="text-caption">Share and referral with your friend.</li>
                                   <li class="text-caption">Please enter your referral link to complete task.</li>
                                 </ul>
@@ -413,14 +443,12 @@
                               <div class="text-end">
                                 <v-btn
                                   v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
-                                  class="white--text text-none linear-background-blue-main"
-                                  :disabled="
-                                    vm.status === HUNTING.start || vm.status === HUNTING.finish || twitterTask.finished
-                                  "
+                                  class="white--text text-none linear-background-blue-main text-caption"
+                                  :disabled="vm.shouldDisableTaskProcessing || twitterTask.finished"
                                   elevation="0"
                                   @click="openFollowTwitterLink(twitterTask.link, index)"
                                 >
-                                  <v-icon left>mdi-twitter</v-icon>
+                                  <v-icon left size="14">mdi-twitter</v-icon>
                                   Twitter follow
                                 </v-btn>
                                 <link-submit class="mt-4" v-else :twitterTask="twitterTask" :step="index" />
@@ -429,7 +457,7 @@
                           </v-sheet>
                         </v-col>
                         <!-- TASK COL 3 -->
-                        <v-col cols="1" class="">
+                        <v-col cols="1" class="" v-if="$vuetify.breakpoint.smAndUp">
                           <v-sheet rounded class="fill-height ml-3 ba-dotted" min-width="40">
                             <v-sheet
                               outlined
@@ -448,16 +476,28 @@
                     </v-sheet>
 
                     <!-- button -->
-                    <v-row dense no-gutters class="mb-8">
-                      <v-col cols="12" class="text-center">
+                    <v-row class="mb-8">
+                      <v-col cols="12" sm="6" class="text-center">
                         <v-btn
                           elevation="0"
                           color="bluePrimary"
-                          class="white--text text-none linear-background-blue-main"
+                          class="white--text text-none linear-background-blue-main text-caption"
+                          :disabled="!vm.isPriorityPoolAvailable"
+                          @click="vm.applyForPriorityPool()"
+                          v-if="!vm.isInPriorityPool"
+                        >
+                          Apply for priority pool
+                        </v-btn>
+                      </v-col>
+                      <v-col cols="12" :sm="!vm.isInPriorityPool ? 6 : 12" class="text-center">
+                        <v-btn
+                          elevation="0"
+                          color="bluePrimary"
+                          class="white--text text-none linear-background-blue-main text-caption"
                           :disabled="vm.status === HUNTING.start || vm.status === HUNTING.finish"
                           @click="vm.changeEarnDialog(true)"
                         >
-                          Confirm and earn reward
+                          Confirm to complete
                         </v-btn>
                       </v-col>
                     </v-row>
@@ -580,16 +620,18 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
-import { BountyDetailViewModel, HUNTING } from '../viewmodels/bounty-detail-viewmodel'
+import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 
 @Observer
 @Component({
   components: {
     'chain-logo': () => import('@/components/chain-logo.vue'),
-    'link-submit': () => import('@/modules/bounty/components/link-submit.vue'),
+    'link-submit': () => import('@/modules/bounty/components/bounty-detail/link-submit.vue'),
     'recaptcha-dialog': () => import('@/modules/bounty/components/recaptcha-dialog.vue'),
     'confirm-and-earn-dialog': () => import('@/modules/bounty/components/confirm-and-earn-dialog.vue'),
     countdown: () => import('@/modules/bounty/components/countdown.vue'),
+    'wallet-sheet': () => import('@/modules/bounty/components/bounty-detail/wallet-sheet.vue'),
+    'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
   },
 })
 export default class BountyDetail extends Vue {

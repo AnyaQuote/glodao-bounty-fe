@@ -328,6 +328,12 @@ tbody {
 .background-transparent {
   background: transparent !important;
 }
+.bluePrimary--border {
+  border: thin solid var(--v-bluePrimary-base) !important;
+}
+.redSenamatic--border {
+  border: thin solid var(--v-redSenamatic-base) !important;
+}
 .mt-20 {
   margin-top: 80px;
 }
@@ -336,6 +342,9 @@ tbody {
 }
 .linear-background-blue-main {
   background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
+}
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
 }
 @font-face {
   font-family: 'Proxima Nova';
