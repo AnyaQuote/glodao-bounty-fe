@@ -8,6 +8,9 @@ import moment from 'moment'
 
 const PAGE_LIMIT = 6
 export class BountyHunterViewModel {
+  @observable liveBountyList: any[] = []
+  @observable upcomingBountyList: any[] = []
+
   @observable bountyList: any[] = []
   @observable bountyCount = 0
   @observable page = 1
@@ -36,6 +39,8 @@ export class BountyHunterViewModel {
   constructor() {
     //
     this.getBountyListByPage()
+    this.getAllLiveBounty();
+    this.getTopUpcomingBounty()
     this.getTotalBountyCount()
     this.getCurrentTask()
   }
@@ -68,15 +73,50 @@ export class BountyHunterViewModel {
     this._disposers.forEach((d) => d())
   }
 
+  @asyncAction *getAllLiveBounty() {
+    try {
+      const res = yield apiService.tasks.find(
+        { status: 'live' },
+        {
+          _start: 0,
+        }
+      )
+      this.liveBountyList = res
+    } catch (error) {
+      this.liveBountyList = []
+      snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *getTopUpcomingBounty(limit = 5) {
+    try {
+      const res = yield apiService.tasks.find(
+        { status: 'upcoming' },
+        {
+          _start: 0,
+          _limit: limit,
+          _sort: 'startTime:ASC',
+        }
+      )
+      this.upcomingBountyList = res
+    } catch (error) {
+      this.upcomingBountyList = []
+      snackController.error(error as string)
+    }
+  }
+
   @asyncAction *getBountyListByPage(page?: number) {
     try {
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.tasks.find(this.dateRangeFilterParams, {
-        _limit: PAGE_LIMIT,
-        _start: _start,
-        _sort: this.sortParams,
-      })
+      const res = yield apiService.tasks.find(
+        { status: 'ended', ...this.dateRangeFilterParams },
+        {
+          _limit: PAGE_LIMIT,
+          _start: _start,
+          _sort: this.sortParams,
+        }
+      )
       if (this.page === 1) this.bountyList = res
       else this.bountyList = [...this.bountyList, ...res]
       this.page += 1
@@ -87,7 +127,7 @@ export class BountyHunterViewModel {
   }
 
   @asyncAction *getTotalBountyCount() {
-    this.bountyCount = yield apiService.tasks.count(this.dateRangeFilterParams)
+    this.bountyCount = yield apiService.tasks.count({ status: 'ended', ...this.dateRangeFilterParams })
   }
 
   @asyncAction *getCurrentTask() {
@@ -119,6 +159,34 @@ export class BountyHunterViewModel {
 
   @computed get convertedBountyList() {
     return this.bountyList.map((bounty) => {
+      return {
+        name: bounty.name,
+        id: bounty.id,
+        startTime: bounty.startTime,
+        rewardAmount: bounty.rewardAmount,
+        chainId: bounty.chainId,
+        metadata: bounty.metadata,
+        types: keys(bounty.data),
+        maxParticipant: bounty.maxParticipant,
+      }
+    })
+  }
+  @computed get convertedLiveBountyList() {
+    return this.liveBountyList.map((bounty) => {
+      return {
+        name: bounty.name,
+        id: bounty.id,
+        startTime: bounty.startTime,
+        rewardAmount: bounty.rewardAmount,
+        chainId: bounty.chainId,
+        metadata: bounty.metadata,
+        types: keys(bounty.data),
+        maxParticipant: bounty.maxParticipant,
+      }
+    })
+  }
+  @computed get convertedUpcomingBountyList() {
+    return this.upcomingBountyList.map((bounty) => {
       return {
         name: bounty.name,
         id: bounty.id,

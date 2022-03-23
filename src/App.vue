@@ -1,14 +1,16 @@
 <template>
   <v-app class="page-bg">
-    <snack-bar />
-    <alert />
-    <global-loading />
-    <twitter-login-dialog />
-    <attach-wallet-dialog />
+    <v-app-bar app>
+      <snack-bar />
+      <alert />
+      <global-loading />
+      <twitter-login-dialog />
+      <attach-wallet-dialog />
+      <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
+    </v-app-bar>
     <navigation-drawer />
-    <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
-    <mobile-navigation-bar v-else />
-    <v-main class="d-flex flex-column neutral15">
+    <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
+    <v-main app class="neutral15">
       <router-view></router-view>
     </v-main>
     <v-divider></v-divider>
