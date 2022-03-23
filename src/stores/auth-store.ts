@@ -146,6 +146,10 @@ export class AuthStore {
     if (!this.user?.twitterCreatedTime) return 0
     else return moment().diff(moment(this.user.twitterCreatedTime), 'days')
   }
+
+  @computed get registeredWallet() {
+    return get(this.user, 'hunter.address', '')
+  }
 }
 
 export const authStore = new AuthStore()
