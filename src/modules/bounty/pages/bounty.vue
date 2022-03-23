@@ -104,6 +104,25 @@
       <v-container>
         <v-row>
           <v-col>
+            <div class="section-big-title-text font-weight-bold">Hunting time starts</div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col md="6" sm="6" cols="12">
+            <hunting-time-card></hunting-time-card>
+          </v-col>
+          <v-col md="6" sm="6" cols="12">
+            <hunting-time-card></hunting-time-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-col>
+
+    <v-col cols="12">
+      <v-divider class="my-4"></v-divider>
+      <v-container>
+        <v-row>
+          <v-col>
             <div class="section-big-title-text font-weight-bold">Live pools</div>
           </v-col>
         </v-row>
@@ -227,6 +246,7 @@ import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter
     'bounty-card': () => import('@/modules/bounty/components/bounty-card.vue'),
     'info-card': () => import('@/modules/bounty/components/info-card.vue'),
     'bounty-banner': () => import('@/modules/bounty/components/bounty-banner.vue'),
+    'hunting-time-card': () => import('@/modules/bounty/components/hunting-time-card.vue'),
   },
 })
 export default class BountyPage extends Vue {
