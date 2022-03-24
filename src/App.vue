@@ -56,6 +56,32 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.task-detail-twitter-share-data-table {
+  &.v-data-table {
+    thead {
+      background: var(--v-bluePrimary-lighten1);
+    }
+    tbody {
+      tr:nth-child(even) {
+        background-color: var(--v-neutral15-base);
+      }
+      tr:nth-child(odd) {
+        background-color: var(--v-neutral100-base) !important;
+        background: var(--v-neutral100-base) !important;
+      }
+    }
+  }
+}
+.theme--dark {
+  .task-detail-twitter-share-data-table {
+    &.v-data-table {
+      thead {
+        background: var(--v-neutral20-base);
+      }
+    }
+  }
+}
+
 .neutral100--bg {
   background-color: var(--v-neutral100-base) !important;
 }

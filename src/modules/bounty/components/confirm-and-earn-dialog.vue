@@ -1,6 +1,6 @@
 <template>
-  <v-dialog persistent width="534" v-model="vm.earnDialog">
-    <v-sheet class="position-relative overflow-hidden pb-4" outlined>
+  <v-dialog persistent width="534" v-model="vm.earnDialog" class="overflow-hidden">
+    <v-sheet class="position-relative overflow-hidden pb-4 rounded neutral100--bg" outlined>
       <div class="d-flex justify-center align-center py-4 card-title-text font-weight-600 text-uppercase">
         confirm to complete
       </div>
@@ -22,7 +22,7 @@
         </div>
         <!-- <div class="mt-8 small-label">Please enter your reward address and perform KYC to reward</div> -->
         <div class="mt-5 text-body-2">Please enter your reward address</div>
-        <v-sheet class="mt-2 py-1 px-2 d-flex align-center" rounded outlined>
+        <v-sheet class="mt-2 py-1 px-2 d-flex align-center neutral100--bg" rounded outlined>
           <v-icon>mdi-wallet-outline</v-icon>
 
           <v-text-field
@@ -31,7 +31,7 @@
             placeholder="Your wallet address"
             flat
             solo
-            class="ma-0 pa-0 rounded-lg text-caption"
+            class="ma-0 pa-0 rounded-lg text-caption neutral100--bg link-submit-custom-input"
             :value="vm.earnDialogWalletInput"
             @input="vm.changeEarnDialogWalletInput"
             readonly
