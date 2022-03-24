@@ -1,31 +1,50 @@
 <template>
   <v-dialog persistent width="534" v-model="vm.earnDialog">
     <v-sheet class="position-relative overflow-hidden pb-4" outlined>
-      <div class="d-flex justify-center align-center py-5 card-title-text font-weight-600 text-uppercase">
-        confirm and earn reward
+      <div class="d-flex justify-center align-center py-4 card-title-text font-weight-600 text-uppercase">
+        confirm to complete
       </div>
       <div class="custom-blue-divider fill-width"></div>
       <div class="mt-7 px-8">
-        <div>
-          <ul class="card-title-text">
-            <li>You have done successfully the Twitter task!</li>
-            <!-- <li>Your total reward: <span class="card-title-text font-weight-600">1000 DVT</span></li> -->
-          </ul>
+        <div class="text-body-2 text-center font-weight-bold">
+          Congratulations, You have done successfully the Twitter task in
+          <span class="text-capitalize">{{ vm.currentPoolType }}</span> pool!
+        </div>
+        <div class="text-body-2 text-center font-weight-bold" v-if="vm.isInPriorityPool">
+          Your total reward: {{ vm.singlePriorityReward }} {{ vm.rewardToken }}
+        </div>
+        <div class="text-caption text-center mt-1" v-if="!vm.isInPriorityPool">
+          Your reward will be calculated exactly when the hunting pool ends. Please wait until then, we will distribute
+          it to the reward wallet address you provided!
+        </div>
+        <div class="text-caption text-center mt-1" v-else>
+          Please wait until when the hunting pool ends, we will distribute it to the reward wallet address you provided!
         </div>
         <!-- <div class="mt-8 small-label">Please enter your reward address and perform KYC to reward</div> -->
-        <div class="mt-8 small-label">Please submit your wallet address to earn reward</div>
-        <v-sheet class="mt-4 py-1 px-2 d-flex align-center" rounded outlined>
+        <div class="mt-5 text-body-2">Please enter your reward address</div>
+        <v-sheet class="mt-2 py-1 px-2 d-flex align-center" rounded outlined>
+          <v-icon>mdi-wallet-outline</v-icon>
+
           <v-text-field
             hide-details
             dense
             placeholder="Your wallet address"
             flat
             solo
-            class="ma-0 pa-0 rounded-lg"
+            class="ma-0 pa-0 rounded-lg text-caption"
             :value="vm.earnDialogWalletInput"
             @input="vm.changeEarnDialogWalletInput"
+            readonly
           ></v-text-field>
-          <v-icon>mdi-wallet-outline</v-icon>
+          <v-btn
+            depressed
+            class="line-height-6 px-4 py-2 linear-background-blue-main"
+            height="40"
+            :disabled="!vm.earnDialogWalletInput.trim()"
+            @click="vm.submitTaskConfirmation('twitter')"
+          >
+            <span class="btn-span text-capitalize">submit</span>
+          </v-btn>
         </v-sheet>
         <!-- <v-sheet class="mt-6 py-1 px-2 d-flex align-center" outlined>
           <v-text-field
@@ -39,7 +58,7 @@
           ></v-text-field>
           <v-btn depressed class="background-blue-diversity white--text rounded-0 text-capitalize"> Submit KYC </v-btn>
         </v-sheet> -->
-        <div class="mt-6 d-flex justify-center">
+        <!-- <div class="mt-6 d-flex justify-center">
           <v-btn
             depressed
             class="line-height-6 px-4 py-2 linear-background-blue-main"
@@ -49,7 +68,7 @@
           >
             <span class="btn-span text-capitalize">submit</span>
           </v-btn>
-        </div>
+        </div> -->
       </div>
       <v-icon class="close-icon" @click="vm.changeEarnDialog(false)">mdi-window-close</v-icon>
     </v-sheet>
@@ -84,7 +103,7 @@ export default class Farming extends Vue {
   line-height: 18px;
 }
 .custom-blue-divider {
-  border-top: 3px solid var(--v-bluePrimary-base);
+  border-top: 2px solid var(--v-bluePrimary-base);
 }
 .btn-span {
   line-height: 24px;
