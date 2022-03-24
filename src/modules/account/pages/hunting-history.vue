@@ -2,10 +2,10 @@
   <v-row>
     <v-col cols="12" class="hunter-info-container">
       <v-container class="d-flex justify-center mt-20">
-        <v-sheet class="overflow-hidden rounded-lg" width="100%" elevation="3">
+        <v-sheet class="overflow-hidden rounded-lg neutral100--bg" width="100%" elevation="3">
           <v-row dense no-gutters>
             <v-col cols="12" md="4" lg="4">
-              <v-sheet height="160" outlined style="flex: 1">
+              <v-sheet height="160" outlined style="flex: 1" class="neutral100--bg">
                 <div class="mt-6 d-flex justify-center">
                   <v-avatar size="68">
                     <img :src="authStore.user.avatar" alt="Avatar" />
@@ -17,34 +17,34 @@
               </v-sheet>
             </v-col>
             <v-col>
-              <v-sheet height="160" outlined style="flex: 2">
+              <v-sheet height="160" outlined style="flex: 2" class="neutral100--bg">
                 <v-row dense no-gutters class="d-flex align-center fill-height pl-6">
                   <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center">
+                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
                       <div>
                         <v-icon style="opacity: 0.8">mdi-bullseye-arrow</v-icon>
                       </div>
                       <div class="d-flex align-center ml-2">{{ vm.completedTaskCount }}</div>
                     </v-sheet>
-                    <v-sheet class="caption-text">Successful task</v-sheet>
+                    <v-sheet class="caption-text neutral100--bg">Successful task</v-sheet>
                   </v-col>
                   <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center">
+                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
                       <div>
                         <v-img src="@/assets/icons/processing-spiral.svg" width="20" height="20"></v-img>
                       </div>
                       <div class="d-flex align-center ml-2">{{ vm.processingTaskCount }}</div>
                     </v-sheet>
-                    <v-sheet class="caption-text">Processing task</v-sheet>
+                    <v-sheet class="caption-text neutral100--bg">Processing task</v-sheet>
                   </v-col>
                   <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center">
+                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
                       <div>
                         <v-img src="@/assets/icons/crown-mini.svg" width="20" height="20"></v-img>
                       </div>
                       <div class="d-flex align-center ml-2">$0.00</div>
                     </v-sheet>
-                    <v-sheet class="caption-text">Bounty earned</v-sheet>
+                    <v-sheet class="caption-text neutral100--bg">Bounty earned</v-sheet>
                   </v-col>
                 </v-row>
               </v-sheet>
