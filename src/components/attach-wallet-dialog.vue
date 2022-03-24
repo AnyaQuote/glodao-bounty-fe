@@ -1,19 +1,22 @@
 <template>
-  <v-dialog v-model="authStore.attachWalletDialog" class="rounded-0" max-width="500" persistent>
-    <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text overflow-hidden">
+  <v-dialog v-model="authStore.attachWalletDialog" content-class=" rounded overflow-hidden" max-width="500" persistent>
+    <v-sheet
+      outlined
+      class="position-relative pa-8 text-center dialog-normal-text overflow-hidden rounded neutral100--bg"
+    >
       <v-avatar size="48">
         <img :src="authStore.user.avatar" alt="Avatar" />
       </v-avatar>
       <div class="mt-3 card-title-text font-weight-600">Set the attached wallet</div>
       <div class="mt-6 font-weight-600">Please connect your wallet to continue</div>
-      <v-sheet class="mt-4 py-1 px-2 d-flex align-center" outlined>
+      <v-sheet class="mt-4 py-1 px-2 d-flex align-center neutral100--bg" outlined>
         <v-text-field
           hide-details
           dense
           placeholder="Your wallet address"
           flat
           solo
-          class="ma-0 pa-0"
+          class="ma-0 pa-0 neutral100--bg link-submit-custom-input"
           @input="authStore.changeWalletDialogInput"
           :value="walletStore.account"
           readonly

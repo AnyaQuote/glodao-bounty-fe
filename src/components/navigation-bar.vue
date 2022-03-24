@@ -52,15 +52,15 @@
                   <img :src="authStore.user.avatar" alt="Avatar" />
                 </v-avatar>
               </template>
-              <v-sheet width="240" outlined>
-                <v-sheet class="d-flex align-center pa-4">
+              <v-sheet width="240" class="neutral100--bg" outlined>
+                <v-sheet class="d-flex align-center pa-4 neutral100--bg">
                   <v-avatar size="32">
                     <img :src="authStore.user.avatar" alt="Avatar" />
                   </v-avatar>
                   <div class="ml-3 font-weight-600">{{ authStore.user.hunter.name }}</div>
                 </v-sheet>
                 <v-divider></v-divider>
-                <v-sheet>
+                <v-sheet class="neutral100--bg">
                   <v-btn
                     plain
                     block

@@ -29,16 +29,16 @@
       </div>
     </template>
 
-    <v-card class="pa-0">
-      <v-card-title class="d-flex justify-space-between pa-4 pb-0">
+    <v-card class="pa-0 neutral100--bg">
+      <v-card-title class="d-flex justify-space-between pa-4 pb-0 neutral100--bg">
         <div>Connect your wallet</div>
         <v-btn icon small @click="walletStore.changeShowConnectDialog(false)">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-text class="pa-4 pt-0">
-        <v-card class="px-4 py-2 my-2 border-radius-8" elevation="0" outlined>
-          <div class="text-center my-2">
+      <v-card-text class="pa-4 pt-0 neutral100--bg">
+        <v-card class="px-4 py-2 my-2 border-radius-8 neutral100--bg" elevation="0" outlined>
+          <div class="text-center my-2 neutral100--bg">
             <div
               class="d-flex align-center"
               v-if="
@@ -74,19 +74,16 @@
         <div class="text-h6" v-if="!walletStore.requestingChain || walletStore.requestingChain === 'sol'">
           SOLANA Chain
         </div>
-        <div
-          style="background-color: transparent"
-          v-if="!walletStore.requestingChain || walletStore.requestingChain === 'sol'"
-        >
+        <div v-if="!walletStore.requestingChain || walletStore.requestingChain === 'sol'">
           <v-card
             disabled
             v-for="(wallet, index) in walletStore.solWalletItems"
             :key="index"
             outlined
             elevation="0"
-            class="my-1 wallet-card"
+            class="my-1 wallet-card neutal100--bg"
           >
-            <div @click="connectSolana(wallet)" class="d-flex align-center">
+            <div @click="connectSolana(wallet)" class="d-flex align-center neutral100--bg">
               <div class="d-flex align-center ma-4">
                 <img width="24" :src="wallet.icon" />
               </div>
@@ -107,9 +104,9 @@
           v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
           elevation="0"
           outlined
-          class="wallet-card"
+          class="wallet-card neutra100--bg"
         >
-          <div class="d-flex align-center">
+          <div class="d-flex align-center neutral100--bg">
             <div class="d-flex align-center ma-4">
               <img width="24" :src="require('@/assets/icons/metamask-fox.svg')" />
             </div>
@@ -179,6 +176,6 @@ export default class extends Vue {
   border-radius: 8px;
 }
 .wallet-card:hover {
-  background: var(--v-background-base) !important;
+  background: var(--v-primary-base) !important;
 }
 </style>
