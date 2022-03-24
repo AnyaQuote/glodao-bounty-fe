@@ -303,23 +303,8 @@
           <!-- TASK -->
           <v-sheet class="rounded-lg overflow-hidden neutral100" elevation="3">
             <v-tabs v-model="tab" color="bluePrimary" class="rounded-lg neutral100 custom-tabs-bar-bounty-detail">
-              <v-tab
-                v-for="(item, index) in items"
-                :key="index"
-                :disabled="index !== 0"
-                :class="{
-                  'font-size-14': $vuetify.breakpoint.mdAndUp,
-                  'font-size-12': $vuetify.breakpoint.smOnly,
-                  'font-size-8': $vuetify.breakpoint.xsOnly,
-                }"
-              >
-                <span
-                  :class="{
-                    'font-size-14': $vuetify.breakpoint.mdAndUp,
-                    'font-size-12': $vuetify.breakpoint.smOnly,
-                    'font-size-8': $vuetify.breakpoint.xsOnly,
-                  }"
-                >
+              <v-tab v-for="(item, index) in items" :key="index" :disabled="index !== 0" class="text-caption">
+                <span class="text-caption text-none primary--text">
                   {{ item }}
                 </span>
               </v-tab>
