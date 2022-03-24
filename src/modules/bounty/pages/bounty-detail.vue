@@ -495,7 +495,7 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="vm.status === HUNTING.start || vm.status === HUNTING.finish"
+                          :disabled="vm.shouldDisableTaskProcessing"
                           @click="vm.changeEarnDialog(true)"
                         >
                           Confirm to complete
