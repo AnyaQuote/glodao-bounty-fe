@@ -1,7 +1,7 @@
 <template>
-  <v-sheet class="overflow-hidden rounded-lg" elevation="3">
+  <v-sheet class="overflow-hidden rounded-lg neutral100--bg" elevation="3">
     <v-sheet class="position-relative">
-      <v-img height="350" :src="coverImageUrl"></v-img>
+      <v-img height="236" :src="coverImageUrl"></v-img>
       <v-sheet class="d-flex justify-end countdown-container transparent pa-6">
         <countdown class="countdown rounded-lg" :targetDate="endTime">
           <template slot="prepend">
@@ -10,22 +10,27 @@
         </countdown>
       </v-sheet>
       <v-sheet class="title-container d-flex align-center px-5 py-3">
-        <v-img max-height="64" max-width="64" src="@/assets/images/dummy_cryptocurrency.svg"></v-img>
+        <v-img max-height="50" max-width="50" src="@/assets/images/dummy_cryptocurrency.svg"></v-img>
         <v-sheet class="transparent title blue--text px-6">{{ name }}</v-sheet>
       </v-sheet>
     </v-sheet>
-    <v-sheet class="d-flex px-6 py-4">
-      <v-sheet class="d-flex flex-column">
-        <v-sheet class="text-1 neutral10--text">Total reward</v-sheet>
-        <v-sheet class="text-2 mt-1">{{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}</v-sheet>
+    <v-sheet class="d-flex transparent px-6 py-4">
+      <v-sheet class="d-flex transparent flex-column">
+        <v-sheet class="transparent neutral10--text">Total reward</v-sheet>
+        <v-sheet class="transparent mt-1">{{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}</v-sheet>
       </v-sheet>
-      <v-sheet class="d-flex flex-column ml-9">
-        <v-sheet class="text-1 neutral10--text">Participants</v-sheet>
-        <v-sheet class="text-2 mt-1">{{ participant | formatNumber(0, 0) }}</v-sheet>
+      <v-sheet class="d-flex transparent flex-column ml-9">
+        <v-sheet class="transparent font-weight-bold neutral10--text">Participants</v-sheet>
+        <v-sheet class="transparent font-weight-bold mt-1">{{ participant | formatNumber(0, 0) }}</v-sheet>
       </v-sheet>
     </v-sheet>
-    <v-sheet class="px-6 pb-6">
-      <v-btn class="btn btn-text text-capitalize white--text rounded-lg" width="100%" x-large @click="openLink()">
+    <v-sheet class="transparent px-6 pb-6">
+      <v-btn
+        class="btn transparent btn-text text-capitalize white--text rounded-lg"
+        width="100%"
+        large
+        @click="openLink()"
+      >
         <v-img class="mr-3" :src="require('@/assets/icons/crown-white.svg')" max-height="25" max-width="25"></v-img>
         Start hunting
       </v-btn>
@@ -80,17 +85,6 @@ export default class HuntingTimeCard extends Vue {
   font-weight: 700;
   font-size: 48px;
   line-height: 130%;
-}
-.text-1 {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-}
-.text-2 {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 130%;
-  color: #06032b;
 }
 .btn {
   background: linear-gradient(90deg, #0276f0 0%, #00e5ff 113.65%);

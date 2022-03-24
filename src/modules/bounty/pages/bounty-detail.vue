@@ -286,7 +286,12 @@
                       <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
                       <v-sheet class="primary--text number-font neutral100--bg">
                         Sharing pool mission
-                        <v-icon color="primary" size="10">mdi-help-circle-outline</v-icon>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-icon color="primary" size="15" v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
+                          </template>
+                          <span>Pool rewards will be divided equally among all participants</span>
+                        </v-tooltip>
                       </v-sheet>
                     </v-sheet>
                   </v-sheet>
@@ -345,9 +350,14 @@
                     </div>
                     <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
                     <div class="text-center my-4">
-                      <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify">
-                        Your account does not qualify for task hunting
-                      </div>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify" v-bind="attrs" v-on="on">
+                            Your account does not qualify for task hunting
+                          </div>
+                        </template>
+                        <span>Your twitter account must be older than 6 months</span>
+                      </v-tooltip>
                       <div v-if="vm.status === HUNTING.start">
                         <v-btn
                           elevation
