@@ -583,11 +583,11 @@
             </v-row>
           </v-sheet>
 
-          <v-sheet outlined class="mt-4" rounded>
+          <v-sheet outlined class="mt-4 overflow-hidden" rounded>
             <v-data-table
               :headers="headers"
               :items="vm.twitterSharedLinkList"
-              class="elevation-0 rounded-lg"
+              class="elevation-0 rounded-lg task-detail-twitter-share-data-table"
               :hide-default-footer="vm.totalTwitterShare < 10"
             >
               <template v-slot:[`item.name`]="{ item }">
@@ -603,7 +603,7 @@
               </template>
               <template v-slot:[`item.link`]="{ item }">
                 <v-row no-gutters dense justify="center">
-                  <div class="blue--text" @click="openLink(item.link)">
+                  <div class="bluePrimary--text" @click="openLink(item.link)">
                     Link<v-icon size="14" color="bluePrimary" class="ml-2">mdi-open-in-new</v-icon>
                   </div>
                 </v-row>
@@ -654,21 +654,18 @@ export default class BountyDetail extends Vue {
       value: 'name',
       align: 'center',
       sortable: false,
-      class: ['blue lighten-1'],
     },
     {
       text: 'Share time',
       value: 'time',
       align: 'center',
       sortable: false,
-      class: ['blue lighten-1'],
     },
     {
       text: 'Share link',
       value: 'link',
       align: 'center',
       sortable: false,
-      class: ['blue lighten-1'],
     },
   ]
   openLink(link: string) {
