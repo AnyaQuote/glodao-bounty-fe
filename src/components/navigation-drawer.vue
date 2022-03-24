@@ -1,8 +1,8 @@
 <template>
   <v-navigation-drawer
     v-model="wallet.navigationDrawer"
-    style="background: white; min-width: 320px"
-    class="fill-height"
+    style="min-width: 320px"
+    class="fill-height neutral100"
     temporary
     fixed
   >
@@ -10,7 +10,7 @@
     <v-divider></v-divider>
     <v-btn
       depressed
-      class="rounded-0 blue-diversity--text"
+      class="rounded-0 blue-diversity--text neutral15"
       height="40"
       block
       v-if="!authStore.jwt"
@@ -18,15 +18,15 @@
     >
       <v-icon class="mr-2">mdi-twitter</v-icon> Log in
     </v-btn>
-    <v-sheet class="fill-width" v-else>
-      <v-sheet class="d-flex align-center pa-4">
+    <v-sheet class="fill-width neutral100" v-else>
+      <v-sheet class="d-flex align-center pa-4 neutral100">
         <v-avatar size="32">
           <img :src="authStore.user.avatar" alt="Avatar" />
         </v-avatar>
         <div class="ml-3 font-weight-600">{{ authStore.user.hunter.name }}</div>
       </v-sheet>
       <v-divider></v-divider>
-      <v-sheet>
+      <v-sheet class="neutral100">
         <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.changeAttachWalletDialog(true)">
           <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
         </v-btn>
