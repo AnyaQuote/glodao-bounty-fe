@@ -14,7 +14,7 @@
             <v-btn
               outlined
               depressed
-              class="rounded-pill primary--text login-btn"
+              class="rounded-pill neutral100--bg login-btn"
               :href="`https://diversity-api.contracts.dev/connect/twitter`"
             >
               <span> Log in with Twitter </span>
