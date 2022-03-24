@@ -10,7 +10,7 @@
         </countdown>
       </v-sheet>
       <v-sheet class="title-container d-flex align-center px-5 py-3">
-        <v-img max-height="50" max-width="50" src="@/assets/images/dummy_cryptocurrency.svg"></v-img>
+        <img :src="require(`@/assets/icons/${chainId || 'bsc'}-icon.svg`)" width="50" height="50" v-bind="$attrs" />
         <v-sheet class="transparent title blue--text px-6">{{ name }}</v-sheet>
       </v-sheet>
     </v-sheet>
@@ -51,6 +51,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class HuntingTimeCard extends Vue {
   @Prop({ required: true }) coverImageUrl!: string
   @Prop({ required: true }) endTime!: string
+  @Prop({ default: 'bsc' }) chainId!: 'bsc' | 'eth' | 'sol'
   @Prop({ required: true }) name!: string
   @Prop({ required: true }) rewardAmount!: number
   @Prop({ required: true }) tokenName!: string

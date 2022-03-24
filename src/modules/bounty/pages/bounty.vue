@@ -112,6 +112,7 @@
             <hunting-time-card
               :coverImageUrl="bounty.coverImage"
               :endTime="bounty.endTime"
+              :chainId="bounty.chainId"
               :name="bounty.name"
               :rewardAmount="bounty.rewardAmount"
               :tokenName="bounty.tokenName"
