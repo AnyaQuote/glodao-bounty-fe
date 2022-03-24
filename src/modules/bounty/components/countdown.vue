@@ -1,20 +1,20 @@
 <template>
-  <v-sheet class="d-flex justify-space-between align-center rounded-lg px-3 py-1">
+  <v-sheet class="d-flex justify-space-between align-center rounded-lg px-3 py-1 neutral100--bg">
     <slot name="prepend"></slot>
-    <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-      <div class="font-weight-bold">{{ days | twoDigits }}</div>
+    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+      <div class="font-weight-bold primary--text">{{ days | twoDigits }}</div>
     </v-sheet>
     <div class="flex-center-box mx-3">:</div>
-    <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-      <div class="font-weight-bold">{{ hours | twoDigits }}</div>
+    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+      <div class="font-weight-bold primary--text">{{ hours | twoDigits }}</div>
     </v-sheet>
     <div class="flex-center-box mx-3">:</div>
-    <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-      <div class="font-weight-bold">{{ minutes | twoDigits }}</div>
+    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+      <div class="font-weight-bold primary--text">{{ minutes | twoDigits }}</div>
     </v-sheet>
     <div class="flex-center-box mx-3">:</div>
-    <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-      <div class="font-weight-bold">{{ seconds | twoDigits }}</div>
+    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+      <div class="font-weight-bold primary--text">{{ seconds | twoDigits }}</div>
     </v-sheet>
   </v-sheet>
 </template>

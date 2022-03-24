@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar height="80px" class="navigation-bar" app flat>
+  <v-app-bar height="80px" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
     <div class="nav-container mx-auto" style="width: 100%">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
@@ -124,7 +124,7 @@ export default class Staking extends Vue {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .menu-btn {
   border-radius: 0 !important;
   display: flex;
@@ -135,9 +135,6 @@ export default class Staking extends Vue {
   margin-top: 4px;
   margin-bottom: 4px;
   color: var(--v-neutral10-base);
-}
-.navigation-bar {
-  background: var(--v-background-base) !important;
 }
 .nav-container {
   max-width: 1280px;
