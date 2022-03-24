@@ -56,126 +56,38 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
-.linear-background-blue-main {
-  background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
+.neutral100--bg {
+  background-color: var(--v-neutral100-base) !important;
 }
-.theme--light {
-  .markdown-li a {
-    color: black !important;
+.v-sheet--outlined {
+  border: thin solid var(--v-neutral20-base);
+}
+.theme--dark {
+  .v-sheet--outlined {
+    border: thin solid var(--v-neutral20-base) !important;
   }
-  .black-bg {
+}
+.link-submit-custom-input {
+  .v-input__control {
+    .v-input__slot {
+      background: transparent !important;
+    }
+  }
+}
+.custom-tabs-bar-bounty-detail {
+  background: transparent;
+  .v-tabs-bar {
+    border-bottom-right-radius: 0;
+    border-bottom: 1px solid var(--v-neutral20-base);
     background: transparent !important;
   }
-  .light-black-bg {
-    background: #201f22 !important;
-  }
-  .card-bg {
-    background: linear-gradient(179.93deg, rgba(255, 255, 255, 1) 2.53%, rgba(255, 255, 255, 0.3) 113.97%) !important;
-  }
-  .dialog-bg {
-    background: white;
-  }
-  .white-bg {
-    background: white !important;
-  }
-  .background-1 {
-    background-attachment: fixed;
-    background-position: top center;
-    background-size: cover;
-  }
-  .background-2 {
-    width: 100%;
-    background-position: top center;
-    background-size: cover;
-  }
-  .v-tabs-items {
-    background-color: transparent !important;
-  }
-  .v-app-bar.v-toolbar.v-sheet {
-    background-color: #fff !important;
-  }
-  .v-toolbar__content {
-    border-bottom: 1px solid var(--v-primary-base) !important;
-    padding: 0 !important;
-  }
-  .index {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
-    min-width: 64px;
-  }
-  .info-card {
-    background: #ffffff;
-  }
-  .time {
-    background: rgba(255, 255, 255, 0.9);
-  }
-  .big-primary-border {
-    border: 2px solid var(--v-primary-base) !important;
-  }
+}
+.linear-background-blue-main {
+  background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
 }
 .fill-width {
   width: 100%;
 }
-
-.theme--dark {
-  .markdown-li a {
-    color: white !important;
-  }
-  .black-bg {
-    background: var(--v-background-base) !important;
-  }
-  .light-black-bg {
-    background: #201f22 !important;
-  }
-  .card-bg {
-    background: var(--v-background-lighten1) !important;
-  }
-  .background-1 {
-    background: #181718 !important;
-  }
-  .background-2 {
-    width: 100%;
-    background-repeat: no-repeat;
-    background-position: top right;
-    background-size: contain;
-  }
-  input[type='date']::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    margin-left: 0 !important;
-    padding: 0;
-  }
-  .v-toolbar__content {
-    box-shadow: 0 4px 8px -1px rgba(255, 255, 187, 0.1);
-    padding: 0 !important;
-  }
-  .v-tabs-items {
-    background-color: transparent !important;
-  }
-  .v-app-bar.v-toolbar.v-sheet {
-    background-color: var(--v-primary-lighten1) !important;
-  }
-  .v-application--wrap {
-    background: var(--v-primary-lighten1) !important;
-  }
-  .v-btn:not(.v-btn--outlined).primary {
-    color: black !important;
-  }
-  .index {
-    background: linear-gradient(112.72deg, rgba(255, 199, 73, 0.05) -28.85%, rgba(255, 255, 255, 0.1) 107.2%);
-    border-radius: 24px;
-    min-width: 64px;
-  }
-  .info-card {
-    background: #1b0e17;
-  }
-  .time {
-    background: linear-gradient(112.72deg, rgba(255, 199, 73, 0.05) -28.85%, rgba(255, 255, 255, 0.1) 107.2%);
-  }
-  .big-primary-border {
-    border: 1px solid var(--v-primary-base) !important;
-  }
-}
-
 .container {
   max-width: 1250px !important;
 }
@@ -252,11 +164,6 @@ export default class App extends Vue {
   background-color: var(--v-subtitle-base);
 }
 
-.theme--dark .filter-btn {
-  .v-text-field--outlined > .v-input__control > .v-input__slot {
-    background: #bcabc7;
-  }
-}
 tbody {
   tr:hover {
     background-color: transparent !important;

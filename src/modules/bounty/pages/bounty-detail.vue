@@ -70,7 +70,7 @@
         <v-sheet class="neutral15">
           <v-sheet class="d-flex transparent mb-3">
             <v-sheet class="transparent title-2">Website:</v-sheet>
-            <a class="blue--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
+            <a class="bluePrimary--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
               {{ vm.task | _get('metadata.website') }}
             </a>
           </v-sheet>
@@ -79,7 +79,7 @@
             <v-btn
               v-for="(value, key) in vm.task.metadata.socialLinks"
               :key="key"
-              class="blue ml-3"
+              class="bluePrimary ml-3"
               fab
               width="24"
               height="24"
@@ -99,7 +99,7 @@
           <v-sheet class="mb-4 neutral15">
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4" elevation="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
                   <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-center">
                     <v-img
@@ -113,7 +113,7 @@
                 </v-sheet>
               </v-col>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4" elevation="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
                   <div class="card-subtitle-1">Remaining ({{ vm.rewardToken }})</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-center">
                     <v-img
@@ -127,7 +127,7 @@
                 </v-sheet>
               </v-col>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4" elevation="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-center">
                     <v-icon size="20" class="mr-1" color="bluePrimary">mdi-account-circle</v-icon>
@@ -225,30 +225,32 @@
             <v-row>
               <v-col>
                 <v-sheet
-                  class="d-flex flex-column justify-space-between align-center white rounded-lg pa-5"
+                  class="d-flex flex-column justify-space-between align-center rounded-lg pa-5 neutral100--bg"
                   width="100%"
                   height="100%"
                 >
-                  <v-sheet class="d-flex mb-3" width="100%">
-                    <v-sheet class="text-uppercase black--text mr-3" height="100%">priority pool</v-sheet>
-                    <v-chip class="bluePrimary lighten-1 black--text font-italic" small>For GDAO stakers</v-chip>
+                  <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
+                    <v-sheet class="text-uppercase primary--text mr-3 neutral100--bg" height="100%">
+                      priority pool
+                    </v-sheet>
+                    <v-chip class="bluePrimary lighten-1 primary--text font-italic" small>For GDAO stakers</v-chip>
                   </v-sheet>
-                  <v-sheet class="d-flex flex-column" width="100%">
-                    <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
-                      <v-sheet class="black--text number-font">
+                  <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
+                    <v-sheet class="d-flex justify-space-between neutral100--bg">
+                      <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
+                      <v-sheet class="primary--text number-font neutral100--bg">
                         {{ vm.totalPriorityReward }} {{ vm.rewardToken }}
                       </v-sheet>
                     </v-sheet>
-                    <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Participants:</v-sheet>
-                      <v-sheet class="black--text number-font">
+                    <v-sheet class="d-flex justify-space-between neutral100--bg">
+                      <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
+                      <v-sheet class="primary--text number-font neutral100--bg">
                         {{ vm.currentPriorityParticipants }}/{{ vm.maxPriorityParticipants }}
                       </v-sheet>
                     </v-sheet>
-                    <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Personal reward:</v-sheet>
-                      <v-sheet class="black--text number-font">
+                    <v-sheet class="d-flex justify-space-between neutral100--bg">
+                      <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
+                      <v-sheet class="primary--text number-font neutral100--bg">
                         {{ vm.singlePriorityReward | formatNumber(2, 0) }} {{ vm.rewardToken }}
                       </v-sheet>
                     </v-sheet>
@@ -257,30 +259,34 @@
               </v-col>
               <v-col>
                 <v-sheet
-                  class="d-flex flex-column justify-space-between align-center white rounded-lg pa-5"
+                  class="d-flex flex-column justify-space-between align-center neutral100--bg rounded-lg pa-5"
                   width="100%"
                   height="100%"
                 >
-                  <v-sheet class="d-flex mb-3" width="100%">
-                    <v-sheet class="text-uppercase black--text mr-3" height="100%">community pool</v-sheet>
-                    <v-chip class="bluePrimary lighten-1 black--text font-italic" small>For community</v-chip>
+                  <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
+                    <v-sheet class="text-uppercase neutral100--bg primary--text mr-3" height="100%">
+                      community pool
+                    </v-sheet>
+                    <v-chip class="bluePrimary lighten-1 primary--text font-italic" small>For community</v-chip>
                   </v-sheet>
-                  <v-sheet class="d-flex flex-column" width="100%">
-                    <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Pool reward:</v-sheet>
-                      <v-sheet class="black--text number-font">
+                  <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
+                    <v-sheet class="d-flex justify-space-between neutral100--bg">
+                      <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
+                      <v-sheet class="primary--text number-font neutral100--bg">
                         {{ vm.totalCommunityReward }} {{ vm.rewardToken }}
                       </v-sheet>
                     </v-sheet>
-                    <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Participants:</v-sheet>
-                      <v-sheet class="black--text number-font">{{ vm.currentCommunityParticipants }}</v-sheet>
+                    <v-sheet class="d-flex justify-space-between neutral100--bg">
+                      <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
+                      <v-sheet class="primary--text number-font neutral100--bg">
+                        {{ vm.currentCommunityParticipants }}
+                      </v-sheet>
                     </v-sheet>
-                    <v-sheet class="d-flex justify-space-between">
-                      <v-sheet class="neutral10--text card-subtitle-1">Personal reward:</v-sheet>
-                      <v-sheet class="black--text number-font">
+                    <v-sheet class="d-flex justify-space-between neutral100--bg">
+                      <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
+                      <v-sheet class="primary--text number-font neutral100--bg">
                         Sharing pool mission
-                        <v-icon color="black" size="10">mdi-help-circle-outline</v-icon>
+                        <v-icon color="primary" size="10">mdi-help-circle-outline</v-icon>
                       </v-sheet>
                     </v-sheet>
                   </v-sheet>
@@ -295,8 +301,8 @@
             </v-col>
           </v-row>
           <!-- TASK -->
-          <v-sheet class="rounded-lg" elevation="3">
-            <v-tabs v-model="tab" color="blue" class="rounded-lg">
+          <v-sheet class="rounded-lg overflow-hidden neutral100" elevation="3">
+            <v-tabs v-model="tab" color="bluePrimary" class="rounded-lg neutral100 custom-tabs-bar-bounty-detail">
               <v-tab
                 v-for="(item, index) in items"
                 :key="index"
@@ -323,7 +329,7 @@
                 <v-row
                   dense
                   no-gutters
-                  justify="center"
+                  justify="center neutral100"
                   :class="{
                     'px-4': $vuetify.breakpoint.smAndDown,
                   }"
@@ -367,43 +373,42 @@
                       >
                         <!-- TASK COL 1 -->
                         <v-col cols="1" v-if="$vuetify.breakpoint.smAndUp">
-                          <v-sheet class="pb-1">
+                          <v-sheet class="pb-1 neutral100">
                             <v-sheet
                               width="18"
                               height="18"
-                              class="rounded-circle flex-center-box background-transparent"
-                              style="border: 1px solid black"
+                              class="rounded-circle flex-center-box background-transparent custom-check-dot"
                             >
                               <v-sheet
                                 width="10"
                                 height="10"
                                 class="rounded-circle"
-                                color="black"
+                                :color="$vuetify.theme.dark ? 'bluePrimary' : 'black'"
                                 v-if="twitterTask.finished || twitterTask.activeStep"
                               >
                               </v-sheet>
                             </v-sheet>
                           </v-sheet>
-                          <v-sheet class="fill-height pb-7">
+                          <v-sheet class="fill-height pb-7 neutral100">
                             <div class="divider"></div>
                           </v-sheet>
                         </v-col>
                         <!-- TASK COL 2 -->
                         <v-col :cols="$vuetify.breakpoint.smAndUp ? 10 : 12">
-                          <v-sheet outlined rounded>
+                          <v-sheet outlined rounded class="mini-task-container-sheet">
                             <v-container fluid>
                               <!-- title -->
                               <div class="d-flex align-center">
                                 <v-sheet
                                   width="10"
                                   height="10"
-                                  class="rounded-circle flex-center-box black--border-thin mr-1"
+                                  class="rounded-circle flex-center-box primary--border-thin mr-1"
                                   v-if="twitterTask.finished || twitterTask.activeStep"
                                 >
-                                  <v-icon size="8" color="black" v-if="twitterTask.finished">mdi-check</v-icon>
-                                  <v-icon size="8" color="black" v-else-if="twitterTask.activeStep"
-                                    >mdi-dots-horizontal</v-icon
-                                  >
+                                  <v-icon size="8" color="primary" v-if="twitterTask.finished">mdi-check</v-icon>
+                                  <v-icon size="8" color="primary" v-else-if="twitterTask.activeStep">
+                                    mdi-dots-horizontal
+                                  </v-icon>
                                 </v-sheet>
                                 <div class="text-caption text-weight-400 line-height" v-if="twitterTask.finished">
                                   Completed
@@ -459,11 +464,7 @@
                         <!-- TASK COL 3 -->
                         <v-col cols="1" class="" v-if="$vuetify.breakpoint.smAndUp">
                           <v-sheet rounded class="fill-height ml-3 ba-dotted" min-width="40">
-                            <v-sheet
-                              outlined
-                              rounded
-                              class="fill-height d-flex justify-center align-center neutral20 lighten-1"
-                            >
+                            <v-sheet outlined rounded class="fill-height d-flex justify-center align-center neutral100">
                               <v-icon v-if="twitterTask && twitterTask.finished">mdi-check </v-icon>
                             </v-sheet>
                           </v-sheet>
@@ -519,7 +520,7 @@
             <v-row>
               <!-- 1 -->
               <v-col cols="12" sm="4" md="4" lg="4">
-                <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
+                <v-sheet outlined rounded height="80" class="pa-4 neutral100--bg" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
                       width="48"
@@ -528,11 +529,11 @@
                     >
                       <v-icon color="white">mdi-share-all</v-icon>
                     </v-sheet>
-                    <div>
-                      <v-sheet class="text-subtitle-2">Total share</v-sheet>
-                      <v-sheet class="text-h6 line-height font-weight-black">{{
-                        vm.totalTwitterShare | formatNumber(0)
-                      }}</v-sheet>
+                    <div class="neutral100--bg">
+                      <v-sheet class="text-subtitle-2 neutral100--bg">Total share</v-sheet>
+                      <v-sheet class="text-h6 line-height font-weight-black neutral100--bg">
+                        {{ vm.totalTwitterShare | formatNumber(0) }}
+                      </v-sheet>
                     </div>
                   </v-row>
                 </v-sheet>
@@ -540,7 +541,7 @@
 
               <!-- 2 -->
               <v-col cols="12" sm="4" md="4" lg="4">
-                <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
+                <v-sheet outlined rounded height="80" class="pa-4 neutral100--bg" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
                       width="48"
@@ -550,10 +551,10 @@
                       <v-icon color="white">mdi-share-all-outline</v-icon>
                     </v-sheet>
                     <div>
-                      <v-sheet class="text-subtitle-2">Daily share</v-sheet>
-                      <v-sheet class="text-h6 line-height font-weight-black">{{
-                        vm.dailyTwitterShareCount | formatNumber(0)
-                      }}</v-sheet>
+                      <v-sheet class="text-subtitle-2 neutral100--bg">Daily share</v-sheet>
+                      <v-sheet class="text-h6 line-height font-weight-black neutral100--bg">
+                        {{ vm.dailyTwitterShareCount | formatNumber(0) }}
+                      </v-sheet>
                     </div>
                   </v-row>
                 </v-sheet>
@@ -561,7 +562,7 @@
 
               <!-- 3 -->
               <v-col cols="12" sm="4" md="4" lg="4">
-                <v-sheet outlined rounded height="80" class="pa-4" elevation="3">
+                <v-sheet outlined rounded height="80" class="pa-4 neutral100--bg" elevation="3">
                   <v-row no-gutters dense>
                     <v-sheet
                       width="48"
@@ -571,8 +572,8 @@
                       <v-icon color="white" size="20"> mdi-twitter </v-icon>
                     </v-sheet>
                     <div>
-                      <v-sheet class="text-subtitle-2">Twitter account </v-sheet>
-                      <v-sheet class="text-h6 line-height font-weight-black">
+                      <v-sheet class="text-subtitle-2 neutral100--bg">Twitter account </v-sheet>
+                      <v-sheet class="text-h6 line-height font-weight-black neutral100--bg">
                         {{ vm.uniqueTwitterAccountCount | formatNumber(0) }}
                       </v-sheet>
                     </div>
@@ -685,6 +686,21 @@ export default class BountyDetail extends Vue {
 }
 </script>
 <style scoped lang="scss">
+.theme--light {
+  .custom-check-dot {
+    border: thin solid var(--v-primary-base);
+  }
+}
+.theme--dark {
+  .custom-check-dot {
+    border: thin solid var(--v-bluePrimary-base);
+  }
+}
+
+.mini-task-container-sheet {
+  background-color: var(--v-neutral100-base);
+  border: 1px solid var(--v-neutral20-base);
+}
 .neutral15-background {
   background-color: var(--v-neutral15-base);
 }
@@ -695,8 +711,8 @@ export default class BountyDetail extends Vue {
 .v-btn--disabled {
   background-image: none !important;
 }
-.black--border-thin {
-  border: thin solid black;
+.primary--border-thin {
+  border: thin solid var(--v-primary-base);
 }
 .font-size-8 {
   font-size: 8px;
@@ -711,7 +727,7 @@ export default class BountyDetail extends Vue {
   font-size: 14px;
 }
 .divider {
-  border-left: 1px solid var(--v-grey-lighten1);
+  border-left: 1px solid var(--v-neutral20-base);
   height: 100%;
   margin-left: 9px;
   padding-top: 30px;

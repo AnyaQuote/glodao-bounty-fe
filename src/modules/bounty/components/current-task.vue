@@ -1,5 +1,5 @@
 <template>
-  <v-sheet outlined class="pa-3 pb-2 card-text" rounded elevation="3" style="position: relative">
+  <v-sheet outlined class="pa-3 pb-2 card-text neutral100" rounded elevation="3" style="position: relative">
     <div class="custom-flag-container">
       <div
         class="custom-flag-css d-flex justify-end align-center pb-2 flex-column"
@@ -16,7 +16,9 @@
       <div class="mt-1 card-text short-description">{{ shortDescription }}</div>
       <div class="d-flex justify-end mt-4 align-center">
         <div class="rounded-circle mr-1 d-flex justify-center align-center progress-icon-container" v-if="statusIcon">
-          <v-icon size="8" color="black" class="font-weight-600">{{ this.statusIcon }}</v-icon>
+          <v-icon size="8" :color="$vuetify.theme.dark ? 'white' : 'black'" class="font-weight-600">
+            {{ this.statusIcon }}
+          </v-icon>
         </div>
         <div class="mr-2 font-italic font-weight-600 text-capitalize">{{ status }}</div>
         <v-sheet
@@ -44,7 +46,7 @@
 <script lang="ts">
 import { lowerCase } from 'lodash'
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Observer
 @Component({
@@ -115,7 +117,12 @@ export default class CurrentTask extends Vue {
 .progress-icon-container {
   width: 10px;
   height: 10px;
-  border: 1px solid black;
+  border: thin solid black;
+}
+.theme--dark {
+  .progress-icon-container {
+    border: thin solid white;
+  }
 }
 .short-description {
   white-space: nowrap;

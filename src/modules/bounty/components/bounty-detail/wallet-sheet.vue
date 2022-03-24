@@ -1,8 +1,8 @@
 <template>
-  <v-sheet class="pa-6 mb-6 rounded-lg" elevation="3">
-    <v-sheet>Your connected wallet:</v-sheet>
+  <v-sheet class="pa-6 mb-6 rounded-lg neutral100--bg" elevation="3">
+    <v-sheet class="neutral100--bg">Your connected wallet:</v-sheet>
     <v-sheet
-      class="font-weight-bold text-caption text-md-body-2 overflow-hidden text-overflow-ellipsis align-center"
+      class="font-weight-bold text-caption text-md-body-2 overflow-hidden text-overflow-ellipsis align-center neutral100--bg"
       :class="{
         'd-flex': $vuetify.breakpoint.smAndUp,
       }"
@@ -19,6 +19,7 @@
       </v-sheet>
       {{ vm.currentWallet }}
       <v-sheet
+        class="neutral100--bg"
         :class="{
           'fill-width': $vuetify.breakpoint.smAndDown,
         }"
@@ -57,9 +58,9 @@
         </v-chip>
       </v-sheet>
     </v-sheet>
-    <v-sheet v-if="vm.shouldShowStakeSuggestion">
+    <v-sheet v-if="vm.shouldShowStakeSuggestion" class="neutral100--bg">
       <v-divider></v-divider>
-      <v-sheet class="mt-2 text-body-2 neutral10--text">
+      <v-sheet class="mt-2 text-body-2 neutral10--text neutral100--bg">
         Priority pool is not full yet. Stake GDAO to enter!
         <a href="#" class="bluePrimary--text ml-2">
           Stake now

@@ -1,3 +1,4 @@
+import { localData } from '@/stores/local-data'
 import '@fortawesome/fontawesome-free/css/all.css'
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -16,7 +17,7 @@ export default new Vuetify({
   },
   theme: {
     // dark: !localData.lightmode,
-    dark: false,
+    dark: !localData.lightmode,
     options: {
       customProperties: true,
     },
@@ -74,10 +75,13 @@ export default new Vuetify({
           base: '#F9F9F9',
           lighten1: '#E5E5E5',
         },
+        neutral100: {
+          base: '#FFFFFF',
+        },
       },
       dark: {
         primary: {
-          base: '#FFC107',
+          base: '#FFFFFF',
         },
         success: {
           base: '#5FCD5B',
@@ -91,16 +95,25 @@ export default new Vuetify({
           base: '#181718',
         },
         bluePrimary: {
-          base: '#0276F0',
-          lighten1: '#E6F1FE',
+          base: '#00E5FF',
+          lighten1: '#143973',
           lighten2: '#55ACE3',
         },
-        neutral20: '#565A5D',
+        neutral20: {
+          base: '#30415C',
+          lighten1: '#F9F9F9',
+        },
         neutral10: '#8D9095',
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
         orangeSenamatic: '#F9AF40',
         purple: '#6955E3',
+        neutral15: {
+          base: '#00102A',
+        },
+        neutral100: {
+          base: '#092249',
+        },
       },
     },
   },

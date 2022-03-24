@@ -1,9 +1,10 @@
 <template>
   <div>
     <div
-      class="footer-background"
       :class="{
         footer: $vuetify.breakpoint.smAndUp,
+        neutral15: $vuetify.theme.dark,
+        white: !$vuetify.theme.dark,
       }"
     >
       <v-container class="px-6 py-7">
@@ -39,11 +40,24 @@
             <a href="" class="ml-8">
               <v-icon> fab fa-telegram-plane </v-icon>
             </a>
+            <v-btn icon class="ml-6" @click="changeTheme">
+              <v-icon>
+                {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
+              </v-icon>
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
     </div>
-    <div class="flex-center-box neutral15 py-3">Copyright © 2022 GLO DAO. All rights reserved.</div>
+    <div
+      class="flex-center-box py-1 text-caption"
+      :class="{
+        neutral100: $vuetify.theme.dark,
+        'bluePrimary lighten-1': !$vuetify.theme.dark,
+      }"
+    >
+      Copyright © 2022 GLO DAO. All rights reserved.
+    </div>
   </div>
 </template>
 
@@ -56,17 +70,14 @@ import { AppProvider } from '@/app-providers'
 @Component
 export default class Footer extends Vue {
   @Inject() providers!: AppProvider
+  changeTheme() {
+    this.providers.toggleLightMode(this.$vuetify)
+  }
 }
 </script>
 
 <style lang="scss">
 .footer {
   max-height: 124px;
-}
-.theme--dark {
-  .footer-background {
-    background: var(--v-primary-lighten1) !important;
-    border-top: 1px solid rgba(255, 255, 187, 0.1) !important;
-  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-sheet>
+  <v-sheet class="neutral100">
     <v-row dense no-gutters>
       <v-col cols="9" sm="10">
         <v-sheet outlined class="rounded rounded-r-0">
@@ -8,8 +8,8 @@
             dense
             flat
             solo
-            class="ma-0 pa-0 text-caption"
-            :placeholder="twitterTask.stepLink || 'https://www.waggle.network/v=gJJzlpw8fG8'"
+            class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
+            :placeholder="twitterTask.stepLink || 'https://twitter.com/CyberKDev/status/1505764152094035972'"
             :readonly="vm.shouldDisableTaskProcessing || twitterTask.finished"
             :value="value"
             @change="onValueChange"
