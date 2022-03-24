@@ -10,8 +10,8 @@
         </countdown>
       </v-sheet>
       <v-sheet class="title-container d-flex align-center px-5 py-3">
-        <img :src="require(`@/assets/icons/${chainId || 'bsc'}-icon.svg`)" width="50" height="50" v-bind="$attrs" />
-        <v-sheet class="transparent title blue--text px-6">{{ name }}</v-sheet>
+        <img :src="require(`@/assets/icons/${chainId || 'bsc'}-icon.svg`)" width="30" height="30" v-bind="$attrs" />
+        <v-sheet class="transparent title blue--text px-3">{{ name }}</v-sheet>
       </v-sheet>
     </v-sheet>
     <v-sheet class="d-flex transparent px-6 py-4">
