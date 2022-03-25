@@ -255,6 +255,24 @@ export class ApiService {
     })
     return res.data
   }
+
+  async applyForPriorityPool(walletAddress: string, applyId: string, hunterId: string, taskId: string) {
+    const res = await axios.post(
+      'applies/applyForPriority',
+      {
+        walletAddress,
+        applyId,
+        hunterId,
+        taskId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
