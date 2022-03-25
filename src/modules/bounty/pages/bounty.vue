@@ -156,7 +156,7 @@
           <v-col>
             <div class="section-big-title-text font-weight-bold">Bounty pools ({{ vm.bountyCount }})</div>
           </v-col>
-          <v-col cols="12" lg="2" md="3" sm="3" xs="4">
+          <!-- <v-col cols="12" lg="2" md="3" sm="3" xs="4">
             <v-btn
               outlined
               depressed
@@ -167,7 +167,7 @@
             >
               Filter by start time
             </v-btn>
-          </v-col>
+          </v-col> -->
           <v-col cols="12" lg="2" md="3" sm="3" xs="4">
             <v-select
               :items="vm.sortList"
