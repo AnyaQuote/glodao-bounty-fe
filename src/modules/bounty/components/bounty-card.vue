@@ -52,13 +52,13 @@
           class="position-absolute linear-background-blue-main fill-width fill-height rounded-0"
           style="opacity: 0.3"
         ></div>
-        <v-btn width="152" height="124" @click="openLink()">
+        <v-btn width="152" height="124" @click="openLink()" class="white">
           <div>
             <div class="d-flex justify-center">
               <v-img :src="require('@/assets/icons/crown-black.svg')" max-height="50" max-width="50"></v-img>
             </div>
             <br />
-            <div class="text-none font-weight-bold card-big-title-text">Start hunting</div>
+            <div class="text-none font-weight-bold card-big-title-text black--text">Start hunting</div>
           </div>
         </v-btn>
       </div>
