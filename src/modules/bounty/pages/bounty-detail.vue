@@ -300,9 +300,16 @@
             </v-row>
           </v-sheet>
 
-          <v-row dense no-gutters v-if="vm.currentWallet">
+          <v-row dense no-gutters>
             <v-col cols="12">
-              <wallet-sheet></wallet-sheet>
+              <wallet-sheet v-if="vm.currentWallet"></wallet-sheet>
+              <v-sheet
+                class="pa-4 mb-6 rounded-lg neutral100--bg redSenamatic--text font-italic text-body-2"
+                elevation="3"
+                v-else
+              >
+                You need to connect your wallet to do task
+              </v-sheet>
             </v-col>
           </v-row>
           <!-- TASK -->
@@ -319,7 +326,8 @@
                 <v-row
                   dense
                   no-gutters
-                  justify="center neutral100"
+                  class="neutral100--bg"
+                  justify="center"
                   :class="{
                     'px-4': $vuetify.breakpoint.smAndDown,
                   }"

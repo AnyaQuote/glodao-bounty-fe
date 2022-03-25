@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-6 mb-6 rounded-lg neutral100--bg" elevation="3">
+  <v-sheet class="pa-6 mb-6 rounded-lg neutral100--bg pb-4" elevation="3">
     <v-sheet class="neutral100--bg">Your connected wallet:</v-sheet>
     <v-sheet
       class="font-weight-bold text-caption text-md-body-2 overflow-hidden text-overflow-ellipsis align-center neutral100--bg"
@@ -28,7 +28,6 @@
           class="ma-2 text-uppercase font-weight-regular text-caption"
           :class="{
             'ml-0': $vuetify.breakpoint.xsOnly,
-            'mb-0': !vm.shouldShowStakeSuggestion,
           }"
           v-if="!vm.isCurrentWalletMatchRegistered"
           color="error"
@@ -40,7 +39,6 @@
           class="ma-2 text-uppercase font-weight-regular text-caption bluePrimary--text bluePrimary lighten-1 font-weight-bold"
           :class="{
             'ml-0': $vuetify.breakpoint.xsOnly,
-            'mb-0': !vm.shouldShowStakeSuggestion,
           }"
           v-else-if="vm.isStaker"
         >
@@ -50,7 +48,6 @@
           class="ma-2 text-uppercase font-weight-regular text-caption neutral10--text neutral20 font-weight-bold"
           :class="{
             'ml-0': $vuetify.breakpoint.xsOnly,
-            'mb-0': !vm.shouldShowStakeSuggestion,
           }"
           v-else
         >

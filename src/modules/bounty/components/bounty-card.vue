@@ -8,9 +8,9 @@
       >
         <div class="position-relative">
           <v-img height="236" :src="coverImage"></v-img>
-          <div class="start-date-container" v-if="!isStarted"></div>
-          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600" v-if="!isStarted">
-            Start in {{ startTime | datetime }} 🔥
+          <div class="start-date-container" v-if="isEnded"></div>
+          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
+            Closed: {{ endTime | datetime }}
           </div>
           <div class="position-absolute custom-chevron-flag-container rounded-0">
             <div class="custom-chevron-flag d-flex flex-column justify-center align-center pt-6 pb-3 elavation-10">
@@ -34,8 +34,8 @@
               <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
-              <div>Max participant</div>
-              <div class="font-weight-bold">{{ maxParticipant }}</div>
+              <div>Participants</div>
+              <div class="font-weight-bold">{{ totalParticipants }}</div>
             </div>
           </div>
         </div>
@@ -52,13 +52,13 @@
           class="position-absolute linear-background-blue-main fill-width fill-height rounded-0"
           style="opacity: 0.3"
         ></div>
-        <v-btn width="152" height="124" @click="openLink()">
+        <v-btn width="152" height="124" @click="openLink()" class="white">
           <div>
             <div class="d-flex justify-center">
               <v-img :src="require('@/assets/icons/crown-black.svg')" max-height="50" max-width="50"></v-img>
             </div>
             <br />
-            <div class="text-none font-weight-bold card-big-title-text">Start hunting</div>
+            <div class="text-none font-weight-bold card-big-title-text black--text">Start hunting</div>
           </div>
         </v-btn>
       </div>
@@ -80,15 +80,16 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class BountyCard extends Vue {
   @Prop({ required: true }) name!: string
   @Prop({ required: true }) startTime!: string
+  @Prop({ required: true }) endTime!: string
   @Prop({ required: true }) rewardAmount!: number
   @Prop({ required: true }) chainId!: number
   @Prop({ required: true }) metadata!: any
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) types!: string[]
-  @Prop({ required: true }) maxParticipant!: number
+  @Prop({ required: true }) totalParticipants!: number
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
-  isStarted = moment(this.startTime).isBefore(moment())
+  isEnded = moment(this.endTime).isBefore(moment())
 
   openLink() {
     this.$router.push(`bounty/${this.id}`)

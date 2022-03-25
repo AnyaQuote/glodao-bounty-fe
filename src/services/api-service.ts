@@ -224,6 +224,7 @@ export class ApiService {
     )
     return res.data
   }
+
   async updateWalletAddress(walletAddress: string, signature: string, chain: string, id: string) {
     const res = await axios.post(
       'hunters/updateWalletAddress',
@@ -232,6 +233,37 @@ export class ApiService {
         signature,
         chain,
         id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
+
+  async checkStakeStatus(walletAddress: string, poolId: number) {
+    const res = await axios.get('checkUserStaked', {
+      params: {
+        address: walletAddress,
+        poolId,
+      },
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
+    return res.data
+  }
+
+  async applyForPriorityPool(walletAddress: string, applyId: string, hunterId: string, taskId: string) {
+    const res = await axios.post(
+      'applies/applyForPriority',
+      {
+        walletAddress,
+        applyId,
+        hunterId,
+        taskId,
       },
       {
         headers: {

@@ -71,8 +71,7 @@
             </v-select>
           </v-col>
           <v-col cols="12" sm="6" md="2">
-            <!-- <v-select :items="items" label="Time" outlined dense class="rounded-0"></v-select> -->
-            <v-btn
+            <!-- <v-btn
               outlined
               depressed
               class="fill-width text-none text-start font-weight-regular d-flex justify-start align-center"
@@ -81,7 +80,7 @@
               style="border: thin solid rgba(0, 0, 0, 0.38) !important"
             >
               Filter by date
-            </v-btn>
+            </v-btn> -->
           </v-col>
           <v-col cols="12" sm="6" md="2">
             <!-- <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select> -->

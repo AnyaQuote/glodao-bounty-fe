@@ -62,6 +62,8 @@ export class BountyDetailViewModel {
   @observable currentTime = Date.now()
   currentTimeInterval: NodeJS.Timer
 
+  @observable stakeStatus = false
+
   @observable statistical = {
     total: 100,
     daily: 10000,
@@ -90,6 +92,12 @@ export class BountyDetailViewModel {
           this.changeEarnDialogWalletInput(authStore.user.hunter.address)
         }
       ),
+      reaction(
+        () => walletStore.account,
+        () => {
+          this.getStakeStatus()
+        }
+      ),
     ]
     this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
@@ -97,6 +105,15 @@ export class BountyDetailViewModel {
   destroyReaction() {
     this.disposes.forEach((d) => d())
     if (this.currentTimeInterval) clearInterval(this.currentTimeInterval)
+  }
+
+  @asyncAction *getStakeStatus() {
+    try {
+      const res = yield apiService.checkStakeStatus(walletStore.account, 0)
+      this.stakeStatus = res
+    } catch (error) {
+      snackController.error('Error: Cant get stake status')
+    }
   }
 
   @action.bound generateBreadcrumbsItems() {
@@ -181,18 +198,26 @@ export class BountyDetailViewModel {
   @asyncAction *fetchData() {
     yield this.getTaskData()
     this.initEmptyStepData()
+    yield this.getRelatedApplies()
     yield this.getApplyData()
+    yield this.getStakeStatus()
   }
 
   @asyncAction *getTaskData() {
     try {
       const res = yield apiService.tasks.findOne(this.taskId)
       this.task = res
-      apiService.applies
-        .find({
-          'task.id': this.taskId,
-        })
-        .then((res) => (this.relatedApplies = res))
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *getRelatedApplies() {
+    try {
+      const res = yield apiService.applies.find({
+        'task.id': this.taskId,
+      })
+      this.relatedApplies = res
     } catch (error) {
       snackController.error(error as string)
     }
@@ -291,11 +316,24 @@ export class BountyDetailViewModel {
 
   @asyncAction *applyForPriorityPool() {
     try {
-      console.log('apply for priority pool')
-      yield 0
-    } catch (error) {
-      console.log(error)
-      snackController.error('Fail to enter priority pool')
+      if (this.isPriorityPoolFull) {
+        snackController.error('There are not any priority pool slot left!')
+      } else if (!this.isStaker) {
+        snackController.error('Only GloDAO stacker can apply for priority pool')
+      } else {
+        const res = yield apiService.applyForPriorityPool(
+          walletStore.account,
+          get(this.apply, 'id', ''),
+          get(authStore.user, 'hunter.id', ''),
+          get(this.task, 'id', '')
+        )
+        this.apply = res
+        const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+        this.relatedApplies[foundIndex] = this.apply
+        snackController.success('Apply for priority pool successfully')
+      }
+    } catch (error: any) {
+      snackController.error('Fail to enter priority pool: ' + error.message)
     }
   }
 
@@ -486,7 +524,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get isStaker() {
-    return false
+    return this.stakeStatus
   }
 
   @computed get shouldShowStakeSuggestion() {
