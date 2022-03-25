@@ -294,6 +294,7 @@ export class BountyDetailViewModel {
           this.apply = res
           this.status = HUNTING.finish
           this.changeEarnDialog(false)
+          snackController.success('Submit successfully')
         })
     } catch (error) {
       snackController.error(error as string)
@@ -325,7 +326,8 @@ export class BountyDetailViewModel {
           walletStore.account,
           get(this.apply, 'id', ''),
           get(authStore.user, 'hunter.id', ''),
-          get(this.task, 'id', '')
+          get(this.task, 'id', ''),
+          0
         )
         this.apply = res
         const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
@@ -333,7 +335,7 @@ export class BountyDetailViewModel {
         snackController.success('Apply for priority pool successfully')
       }
     } catch (error: any) {
-      snackController.error('Fail to enter priority pool: ' + error.message)
+      snackController.error('Fail to enter priority pool: ' + error.response.data.message)
     }
   }
 

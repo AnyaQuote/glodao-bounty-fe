@@ -256,7 +256,7 @@ export class ApiService {
     return res.data
   }
 
-  async applyForPriorityPool(walletAddress: string, applyId: string, hunterId: string, taskId: string) {
+  async applyForPriorityPool(walletAddress: string, applyId: string, hunterId: string, taskId: string, poolId: number) {
     const res = await axios.post(
       'applies/applyForPriority',
       {
@@ -264,6 +264,7 @@ export class ApiService {
         applyId,
         hunterId,
         taskId,
+        poolId,
       },
       {
         headers: {
