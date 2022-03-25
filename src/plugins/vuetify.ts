@@ -114,6 +114,17 @@ export default new Vuetify({
         neutral100: {
           base: '#092249',
         },
+        green: {
+          base: '#6CE08D',
+        },
+        red: {
+          base: '#E35E55',
+        },
+        blue: {
+          base: '#0276F0',
+          lighten1: '#E6F1FE',
+          lighten2: '#55ACE3',
+        },
       },
     },
   },
