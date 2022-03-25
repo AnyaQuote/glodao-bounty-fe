@@ -62,6 +62,8 @@ export class BountyDetailViewModel {
   @observable currentTime = Date.now()
   currentTimeInterval: NodeJS.Timer
 
+  @observable stakeStatus = false
+
   @observable statistical = {
     total: 100,
     daily: 10000,
@@ -90,6 +92,12 @@ export class BountyDetailViewModel {
           this.changeEarnDialogWalletInput(authStore.user.hunter.address)
         }
       ),
+      reaction(
+        () => walletStore.account,
+        () => {
+          this.getStakeStatus()
+        }
+      ),
     ]
     this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
@@ -97,6 +105,15 @@ export class BountyDetailViewModel {
   destroyReaction() {
     this.disposes.forEach((d) => d())
     if (this.currentTimeInterval) clearInterval(this.currentTimeInterval)
+  }
+
+  @asyncAction *getStakeStatus() {
+    try {
+      const res = yield apiService.checkStakeStatus(walletStore.account, 0)
+      this.stakeStatus = res
+    } catch (error) {
+      snackController.error('Error: Cant get stake status')
+    }
   }
 
   @action.bound generateBreadcrumbsItems() {
@@ -182,6 +199,7 @@ export class BountyDetailViewModel {
     yield this.getTaskData()
     this.initEmptyStepData()
     yield this.getApplyData()
+    yield this.getStakeStatus()
   }
 
   @asyncAction *getTaskData() {
@@ -486,7 +504,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get isStaker() {
-    return false
+    return this.stakeStatus
   }
 
   @computed get shouldShowStakeSuggestion() {

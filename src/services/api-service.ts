@@ -224,6 +224,7 @@ export class ApiService {
     )
     return res.data
   }
+
   async updateWalletAddress(walletAddress: string, signature: string, chain: string, id: string) {
     const res = await axios.post(
       'hunters/updateWalletAddress',
@@ -239,6 +240,19 @@ export class ApiService {
         },
       }
     )
+    return res.data
+  }
+
+  async checkStakeStatus(walletAddress: string, poolId: number) {
+    const res = await axios.get('checkUserStaked', {
+      params: {
+        address: walletAddress,
+        poolId,
+      },
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
     return res.data
   }
 }
