@@ -198,12 +198,14 @@
             <bounty-card
               :name="bounty.name"
               :id="bounty.id"
-              :startTime="bounty.startTime"
               :rewardAmount="bounty.rewardAmount"
+              :startTime="bounty.startTime"
+              :endTime="bounty.endTime"
               :chainId="bounty.chainId"
               :metadata="bounty.metadata"
               :types="bounty.types"
               :maxParticipant="bounty.maxParticipant"
+              :totalParticipants="bounty.totalParticipants"
             />
           </v-col>
         </v-row>

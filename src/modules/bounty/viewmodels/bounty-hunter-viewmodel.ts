@@ -169,6 +169,7 @@ export class BountyHunterViewModel {
         metadata: bounty.metadata,
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
+        totalParticipants: bounty.totalParticipants,
       }
     })
   }
