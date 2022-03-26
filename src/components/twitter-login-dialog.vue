@@ -1,8 +1,11 @@
 <template>
-  <v-dialog v-model="authStore.twitterLoginDialog" class="rounded-0" max-width="450" persistent>
-    <v-sheet outlined class="position-relative pa-8 text-center dialog-normal-text position-relative overflow-hidden">
-      <v-sheet min-height="300" class="d-flex align-center justify-center" v-if="!logined">
-        <v-sheet>
+  <v-dialog v-model="authStore.twitterLoginDialog" class="rounded-lg overflow-hidden" max-width="450" persistent>
+    <v-sheet
+      outlined
+      class="position-relative pa-8 rounded-lg text-center dialog-normal-text position-relative overflow-hidden neutral100--bg"
+    >
+      <v-sheet min-height="300" class="d-flex align-center justify-center neutral100--bg" v-if="!logined">
+        <v-sheet class="neutral100--bg">
           <div class="d-flex justify-center">
             <v-sheet width="64" height="64" class="background-twitter rounded-circle d-flex justify-center">
               <v-icon class="white--text" size="30">mdi-twitter</v-icon>
@@ -28,7 +31,7 @@
         </v-sheet>
       </v-sheet>
 
-      <v-sheet v-if="logined">
+      <v-sheet v-if="logined" class="neutral100--bg">
         <div class="d-flex align-center justify-center blue-diversity--text">
           <v-icon size="18" class="mr-2 blue-diversity--text">mdi-twitter</v-icon>
           Log in with Twitter
