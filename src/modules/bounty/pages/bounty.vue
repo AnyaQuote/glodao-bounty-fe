@@ -32,70 +32,8 @@
       <v-divider class="mt-8" />
     </v-col>
     <v-col cols="12">
-      <!-- <v-container>
-        <v-row>
-          <v-col>
-            <div class="section-big-title-text font-weight-bold">Upcoming pools</div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col md="6" sm="6" cols="12" v-for="bounty in vm.convertedUpcomingBountyList" :key="bounty.id">
-            <bounty-card
-              :name="bounty.name"
-              :id="bounty.id"
-              :startTime="bounty.startTime"
-              :rewardAmount="bounty.rewardAmount"
-              :chainId="bounty.chainId"
-              :metadata="bounty.metadata"
-              :types="bounty.types"
-              :maxParticipant="bounty.maxParticipant"
-            />
-          </v-col>
-        </v-row>
-      </v-container> -->
       <v-container>
-        <v-row>
-          <v-col cols="12">
-            <div class="section-big-title-text font-weight-bold">Upcoming pools</div>
-          </v-col>
-          <v-col cols="9">
-            <div class="view-container">
-              <v-img class="view-cover border-radius-16" :src="require('@/assets/images/dummy_cover.png')"></v-img>
-              <div class="view-content d-flex flex-column justify-space-between align-items-start pa-10">
-                <div class="view-top">
-                  <v-sheet class="d-flex flex-row align-center border-radius-16 pa-5">
-                    <v-img
-                      class="view-top-icon"
-                      max-height="64"
-                      max-width="64"
-                      :src="require('@/assets/images/dummy_cryptocurrency.svg')"
-                    ></v-img>
-                    <div class="d-flex flex-column flex-grow-1 pl-5">
-                      <div class="d-flex flex-row align-center justify-space-between">
-                        <div class="view-top-name blue--text">The Peaky Blinder</div>
-                        <div class="dot"></div>
-                        <div class="view-top-value">10,000 TPB</div>
-                      </div>
-                      <div class="view-top-date">Jan 21st 2022, 10:00 am - Feb 26th 2022, 10:00 am</div>
-                    </div>
-                  </v-sheet>
-                </div>
-                <div class="view-bottom white--text">
-                  <div>Social link:</div>
-                  <div>
-                    <v-btn icon><v-icon color="white">mdi-twitter</v-icon></v-btn>
-                    <v-btn icon><v-icon color="white">mdi-twitter</v-icon></v-btn>
-                    <v-btn icon><v-icon color="white">mdi-twitter</v-icon></v-btn>
-                    <v-btn icon><v-icon color="white">mdi-twitter</v-icon></v-btn>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="3">
-            <div>Slider here</div>
-          </v-col>
-        </v-row>
+        <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
       </v-container>
     </v-col>
 
@@ -123,6 +61,12 @@
         </v-row>
       </v-container>
     </v-col>
+    <!-- <v-col cols="12">
+      <v-divider class="my-4"></v-divider>
+      <v-container>
+        <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
+      </v-container>
+    </v-col> -->
 
     <!-- <v-col cols="12">
       <v-divider class="my-4"></v-divider>
@@ -254,6 +198,7 @@ import { BountyHunterViewModel } from '@/modules/bounty/viewmodels/bounty-hunter
     'bounty-card': () => import('@/modules/bounty/components/bounty-card.vue'),
     'info-card': () => import('@/modules/bounty/components/info-card.vue'),
     'bounty-banner': () => import('@/modules/bounty/components/bounty-banner.vue'),
+    'bounty-upcomming': () => import('@/modules/bounty/components/bounty-upcomming.vue'),
     'hunting-time-card': () => import('@/modules/bounty/components/hunting-card.vue'),
   },
 })
@@ -292,64 +237,5 @@ export default class BountyPage extends Vue {
 .button-small {
   font-size: 14px;
   line-height: 24px;
-}
-
-.view-container {
-  position: relative;
-  height: auto;
-}
-
-.view-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: relative;
-  z-index: 0;
-}
-
-.view-content {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-}
-
-.flex-grow-1 {
-  flex: 1;
-}
-
-.align-items-start {
-  align-items: flex-start;
-}
-
-.view-bottom {
-  position: relative;
-  z-index: 1;
-}
-
-.border-radius-16 {
-  border-radius: 16px;
-}
-
-.view-top-name {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 31px;
-}
-
-.view-top-value {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 31px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 10px;
-  background: grey;
-  flex-shrink: 0;
 }
 </style>
