@@ -201,6 +201,7 @@ export class BountyHunterViewModel {
         name: bounty.name,
         id: bounty.id,
         startTime: bounty.startTime,
+        endTime: bounty.endTime,
         rewardAmount: bounty.rewardAmount,
         chainId: bounty.chainId,
         metadata: bounty.metadata,

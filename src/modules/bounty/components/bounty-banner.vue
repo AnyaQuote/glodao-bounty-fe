@@ -25,7 +25,7 @@
       <div class="font-size-72 text-center mb-5">BOUNTY HUNTER</div>
       <div class="d-flex flex-row align-center justify-center mb-5">
         <v-img max-height="21" max-width="28" :src="require('@/assets/images/double-arrow.svg')"></v-img>
-        <span class="mx-2 font-size-36">Do tasks to earn</span>
+        <span class="mx-2 font-size-36 text-center">Do tasks to earn</span>
         <v-img max-height="21" max-width="28" :src="require('@/assets/images/double-arrow-flipped.svg')"></v-img>
       </div>
       <div>
