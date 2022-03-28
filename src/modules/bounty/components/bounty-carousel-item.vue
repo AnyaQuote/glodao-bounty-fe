@@ -1,7 +1,7 @@
 <template>
-  <v-sheet class="neutral100--bg d-flex flex-column rounded-lg ma-1" elevation="3" eager>
+  <v-sheet class="neutral100--bg d-flex flex-column rounded-lg ma-1 fill-height" elevation="3" eager>
     <div class="position-relative flex-shrink-0">
-      <v-img class="rounded-lg rounded-b-0" :src="coverImage"></v-img>
+      <v-img class="rounded-lg rounded-b-0" :src="coverImage" :aspect-ratio="1.5"></v-img>
       <div
         class="position-absolute top-0 right-28 custom-chevron-flag d-flex flex-column align-center pt-2 pb-5 elavation-10"
       >

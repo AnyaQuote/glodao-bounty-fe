@@ -1,7 +1,7 @@
 <template>
-  <v-sheet class="overflow-hidden rounded-lg neutral100--bg" elevation="3">
+  <v-sheet class="overflow-hidden rounded-lg neutral100--bg fill-height" elevation="3">
     <v-sheet class="position-relative">
-      <v-img height="236" :src="coverImageUrl"></v-img>
+      <v-img height="236" :src="coverImageUrl" :aspect-ratio="1.5"></v-img>
       <v-sheet class="d-flex justify-end countdown-container transparent pa-6">
         <countdown class="countdown rounded-lg" :targetDate="endTime">
           <template slot="prepend">
