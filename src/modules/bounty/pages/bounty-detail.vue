@@ -486,7 +486,7 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="!vm.isPriorityPoolAvailable"
+                          :disabled="!vm.isPriorityPoolAvailable || !vm.isTaskProcessFinish"
                           @click="vm.applyForPriorityPool()"
                           v-if="!vm.isInPriorityPool"
                           :loading="vm.isApplyPrioritying"
@@ -499,7 +499,7 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="vm.shouldDisableTaskProcessing"
+                          :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
                           @click="vm.changeEarnDialog(true)"
                         >
                           Confirm to complete

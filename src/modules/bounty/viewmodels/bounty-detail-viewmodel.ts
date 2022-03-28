@@ -72,6 +72,8 @@ export class BountyDetailViewModel {
 
   @observable isApplyPrioritying = false
 
+  @observable currentType = 'twitter'
+
   disposes: IReactionDisposer[] = []
 
   constructor() {
@@ -572,5 +574,9 @@ export class BountyDetailViewModel {
       this.isHuntingProcessEnded ||
       !this.isHuntingProcessStarted
     )
+  }
+
+  @computed get isTaskProcessFinish() {
+    return get(this.apply, ['data', this.currentType], []).filter((step) => !step.finished).length === 0
   }
 }
