@@ -70,6 +70,8 @@ export class BountyDetailViewModel {
     twitter: 100000,
   }
 
+  @observable isApplyPrioritying = false
+
   disposes: IReactionDisposer[] = []
 
   constructor() {
@@ -317,13 +319,21 @@ export class BountyDetailViewModel {
 
   @asyncAction *applyForPriorityPool() {
     try {
+      this.isApplyPrioritying = true
       if (this.isPriorityPoolFull) {
         snackController.error('There are not any priority pool slot left!')
       } else if (!this.isStaker) {
         snackController.error('Only GloDAO stacker can apply for priority pool')
       } else {
+        const signature = yield authStore.signMessage(
+          walletStore.account,
+          'bsc',
+          get(authStore.user, 'hunter.nonce', 0)
+        )
         const res = yield apiService.applyForPriorityPool(
           walletStore.account,
+          signature,
+          'bsc',
           get(this.apply, 'id', ''),
           get(authStore.user, 'hunter.id', ''),
           get(this.task, 'id', ''),
@@ -333,9 +343,12 @@ export class BountyDetailViewModel {
         const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
         this.relatedApplies[foundIndex] = this.apply
         snackController.success('Apply for priority pool successfully')
+        authStore.getUserData()
       }
     } catch (error: any) {
       snackController.error('Fail to enter priority pool: ' + error.response.data.message)
+    } finally {
+      this.isApplyPrioritying = false
     }
   }
 

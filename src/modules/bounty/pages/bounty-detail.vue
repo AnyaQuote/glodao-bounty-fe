@@ -489,6 +489,7 @@
                           :disabled="!vm.isPriorityPoolAvailable"
                           @click="vm.applyForPriorityPool()"
                           v-if="!vm.isInPriorityPool"
+                          :loading="vm.isApplyPrioritying"
                         >
                           Apply for priority pool
                         </v-btn>
