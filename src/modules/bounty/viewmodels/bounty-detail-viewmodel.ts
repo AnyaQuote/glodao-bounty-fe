@@ -264,16 +264,14 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
     temp[type][stepIndex].shareTime = Date.now()
-    const tempApply = JSON.parse(JSON.stringify(this.apply))
     try {
-      apiService.applies
-        .update(this.apply.id, { ...tempApply, data: temp })
+      apiService
+        .updateTaskProcess(this.apply.id, type, temp)
         .then((res) => {
-          if (res) {
-            this.applyStepData = temp
-            this.apply = res
-            this.getTaskData()
-          }
+          this.applyStepData = temp
+          this.apply = res
+          this.getTaskData()
+          snackController.updateSuccess()
         })
         .catch((error) => {
           snackController.error(error.response.data.message as string)
@@ -285,19 +283,12 @@ export class BountyDetailViewModel {
 
   @action.bound submitTaskConfirmation(type: string) {
     try {
-      const tempApply = JSON.parse(JSON.stringify(this.apply))
-      apiService.applies
-        .update(this.apply.id, {
-          ...tempApply,
-          status: APPLY_STATUS.COMPLETED,
-          walletAddress: this.earnDialogWalletInput,
-        })
-        .then((res) => {
-          this.apply = res
-          this.status = HUNTING.finish
-          this.changeEarnDialog(false)
-          snackController.success('Submit successfully')
-        })
+      apiService.updateTaskProcess(this.apply.id, 'finish').then((res) => {
+        this.apply = res
+        this.status = HUNTING.finish
+        this.changeEarnDialog(false)
+        snackController.success('Submit successfully')
+      })
     } catch (error) {
       snackController.error(error as string)
     }

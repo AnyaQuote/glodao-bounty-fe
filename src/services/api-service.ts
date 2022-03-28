@@ -286,6 +286,22 @@ export class ApiService {
     )
     return res.data
   }
+
+  async updateTaskProcess(id: string, type: string, taskData?) {
+    const res = await axios.put(
+      `applies/${id}/task`,
+      {
+        taskData,
+        type,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
