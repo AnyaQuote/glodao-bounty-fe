@@ -77,7 +77,7 @@
           <v-sheet class="d-flex align-center transparent">
             <v-sheet class="transparent title-2">Social link:</v-sheet>
             <v-btn
-              v-for="(value, key) in vm.task.metadata.socialLinks"
+              v-for="(value, key) in vm.taskSocialLinks"
               :key="key"
               class="bluePrimary ml-3"
               fab

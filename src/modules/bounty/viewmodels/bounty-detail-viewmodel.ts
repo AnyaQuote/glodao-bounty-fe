@@ -2,7 +2,7 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
-import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte } from 'lodash-es'
+import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte, isEmpty } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
@@ -381,10 +381,11 @@ export class BountyDetailViewModel {
   }
 
   @computed get displayedTwitterData() {
-    const result =
-      this.displayedData?.twitter?.map((task) => {
-        return { ...task, activeStep: false }
-      }) ?? []
+    const result = get(this.displayedData, 'twitter', []).map((task) => {
+      return { ...task, activeStep: false }
+    })
+    if (isEmpty(result)) return []
+
     result[0].activeStep = true
     for (let index = 1; index < result.length; index++) {
       if (result[index - 1].finished) {
@@ -393,7 +394,7 @@ export class BountyDetailViewModel {
       }
     }
 
-    return result ?? []
+    return result
   }
 
   @computed get remainingSlot() {
@@ -597,5 +598,9 @@ export class BountyDetailViewModel {
 
   @computed get isTaskProcessFinish() {
     return get(this.apply, ['data', this.currentType], []).filter((step) => !step.finished).length === 0
+  }
+
+  @computed get taskSocialLinks() {
+    return get(this.task, 'metadata.socialLinks', {})
   }
 }
