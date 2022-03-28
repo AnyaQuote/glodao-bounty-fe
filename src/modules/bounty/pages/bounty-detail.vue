@@ -9,7 +9,7 @@
               <v-breadcrumbs-item :disabled="item.disabled">
                 <template v-slot:default>
                   <router-link :to="item.href">
-                    <span :class="item.text === 'Bounty hunter' ? 'blue--text' : ''">{{ item.text }}</span>
+                    <span :class="item.text === 'Bounty hunter' ? 'bluePrimary--text' : ''">{{ item.text }}</span>
                   </router-link>
                 </template>
                 {{ item.text }}
