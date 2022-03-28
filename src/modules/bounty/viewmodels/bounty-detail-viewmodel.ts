@@ -71,6 +71,8 @@ export class BountyDetailViewModel {
   }
 
   @observable isApplyPrioritying = false
+  @observable isTaskUpdating = false
+  @observable isTaskSubmiting = false
 
   @observable currentType = 'twitter'
 
@@ -262,38 +264,43 @@ export class BountyDetailViewModel {
   }
 
   @action.bound submitLink(type: string, link: string, stepIndex: number) {
+    this.changeTaskUpdating(true)
     const temp = JSON.parse(JSON.stringify(this.applyStepData))
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
     temp[type][stepIndex].shareTime = Date.now()
-    try {
-      apiService
-        .updateTaskProcess(this.apply.id, type, temp)
-        .then((res) => {
-          this.applyStepData = temp
-          this.apply = res
-          this.getTaskData()
-          snackController.updateSuccess()
-        })
-        .catch((error) => {
-          snackController.error(error.response.data.message as string)
-        })
-    } catch (error) {
-      snackController.error(error as string)
-    }
+    apiService
+      .updateTaskProcess(this.apply.id, type, temp)
+      .then((res) => {
+        this.applyStepData = temp
+        this.apply = res
+        this.getTaskData()
+        snackController.updateSuccess()
+      })
+      .catch((error) => {
+        snackController.error(error.response.data.message as string)
+      })
+      .finally(() => {
+        this.changeTaskUpdating(false)
+      })
   }
 
   @action.bound submitTaskConfirmation(type: string) {
-    try {
-      apiService.updateTaskProcess(this.apply.id, 'finish').then((res) => {
+    this.changeTaskSubmiting(true)
+    apiService
+      .updateTaskProcess(this.apply.id, 'finish')
+      .then((res) => {
         this.apply = res
         this.status = HUNTING.finish
         this.changeEarnDialog(false)
         snackController.success('Submit successfully')
       })
-    } catch (error) {
-      snackController.error(error as string)
-    }
+      .catch((error) => {
+        snackController.error(error.response.data.message as string)
+      })
+      .finally(() => {
+        this.changeTaskSubmiting(false)
+      })
   }
 
   @action.bound changeRecaptchaDialog(value: boolean) {
@@ -310,9 +317,21 @@ export class BountyDetailViewModel {
     }
   }
 
+  @action.bound changeApplyPrioritying(value: boolean) {
+    this.isApplyPrioritying = value
+  }
+
+  @action.bound changeTaskUpdating(value: boolean) {
+    this.isTaskUpdating = value
+  }
+
+  @action.bound changeTaskSubmiting(value: boolean) {
+    this.isTaskSubmiting = value
+  }
+
   @asyncAction *applyForPriorityPool() {
     try {
-      this.isApplyPrioritying = true
+      this.changeApplyPrioritying(true)
       if (this.isPriorityPoolFull) {
         snackController.error('There are not any priority pool slot left!')
       } else if (!this.isStaker) {
@@ -341,7 +360,7 @@ export class BountyDetailViewModel {
     } catch (error: any) {
       snackController.error('Fail to enter priority pool: ' + error.response.data.message)
     } finally {
-      this.isApplyPrioritying = false
+      this.changeApplyPrioritying(false)
     }
   }
 

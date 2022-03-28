@@ -42,6 +42,7 @@
             height="40"
             :disabled="!vm.earnDialogWalletInput.trim()"
             @click="vm.submitTaskConfirmation('twitter')"
+            :loading="vm.isTaskSubmiting"
           >
             <span class="btn-span text-capitalize">submit</span>
           </v-btn>
@@ -70,7 +71,9 @@
           </v-btn>
         </div> -->
       </div>
-      <v-icon class="close-icon" @click="vm.changeEarnDialog(false)">mdi-window-close</v-icon>
+      <v-icon class="close-icon" @click="vm.changeEarnDialog(false)" :disabled="vm.isTaskSubmiting">
+        mdi-window-close
+      </v-icon>
     </v-sheet>
   </v-dialog>
 </template>

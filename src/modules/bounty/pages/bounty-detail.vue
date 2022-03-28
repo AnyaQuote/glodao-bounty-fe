@@ -455,6 +455,7 @@
                                   :disabled="vm.shouldDisableTaskProcessing || twitterTask.finished"
                                   elevation="0"
                                   @click="openFollowTwitterLink(twitterTask.link, index)"
+                                  :loading="!twitterTask.finished && vm.isTaskSubmiting"
                                 >
                                   <v-icon left size="14">mdi-twitter</v-icon>
                                   Twitter follow
@@ -501,6 +502,7 @@
                           class="white--text text-none linear-background-blue-main text-caption"
                           :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
                           @click="vm.changeEarnDialog(true)"
+                          :loading="vm.isTaskSubmiting"
                         >
                           Confirm to complete
                         </v-btn>
