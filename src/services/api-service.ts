@@ -200,9 +200,9 @@ export class ApiService {
     return res.data
   }
 
-  async fetchUser(access_token: string, access_secret: string) {
+  async fetchUser(access_token: string, access_secret: string, referrerCode?) {
     const res = await axios.get('auth/twitter/callback', {
-      params: { access_token: access_token, access_secret: access_secret },
+      params: { access_token: access_token, access_secret: access_secret, referrerCode },
     })
     return res.data
   }
@@ -226,7 +226,7 @@ export class ApiService {
   }
 
   async updateWalletAddress(walletAddress: string, signature: string, chain: string, id: string) {
-    const res = await axios.post(
+    const res = await axios.patch(
       'hunters/updateWalletAddress',
       {
         walletAddress,
@@ -257,7 +257,7 @@ export class ApiService {
   }
 
   async applyForPriorityPool(walletAddress: string, applyId: string, hunterId: string, taskId: string, poolId: number) {
-    const res = await axios.post(
+    const res = await axios.patch(
       'applies/applyForPriority',
       {
         walletAddress,
@@ -265,6 +265,7 @@ export class ApiService {
         hunterId,
         taskId,
         poolId,
+        id: applyId,
       },
       {
         headers: {
