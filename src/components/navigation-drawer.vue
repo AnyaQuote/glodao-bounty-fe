@@ -46,17 +46,17 @@
     <v-divider></v-divider>
     <div class="d-flex flex-column">
       <v-list class="px-4 mt-4" dense nav>
-        <v-list-item class="py-2" disabled>
-          <v-list-item-title class="nav-btn-text text-capitalize">Launch pad</v-list-item-title>
+        <v-list-item class="py-2" @click="openLink('https://dev.glodao.io/launchpad')">
+          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Launch pad</v-list-item-title>
         </v-list-item>
         <v-list-item active-class="blue--text" to="/bounty" class="py-2">
           <v-list-item-title class="nav-btn-text text-capitalize">Bounty hunter</v-list-item-title>
         </v-list-item>
-        <v-list-item active-class="primary--text" class="py-2" disabled>
-          <v-list-item-title class="nav-btn-text text-capitalize">Staking</v-list-item-title>
+        <v-list-item active-class="primary--text" class="py-2" @click="openLink('https://dev.glodao.io/staking')">
+          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">$Staking</v-list-item-title>
         </v-list-item>
-        <v-list-item active-class="primary--text" class="py-2" disabled>
-          <v-list-item-title class="nav-btn-text text-capitalize">Farm</v-list-item-title>
+        <v-list-item active-class="primary--text" class="py-2" @click="openLink('https://dev.glodao.io/farm')">
+          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Farm</v-list-item-title>
         </v-list-item>
       </v-list>
     </div>
