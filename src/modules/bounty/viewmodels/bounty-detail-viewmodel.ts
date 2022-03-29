@@ -115,8 +115,11 @@ export class BountyDetailViewModel {
 
   @asyncAction *getStakeStatus() {
     try {
-      const res = yield apiService.checkStakeStatus(walletStore.account, 0)
-      this.stakeStatus = res
+      if (isEmpty(walletStore.account)) this.stakeStatus = false
+      else {
+        const res = yield apiService.checkStakeStatus(walletStore.account, 0)
+        this.stakeStatus = res
+      }
     } catch (error) {
       snackController.error('Error: Cant get stake status')
     }
