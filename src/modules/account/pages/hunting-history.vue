@@ -57,21 +57,29 @@
 
     <v-col cols="12">
       <v-container>
-        <v-row :dense="$vuetify.breakpoint.smAndDown" :no-gutters="$vuetify.breakpoint.smAndDown">
-          <v-col cols="12">
-            <div class="section-big-title-text font-weight-bold text-capitalize">Bounty Hunting History</div>
-          </v-col>
-
-          <v-col cols="12" sm="6" md="3">
-            <v-select v-model="vm.statusModel" :items="vm.status" label="Status" outlined dense multiple>
-              <template v-slot:selection="{ item, index }">
-                <span v-if="index === 0">{{ item }}</span>
-                <span v-if="index === 1" class="text-caption"> &nbsp;(+{{ vm.statusModel.length - 1 }}) </span>
-              </template>
-            </v-select>
-          </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <!-- <v-btn
+        <v-row no-gutters>
+          <v-tabs v-model="tab" class="pb-6" color="blue">
+            <v-tab>
+              <div class="section-big-title-text font-weight-bold text-capitalize">Bounty Hunting History</div>
+            </v-tab>
+            <v-tab>
+              <div class="section-big-title-text font-weight-bold text-capitalize">Referral List</div>
+            </v-tab>
+          </v-tabs>
+        </v-row>
+        <v-tabs-items v-model="tab">
+          <v-tab-item>
+            <v-row :dense="$vuetify.breakpoint.smAndDown" :no-gutters="$vuetify.breakpoint.smAndDown">
+              <v-col cols="12" sm="6" md="3">
+                <v-select v-model="vm.statusModel" :items="vm.status" label="Status" outlined dense multiple>
+                  <template v-slot:selection="{ item, index }">
+                    <span v-if="index === 0">{{ item }}</span>
+                    <span v-if="index === 1" class="text-caption"> &nbsp;(+{{ vm.statusModel.length - 1 }}) </span>
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="2">
+                <!-- <v-btn
               outlined
               depressed
               class="fill-width text-none text-start font-weight-regular d-flex justify-start align-center"
@@ -81,12 +89,12 @@
             >
               Filter by date
             </v-btn> -->
-          </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <!-- <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select> -->
-          </v-col>
-          <v-col cols="12" sm="6" md="2">
-            <!-- <v-select
+              </v-col>
+              <v-col cols="12" sm="6" md="2">
+                <!-- <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select> -->
+              </v-col>
+              <v-col cols="12" sm="6" md="2">
+                <!-- <v-select
               v-model="socialsModel"
               :items="socials"
               label="Social task"
@@ -100,51 +108,80 @@
                 <span v-if="index === 1" class="grey--text text-caption"> &nbsp;(+{{ socialsModel.length - 1 }}) </span>
               </template>
             </v-select> -->
-          </v-col>
-
-          <v-col cols="12" md="3">
-            <v-select
-              :items="vm.sortList"
-              label="Sort"
-              outlined
-              dense
-              height="40"
-              @change="vm.onSortConditionChange"
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row dense no-gutters>
-          <v-col v-if="vm.convertedHuntingHistoryList.length > 0">
-            <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
-              <hunting-history-card
-                :coverImage="task.coverImage"
-                :id="task.id"
-                :chainId="task.chainId"
-                :bountyEarn="task.bountyEarn"
-                :currentStep="task.currentStep"
-                :name="task.name"
-                :startTime="task.startTime"
-                :status="task.status"
-                :totalStep="task.totalStep"
-                :type="task.type"
-                :rewardToken="task.rewardToken"
-              />
-            </div>
-          </v-col>
-          <v-col cols="12" v-else>
-            <no-items />
-          </v-col>
-          <v-col cols="12" class="my-8">
-            <v-pagination
-              v-model="vm.page"
-              :length="vm.totalPageCount"
-              :total-visible="7"
-              color="blue"
-              :value="vm.page"
-              v-if="vm.page > 1"
-            ></v-pagination>
-          </v-col>
-        </v-row>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-select
+                  :items="vm.sortList"
+                  label="Sort"
+                  outlined
+                  dense
+                  height="40"
+                  @change="vm.onSortConditionChange"
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row dense no-gutters>
+              <v-col v-if="vm.convertedHuntingHistoryList.length > 0">
+                <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
+                  <hunting-history-card
+                    :coverImage="task.coverImage"
+                    :id="task.id"
+                    :chainId="task.chainId"
+                    :bountyEarn="task.bountyEarn"
+                    :currentStep="task.currentStep"
+                    :name="task.name"
+                    :startTime="task.startTime"
+                    :status="task.status"
+                    :totalStep="task.totalStep"
+                    :type="task.type"
+                    :rewardToken="task.rewardToken"
+                  />
+                </div>
+              </v-col>
+              <v-col cols="12" v-else>
+                <no-items />
+              </v-col>
+              <v-col cols="12" class="my-8">
+                <v-pagination
+                  v-model="vm.page"
+                  :length="vm.totalPageCount"
+                  :total-visible="7"
+                  color="blue"
+                  :value="vm.page"
+                  v-if="vm.page > 1"
+                ></v-pagination>
+              </v-col>
+            </v-row>
+          </v-tab-item>
+          <v-tab-item>
+            <v-row>
+              <v-col cols="12" sm="6" md="3">
+                <v-sheet class="transparent d-flex align-center" height="100%">
+                  <v-sheet class="transparent font-weight-bold neutral0--text pr-1">1000</v-sheet>
+                  <v-sheet class="transparent neutral0--text">Refferals</v-sheet>
+                </v-sheet>
+              </v-col>
+              <v-col class="ml-auto" cols="12" sm="6" md="3">
+                <v-select
+                  :items="vm.sortList"
+                  label="Recently refer"
+                  outlined
+                  dense
+                  height="40"
+                  hide-details
+                  @change="vm.onSortConditionChange"
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <referral-card></referral-card>
+                <referral-card class="mt-2"></referral-card>
+                <referral-card class="mt-2"></referral-card>
+              </v-col>
+            </v-row>
+          </v-tab-item>
+        </v-tabs-items>
       </v-container>
     </v-col>
     <v-dialog v-model="vm.dateRangeDialog" width="300" persistent>
@@ -175,6 +212,7 @@ import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-hi
   components: {
     'hunting-history-card': () => import('@/modules/account/components/hunting-history-card.vue'),
     'no-items': () => import('@/modules/account/components/no-items.vue'),
+    'referral-card': () => import('@/modules/account/components/referral-card.vue'),
   },
 })
 export default class HuntingHistory extends Vue {
@@ -187,6 +225,7 @@ export default class HuntingHistory extends Vue {
   socials = ['Twitter', 'Discord', 'Telegram']
   socialsModel = []
   dates = []
+  tab = null
 
   mounted() {
     this.vm.initReaction()
