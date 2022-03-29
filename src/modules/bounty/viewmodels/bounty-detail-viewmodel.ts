@@ -278,6 +278,8 @@ export class BountyDetailViewModel {
         this.applyStepData = temp
         this.apply = res
         this.getTaskData()
+        const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+        this.relatedApplies[foundIndex] = this.apply
         snackController.updateSuccess()
       })
       .catch((error) => {
@@ -291,7 +293,7 @@ export class BountyDetailViewModel {
   @action.bound submitTaskConfirmation(type: string) {
     this.changeTaskSubmiting(true)
     apiService
-      .updateTaskProcess(this.apply.id, 'finish')
+      .updateTaskProcess(this.apply.id, 'finish', null, { walletAddress: walletStore.account })
       .then((res) => {
         this.apply = res
         this.status = HUNTING.finish

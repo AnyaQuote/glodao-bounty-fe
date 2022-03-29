@@ -287,12 +287,13 @@ export class ApiService {
     return res.data
   }
 
-  async updateTaskProcess(id: string, type: string, taskData?) {
+  async updateTaskProcess(id: string, type: string, taskData?, optional?) {
     const res = await axios.put(
       `applies/${id}/task`,
       {
         taskData,
         type,
+        optional,
       },
       {
         headers: {
