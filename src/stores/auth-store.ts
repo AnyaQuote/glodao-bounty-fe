@@ -84,7 +84,7 @@ export class AuthStore {
 
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
-      const res = yield apiService.fetchUser(access_token, access_secret)
+      const res = yield apiService.fetchUser(access_token, access_secret, localdata.referralCode)
       let user = res.user
       const jwt = res.jwt
       if (!user.hunter) {
@@ -93,6 +93,7 @@ export class AuthStore {
       this.changeJwt(jwt)
       this.changeUser(user)
       this.changeTwitterLoginDialog(false)
+      localdata.referralCode = ''
     } catch (error) {
       snackController.error(error as string)
     } finally {
@@ -107,7 +108,7 @@ export class AuthStore {
       if (router.currentRoute.path !== '/bounty') yield router.push('/bounty')
       this.resetJwt()
       this.resetUser()
-      localdata.reset()
+      localdata.resetUser()
     } catch (error) {
       snackController.error(error as string)
     }
