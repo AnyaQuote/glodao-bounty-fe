@@ -9,7 +9,7 @@
       </div>
       <div class="d-flex justify-center mb-4">
         <vue-recaptcha
-          sitekey="6LdzodkcAAAAAM_-ulFFxhp1z_z9y4CAl3ciCvoM"
+          sitekey="6LcBtCQfAAAAAAAY0K2ZnOL_ZEUT2W4o-n0W73eQ"
           :loadRecaptchaScript="true"
           @render="onCaptchaRender"
           @verify="onCaptchaVerify"
