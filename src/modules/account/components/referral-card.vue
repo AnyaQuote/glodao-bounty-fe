@@ -5,15 +5,17 @@
     </v-sheet>
     <v-sheet class="transparent d-flex flex-md-column pa-3">
       <v-sheet class="transparent neutral10--text">Reffered</v-sheet>
-      <v-sheet class="transparent neutral0--text pl-3 pl-md-0 ml-auto ml-md-0">@Tommy_Shelby</v-sheet>
+      <v-sheet class="transparent font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">@Tommy_Shelby</v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex flex-md-column pa-3 ml-0 ml-md-auto">
       <v-sheet class="transparent neutral10--text">Time</v-sheet>
-      <v-sheet class="transparent neutral0--text pl-3 pl-md-0 ml-auto ml-md-0">Jan 22nd, 10:00 pm</v-sheet>
+      <v-sheet class="transparent font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0"
+        >Jan 22nd, 10:00 pm</v-sheet
+      >
     </v-sheet>
     <v-sheet class="transparent d-flex flex-md-column pa-3">
       <v-sheet class="transparent neutral10--text">Social</v-sheet>
-      <v-sheet class="transparent d-flex align-center neutral0--text pl-3 pl-md-0 ml-auto ml-md-0">
+      <v-sheet class="transparent d-flex align-center font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
         <v-sheet class="blue d-flex justify-center align-center rounded-circle mr-1" width="25" height="25">
           <v-icon color="white" size="15">mdi-twitter</v-icon>
         </v-sheet>
