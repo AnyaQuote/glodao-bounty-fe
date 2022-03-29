@@ -12,13 +12,18 @@
                   </v-avatar>
                 </div>
                 <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
-                  {{ authStore.user.hunter.name }}
+                  {{ authStore.user | _get('hunter.name', '') }}
                 </div>
               </v-sheet>
             </v-col>
             <v-col>
-              <v-sheet height="160" outlined style="flex: 2" class="neutral100--bg">
-                <v-row dense no-gutters class="d-flex align-center fill-height pl-6">
+              <v-sheet
+                height="160"
+                outlined
+                style="flex: 2"
+                class="neutral100--bg pa-6 d-flex flex-column justify-space-between py-7"
+              >
+                <!-- <v-row dense no-gutters class="d-flex align-center fill-height pl-6">
                   <v-col cols="4">
                     <v-sheet class="number-count-text d-flex align-center neutral100--bg">
                       <div>
@@ -46,7 +51,11 @@
                     </v-sheet>
                     <v-sheet class="caption-text neutral100--bg">Bounty earned</v-sheet>
                   </v-col>
-                </v-row>
+                </v-row> -->
+                <div class="text-body-1 font-weight-600">
+                  Your referral link | <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
+                </div>
+                <referral-copy-board />
               </v-sheet>
             </v-col>
           </v-row>
@@ -202,7 +211,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
+import { Component, Vue, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-history-viewmodel'
@@ -213,6 +222,7 @@ import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-hi
     'hunting-history-card': () => import('@/modules/account/components/hunting-history-card.vue'),
     'no-items': () => import('@/modules/account/components/no-items.vue'),
     'referral-card': () => import('@/modules/account/components/referral-card.vue'),
+    'referral-copy-board': () => import('@/modules/account/components/referral-copy-board.vue'),
   },
 })
 export default class HuntingHistory extends Vue {
@@ -267,5 +277,8 @@ export default class HuntingHistory extends Vue {
 .caption-text {
   font-size: 16px;
   line-height: 24px;
+}
+.font-weight-600 {
+  font-weight: 600 !important;
 }
 </style>

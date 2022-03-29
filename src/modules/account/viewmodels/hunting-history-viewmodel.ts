@@ -1,13 +1,14 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import router from '@/router'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { ceil, keys, lowerCase } from 'lodash-es'
+import { ceil, keys, lowerCase, isEmpty, get } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
 
 const PAGE_LIMIT = 6
-const params = { 'hunter.id': authStore.user.hunter.id }
+const params = { 'hunter.id': get(authStore, 'user.hunter.id', '') }
 export class HuntingHistoryViewModel {
   @observable huntingList: any[] = []
   @observable huntingCount = 0
@@ -40,7 +41,11 @@ export class HuntingHistoryViewModel {
   @observable dateRangeDialog = false
 
   constructor() {
-    this.fetchData()
+    if (isEmpty(authStore.jwt))
+      router.push('/bounty').catch(() => {
+        //
+      })
+    else this.fetchData()
   }
 
   initReaction() {
@@ -198,7 +203,7 @@ export class HuntingHistoryViewModel {
   @computed get filterParams() {
     return {
       _where: [
-        { 'hunter.id': authStore.user.hunter.id },
+        { 'hunter.id': get(authStore, 'user.hunter.id', '') },
         ...this.dateRangeFilterParams,
         { _or: [...this.statusFilterParams] },
       ],
