@@ -1,6 +1,9 @@
 <template>
-  <v-dialog v-model="vm.reCaptchaDialog" class="rounded-0" max-width="400" persistent>
-    <v-sheet outlined class="position-relative pa-6 text-center dialog-normal-text overflow-hidden">
+  <v-dialog v-model="vm.reCaptchaDialog" class="rounded overflow-hidden" max-width="400" persistent>
+    <v-sheet
+      outlined
+      class="position-relative pa-6 text-center rounded dialog-normal-text overflow-hidden neutral100--bg"
+    >
       <div class="mb-6 font-weight-600 dialog-title-text d-flex align-center">
         <v-avatar size="32">
           <chain-logo class="fill-width fill-height" :chain="vm.task.chainId" />
