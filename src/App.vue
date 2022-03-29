@@ -287,6 +287,9 @@ tbody {
 .text-overflow-ellipsis {
   text-overflow: ellipsis;
 }
+.v-item-group {
+  background: transparent !important;
+}
 @font-face {
   font-family: 'Proxima Nova';
   src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Black.ttf) format('truetype');
