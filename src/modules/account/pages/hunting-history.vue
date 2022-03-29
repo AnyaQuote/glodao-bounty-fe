@@ -12,7 +12,7 @@
                   </v-avatar>
                 </div>
                 <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
-                  {{ authStore.user.hunter.name }}
+                  {{ authStore.user | _get('hunter.name', '') }}
                 </div>
               </v-sheet>
             </v-col>
@@ -174,7 +174,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Ref, Provide } from 'vue-property-decorator'
+import { Component, Vue, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-history-viewmodel'
