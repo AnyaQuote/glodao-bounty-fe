@@ -29,7 +29,8 @@ class LocalData {
   }
 
   set referralCode(value: string) {
-    localStorage.setItem('ref', JSON.stringify(value))
+    if (value) localStorage.setItem('ref', JSON.stringify(value))
+    else localStorage.removeItem('ref')
   }
 
   resetUser() {
