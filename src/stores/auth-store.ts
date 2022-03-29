@@ -107,7 +107,7 @@ export class AuthStore {
       if (router.currentRoute.path !== '/bounty') yield router.push('/bounty')
       this.resetJwt()
       this.resetUser()
-      localdata.reset()
+      localdata.resetUser()
     } catch (error) {
       snackController.error(error as string)
     }

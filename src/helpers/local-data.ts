@@ -23,6 +23,20 @@ class LocalData {
     else localStorage.removeItem('lastChain')
   }
 
+  get referralCode(): string {
+    if (localStorage.getItem('ref')) return JSON.parse(localStorage.getItem('ref') || '')
+    return ''
+  }
+
+  set referralCode(value: string) {
+    localStorage.setItem('ref', JSON.stringify(value))
+  }
+
+  resetUser() {
+    localStorage.removeItem('gloDaoUser')
+    localStorage.removeItem('gloDaoJwt')
+  }
+
   reset() {
     localStorage.clear()
   }
