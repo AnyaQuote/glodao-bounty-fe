@@ -84,7 +84,7 @@ export class AuthStore {
 
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
-      const res = yield apiService.fetchUser(access_token, access_secret, 'zyta182000896946')
+      const res = yield apiService.fetchUser(access_token, access_secret)
       let user = res.user
       const jwt = res.jwt
       if (!user.hunter) {
