@@ -9,7 +9,7 @@
               <v-breadcrumbs-item :disabled="item.disabled">
                 <template v-slot:default>
                   <router-link :to="item.href">
-                    <span :class="item.text === 'Bounty hunter' ? 'blue--text' : ''">{{ item.text }}</span>
+                    <span :class="item.text === 'Bounty hunter' ? 'bluePrimary--text' : ''">{{ item.text }}</span>
                   </router-link>
                 </template>
                 {{ item.text }}
@@ -77,7 +77,7 @@
           <v-sheet class="d-flex align-center transparent">
             <v-sheet class="transparent title-2">Social link:</v-sheet>
             <v-btn
-              v-for="(value, key) in vm.task.metadata.socialLinks"
+              v-for="(value, key) in vm.taskSocialLinks"
               :key="key"
               class="bluePrimary ml-3"
               fab
@@ -455,6 +455,7 @@
                                   :disabled="vm.shouldDisableTaskProcessing || twitterTask.finished"
                                   elevation="0"
                                   @click="openFollowTwitterLink(twitterTask.link, index)"
+                                  :loading="!twitterTask.finished && vm.isTaskSubmiting"
                                 >
                                   <v-icon left size="14">mdi-twitter</v-icon>
                                   Twitter follow
@@ -486,9 +487,10 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="!vm.isPriorityPoolAvailable"
+                          :disabled="!vm.isPriorityPoolAvailable || !vm.isTaskProcessFinish"
                           @click="vm.applyForPriorityPool()"
                           v-if="!vm.isInPriorityPool"
+                          :loading="vm.isApplyPrioritying"
                         >
                           Apply for priority pool
                         </v-btn>
@@ -498,8 +500,9 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="vm.shouldDisableTaskProcessing"
+                          :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
                           @click="vm.changeEarnDialog(true)"
+                          :loading="vm.isTaskSubmiting"
                         >
                           Confirm to complete
                         </v-btn>

@@ -8,27 +8,30 @@
           </div>
         </v-col>
         <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <div class="nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launch Pad</div>
-            </template>
-            <span>Coming Soon!</span>
-          </v-tooltip>
+          <a
+            @click="openLink('https://dev.glodao.io/launchpad')"
+            class="text-decoration-none px-4"
+            active-class="blue-diversity--text"
+          >
+            <div class="text-none nav-btn-text">Launch Pad</div>
+          </a>
           <router-link to="/bounty" class="text-decoration-none px-4" active-class="blue-diversity--text">
             <div class="text-none nav-btn-text">Bounty Hunter</div>
           </router-link>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <div class="nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Staking</div>
-            </template>
-            <span>Coming Soon!</span>
-          </v-tooltip>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <div class="nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Farm</div>
-            </template>
-            <span>Coming Soon!</span>
-          </v-tooltip>
+          <a
+            @click="openLink('https://dev.glodao.io/staking')"
+            class="text-decoration-none px-4"
+            active-class="blue-diversity--text"
+          >
+            <div class="text-none nav-btn-text">$Staking</div>
+          </a>
+          <a
+            @click="openLink('https://dev.glodao.io/farm')"
+            class="text-decoration-none px-4"
+            active-class="blue-diversity--text"
+          >
+            <div class="text-none nav-btn-text">Farm</div>
+          </a>
         </v-col>
         <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
           <connect-wallet />

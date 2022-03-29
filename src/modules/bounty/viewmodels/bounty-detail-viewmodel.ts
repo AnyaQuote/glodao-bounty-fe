@@ -2,7 +2,7 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
-import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte } from 'lodash-es'
+import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte, isEmpty } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
@@ -69,6 +69,12 @@ export class BountyDetailViewModel {
     daily: 10000,
     twitter: 100000,
   }
+
+  @observable isApplyPrioritying = false
+  @observable isTaskUpdating = false
+  @observable isTaskSubmiting = false
+
+  @observable currentType = 'twitter'
 
   disposes: IReactionDisposer[] = []
 
@@ -258,47 +264,43 @@ export class BountyDetailViewModel {
   }
 
   @action.bound submitLink(type: string, link: string, stepIndex: number) {
+    this.changeTaskUpdating(true)
     const temp = JSON.parse(JSON.stringify(this.applyStepData))
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
     temp[type][stepIndex].shareTime = Date.now()
-    const tempApply = JSON.parse(JSON.stringify(this.apply))
-    try {
-      apiService.applies
-        .update(this.apply.id, { ...tempApply, data: temp })
-        .then((res) => {
-          if (res) {
-            this.applyStepData = temp
-            this.apply = res
-            this.getTaskData()
-          }
-        })
-        .catch((error) => {
-          snackController.error(error.response.data.message as string)
-        })
-    } catch (error) {
-      snackController.error(error as string)
-    }
+    apiService
+      .updateTaskProcess(this.apply.id, type, temp)
+      .then((res) => {
+        this.applyStepData = temp
+        this.apply = res
+        this.getTaskData()
+        snackController.updateSuccess()
+      })
+      .catch((error) => {
+        snackController.error(error.response.data.message as string)
+      })
+      .finally(() => {
+        this.changeTaskUpdating(false)
+      })
   }
 
   @action.bound submitTaskConfirmation(type: string) {
-    try {
-      const tempApply = JSON.parse(JSON.stringify(this.apply))
-      apiService.applies
-        .update(this.apply.id, {
-          ...tempApply,
-          status: APPLY_STATUS.COMPLETED,
-          walletAddress: this.earnDialogWalletInput,
-        })
-        .then((res) => {
-          this.apply = res
-          this.status = HUNTING.finish
-          this.changeEarnDialog(false)
-          snackController.success('Submit successfully')
-        })
-    } catch (error) {
-      snackController.error(error as string)
-    }
+    this.changeTaskSubmiting(true)
+    apiService
+      .updateTaskProcess(this.apply.id, 'finish')
+      .then((res) => {
+        this.apply = res
+        this.status = HUNTING.finish
+        this.changeEarnDialog(false)
+        snackController.success('Submit successfully')
+      })
+      .catch((error) => {
+        snackController.error(error.response.data.message as string)
+      })
+      .finally(() => {
+        this.changeTaskSubmiting(false)
+      })
   }
 
   @action.bound changeRecaptchaDialog(value: boolean) {
@@ -315,15 +317,35 @@ export class BountyDetailViewModel {
     }
   }
 
+  @action.bound changeApplyPrioritying(value: boolean) {
+    this.isApplyPrioritying = value
+  }
+
+  @action.bound changeTaskUpdating(value: boolean) {
+    this.isTaskUpdating = value
+  }
+
+  @action.bound changeTaskSubmiting(value: boolean) {
+    this.isTaskSubmiting = value
+  }
+
   @asyncAction *applyForPriorityPool() {
     try {
+      this.changeApplyPrioritying(true)
       if (this.isPriorityPoolFull) {
         snackController.error('There are not any priority pool slot left!')
       } else if (!this.isStaker) {
         snackController.error('Only GloDAO stacker can apply for priority pool')
       } else {
+        const signature = yield authStore.signMessage(
+          walletStore.account,
+          'bsc',
+          get(authStore.user, 'hunter.nonce', 0)
+        )
         const res = yield apiService.applyForPriorityPool(
           walletStore.account,
+          signature,
+          'bsc',
           get(this.apply, 'id', ''),
           get(authStore.user, 'hunter.id', ''),
           get(this.task, 'id', ''),
@@ -333,9 +355,12 @@ export class BountyDetailViewModel {
         const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
         this.relatedApplies[foundIndex] = this.apply
         snackController.success('Apply for priority pool successfully')
+        authStore.getUserData()
       }
     } catch (error: any) {
       snackController.error('Fail to enter priority pool: ' + error.response.data.message)
+    } finally {
+      this.changeApplyPrioritying(false)
     }
   }
 
@@ -356,10 +381,11 @@ export class BountyDetailViewModel {
   }
 
   @computed get displayedTwitterData() {
-    const result =
-      this.displayedData?.twitter?.map((task) => {
-        return { ...task, activeStep: false }
-      }) ?? []
+    const result = get(this.displayedData, 'twitter', []).map((task) => {
+      return { ...task, activeStep: false }
+    })
+    if (isEmpty(result)) return []
+
     result[0].activeStep = true
     for (let index = 1; index < result.length; index++) {
       if (result[index - 1].finished) {
@@ -368,7 +394,7 @@ export class BountyDetailViewModel {
       }
     }
 
-    return result ?? []
+    return result
   }
 
   @computed get remainingSlot() {
@@ -568,5 +594,13 @@ export class BountyDetailViewModel {
       this.isHuntingProcessEnded ||
       !this.isHuntingProcessStarted
     )
+  }
+
+  @computed get isTaskProcessFinish() {
+    return get(this.apply, ['data', this.currentType], []).filter((step) => !step.finished).length === 0
+  }
+
+  @computed get taskSocialLinks() {
+    return get(this.task, 'metadata.socialLinks', {})
   }
 }

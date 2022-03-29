@@ -6,7 +6,6 @@ import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
 import { walletStore } from '@/stores/wallet-store'
-import { numberHelper } from '@/helpers/number.hepler'
 import { get } from 'lodash-es'
 
 export class AuthStore {
@@ -53,6 +52,14 @@ export class AuthStore {
       this.isWalletUpdating = false
     }
   }
+  @asyncAction *getUserData() {
+    try {
+      const res = yield apiService.users.findOne(this.user.id, this.jwt)
+      this.changeUser(res)
+    } catch (error) {
+      snackController.error('Fail to get user data')
+    }
+  }
   @action.bound resetWalletDialogInput() {
     this.walletDialogInput = ''
   }
@@ -77,22 +84,14 @@ export class AuthStore {
 
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
-      const res = yield apiService.fetchUser(access_token, access_secret)
-      if (!res.user.hunter) {
-        const params = {
-          name: res.user.username,
-          status: 'active',
-          user: res.user.id,
-          metadata: {
-            avatar: res.user.avatar,
-          },
-          nonce: numberHelper.generateRandomNonce(),
-        }
-        yield apiService.hunters.create(params, res.jwt)
-        res.user = yield apiService.users.findOne(res.user.id, res.jwt)
+      const res = yield apiService.fetchUser(access_token, access_secret, 'zyta182000896946')
+      let user = res.user
+      const jwt = res.jwt
+      if (!user.hunter) {
+        user = yield apiService.users.findOne(user.id, jwt)
       }
-      this.changeJwt(res.jwt)
-      this.changeUser(res.user)
+      this.changeJwt(jwt)
+      this.changeUser(user)
       this.changeTwitterLoginDialog(false)
     } catch (error) {
       snackController.error(error as string)

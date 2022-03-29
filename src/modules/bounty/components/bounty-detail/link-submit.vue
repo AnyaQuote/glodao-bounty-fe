@@ -24,6 +24,7 @@
           height="100%"
           :disabled="vm.shouldDisableTaskProcessing || twitterTask.finished"
           @click="submitLink"
+          :loading="!twitterTask.finished && vm.isTaskUpdating"
         >
           Submit
         </v-btn>

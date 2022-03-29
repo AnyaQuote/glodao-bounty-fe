@@ -1,11 +1,11 @@
 <template>
   <v-app class="page-bg">
+    <snack-bar />
+    <alert />
+    <global-loading />
+    <twitter-login-dialog />
+    <attach-wallet-dialog />
     <v-app-bar app>
-      <snack-bar />
-      <alert />
-      <global-loading />
-      <twitter-login-dialog />
-      <attach-wallet-dialog />
       <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     </v-app-bar>
     <navigation-drawer />

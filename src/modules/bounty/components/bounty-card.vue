@@ -1,13 +1,13 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <v-card class="mx-auto overflow-hidden border-radius-8px neutral100" elevation="3" outlined>
+    <v-card class="mx-auto overflow-hidden border-radius-8px neutral100 fill-height" elevation="3" outlined>
       <div
         :class="{
           'backdrop-hover-overlay': hover,
         }"
       >
         <div class="position-relative">
-          <v-img height="236" :src="coverImage"></v-img>
+          <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
           <div class="start-date-container" v-if="isEnded"></div>
           <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
             Closed: {{ endTime | datetime }}
