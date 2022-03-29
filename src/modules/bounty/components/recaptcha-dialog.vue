@@ -9,7 +9,7 @@
       </div>
       <div class="d-flex justify-center mb-4">
         <vue-recaptcha
-          sitekey="6LcBtCQfAAAAAAAY0K2ZnOL_ZEUT2W4o-n0W73eQ"
+          sitekey="6LcTviQfAAAAAFftWmtT77h8ha_eA6H6H5h7rZrX"
           :loadRecaptchaScript="true"
           @render="onCaptchaRender"
           @verify="onCaptchaVerify"
@@ -71,7 +71,7 @@ export default class RecaptchaDialog extends Vue {
 }
 .dialog-title-text {
   //styleName: H4;
-  font-family: Proxima Nova Alt;
+  font-family: Proxima Nova;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
