@@ -18,7 +18,7 @@
               outlined
               depressed
               class="rounded-pill neutral100--bg login-btn"
-              :href="`https://diversity-api.contracts.dev/connect/twitter`"
+              :href="`https://api.glodao.io/connect/twitter`"
             >
               <span> Log in with Twitter </span>
             </v-btn>
