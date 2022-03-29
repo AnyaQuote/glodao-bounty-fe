@@ -49,7 +49,7 @@ export default class BountyDetail extends Vue {
   @Inject() vm!: BountyDetailViewModel
   @Prop({ required: true }) twitterTask!: any
   @Prop({ required: true }) step!: number
-  value = this.twitterTask.stepLink
+  value = this.twitterTask.stepLink ?? ''
   HUNTING = HUNTING
 
   onValueChange(value: string) {
