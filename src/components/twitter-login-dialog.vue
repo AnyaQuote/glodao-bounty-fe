@@ -18,7 +18,7 @@
               outlined
               depressed
               class="rounded-pill neutral100--bg login-btn"
-              :href="`https://api.glodao.io/connect/twitter`"
+              :href="`${apiEndPoint}connect/twitter`"
             >
               <span> Log in with Twitter </span>
             </v-btn>
@@ -85,6 +85,7 @@ export default class TwitterLoginDialog extends Vue {
   logined = false
   authStore = authStore
 
+  apiEndPoint = process.env.VUE_APP_API_STRAPI_ENDPOINT
   changeLoginState() {
     this.logined = !this.logined
   }
