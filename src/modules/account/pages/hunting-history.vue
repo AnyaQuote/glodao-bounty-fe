@@ -185,7 +185,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" v-if="vm.convertedReferralList.length > 0">
                 <referral-card
                   v-for="item in vm.convertedReferralList"
                   :key="item.id"
@@ -196,6 +196,9 @@
                   class="mb-2"
                 ></referral-card>
               </v-col>
+              <v-col cols="12" v-else>
+                <no-referrals />
+              </v-col>
               <v-col cols="12" class="my-8" v-if="vm.totalReferralPageCount > 1">
                 <v-pagination
                   v-model="vm.referralPage"
@@ -204,9 +207,6 @@
                   color="blue"
                   :value="vm.referralPage"
                 ></v-pagination>
-              </v-col>
-              <v-col cols="12" v-else>
-                <no-referrals />
               </v-col>
             </v-row>
           </v-tab-item>
