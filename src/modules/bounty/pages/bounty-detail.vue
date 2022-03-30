@@ -357,6 +357,7 @@
                           class="white--text text-none linear-background-blue-main"
                           @click="vm.startHunting"
                           :disabled="!vm.isAccountAgeQualify || !vm.currentWallet"
+                          :loading="vm.isStartingProcess"
                         >
                           <v-icon left>mdi-power</v-icon>
                           Start hunting
@@ -487,7 +488,7 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="!vm.isPriorityPoolAvailable || !vm.isTaskProcessFinish"
+                          :disabled="!vm.isPriorityPoolAvailable || !vm.isValidStakeAmount"
                           @click="vm.applyForPriorityPool()"
                           v-if="!vm.isInPriorityPool"
                           :loading="vm.isApplyPrioritying"

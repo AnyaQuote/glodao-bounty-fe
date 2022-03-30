@@ -244,11 +244,12 @@ export class ApiService {
     return res.data
   }
 
-  async checkStakeStatus(walletAddress: string, poolId: number) {
+  async checkStakeStatus(walletAddress: string, hunterId: string, poolId = 0) {
     const res = await axios.get('checkUserStaked', {
       params: {
         address: walletAddress,
         poolId,
+        id: hunterId,
       },
       headers: {
         Authorization: `Bearer ${authStore.jwt}`,

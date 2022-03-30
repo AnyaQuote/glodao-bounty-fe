@@ -25,6 +25,8 @@ const POOL_TYPES = {
 
 const ACCOUNT_MIN_AGE_IN_DAYS = 180
 
+const MIN_STAKE_AMOUNT = 1000
+
 const DEFAULT_BREADCRUMBS = [
   {
     text: 'Bounty hunter',
@@ -63,6 +65,7 @@ export class BountyDetailViewModel {
   currentTimeInterval: NodeJS.Timer
 
   @observable stakeStatus = false
+  @observable isValidStakeAmount = false
 
   @observable statistical = {
     total: 100,
@@ -70,6 +73,7 @@ export class BountyDetailViewModel {
     twitter: 100000,
   }
 
+  @observable isStartingProcess = false
   @observable isApplyPrioritying = false
   @observable isTaskUpdating = false
   @observable isTaskSubmiting = false
@@ -115,13 +119,16 @@ export class BountyDetailViewModel {
 
   @asyncAction *getStakeStatus() {
     try {
-      if (isEmpty(walletStore.account)) this.stakeStatus = false
-      else {
-        const res = yield apiService.checkStakeStatus(walletStore.account, 0)
-        this.stakeStatus = res
+      if (isEmpty(walletStore.account)) {
+        this.stakeStatus = false
+        this.isValidStakeAmount = false
+      } else {
+        const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
+        if (gte(res, MIN_STAKE_AMOUNT)) this.isValidStakeAmount = true
+        if (gte(res, 0)) this.stakeStatus = true
       }
-    } catch (error) {
-      snackController.error('Error: Cant get stake status')
+    } catch (error: any) {
+      snackController.error('Error: Cant get stake status - ' + error.response.data.message)
     }
   }
 
@@ -186,6 +193,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *createApply() {
     try {
+      this.changeIsStartingProcess(true)
       const res = yield apiService.applies.create({
         data: this.applyStepData,
         ID: `${this.taskId}_${authStore.user.hunter.id}`,
@@ -199,8 +207,11 @@ export class BountyDetailViewModel {
         this.status = HUNTING.hunting
         this.fetchData()
       }
+      snackController.success('Apply for bounty hunting successfully')
     } catch (error) {
       snackController.error(error as string)
+    } finally {
+      this.changeIsStartingProcess(false)
     }
   }
 
@@ -322,6 +333,9 @@ export class BountyDetailViewModel {
     }
   }
 
+  @action.bound changeIsStartingProcess(value: boolean) {
+    this.isStartingProcess = value
+  }
   @action.bound changeApplyPrioritying(value: boolean) {
     this.isApplyPrioritying = value
   }
@@ -342,14 +356,14 @@ export class BountyDetailViewModel {
       } else if (!this.isStaker) {
         snackController.error('Only GloDAO stacker can apply for priority pool')
       } else {
-        const signature = yield authStore.signMessage(
-          walletStore.account,
-          'bsc',
-          get(authStore.user, 'hunter.nonce', 0)
-        )
+        // const signature = yield authStore.signMessage(
+        //   walletStore.account,
+        //   'bsc',
+        //   get(authStore.user, 'hunter.nonce', 0)
+        // )
         const res = yield apiService.applyForPriorityPool(
           walletStore.account,
-          signature,
+          'signature',
           'bsc',
           get(this.apply, 'id', ''),
           get(authStore.user, 'hunter.id', ''),
@@ -360,7 +374,7 @@ export class BountyDetailViewModel {
         const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
         this.relatedApplies[foundIndex] = this.apply
         snackController.success('Apply for priority pool successfully')
-        authStore.getUserData()
+        // authStore.getUserData()
       }
     } catch (error: any) {
       snackController.error('Fail to enter priority pool: ' + error.response.data.message)
