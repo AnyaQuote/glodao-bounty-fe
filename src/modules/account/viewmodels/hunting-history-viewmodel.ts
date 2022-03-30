@@ -16,6 +16,7 @@ export class HuntingHistoryViewModel {
   @observable currentApplies: any[] = []
   @observable completedTaskCount = 0
   @observable processingTaskCount = 0
+  @observable referralList: any[] = []
   _disposers: IDisposer[] = []
 
   @observable sortParams = 'createdAt:DESC'
@@ -85,6 +86,7 @@ export class HuntingHistoryViewModel {
     this.getHuntingListByPage()
     this.getTotalHuntingCount()
     this.getProcessingAndCompletedTaskCount()
+    this.getReferralList()
   }
 
   @action.bound onSortConditionChange(value: string) {
@@ -101,6 +103,15 @@ export class HuntingHistoryViewModel {
 
   @action.bound changeDateRange(value) {
     this.dateRanges = value
+  }
+
+  @asyncAction *getReferralList() {
+    try {
+      const res = yield apiService.hunters.find({ referrerCode: get(authStore, 'user.hunter.referralCode', '') })
+      this.referralList = res
+    } catch (error) {
+      snackController.error(('Cant get referral list:' + error) as string)
+    }
   }
 
   @asyncAction *getHuntingListByPage(page?: number) {
@@ -208,5 +219,22 @@ export class HuntingHistoryViewModel {
         { _or: [...this.statusFilterParams] },
       ],
     }
+  }
+
+  @computed get referralCount() {
+    console.log(this.referralList)
+
+    return this.referralList.length
+  }
+
+  @computed get convertedReferralList() {
+    return this.referralList.map(({ id, name, createdAt, metadata }) => {
+      return {
+        id,
+        name,
+        joinTime: createdAt,
+        avatar: get(metadata, 'avatar', ''),
+      }
+    })
   }
 }

@@ -69,10 +69,10 @@
         <v-row no-gutters>
           <v-tabs v-model="tab" class="pb-6" color="blue">
             <v-tab>
-              <div class="section-big-title-text font-weight-bold text-capitalize">Bounty Hunting History</div>
+              <div class="section-big-title-text font-weight-bold text-capitalize text-h6">Bounty Hunting History</div>
             </v-tab>
             <v-tab>
-              <div class="section-big-title-text font-weight-bold text-capitalize">Referral List</div>
+              <div class="section-big-title-text font-weight-bold text-capitalize text-h6">Referral List</div>
             </v-tab>
           </v-tabs>
         </v-row>
@@ -166,7 +166,7 @@
             <v-row>
               <v-col cols="12" sm="6" md="3">
                 <v-sheet class="transparent d-flex align-center" height="100%">
-                  <v-sheet class="transparent font-weight-bold neutral0--text pr-1">1000</v-sheet>
+                  <v-sheet class="transparent font-weight-bold neutral0--text pr-1">{{ vm.referralCount }}</v-sheet>
                   <v-sheet class="transparent neutral0--text">Refferals</v-sheet>
                 </v-sheet>
               </v-col>
@@ -184,9 +184,13 @@
             </v-row>
             <v-row>
               <v-col>
-                <referral-card></referral-card>
-                <referral-card class="mt-2"></referral-card>
-                <referral-card class="mt-2"></referral-card>
+                <referral-card
+                  v-for="item in vm.convertedReferralList"
+                  :key="item.id"
+                  :name="item.name"
+                  :joinTime="item.joinTime"
+                  :avatar="item.avatar"
+                ></referral-card>
               </v-col>
             </v-row>
           </v-tab-item>
