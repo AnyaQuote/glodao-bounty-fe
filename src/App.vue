@@ -64,6 +64,9 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.v-slide-group__prev {
+  display: none !important;
+}
 .task-detail-twitter-share-data-table {
   &.v-data-table {
     thead {

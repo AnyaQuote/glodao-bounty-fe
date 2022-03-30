@@ -67,7 +67,7 @@
     <v-col cols="12">
       <v-container>
         <v-row no-gutters>
-          <v-tabs v-model="tab" class="pb-6" color="blue">
+          <v-tabs v-model="tab" class="pb-4" color="blue">
             <v-tab>
               <div class="section-big-title-text font-weight-bold text-capitalize text-h6">Bounty Hunting History</div>
             </v-tab>
@@ -78,7 +78,7 @@
         </v-row>
         <v-tabs-items v-model="tab">
           <v-tab-item>
-            <v-row :dense="$vuetify.breakpoint.smAndDown" :no-gutters="$vuetify.breakpoint.smAndDown">
+            <v-row class="mt-1" :dense="$vuetify.breakpoint.smAndDown" :no-gutters="$vuetify.breakpoint.smAndDown">
               <v-col cols="12" sm="6" md="3">
                 <v-select v-model="vm.statusModel" :items="vm.status" label="Status" outlined dense multiple>
                   <template v-slot:selection="{ item, index }">
@@ -163,7 +163,7 @@
             </v-row>
           </v-tab-item>
           <v-tab-item>
-            <v-row>
+            <v-row class="mt-1">
               <v-col cols="12" sm="6" md="3">
                 <v-sheet class="transparent d-flex align-center" height="100%">
                   <v-sheet class="transparent font-weight-bold neutral0--text pr-1">{{ vm.referralCount }}</v-sheet>
@@ -172,25 +172,36 @@
               </v-col>
               <v-col class="ml-auto" cols="12" sm="6" md="3">
                 <v-select
-                  :items="vm.sortList"
-                  label="Recently refer"
+                  :items="vm.referralSortList"
+                  label="Sort"
                   outlined
                   dense
                   height="40"
                   hide-details
-                  @change="vm.onSortConditionChange"
+                  @change="vm.onReferralSortConditionChange"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col cols="12">
                 <referral-card
                   v-for="item in vm.convertedReferralList"
                   :key="item.id"
                   :name="item.name"
                   :joinTime="item.joinTime"
                   :avatar="item.avatar"
+                  :id="item.id"
+                  class="mb-2"
                 ></referral-card>
+              </v-col>
+              <v-col cols="12" class="my-8" v-if="vm.totalReferralPageCount > 1">
+                <v-pagination
+                  v-model="vm.referralPage"
+                  :length="vm.totalReferralPageCount"
+                  :total-visible="7"
+                  color="blue"
+                  :value="vm.referralPage"
+                ></v-pagination>
               </v-col>
             </v-row>
           </v-tab-item>
