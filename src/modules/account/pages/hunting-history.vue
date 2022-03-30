@@ -87,6 +87,39 @@
                   </template>
                 </v-select>
               </v-col>
+              <!-- <v-col cols="12" sm="6" md="2">
+                <v-btn
+                  outlined
+                  depressed
+                  class="fill-width text-none text-start font-weight-regular d-flex justify-start align-center"
+                  height="40"
+                  @click="vm.changeDateRangeDialog(true)"
+                  style="border: thin solid rgba(0, 0, 0, 0.38) !important"
+                >
+                  Filter by date
+                </v-btn>
+              </v-col>
+              <v-col cols="12" sm="6" md="2">
+                <v-select :items="items" label="Project" outlined dense class="rounded-0"></v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="2">
+                <v-select
+                  v-model="socialsModel"
+                  :items="socials"
+                  label="Social task"
+                  outlined
+                  dense
+                  class="rounded-0"
+                  multiple
+                >
+                  <template v-slot:selection="{ item, index }">
+                    <span v-if="index === 0">{{ item }}</span>
+                    <span v-if="index === 1" class="grey--text text-caption">
+                      &nbsp;(+{{ socialsModel.length - 1 }})
+                    </span>
+                  </template>
+                </v-select>
+              </v-col> -->
               <v-col cols="12" sm="6" md="3" class="ml-md-auto">
                 <v-select
                   :items="vm.sortList"
