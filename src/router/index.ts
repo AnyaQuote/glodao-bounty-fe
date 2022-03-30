@@ -34,7 +34,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '*',
     name: 'NotFound',
-    component: () => import('@/modules/bounty/pages/bounty.vue'),
+    component: () => import('@/modules/error/pages/404.vue'),
   },
 ]
 
