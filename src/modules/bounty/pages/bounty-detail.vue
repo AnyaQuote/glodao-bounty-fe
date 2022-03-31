@@ -361,103 +361,7 @@
           <!-- divider -->
           <v-divider class="my-10"></v-divider>
 
-          <v-sheet class="my-4 neutral15">
-            <div class="card-big-title-text font-weight-bold">Current Twitter shares</div>
-          </v-sheet>
-          <v-sheet class="neutral15-background">
-            <v-row>
-              <!-- 1 -->
-              <v-col cols="12" sm="4" md="4" lg="4">
-                <v-sheet outlined rounded height="80" class="pa-4 neutral100--bg" elevation="3">
-                  <v-row no-gutters dense>
-                    <v-sheet
-                      width="48"
-                      height="48"
-                      class="rounded-circle mr-4 flex-center-box linear-background-blue-main"
-                    >
-                      <v-icon color="white">mdi-share-all</v-icon>
-                    </v-sheet>
-                    <div class="neutral100--bg">
-                      <v-sheet class="text-subtitle-2 neutral100--bg">Total share</v-sheet>
-                      <v-sheet class="text-h6 line-height font-weight-black neutral100--bg">
-                        {{ vm.totalTwitterShare | formatNumber(0) }}
-                      </v-sheet>
-                    </div>
-                  </v-row>
-                </v-sheet>
-              </v-col>
-
-              <!-- 2 -->
-              <v-col cols="12" sm="4" md="4" lg="4">
-                <v-sheet outlined rounded height="80" class="pa-4 neutral100--bg" elevation="3">
-                  <v-row no-gutters dense>
-                    <v-sheet
-                      width="48"
-                      height="48"
-                      class="rounded-circle mr-4 flex-center-box linear-background-blue-main"
-                    >
-                      <v-icon color="white">mdi-share-all-outline</v-icon>
-                    </v-sheet>
-                    <div>
-                      <v-sheet class="text-subtitle-2 neutral100--bg">Daily share</v-sheet>
-                      <v-sheet class="text-h6 line-height font-weight-black neutral100--bg">
-                        {{ vm.dailyTwitterShareCount | formatNumber(0) }}
-                      </v-sheet>
-                    </div>
-                  </v-row>
-                </v-sheet>
-              </v-col>
-
-              <!-- 3 -->
-              <v-col cols="12" sm="4" md="4" lg="4">
-                <v-sheet outlined rounded height="80" class="pa-4 neutral100--bg" elevation="3">
-                  <v-row no-gutters dense>
-                    <v-sheet
-                      width="48"
-                      height="48"
-                      class="rounded-circle mr-4 flex-center-box linear-background-blue-main"
-                    >
-                      <v-icon color="white" size="20"> mdi-twitter </v-icon>
-                    </v-sheet>
-                    <div>
-                      <v-sheet class="text-subtitle-2 neutral100--bg">Twitter account </v-sheet>
-                      <v-sheet class="text-h6 line-height font-weight-black neutral100--bg">
-                        {{ vm.uniqueTwitterAccountCount | formatNumber(0) }}
-                      </v-sheet>
-                    </div>
-                  </v-row>
-                </v-sheet>
-              </v-col>
-            </v-row>
-          </v-sheet>
-
-          <v-sheet outlined class="mt-4 overflow-hidden" rounded>
-            <v-data-table
-              :headers="headers"
-              :items="vm.twitterSharedLinkList"
-              class="elevation-0 rounded-lg task-detail-twitter-share-data-table"
-              :hide-default-footer="vm.totalTwitterShare < 10"
-            >
-              <template v-slot:[`item.name`]="{ item }">
-                <v-row dense no-gutters justify="center" align="center" class="ma-2">
-                  <v-avatar>
-                    <img :src="item.hunterAvatar" alt="Avatar" />
-                  </v-avatar>
-                  <div class="ml-4 font-weight-medium">{{ `@${item.hunterName}` }}</div>
-                </v-row>
-              </template>
-              <template v-slot:[`item.time`]="{ item }">
-                <div>{{ item.shareTime | normalizeTimeDuration }}</div>
-              </template>
-              <template v-slot:[`item.link`]="{ item }">
-                <v-row no-gutters dense justify="center">
-                  <div class="bluePrimary--text" @click="openLink(item.link)">
-                    Link<v-icon size="14" color="bluePrimary" class="ml-2">mdi-open-in-new</v-icon>
-                  </div>
-                </v-row>
-              </template>
-            </v-data-table>
-          </v-sheet>
+          <twitter-share-table />
         </v-sheet>
       </v-col>
     </v-row>
@@ -482,6 +386,7 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'wallet-sheet': () => import('@/modules/bounty/components/bounty-detail/wallet-sheet.vue'),
     'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
+    'twitter-share-table': () => import('@/modules/bounty/components/bounty-detail/twitter-share-table.vue'),
   },
 })
 export default class BountyDetail extends Vue {
