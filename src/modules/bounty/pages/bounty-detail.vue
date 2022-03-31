@@ -173,16 +173,7 @@
                     'px-4': $vuetify.breakpoint.smAndDown,
                   }"
                 >
-                  <v-col cols="12" md="10" class="mt-6">
-                    <div class="card-subtitle-1 font-weight-medium">
-                      Reward for twitter task: {{ vm.task | _get('rewardAmount') }}
-                      {{ vm.task | _get('metadata.rewardToken') }}
-                    </div>
-                    <div class="card-subtitle-1">
-                      Please ensure you join our Twitter channel to be eligible. Our moderators will check through all
-                      submissions and take action to reward or reject.
-                    </div>
-                    <div class="card-subtitle-1">Are you ready? Please click “Start hunting” button to start.</div>
+                  <v-col cols="12" md="10">
                     <div class="text-center my-4">
                       <v-tooltip bottom>
                         <template v-slot:activator="{ on, attrs }">
@@ -353,7 +344,50 @@
                   </v-col>
                 </v-row>
               </v-tab-item>
-              <v-tab-item></v-tab-item>
+              <v-tab-item>
+                <v-sheet class="neutral100--bg fill-width pa-7">
+                  <v-row dense no-gutters>
+                    <v-col cols="12">
+                      <div class="text-uppercase bluePrimary--text font-weight-bold text-body-1">hunting zone</div>
+                    </v-col>
+                    <v-col cols="12">
+                      <div class="text-body-2 mt-5">
+                        Please ensure you join our channels to be eligible. Our moderators will check through all
+                        submissions and take action to reward or reject.
+                      </div>
+                    </v-col>
+                    <v-col cols="12">
+                      <div v-if="!vm.isHuntingProcessStarted">
+                        <div class="text-body-2">Are you ready? Please click “Start hunting” button to start.</div>
+                        <div class="d-flex mt-5">
+                          <v-btn
+                            elevation
+                            class="white--text text-none linear-background-blue-main"
+                            @click="vm.startHunting"
+                            :disabled="!vm.isAccountAgeQualify || !vm.currentWallet"
+                            :loading="vm.isStartingProcess"
+                            height="40"
+                          >
+                            <v-icon left>mdi-power</v-icon>
+                            Start hunting
+                          </v-btn>
+                        </div>
+                      </div>
+                      <hunting-status v-else class="mt-5" />
+                    </v-col>
+                    <v-sheet
+                      class="ba-dotted neutral100--bg fill-width mt-4 border-radius-8 overflow-hidden"
+                      height="400"
+                    >
+                      <v-sheet class="pa-4 pa-sm-6 neutral100--bg">
+                        <v-col cols="12" v-for="(twitterTask, index) in vm.displayedTwitterData" :key="index">
+                          <twitter-mini-task :twitterTask="twitterTask" :step="index" />
+                        </v-col>
+                      </v-sheet>
+                    </v-sheet>
+                  </v-row>
+                </v-sheet>
+              </v-tab-item>
               <v-tab-item></v-tab-item>
             </v-tabs-items>
           </v-sheet>
@@ -387,6 +421,7 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
     'twitter-share-table': () => import('@/modules/bounty/components/bounty-detail/twitter-share-table.vue'),
+    'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
   },
 })
 export default class BountyDetail extends Vue {
