@@ -7,6 +7,7 @@ import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
 import { walletStore } from '@/stores/wallet-store'
 import { get } from 'lodash-es'
+import jwtDecode from 'jwt-decode'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -21,6 +22,15 @@ export class AuthStore {
     //
     if (localdata.jwt) this.changeJwt(localdata.jwt)
     if (localdata.user) this.changeUser(localdata.user)
+    if (this.jwt) {
+      const { exp } = jwtDecode(this.jwt) as any
+      const isExpire = Date.now() >= exp * 1000
+      // If the token has expired
+      if (isExpire) {
+        this.logout()
+        snackController.error('Your session has expired! Please log in')
+      }
+    }
   }
 
   @action.bound changeAttachWalletDialog(value: boolean) {
@@ -105,7 +115,9 @@ export class AuthStore {
 
   @asyncAction *logout() {
     try {
-      if (router.currentRoute.path !== '/bounty') yield router.push('/bounty')
+      yield router.push('/bounty').catch(() => {
+        //
+      })
       this.resetJwt()
       this.resetUser()
       localdata.resetUser()
