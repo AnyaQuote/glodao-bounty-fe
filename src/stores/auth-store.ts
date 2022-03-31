@@ -26,7 +26,10 @@ export class AuthStore {
       const { exp } = jwtDecode(this.jwt) as any
       const isExpire = Date.now() >= exp * 1000
       // If the token has expired
-      if (isExpire) this.logout()
+      if (isExpire) {
+        this.logout()
+        snackController.error('Your session has expired! Please log in')
+      }
     }
   }
 
