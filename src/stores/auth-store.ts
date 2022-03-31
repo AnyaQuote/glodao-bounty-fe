@@ -57,7 +57,7 @@ export class AuthStore {
       snackController.updateSuccess()
       this.changeAttachWalletDialog(false)
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     } finally {
       this.isWalletUpdating = false
     }
