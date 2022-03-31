@@ -1,7 +1,10 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { Zero } from '@/constants'
+import { bigNumberHelper } from '@/helpers/bignumber-helper'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
+import { FixedNumber } from '@ethersproject/bignumber'
 import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte, isEmpty } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
@@ -25,7 +28,7 @@ const POOL_TYPES = {
 
 const ACCOUNT_MIN_AGE_IN_DAYS = 180
 
-const MIN_STAKE_AMOUNT = 1000
+const MIN_STAKE_AMOUNT = FixedNumber.from(0)
 
 const DEFAULT_BREADCRUMBS = [
   {
@@ -124,11 +127,12 @@ export class BountyDetailViewModel {
         this.isValidStakeAmount = false
       } else {
         const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
-        if (gte(res, MIN_STAKE_AMOUNT)) this.isValidStakeAmount = true
-        if (gte(res, 0)) this.stakeStatus = true
+        if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), MIN_STAKE_AMOUNT))
+          this.isValidStakeAmount = true
+        if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
       }
     } catch (error: any) {
-      snackController.error('Error: Cant get stake status - ' + error.response.data.message)
+      snackController.error('Error: Cant get stake status - ' + error)
     }
   }
 
