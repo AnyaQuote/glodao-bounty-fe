@@ -135,57 +135,11 @@
                   </div>
                 </v-sheet>
               </v-col>
-              <!-- <v-col cols="6" md="3">
-                <v-sheet outlined rounded class="pa-4" elevation="3">
-                  <div class="card-subtitle-1">Slot left</div>
-                  <div class="card-big-title-text font-weight-bold">{{ vm.remainingSlot }}</div>
-                </v-sheet>
-              </v-col> -->
             </v-row>
           </v-sheet>
 
           <!-- COUNTDOWN -->
           <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" elevation="3">
-            <!-- <v-row dense>
-              <v-col cols="12">
-                <div class="white--text text-uppercase" v-if="!vm.isTaskEnded">POOL ENDS IN</div>
-                <div class="white--text text-uppercase" v-else-if="vm.isTaskEnded">POOL ENDED</div>
-              </v-col>  
-              <v-col cols="12" md="6">
-                <countdown v-if="!vm.isTaskEnded" :targetDate="vm.task.endTime" />
-                <div class="d-flex" v-if="vm.isTaskEnded">
-                  <v-icon color="white" class="mr-3">mdi-clock-outline</v-icon>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">0</div>
-                  </v-sheet>
-                  <div class="flex-center-box mx-3 white--text">:</div>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">0</div>
-                  </v-sheet>
-                  <div class="flex-center-box mx-3 white--text">:</div>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">0</div>
-                  </v-sheet>
-                  <div class="flex-center-box mx-3 white--text">:</div>
-                  <v-sheet rounded width="36" height="36" color="white" class="flex-center-box">
-                    <div class="font-weight-bold">0</div>
-                  </v-sheet>
-                </div>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-progress-linear
-                  :value="vm.taskProgressPercentage"
-                  color="white"
-                  height="36"
-                  class="rounded font-weight-bold"
-                >
-                  Progess: {{ `${vm.currentParticipant}/${vm.task.maxParticipant} ` }} ({{
-                    vm.taskProgressPercentage | formatNumber(2, 0)
-                  }}%)
-                </v-progress-linear>
-              </v-col>
-            </v-row> -->
-
             <v-row>
               <v-col v-if="!vm.isTaskEnded">
                 <v-sheet class="d-flex flex-column justify-space-between transparent" height="100%">
