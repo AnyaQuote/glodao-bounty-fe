@@ -599,8 +599,8 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
   components: {
     'chain-logo': () => import('@/components/chain-logo.vue'),
     'link-submit': () => import('@/modules/bounty/components/bounty-detail/link-submit.vue'),
-    'recaptcha-dialog': () => import('@/modules/bounty/components/recaptcha-dialog.vue'),
-    'confirm-and-earn-dialog': () => import('@/modules/bounty/components/confirm-and-earn-dialog.vue'),
+    'recaptcha-dialog': () => import('@/modules/bounty/components/bounty-detail/recaptcha-dialog.vue'),
+    'confirm-and-earn-dialog': () => import('@/modules/bounty/components/bounty-detail/confirm-and-earn-dialog.vue'),
     countdown: () => import('@/modules/bounty/components/countdown.vue'),
     'wallet-sheet': () => import('@/modules/bounty/components/bounty-detail/wallet-sheet.vue'),
     'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
