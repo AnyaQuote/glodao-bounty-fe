@@ -233,7 +233,17 @@
                     <v-sheet class="text-uppercase primary--text mr-3 neutral100--bg" height="100%">
                       priority pool
                     </v-sheet>
-                    <v-chip class="bluePrimary lighten-1 primary--text font-italic" small>For GDAO stakers</v-chip>
+                    <v-chip class="bluePrimary lighten-1 primary--text font-italic" small>
+                      For GDAO stakers
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon right color="primary" size="12" v-bind="attrs" v-on="on">
+                            mdi-help-circle-outline
+                          </v-icon>
+                        </template>
+                        <span>GDAO stakers who have staked more than 1000 GLD can participate in priority pool</span>
+                      </v-tooltip>
+                    </v-chip>
                   </v-sheet>
                   <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
                     <v-sheet class="d-flex justify-space-between neutral100--bg">
@@ -357,6 +367,7 @@
                           class="white--text text-none linear-background-blue-main"
                           @click="vm.startHunting"
                           :disabled="!vm.isAccountAgeQualify || !vm.currentWallet"
+                          :loading="vm.isStartingProcess"
                         >
                           <v-icon left>mdi-power</v-icon>
                           Start hunting
@@ -487,7 +498,7 @@
                           elevation="0"
                           color="bluePrimary"
                           class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="!vm.isPriorityPoolAvailable || !vm.isTaskProcessFinish"
+                          :disabled="!vm.isPriorityPoolAvailable || !vm.isValidStakeAmount"
                           @click="vm.applyForPriorityPool()"
                           v-if="!vm.isInPriorityPool"
                           :loading="vm.isApplyPrioritying"
