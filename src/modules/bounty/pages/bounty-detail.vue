@@ -139,7 +139,7 @@
           </v-sheet>
 
           <!-- COUNTDOWN -->
-          <v-sheet rounded class="pa-6 mb-4 linear-background-blue-main" elevation="3">
+          <v-sheet class="pa-6 mb-4 pool-type-container border-radius-8" elevation="3">
             <v-row>
               <v-col v-if="!vm.isTaskEnded">
                 <v-sheet class="d-flex flex-column justify-space-between transparent" height="100%">
@@ -654,6 +654,10 @@ export default class BountyDetail extends Vue {
 }
 </script>
 <style scoped lang="scss">
+.pool-type-container {
+  background: url('~@/assets/images/pool-type-container-bg.png');
+  background-size: cover;
+}
 .theme--light {
   .custom-check-dot {
     border: thin solid var(--v-primary-base);
