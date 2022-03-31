@@ -28,7 +28,7 @@ const POOL_TYPES = {
 
 const ACCOUNT_MIN_AGE_IN_DAYS = 180
 
-const MIN_STAKE_AMOUNT = FixedNumber.from(0)
+const MIN_STAKE_AMOUNT = FixedNumber.from(1000)
 
 const DEFAULT_BREADCRUMBS = [
   {
