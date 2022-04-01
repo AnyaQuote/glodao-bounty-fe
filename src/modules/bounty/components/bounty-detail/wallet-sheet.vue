@@ -10,12 +10,14 @@
       <v-sheet
         width="20"
         height="20"
-        class="mr-2"
+        class="mr-2 background-transparent"
+        min-height="20"
+        min-width="20"
         :class="{
           'd-none': $vuetify.breakpoint.xsOnly,
         }"
       >
-        <v-img :src="require('@/assets/icons/chain-wallet.svg')" max-height="20" max-width="20"></v-img>
+        <chain-logo :chain="chainId" class="fill-width fill-height" />
       </v-sheet>
       {{ vm.currentWallet }}
       <v-sheet
@@ -36,13 +38,13 @@
           The wallet isn't matched
         </v-chip>
         <v-chip
-          class="ma-2 text-uppercase font-weight-regular text-caption bluePrimary--text bluePrimary lighten-1 font-weight-bold"
+          class="ma-2 text-uppercase font-weight-regular text-caption blue--text blue lighten-1 font-weight-bold"
           :class="{
             'ml-0': $vuetify.breakpoint.xsOnly,
           }"
           v-else-if="vm.isStaker"
         >
-          <v-icon size="12" class="mr-1 bluePrimary--text">mdi-star</v-icon> GLO STAKER
+          <v-icon size="12" class="mr-1 blue--text">mdi-star</v-icon> GLO STAKER
         </v-chip>
         <v-chip
           class="ma-2 text-uppercase font-weight-regular text-caption neutral10--text neutral20 font-weight-bold"
@@ -72,13 +74,17 @@
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
+import { localdata } from '@/helpers/local-data'
 
 @Observer
 @Component({
-  components: {},
+  components: {
+    'chain-logo': () => import('@/components/chain-logo.vue'),
+  },
 })
 export default class WalletSheet extends Vue {
   @Inject() vm!: BountyDetailViewModel
+  chainId = localdata.lastChain
 }
 </script>
 <style scoped lang="scss"></style>

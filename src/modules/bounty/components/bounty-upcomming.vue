@@ -22,7 +22,7 @@
         </v-tabs-items>
       </v-col>
       <v-col cols="3">
-        <div class="d-flex flex-column m-h-560 scrollable pa-2 pb-0 linear-border-blue-main">
+        <div class="d-flex flex-column m-h-560 scrollable pa-2 pb-0 linear-border-blue-main fill-height">
           <BountyUpcomingPreview
             v-for="(pool, index) in upcomingPoolList"
             @onClick="toggleTab"

@@ -3,6 +3,7 @@
     <v-img
       class="position-relative z-index-0 w-fill h-fill object-fit-cover border-radius-16"
       :src="coverImage"
+      :aspect-ratio="1.55"
     ></v-img>
     <div
       class="position-absolute z-index-1 left-0 rounded-lg bottom-0 rounded-t-0 custom-white-bg w-fill font-size-18 text-truncate blue--text pa-2"

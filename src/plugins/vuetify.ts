@@ -47,14 +47,19 @@ export default new Vuetify({
           lighten1: '#E6F1FE',
           lighten2: '#55ACE3',
         },
-        neutral20: {
-          base: '#E5E5E5',
-          lighten1: '#F9F9F9',
+        neutral10: {
+          base: '#5F6267',
         },
         neutral15: {
           base: '#F9FBFD',
         },
-        neutral10: '#5F6267',
+        neutral20: {
+          base: '#E5E5E5',
+          lighten1: '#F9F9F9',
+        },
+        neutral100: {
+          base: '#FFFFFF',
+        },
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
         orangeSenamatic: '#F9AF40',
@@ -74,9 +79,6 @@ export default new Vuetify({
         grey: {
           base: '#F9F9F9',
           lighten1: '#E5E5E5',
-        },
-        neutral100: {
-          base: '#FFFFFF',
         },
       },
       dark: {
@@ -103,11 +105,13 @@ export default new Vuetify({
           base: '#30415C',
           lighten1: '#F9F9F9',
         },
-        neutral10: '#8D9095',
         greenSenamatic: '#6CE08D',
         redSenamatic: '#E35E55',
         orangeSenamatic: '#F9AF40',
         purple: '#6955E3',
+        neutral10: {
+          base: '#B6B9BE',
+        },
         neutral15: {
           base: '#00102A',
         },

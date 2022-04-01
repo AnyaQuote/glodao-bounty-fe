@@ -58,7 +58,7 @@
               <v-img :src="require('@/assets/icons/crown-black.svg')" max-height="50" max-width="50"></v-img>
             </div>
             <br />
-            <div class="text-none font-weight-bold card-big-title-text black--text">Start hunting</div>
+            <div class="text-none font-weight-bold card-big-title-text black--text">View bounty</div>
           </div>
         </v-btn>
       </div>

@@ -135,9 +135,6 @@ export default class App extends Vue {
     color: inherit;
   }
 }
-.v-sheet.v-card.rounded-lg {
-  border-radius: 16px !important;
-}
 .full-width {
   width: 100% !important;
 }
@@ -253,13 +250,13 @@ tbody {
   font-size: 9px;
 }
 .line-height-6 {
-  line-height: 24px;
+  line-height: 24px !important;
 }
 .line-height-3 {
-  line-height: 12px;
+  line-height: 12px !important;
 }
 .font-weight-600 {
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 .blue-diversity--text {
   color: var(--v-bluePrimary-base) !important;
