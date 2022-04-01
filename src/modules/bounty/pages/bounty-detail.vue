@@ -41,7 +41,7 @@
       <!-- LEFT -->
       <v-col cols="12" md="4">
         <div>
-          <v-sheet class="mb-4 position-relative">
+          <v-sheet class="mb-4 position-relative rounded-lg overflow-hidden">
             <!-- image -->
             <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg"></v-img>
             <!-- status -->
