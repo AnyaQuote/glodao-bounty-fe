@@ -45,20 +45,24 @@
             <!-- image -->
             <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg"></v-img>
             <!-- status -->
-            <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
+            <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1 white">
               <v-sheet
                 class="rounded-circle flex-center-box background-transparent"
                 :class="vm.task | _get('status') | statusBorder"
               >
                 <v-sheet
-                  width="10"
-                  height="10"
-                  class="rounded-circle ma-1"
+                  width="6"
+                  height="6"
+                  class="rounded-circle"
                   :class="vm.task | _get('status') | statusBackground"
+                  style="margin: 2px"
                 >
                 </v-sheet>
               </v-sheet>
-              <div :class="vm.task | _get('status') | statusColor" class="text-uppercase ml-2 mr-1 green--text">
+              <div
+                :class="vm.task | _get('status') | statusColor"
+                class="text-uppercase ml-1 mr-1 green--text font-weight-bold text-caption"
+              >
                 {{ vm.task | _get('status') }}
               </div>
             </div>
