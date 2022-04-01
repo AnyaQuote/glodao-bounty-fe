@@ -135,9 +135,6 @@ export default class App extends Vue {
     color: inherit;
   }
 }
-.v-sheet.v-card.rounded-lg {
-  border-radius: 16px !important;
-}
 .full-width {
   width: 100% !important;
 }
