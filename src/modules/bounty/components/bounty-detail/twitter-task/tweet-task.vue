@@ -6,7 +6,7 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">Share a Twitter post</div>
+          <div class="text-body-1 font-weight-600">Tweet a Twitter post</div>
           <div class="text-caption mt-1">
             Post a Tweet using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
             >, share why you want to have this project’s primary market exposure.
