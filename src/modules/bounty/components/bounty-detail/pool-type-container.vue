@@ -46,11 +46,11 @@
         >
           <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
             <v-sheet class="text-uppercase primary--text mr-3 neutral100--bg" height="100%"> priority pool </v-sheet>
-            <v-chip class="bluePrimary lighten-1 primary--text font-italic" small>
+            <v-chip class="blue lighten-1 blue--text font-italic" small>
               For GDAO stakers
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-icon right color="primary" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
+                  <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                 </template>
                 <span>GDAO stakers who have staked more than 1000 GLD can participate in priority pool</span>
               </v-tooltip>
@@ -86,7 +86,7 @@
         >
           <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
             <v-sheet class="text-uppercase neutral100--bg primary--text mr-3" height="100%"> community pool </v-sheet>
-            <v-chip class="bluePrimary lighten-1 primary--text font-italic" small>For community</v-chip>
+            <v-chip class="blue lighten-1 blue--text font-italic" small>For community</v-chip>
           </v-sheet>
           <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
             <v-sheet class="d-flex justify-space-between neutral100--bg">
