@@ -38,13 +38,13 @@
           The wallet isn't matched
         </v-chip>
         <v-chip
-          class="ma-2 text-uppercase font-weight-regular text-caption bluePrimary--text bluePrimary lighten-1 font-weight-bold"
+          class="ma-2 text-uppercase font-weight-regular text-caption blue--text blue lighten-1 font-weight-bold"
           :class="{
             'ml-0': $vuetify.breakpoint.xsOnly,
           }"
           v-else-if="vm.isStaker"
         >
-          <v-icon size="12" class="mr-1 bluePrimary--text">mdi-star</v-icon> GLO STAKER
+          <v-icon size="12" class="mr-1 blue--text">mdi-star</v-icon> GLO STAKER
         </v-chip>
         <v-chip
           class="ma-2 text-uppercase font-weight-regular text-caption neutral10--text neutral20 font-weight-bold"
