@@ -598,7 +598,11 @@ export class BountyDetailViewModel {
   }
 
   @computed get isHuntingProcessStarted() {
-    return get(this.apply, 'id', '') && isEqual(get(this.apply, 'status', 'processing'), APPLY_STATUS.PROCESSING)
+    const status = get(this.apply, 'status', 'processing')
+    return (
+      !isEmpty(get(this.apply, 'id', '')) &&
+      (isEqual(status, APPLY_STATUS.PROCESSING) || isEqual(status, APPLY_STATUS.COMPLETED))
+    )
   }
 
   @computed get isHuntingProcessEnded() {
