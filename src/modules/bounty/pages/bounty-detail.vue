@@ -40,56 +40,58 @@
 
       <!-- LEFT -->
       <v-col cols="12" md="4">
-        <v-sheet class="mb-4 position-relative">
-          <!-- image -->
-          <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg"></v-img>
-          <!-- status -->
-          <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
-            <v-sheet
-              class="rounded-circle flex-center-box background-transparent"
-              :class="vm.task | _get('status') | statusBorder"
-            >
+        <div>
+          <v-sheet class="mb-4 position-relative">
+            <!-- image -->
+            <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg"></v-img>
+            <!-- status -->
+            <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1">
               <v-sheet
-                width="10"
-                height="10"
-                class="rounded-circle ma-1"
-                :class="vm.task | _get('status') | statusBackground"
+                class="rounded-circle flex-center-box background-transparent"
+                :class="vm.task | _get('status') | statusBorder"
               >
+                <v-sheet
+                  width="10"
+                  height="10"
+                  class="rounded-circle ma-1"
+                  :class="vm.task | _get('status') | statusBackground"
+                >
+                </v-sheet>
               </v-sheet>
-            </v-sheet>
-            <div :class="vm.task | _get('status') | statusColor" class="text-uppercase ml-2 mr-1 green--text">
-              {{ vm.task | _get('status') }}
+              <div :class="vm.task | _get('status') | statusColor" class="text-uppercase ml-2 mr-1 green--text">
+                {{ vm.task | _get('status') }}
+              </div>
             </div>
-          </div>
-        </v-sheet>
+          </v-sheet>
 
-        <!-- subtitle -->
-        <v-sheet class="mb-4 card-subtitle-1 neutral15">
-          {{ vm.task | _get('metadata.caption') }}
-        </v-sheet>
-        <v-sheet class="neutral15">
-          <v-sheet class="d-flex transparent mb-3">
-            <v-sheet class="transparent title-2">Website:</v-sheet>
-            <a class="bluePrimary--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
-              {{ vm.task | _get('metadata.website') }}
-            </a>
+          <!-- subtitle -->
+          <v-sheet class="mb-4 card-subtitle-1 neutral15">
+            {{ vm.task | _get('metadata.caption') }}
           </v-sheet>
-          <v-sheet class="d-flex align-center transparent">
-            <v-sheet class="transparent title-2">Social link:</v-sheet>
-            <v-btn
-              v-for="(value, key) in vm.taskSocialLinks"
-              :key="key"
-              class="bluePrimary ml-3"
-              fab
-              width="24"
-              height="24"
-              :href="value"
-              target="_blank"
-            >
-              <v-icon color="white" dark size="16"> {{ `mdi-${key}` }}</v-icon>
-            </v-btn>
+          <v-sheet class="neutral15">
+            <v-sheet class="d-flex transparent mb-3">
+              <v-sheet class="transparent title-2">Website:</v-sheet>
+              <a class="bluePrimary--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
+                {{ vm.task | _get('metadata.website') }}
+              </a>
+            </v-sheet>
+            <v-sheet class="d-flex align-center transparent">
+              <v-sheet class="transparent title-2">Social link:</v-sheet>
+              <v-btn
+                v-for="(value, key) in vm.taskSocialLinks"
+                :key="key"
+                class="bluePrimary ml-3"
+                fab
+                width="24"
+                height="24"
+                :href="value"
+                target="_blank"
+              >
+                <v-icon color="white" dark size="16"> {{ `mdi-${key}` }}</v-icon>
+              </v-btn>
+            </v-sheet>
           </v-sheet>
-        </v-sheet>
+        </div>
       </v-col>
 
       <!-- RIGHT -->
@@ -155,14 +157,14 @@
           </v-row>
           <!-- TASK -->
           <v-sheet class="rounded-lg overflow-hidden neutral100" elevation="3">
-            <v-tabs v-model="tab" color="bluePrimary" class="rounded-lg neutral100 custom-tabs-bar-bounty-detail">
+            <!-- <v-tabs v-model="tab" color="bluePrimary" class="rounded-lg neutral100 custom-tabs-bar-bounty-detail">
               <v-tab v-for="(item, index) in items" :key="index" :disabled="index !== 0" class="text-caption">
                 <span class="text-caption text-none primary--text">
                   {{ item }}
                 </span>
               </v-tab>
-            </v-tabs>
-            <v-tabs-items v-model="tab" class="">
+            </v-tabs> -->
+            <!-- <v-tabs-items v-model="tab" class="">
               <v-tab-item>
                 <v-row
                   dense
@@ -197,8 +199,8 @@
                       </div>
                       <hunting-status v-else />
                     </div>
-                  </v-col>
-                  <v-col cols="12" md="9">
+                  </v-col> -->
+            <!-- <v-col cols="12" md="9">
                     <div class="custom-dash-divider mb-7"></div>
                     <div v-for="(twitterTask, index) in vm.displayedTwitterData" :key="index">
                       <v-row
@@ -206,9 +208,9 @@
                         no-gutters
                         class="mb-4"
                         v-if="vm.displayedTwitterData.length > 0 && twitterTask.type !== 'retweet'"
-                      >
-                        <!-- TASK COL 1 -->
-                        <v-col cols="1" v-if="$vuetify.breakpoint.smAndUp">
+                      > -->
+            <!-- TASK COL 1 -->
+            <!-- <v-col cols="1" v-if="$vuetify.breakpoint.smAndUp">
                           <v-sheet class="pb-1 neutral100">
                             <v-sheet
                               width="18"
@@ -228,12 +230,11 @@
                           <v-sheet class="fill-height pb-7 neutral100">
                             <div class="divider"></div>
                           </v-sheet>
-                        </v-col>
-                        <!-- TASK COL 2 -->
-                        <v-col :cols="$vuetify.breakpoint.smAndUp ? 10 : 12">
+                        </v-col> -->
+            <!-- TASK COL 2 -->
+            <!-- <v-col :cols="$vuetify.breakpoint.smAndUp ? 10 : 12">
                           <v-sheet outlined rounded class="mini-task-container-sheet">
                             <v-container fluid>
-                              <!-- title -->
                               <div class="d-flex align-center">
                                 <v-sheet
                                   width="10"
@@ -256,16 +257,13 @@
                                   Processing
                                 </div>
                               </div>
-                              <!-- content -->
                               <div class="mb-4">
                                 <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
-                                <!-- follow -->
                                 <ul v-if="twitterTask.type === 'follow'">
                                   <li class="text-caption">
                                     Please follow “{{ vm.task | _get('name') }}” Twitter page to complete this task.
                                   </li>
                                 </ul>
-                                <!-- weet -->
                                 <ul v-if="twitterTask.type === 'tweet'">
                                   <li class="text-caption">
                                     Post a Tweet using
@@ -274,13 +272,11 @@
                                   </li>
                                   <li class="text-caption">Please enter your share link post to complete task.</li>
                                 </ul>
-                                <!-- retweet -->
                                 <ul v-if="twitterTask.type === 'referral'">
                                   <li class="text-caption">Share and referral with your friend.</li>
                                   <li class="text-caption">Please enter your referral link to complete task.</li>
                                 </ul>
                               </div>
-                              <!-- control -->
                               <div class="text-end">
                                 <v-btn
                                   v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
@@ -297,9 +293,9 @@
                               </div>
                             </v-container>
                           </v-sheet>
-                        </v-col>
-                        <!-- TASK COL 3 -->
-                        <v-col cols="1" class="" v-if="$vuetify.breakpoint.smAndUp">
+                        </v-col> -->
+            <!-- TASK COL 3 -->
+            <!-- <v-col cols="1" class="" v-if="$vuetify.breakpoint.smAndUp">
                           <v-sheet rounded class="fill-height ml-3 ba-dotted" min-width="40">
                             <v-sheet outlined rounded class="fill-height d-flex justify-center align-center neutral100">
                               <v-icon v-if="twitterTask && twitterTask.finished">mdi-check </v-icon>
@@ -307,14 +303,14 @@
                           </v-sheet>
                         </v-col>
                       </v-row>
-                    </div>
+                    </div> -->
 
-                    <v-sheet class="my-7">
+            <!-- <v-sheet class="my-7">
                       <div class="custom-dash-divider"></div>
-                    </v-sheet>
+                    </v-sheet> -->
 
-                    <!-- button -->
-                    <v-row class="mb-8">
+            <!-- button -->
+            <!-- <v-row class="mb-8">
                       <v-col cols="12" sm="6" class="text-center">
                         <v-btn
                           elevation="0"
@@ -344,52 +340,86 @@
                   </v-col>
                 </v-row>
               </v-tab-item>
-              <v-tab-item>
-                <v-sheet class="neutral100--bg fill-width pa-7">
-                  <v-row dense no-gutters>
-                    <v-col cols="12">
-                      <div class="text-uppercase bluePrimary--text font-weight-bold text-body-1">hunting zone</div>
-                    </v-col>
-                    <v-col cols="12">
-                      <div class="text-body-2 mt-5">
-                        Please ensure you join our channels to be eligible. Our moderators will check through all
-                        submissions and take action to reward or reject.
-                      </div>
-                    </v-col>
-                    <v-col cols="12">
-                      <div v-if="!vm.isHuntingProcessStarted">
-                        <div class="text-body-2">Are you ready? Please click “Start hunting” button to start.</div>
-                        <div class="d-flex mt-5">
-                          <v-btn
-                            elevation
-                            class="white--text text-none linear-background-blue-main"
-                            @click="vm.startHunting"
-                            :disabled="!vm.isAccountAgeQualify || !vm.currentWallet"
-                            :loading="vm.isStartingProcess"
-                            height="40"
-                          >
-                            <v-icon left>mdi-power</v-icon>
-                            Start hunting
-                          </v-btn>
-                        </div>
-                      </div>
-                      <hunting-status v-else class="mt-5" />
-                    </v-col>
-                    <v-sheet
-                      class="ba-dotted neutral100--bg fill-width mt-4 border-radius-8 overflow-hidden"
-                      height="400"
+              <v-tab-item> -->
+            <v-sheet class="neutral100--bg fill-width pa-7">
+              <v-row dense no-gutters>
+                <v-col cols="12">
+                  <div class="text-uppercase bluePrimary--text font-weight-bold text-body-1">hunting zone</div>
+                </v-col>
+                <v-col cols="12">
+                  <div class="text-body-2 mt-5">
+                    Please ensure you join our channels to be eligible. Our moderators will check through all
+                    submissions and take action to reward or reject.
+                  </div>
+                </v-col>
+                <v-col cols="12">
+                  <div v-if="!vm.isHuntingProcessStarted && !vm.isUserTaskCompleted">
+                    <div class="text-body-2">Are you ready? Please click “Start hunting” button to start.</div>
+                    <div class="d-flex mt-5">
+                      <v-btn
+                        elevation
+                        class="white--text text-none linear-background-blue-main"
+                        @click="vm.startHunting"
+                        :disabled="!vm.isTaskStarted || vm.isTaskEnded || !vm.isAccountAgeQualify || !vm.currentWallet"
+                        :loading="vm.isStartingProcess"
+                        height="40"
+                      >
+                        <v-icon left>mdi-power</v-icon>
+                        Start hunting
+                      </v-btn>
+                    </div>
+                  </div>
+                  <hunting-status v-else class="mt-5" />
+                </v-col>
+                <v-sheet class="ba-dotted neutral100--bg fill-width mt-5 border-radius-8 overflow-hidden">
+                  <v-sheet class="pa-4 pa-md-6 neutral100--bg">
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      v-for="(twitterTask, index) in vm.displayedTwitterData"
+                      :key="index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
                     >
-                      <v-sheet class="pa-4 pa-sm-6 neutral100--bg">
-                        <v-col cols="12" v-for="(twitterTask, index) in vm.displayedTwitterData" :key="index">
-                          <twitter-mini-task :twitterTask="twitterTask" :step="index" />
-                        </v-col>
-                      </v-sheet>
-                    </v-sheet>
+                      <div class="custom-dash-divider" v-if="index !== 0"></div>
+                      <twitter-mini-task :twitterTask="twitterTask" :step="index" />
+                    </v-col>
+                  </v-sheet>
+                  <v-divider></v-divider>
+                  <v-row class="pa-6">
+                    <v-col cols="12" sm="6" class="text-center" v-if="!vm.isInPriorityPool">
+                      <v-btn
+                        elevation="0"
+                        color="bluePrimary"
+                        class="white--text text-none linear-background-blue-main text-caption"
+                        :disabled="!vm.isPriorityPoolAvailable || !vm.isValidStakeAmount"
+                        @click="vm.applyForPriorityPool()"
+                        :loading="vm.isApplyPrioritying"
+                      >
+                        Apply for priority pool
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="12" :sm="!vm.isInPriorityPool ? 6 : 12" class="text-center">
+                      <v-btn
+                        elevation="0"
+                        color="bluePrimary"
+                        class="white--text text-none linear-background-blue-main text-caption"
+                        :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
+                        @click="vm.changeEarnDialog(true)"
+                        :loading="vm.isTaskSubmiting"
+                      >
+                        Confirm to complete
+                      </v-btn>
+                    </v-col>
                   </v-row>
                 </v-sheet>
-              </v-tab-item>
+                <v-col cols="12"> </v-col>
+              </v-row>
+            </v-sheet>
+            <!-- </v-tab-item>
               <v-tab-item></v-tab-item>
-            </v-tabs-items>
+            </v-tabs-items> -->
           </v-sheet>
 
           <!-- divider -->
