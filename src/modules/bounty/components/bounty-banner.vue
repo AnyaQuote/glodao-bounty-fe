@@ -1,21 +1,18 @@
 <template>
-  <div class="d-grid grid-setting linear-gradient-bg">
-    <div class="d-grid align-g-item-center justify-g-items-center image-wrapper">
-      <Circles
-        v-show="$vuetify.breakpoint.mdAndUp"
-        class="circle-wrapper full-height opacity-low"
-        :color="'#0276F0'"
-      ></Circles>
-      <v-img
-        v-show="$vuetify.breakpoint.mdAndUp"
-        :src="require('@/assets/images/bounty-briefcase.png')"
-        class="b-icon"
-        height="320"
-        width="420"
-      >
-      </v-img>
+  <div
+    class="d-grid linear-gradient-bg"
+    :class="$vuetify.breakpoint.mdAndUp ? 'grid-setting-web' : 'grid-setting-mobile'"
+  >
+    <div v-if="$vuetify.breakpoint.mdAndUp" class="d-grid align-g-item-center justify-g-items-center image-wrapper">
+      <Circles class="circle-wrapper full-height opacity-low" :color="'#0276F0'"></Circles>
+      <v-img :src="require('@/assets/images/bounty-briefcase.png')" class="b-icon" height="320" width="420"> </v-img>
     </div>
-    <div class="b-content d-flex flex-column white--text">
+    <div
+      :class="
+        $vuetify.breakpoint.mdAndUp ? 'b-content-setting-web' : 'b-content-setting-mobile text-center align-center'
+      "
+      class="d-flex flex-column white--text"
+    >
       <div class="font-size-72 mb-5 blue--text">BOUNTY HUNTER</div>
       <div class="d-flex flex-row align-center mb-5">
         <DoubleArrow></DoubleArrow>
@@ -54,13 +51,22 @@ export default class extends Vue {}
   display: grid;
 }
 
-.grid-setting {
+.grid-setting-web {
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(5, 73px);
 }
 
-.b-content {
+.grid-setting-mobile {
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 73px);
+}
+
+.b-content-setting-web {
   grid-area: 2 / 2 / 4 / 5;
+}
+
+.b-content-setting-mobile {
+  grid-area: 2 / 1 / 4 / 2;
 }
 
 .b-icon {
