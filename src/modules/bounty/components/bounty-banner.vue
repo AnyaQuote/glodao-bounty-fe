@@ -1,35 +1,29 @@
 <template>
-  <div class="d-grid fill linear-background-blue-main h-336">
-    <v-img
-      v-show="$vuetify.breakpoint.mdAndUp"
-      class="circle-wrapper ma-0 pa-0"
-      :src="require('@/assets/images/circle-bg.svg')"
-    ></v-img>
-    <v-img
-      v-show="$vuetify.breakpoint.mdAndUp"
-      class="coins-right"
-      max-width="168"
-      max-height="194"
-      contain
-      :src="require('@/assets/images/coins.png')"
-    ></v-img>
-    <v-img
-      v-show="$vuetify.breakpoint.mdAndUp"
-      class="coins-left"
-      max-width="168"
-      max-height="194"
-      contain
-      :src="require('@/assets/images/coins-flipped.png')"
-    ></v-img>
-    <div class="b-content d-flex flex-column justify-center align-center white--text">
-      <div class="font-size-72 text-center mb-5">BOUNTY HUNTER</div>
-      <div class="d-flex flex-row align-center justify-center mb-5">
-        <v-img max-height="21" max-width="28" :src="require('@/assets/images/double-arrow.svg')"></v-img>
-        <span class="mx-2 font-size-36 text-center">Do tasks to earn</span>
-        <v-img max-height="21" max-width="28" :src="require('@/assets/images/double-arrow-flipped.svg')"></v-img>
+  <div class="d-grid grid-setting linear-gradient-bg">
+    <div class="d-grid align-g-item-center justify-g-items-center image-wrapper">
+      <Circles
+        v-show="$vuetify.breakpoint.mdAndUp"
+        class="circle-wrapper full-height opacity-low"
+        :color="'#0276F0'"
+      ></Circles>
+      <v-img
+        v-show="$vuetify.breakpoint.mdAndUp"
+        :src="require('@/assets/images/bounty-briefcase.png')"
+        class="b-icon"
+        height="320"
+        width="420"
+      >
+      </v-img>
+    </div>
+    <div class="b-content d-flex flex-column white--text">
+      <div class="font-size-72 mb-5 blue--text">BOUNTY HUNTER</div>
+      <div class="d-flex flex-row align-center mb-5">
+        <DoubleArrow></DoubleArrow>
+        <span class="mx-2 font-size-36 color-1--text">Do tasks to earn</span>
+        <DoubleArrowFlipped></DoubleArrowFlipped>
       </div>
       <div>
-        <v-btn color="white" outlined> See hot pools </v-btn>
+        <v-btn color="blue" outlined> See hot pools </v-btn>
       </div>
     </div>
   </div>
@@ -37,51 +31,67 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import DoubleArrow from '@/assets/icons/double-arrow-vec.vue'
+import DoubleArrowFlipped from '@/assets/icons/double-arrow-flipped-vec.vue'
+import Circles from '@/assets/images/circles.vue'
 
-@Component
+@Component({
+  components: {
+    DoubleArrow,
+    DoubleArrowFlipped,
+    Circles,
+  },
+})
 export default class extends Vue {}
 </script>
 
 <style scoped>
+* {
+  --color-1: #8197bb;
+}
+
 .d-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  align-items: center;
-  justify-items: center;
-  --custom-margin: -80px;
+}
+
+.grid-setting {
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(5, 73px);
 }
 
 .b-content {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  z-index: 1;
+  grid-area: 2 / 2 / 4 / 5;
 }
 
-.circle-wrapper {
-  opacity: 0.1;
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  z-index: 0;
+.b-icon {
+  grid-area: 1 / 1;
+  /* This is not a good way to do this, will fix */
+  margin-right: 170px;
+  /**=========================================== */
+}
+
+.align-g-item-center {
+  align-items: end;
+}
+
+.justify-g-items-center {
+  justify-items: end;
+}
+
+.image-wrapper {
+  grid-area: 1 / 4 / 6 / 9;
+}
+
+.full-height {
   height: 100%;
 }
 
-.coins-left {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  justify-self: start;
-  margin-left: var(--custom-margin);
+.circle-wrapper {
+  grid-area: 1 / 1;
 }
 
-.coins-right {
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  justify-self: end;
-  margin-right: var(--custom-margin);
+.opacity-low {
+  opacity: 0.1;
 }
 
 .font-size-72 {
@@ -96,7 +106,11 @@ export default class extends Vue {}
   font-weight: 600;
 }
 
-.h-336 {
-  height: 360px;
+.linear-gradient-bg {
+  background: linear-gradient(90deg, rgba(2, 118, 240, 0.08) 0%, rgba(0, 229, 255, 0.08) 113.65%);
+}
+
+.color-1--text {
+  color: var(--color-1);
 }
 </style>
