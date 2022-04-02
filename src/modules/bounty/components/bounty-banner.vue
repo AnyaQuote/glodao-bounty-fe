@@ -72,7 +72,7 @@ export default class extends Vue {}
 .b-icon {
   grid-area: 1 / 1;
   /* This is not a good way to do this, will fix */
-  margin-right: 170px;
+  margin-right: 130px;
   /**=========================================== */
 }
 
