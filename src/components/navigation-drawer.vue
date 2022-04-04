@@ -54,12 +54,21 @@
     <div class="d-flex flex-column">
       <v-list class="px-4 mt-4" dense nav>
         <v-list-item class="neutral10--text" @click="openLink('https://dev.glodao.io/launchpad')">
+          <v-list-item-icon class="mr-2">
+            <v-img :src="require('@/assets/icons/nav-bar/launchpad.svg')" class="filter-neutral10 fill-height"></v-img>
+          </v-list-item-icon>
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Launch pad</v-list-item-title>
         </v-list-item>
 
         <v-list-group :value="true" no-action>
           <template v-slot:activator>
-            <v-list-item>
+            <v-list-item class="ml-0 pl-0">
+              <v-list-item-icon class="mr-2">
+                <v-img
+                  :src="require('@/assets/icons/nav-bar/bounty.svg')"
+                  class="filter-bluePrimary fill-height"
+                ></v-img>
+              </v-list-item-icon>
               <v-list-item-title class="nav-btn-text text-none bluePrimary--text">Bounty hunter</v-list-item-title>
             </v-list-item>
           </template>
@@ -74,9 +83,15 @@
           </v-list-item>
         </v-list-group>
         <v-list-item active-class="neutral10--text" @click="openLink('https://dev.glodao.io/staking')">
+          <v-list-item-icon class="mr-2">
+            <v-img :src="require('@/assets/icons/nav-bar/staking.svg')" class="filter-neutral10 fill-height"></v-img>
+          </v-list-item-icon>
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">$Staking</v-list-item-title>
         </v-list-item>
         <v-list-item active-class="neutral10--text" @click="openLink('https://dev.glodao.io/farm')">
+          <v-list-item-icon class="mr-2">
+            <v-img :src="require('@/assets/icons/nav-bar/farm.svg')" class="filter-neutral10 fill-height"></v-img>
+          </v-list-item-icon>
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Farm</v-list-item-title>
         </v-list-item>
       </v-list>
