@@ -105,7 +105,7 @@ export class AuthStore {
       this.changeTwitterLoginDialog(false)
       localdata.referralCode = ''
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     } finally {
       router.push('/bounty').catch(() => {
         //
