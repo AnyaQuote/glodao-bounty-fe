@@ -4,7 +4,15 @@
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
           <div class="pl-4">
-            <v-img :src="require('@/assets/images/glodao-logo.svg')" max-height="50" max-width="75"></v-img>
+            <v-img
+              :src="
+                $vuetify.theme.dark
+                  ? require(`@/assets/images/glodao-logo-dark.svg`)
+                  : require(`@/assets/images/glodao-logo.svg`)
+              "
+              max-height="50"
+              max-width="75"
+            ></v-img>
           </div>
         </v-col>
         <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
