@@ -7,17 +7,27 @@
         white: !$vuetify.theme.dark,
       }"
     >
-      <v-container class="px-6 py-7">
+      <v-container class="px-6 py-4">
         <v-row>
           <v-col cols="12" sm="6" class="d-flex flex-column">
-            <v-img
-              alt="Vuetify Logo"
-              class="shrink mr-2"
-              contain
-              :src="require(`@/assets/images/glodao-logo.svg`)"
-              transition="scale-transition"
-              width="75"
-            />
+            <div class="d-flex align-center">
+              <v-img
+                alt="Vuetify Logo"
+                class="shrink mr-2"
+                contain
+                :src="
+                  $vuetify.theme.dark
+                    ? require(`@/assets/images/glodao-logo-dark.svg`)
+                    : require(`@/assets/images/glodao-logo.svg`)
+                "
+                transition="scale-transition"
+                width="75"
+              />
+              <div class="neutral10--text text-caption">
+                Global Decentralized <br />
+                autonomous organization
+              </div>
+            </div>
           </v-col>
           <v-col
             cols="12"

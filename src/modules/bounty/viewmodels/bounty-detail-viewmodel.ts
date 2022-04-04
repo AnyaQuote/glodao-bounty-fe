@@ -123,7 +123,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *getStakeStatus() {
     try {
-      if (isEmpty(walletStore.account)) {
+      if (isEmpty(walletStore.account) || isEmpty(authStore.jwt)) {
         this.stakeStatus = false
         this.isValidStakeAmount = false
       } else {
@@ -246,7 +246,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *getRelatedApplies() {
     try {
-      if (isEmpty(this.task) || isEmpty(authStore.jwt)) return
+      if (isEmpty(this.task)) return
       const res = yield apiService.applies.find({
         'task.id': this.taskId,
       })
