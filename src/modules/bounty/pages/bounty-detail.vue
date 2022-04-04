@@ -359,6 +359,14 @@
                 <v-col cols="12">
                   <div v-if="!vm.isHuntingProcessStarted && !vm.isUserTaskCompleted">
                     <div class="text-body-2">Are you ready? Please click “Start hunting” button to start.</div>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify" v-bind="attrs" v-on="on">
+                          Your account does not qualify for task hunting
+                        </div>
+                      </template>
+                      <span>Your twitter account must be older than 6 months</span>
+                    </v-tooltip>
                     <div class="d-flex mt-5">
                       <v-btn
                         elevation
