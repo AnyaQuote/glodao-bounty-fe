@@ -27,10 +27,17 @@
       </v-sheet>
       <v-divider></v-divider>
       <v-sheet class="neutral100">
-        <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.changeAttachWalletDialog(true)">
+        <v-btn
+          plain
+          block
+          class="menu-btn neutral10--text"
+          height="40"
+          depressed
+          @click="authStore.changeAttachWalletDialog(true)"
+        >
           <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
         </v-btn>
-        <v-btn plain block class="menu-btn" height="40" depressed @click="goToHuntingHistoryScreen()">
+        <v-btn plain block class="menu-btn neutral10--text" height="40" depressed @click="goToHuntingHistoryScreen()">
           <v-img
             :src="require('@/assets/icons/crown-mini.svg')"
             max-height="22"
@@ -46,22 +53,35 @@
     <v-divider></v-divider>
     <div class="d-flex flex-column">
       <v-list class="px-4 mt-4" dense nav>
-        <v-list-item class="py-2" @click="openLink('https://dev.glodao.io/launchpad')">
+        <v-list-item class="neutral10--text" @click="openLink('https://dev.glodao.io/launchpad')">
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Launch pad</v-list-item-title>
         </v-list-item>
-        <v-list-item active-class="blue--text" to="/bounty" class="py-2">
-          <v-list-item-title class="nav-btn-text text-capitalize">Bounty hunter</v-list-item-title>
-        </v-list-item>
-        <v-list-item active-class="primary--text" class="py-2" @click="openLink('https://dev.glodao.io/staking')">
+
+        <v-list-group :value="true" no-action>
+          <template v-slot:activator>
+            <v-list-item>
+              <v-list-item-title class="nav-btn-text text-none bluePrimary--text">Bounty hunter</v-list-item-title>
+            </v-list-item>
+          </template>
+          <template v-slot:appendIcon>
+            <v-icon color="bluePrimary">mdi-chevron-down</v-icon>
+          </template>
+          <v-list-item active-class="bluePrimary--text" to="/bounty">
+            <v-list-item-title class="nav-btn-text text-none">Bounty hunter</v-list-item-title>
+          </v-list-item>
+          <v-list-item active-class="bluePrimary--text" to="/bounty-history">
+            <v-list-item-title class="nav-btn-text text-none">Bounty history</v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+        <v-list-item active-class="neutral10--text" @click="openLink('https://dev.glodao.io/staking')">
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">$Staking</v-list-item-title>
         </v-list-item>
-        <v-list-item active-class="primary--text" class="py-2" @click="openLink('https://dev.glodao.io/farm')">
+        <v-list-item active-class="neutral10--text" @click="openLink('https://dev.glodao.io/farm')">
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Farm</v-list-item-title>
         </v-list-item>
       </v-list>
     </div>
-    <v-divider></v-divider>
-    <div>
+    <div class="flex-center-box">
       <connect-wallet btnClass="rounded-0 fill-width"></connect-wallet>
     </div>
   </v-navigation-drawer>
@@ -117,5 +137,8 @@ export default class Staking extends Vue {
 }
 .position-sticky {
   position: sticky;
+}
+.nav-btn-text {
+  font-size: 14px !important;
 }
 </style>
