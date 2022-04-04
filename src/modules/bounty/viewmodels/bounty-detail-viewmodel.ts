@@ -235,7 +235,7 @@ export class BountyDetailViewModel {
       const res = yield apiService.tasks.findOne(this.taskId)
       this.task = res
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
@@ -247,7 +247,7 @@ export class BountyDetailViewModel {
       })
       this.relatedApplies = res
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
@@ -281,7 +281,7 @@ export class BountyDetailViewModel {
       if (!this.isTaskStarted) this.status = HUNTING.start
       else if (this.isTaskEnded) this.status = HUNTING.finish
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
@@ -309,7 +309,7 @@ export class BountyDetailViewModel {
           const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
           this.relatedApplies[foundIndex] = this.apply
         }
-        snackController.error(error.response.data.message as string)
+        snackController.error(get(error, 'response.data.message', '') || (error as string))
       })
       .finally(() => {
         this.changeTaskUpdating(false)
@@ -327,7 +327,7 @@ export class BountyDetailViewModel {
         snackController.success('Submit successfully')
       })
       .catch((error) => {
-        snackController.error(error.response.data.message as string)
+        snackController.error(get(error, 'response.data.message', '') || (error as string))
       })
       .finally(() => {
         this.changeTaskSubmiting(false)
