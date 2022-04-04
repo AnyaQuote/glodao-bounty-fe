@@ -52,7 +52,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                 </template>
-                <span>GDAO stakers who have staked more than 1000 GLD can participate in priority pool</span>
+                <span>GDAO stakers who have staked more than 1000$ can participate in priority pool</span>
               </v-tooltip>
             </v-chip>
           </v-sheet>
@@ -60,7 +60,7 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalPriorityReward }} {{ vm.rewardToken }}
+                {{ vm.totalPriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex justify-space-between neutral100--bg">
@@ -72,7 +72,7 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.singlePriorityReward | formatNumber(2, 0) }} {{ vm.rewardToken }}
+                {{ vm.singlePriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
               </v-sheet>
             </v-sheet>
           </v-sheet>
@@ -92,7 +92,7 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalCommunityReward }} {{ vm.rewardToken }}
+                {{ vm.totalCommunityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex justify-space-between neutral100--bg">
@@ -122,7 +122,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Inject, Provide, Vue, Watch } from 'vue-property-decorator'
+import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 
 @Observer

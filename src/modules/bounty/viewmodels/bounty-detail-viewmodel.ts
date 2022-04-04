@@ -128,7 +128,12 @@ export class BountyDetailViewModel {
         this.isValidStakeAmount = false
       } else {
         const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
-        if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), MIN_STAKE_AMOUNT))
+        if (
+          bigNumberHelper.gte(
+            FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
+            MIN_STAKE_AMOUNT
+          )
+        )
           this.isValidStakeAmount = true
         if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
       }
@@ -556,6 +561,26 @@ export class BountyDetailViewModel {
     return subtract(this.rewardAmount, this.totalPriorityReward)
   }
 
+  @computed get totalRewardAsToken() {
+    return FixedNumber.from(this.rewardAmount).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get remainingRewardAsToken() {
+    return FixedNumber.from(this.remainingReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get totalPriorityRewardAsToken() {
+    return FixedNumber.from(this.totalPriorityReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get totalCommunityRewardAsToken() {
+    return FixedNumber.from(this.totalCommunityReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get singlePriorityRewardAsToken() {
+    return FixedNumber.from(this.singlePriorityReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
   @computed get currentCommunityParticipants() {
     return subtract(this.relatedApplies.length, this.currentPriorityParticipants) ?? 0
   }
@@ -634,11 +659,15 @@ export class BountyDetailViewModel {
     )
   }
 
-  @computed get isTaskProcessFinish() {
+  @computed get isTaskProcessFinish(): boolean {
     return get(this.apply, ['data', this.currentType], []).filter((step) => !step.finished).length === 0
   }
 
   @computed get taskSocialLinks() {
     return get(this.task, 'metadata.socialLinks', {})
+  }
+
+  @computed get tokenBasePrice(): FixedNumber {
+    return FixedNumber.from(get(this.task, 'tokenBasePrice', 0))
   }
 }
