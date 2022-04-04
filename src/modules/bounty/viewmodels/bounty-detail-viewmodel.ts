@@ -1,3 +1,4 @@
+import { loadingController } from '@/components/global-loading/global-loading-controller'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { Zero } from '@/constants'
 import { bigNumberHelper } from '@/helpers/bignumber-helper'
@@ -220,11 +221,13 @@ export class BountyDetailViewModel {
   }
 
   @asyncAction *fetchData() {
+    loadingController.increaseRequest()
     yield this.getTaskData()
     this.initEmptyStepData()
     yield this.getRelatedApplies()
     yield this.getApplyData()
     yield this.getStakeStatus()
+    loadingController.decreaseRequest()
   }
 
   @asyncAction *getTaskData() {
@@ -298,6 +301,13 @@ export class BountyDetailViewModel {
         snackController.updateSuccess()
       })
       .catch((error) => {
+        const updatedApply = get(error, 'response.data.data', {})
+        if (!isEmpty(updatedApply)) {
+          this.apply = updatedApply
+          this.applyStepData = updatedApply.data
+          const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+          this.relatedApplies[foundIndex] = this.apply
+        }
         snackController.error(error.response.data.message as string)
       })
       .finally(() => {
