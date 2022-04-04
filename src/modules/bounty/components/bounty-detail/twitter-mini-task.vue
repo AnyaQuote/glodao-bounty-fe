@@ -1,7 +1,8 @@
 <template>
   <div>
-    <follow-task v-if="type === 'follow'" :twitterTask="twitterTask" :step="step" :state="state" />
-    <tweet-task v-if="type === 'tweet'" :twitterTask="twitterTask" :step="step" :state="state" />
+    <follow-task v-if="type === 'follow'" :twitterTask="twitterTask" :step="step" />
+    <tweet-task v-else-if="type === 'tweet'" :twitterTask="twitterTask" :step="step" />
+    <quote-task v-else-if="type === 'quote'" :twitterTask="twitterTask" :step="step" />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import { get } from 'lodash-es'
     'chain-logo': () => import('@/components/chain-logo.vue'),
     'follow-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/follow-task.vue'),
     'tweet-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/tweet-task.vue'),
+    'quote-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/quote-task.vue'),
   },
 })
 export default class BountyDetail extends Vue {
