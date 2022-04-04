@@ -57,9 +57,20 @@
           <v-sheet
             height="24"
             width="24"
+            class="rounded-circle greenSenamatic--bg"
+            style="padding: 1px"
+            v-if="twitterTask.finished"
+          >
+            <v-sheet class="fill-height fill-width neutral100--bg rounded-circle flex-center-box">
+              <v-icon size="18" color="greenSenamatic" v-if="twitterTask.finished">mdi-check</v-icon>
+            </v-sheet>
+          </v-sheet>
+          <v-sheet
+            height="24"
+            width="24"
             class="rounded-circle neutral20--bg"
             style="padding: 1px"
-            v-if="!vm.isHuntingProcessStarted"
+            v-else-if="!vm.isHuntingProcessStarted"
           >
             <v-sheet class="fill-height fill-width neutral100--bg rounded-circle flex-center-box"> </v-sheet>
           </v-sheet>
