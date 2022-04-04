@@ -29,7 +29,7 @@ const POOL_TYPES = {
 
 const ACCOUNT_MIN_AGE_IN_DAYS = 180
 
-const MIN_STAKE_AMOUNT = FixedNumber.from(1000)
+const MIN_STAKE_VALUE = FixedNumber.from(1000)
 
 const DEFAULT_BREADCRUMBS = [
   {
@@ -131,7 +131,7 @@ export class BountyDetailViewModel {
         if (
           bigNumberHelper.gte(
             FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
-            MIN_STAKE_AMOUNT
+            MIN_STAKE_VALUE
           )
         )
           this.isValidStakeAmount = true
