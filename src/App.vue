@@ -10,7 +10,7 @@
     </v-app-bar>
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
-    <v-main app class="neutral15">
+    <v-main app class="neutral15 overflow-hidden pb-6">
       <router-view></router-view>
     </v-main>
     <v-divider></v-divider>

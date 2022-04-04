@@ -114,7 +114,7 @@
                       max-width="19"
                       class="mr-1"
                     ></v-img>
-                    {{ vm.rewardAmount }}
+                    {{ vm.totalRewardAsToken | formatNumber }}
                   </div>
                 </v-sheet>
               </v-col>
@@ -128,7 +128,7 @@
                       max-width="19"
                       class="mr-1"
                     ></v-img>
-                    {{ vm.remainingReward }}
+                    {{ vm.remainingRewardAsToken | formatNumber }}
                   </div>
                 </v-sheet>
               </v-col>
