@@ -101,7 +101,7 @@ export class BountyDetailViewModel {
         }
       ),
       reaction(
-        () => authStore.user.hunter.address,
+        () => authStore.user.hunter?.address,
         () => {
           this.changeEarnDialogWalletInput(authStore.user.hunter.address)
         }
@@ -241,6 +241,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *getRelatedApplies() {
     try {
+      if (isEmpty(this.task) || isEmpty(authStore.jwt)) return
       const res = yield apiService.applies.find({
         'task.id': this.taskId,
       })
