@@ -10,7 +10,7 @@
     </v-app-bar>
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
-    <v-main app class="neutral15">
+    <v-main app class="neutral15 overflow-hidden pb-6">
       <router-view></router-view>
     </v-main>
     <v-divider></v-divider>
@@ -64,6 +64,26 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.theme--light {
+  .filter-neutral10 {
+    filter: invert(40%) sepia(9%) saturate(256%) hue-rotate(178deg) brightness(93%) contrast(93%);
+  }
+}
+.theme--dark {
+  .filter-neutral10 {
+    filter: invert(87%) sepia(10%) saturate(123%) hue-rotate(179deg) brightness(86%) contrast(85%);
+  }
+}
+.theme--light {
+  .filter-bluePrimary {
+    filter: invert(35%) sepia(67%) saturate(4915%) hue-rotate(199deg) brightness(98%) contrast(98%);
+  }
+}
+.theme--dark {
+  .filter-bluePrimary {
+    filter: invert(61%) sepia(60%) saturate(1070%) hue-rotate(141deg) brightness(105%) contrast(105%);
+  }
+}
 .v-slide-group__prev {
   display: none !important;
 }

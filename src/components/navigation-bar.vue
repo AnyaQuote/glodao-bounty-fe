@@ -4,37 +4,105 @@
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
           <div class="pl-4">
-            <v-img :src="require('@/assets/images/glodao-logo.svg')" max-height="50" max-width="75"></v-img>
+            <v-img
+              :src="
+                $vuetify.theme.dark
+                  ? require(`@/assets/images/glodao-logo-dark.svg`)
+                  : require(`@/assets/images/glodao-logo.svg`)
+              "
+              max-height="50"
+              max-width="75"
+            ></v-img>
           </div>
         </v-col>
         <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
           <a
             @click="openLink('https://dev.glodao.io/launchpad')"
-            class="text-decoration-none px-4"
+            class="text-decoration-none px-4 d-flex align-center"
             active-class="blue-diversity--text"
           >
+            <v-img
+              :src="require('@/assets/icons/nav-bar/launchpad.svg')"
+              width="28"
+              height="28"
+              class="filter-neutral10 mr-1"
+            ></v-img>
             <div class="text-none nav-btn-text">Launch Pad</div>
           </a>
-          <router-link to="/bounty" class="text-decoration-none px-4" active-class="blue-diversity--text">
+          <!-- <router-link to="/bounty" class="text-decoration-none px-4" active-class="blue-diversity--text">
             <div class="text-none nav-btn-text">Bounty Hunter</div>
-          </router-link>
+          </router-link> -->
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <div class="text-none nav-btn-text d-flex align-center bluePrimary--text" v-on="on" v-bind="attrs">
+                <v-img
+                  :src="require('@/assets/icons/nav-bar/bounty.svg')"
+                  width="28"
+                  height="28"
+                  class="filter-bluePrimary mr-1"
+                >
+                </v-img>
+                Bounty Hunter <v-icon color="bluePrimary">mdi-chevron-down</v-icon>
+              </div>
+            </template>
+            <v-sheet class="neutral100" width="180">
+              <v-list>
+                <v-list-item-group>
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <router-link
+                        to="/bounty"
+                        class="text-decoration-none px-4 text-none text-body-2"
+                        active-class="blue-diversity--text font-weight-600"
+                      >
+                        Bounty project
+                      </router-link>
+                    </v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <router-link
+                        to="/bounty-history"
+                        class="text-decoration-none px-4 text-none text-body-2"
+                        active-class="blue-diversity--text font-weight-600"
+                      >
+                        Bounty history
+                      </router-link>
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item-group>
+              </v-list>
+            </v-sheet>
+          </v-menu>
           <a
             @click="openLink('https://dev.glodao.io/staking')"
-            class="text-decoration-none px-4"
+            class="text-decoration-none px-4 d-flex align-center"
             active-class="blue-diversity--text"
           >
+            <v-img
+              :src="require('@/assets/icons/nav-bar/staking.svg')"
+              width="28"
+              height="28"
+              class="filter-neutral10 mr-1"
+            ></v-img>
             <div class="text-none nav-btn-text">$Staking</div>
           </a>
           <a
             @click="openLink('https://dev.glodao.io/farm')"
-            class="text-decoration-none px-4"
+            class="text-decoration-none px-4 d-flex align-center"
             active-class="blue-diversity--text"
           >
+            <v-img
+              :src="require('@/assets/icons/nav-bar/farm.svg')"
+              width="28"
+              height="28"
+              class="filter-neutral10 mr-1"
+            ></v-img>
             <div class="text-none nav-btn-text">Farm</div>
           </a>
         </v-col>
         <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
-          <connect-wallet />
+          <connect-wallet class="fill-width" />
         </v-col>
         <v-col col="12" sm="12" md="1">
           <div class="d-flex align-center justify-end pr-6">
@@ -152,6 +220,7 @@ export default class Staking extends Vue {
   font-size: 16px !important;
   line-height: 24px;
   letter-spacing: 0.02em !important;
+  color: var(--v-neutral10-base);
 }
 .active {
   color: var(--v-twitter-base) !important;

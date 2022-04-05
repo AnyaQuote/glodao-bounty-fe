@@ -1,3 +1,4 @@
+import { loadingController } from '@/components/global-loading/global-loading-controller'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { Zero } from '@/constants'
 import { bigNumberHelper } from '@/helpers/bignumber-helper'
@@ -28,7 +29,7 @@ const POOL_TYPES = {
 
 const ACCOUNT_MIN_AGE_IN_DAYS = 180
 
-const MIN_STAKE_AMOUNT = FixedNumber.from(1000)
+const MIN_STAKE_VALUE = FixedNumber.from(1000)
 
 const DEFAULT_BREADCRUMBS = [
   {
@@ -100,7 +101,7 @@ export class BountyDetailViewModel {
         }
       ),
       reaction(
-        () => authStore.user.hunter.address,
+        () => authStore.user.hunter?.address,
         () => {
           this.changeEarnDialogWalletInput(authStore.user.hunter.address)
         }
@@ -122,12 +123,17 @@ export class BountyDetailViewModel {
 
   @asyncAction *getStakeStatus() {
     try {
-      if (isEmpty(walletStore.account)) {
+      if (isEmpty(walletStore.account) || isEmpty(authStore.jwt)) {
         this.stakeStatus = false
         this.isValidStakeAmount = false
       } else {
         const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
-        if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), MIN_STAKE_AMOUNT))
+        if (
+          bigNumberHelper.gte(
+            FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
+            MIN_STAKE_VALUE
+          )
+        )
           this.isValidStakeAmount = true
         if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
       }
@@ -220,11 +226,13 @@ export class BountyDetailViewModel {
   }
 
   @asyncAction *fetchData() {
+    loadingController.increaseRequest()
     yield this.getTaskData()
     this.initEmptyStepData()
     yield this.getRelatedApplies()
     yield this.getApplyData()
     yield this.getStakeStatus()
+    loadingController.decreaseRequest()
   }
 
   @asyncAction *getTaskData() {
@@ -232,18 +240,19 @@ export class BountyDetailViewModel {
       const res = yield apiService.tasks.findOne(this.taskId)
       this.task = res
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
   @asyncAction *getRelatedApplies() {
     try {
+      if (isEmpty(this.task)) return
       const res = yield apiService.applies.find({
         'task.id': this.taskId,
       })
       this.relatedApplies = res
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
@@ -277,7 +286,7 @@ export class BountyDetailViewModel {
       if (!this.isTaskStarted) this.status = HUNTING.start
       else if (this.isTaskEnded) this.status = HUNTING.finish
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
@@ -298,7 +307,14 @@ export class BountyDetailViewModel {
         snackController.updateSuccess()
       })
       .catch((error) => {
-        snackController.error(error.response.data.message as string)
+        const updatedApply = get(error, 'response.data.data', {})
+        if (!isEmpty(updatedApply)) {
+          this.apply = updatedApply
+          this.applyStepData = updatedApply.data
+          const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+          this.relatedApplies[foundIndex] = this.apply
+        }
+        snackController.error(get(error, 'response.data.message', '') || (error as string))
       })
       .finally(() => {
         this.changeTaskUpdating(false)
@@ -316,7 +332,7 @@ export class BountyDetailViewModel {
         snackController.success('Submit successfully')
       })
       .catch((error) => {
-        snackController.error(error.response.data.message as string)
+        snackController.error(get(error, 'response.data.message', '') || (error as string))
       })
       .finally(() => {
         this.changeTaskSubmiting(false)
@@ -545,6 +561,26 @@ export class BountyDetailViewModel {
     return subtract(this.rewardAmount, this.totalPriorityReward)
   }
 
+  @computed get totalRewardAsToken() {
+    return FixedNumber.from(this.rewardAmount).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get remainingRewardAsToken() {
+    return FixedNumber.from(this.remainingReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get totalPriorityRewardAsToken() {
+    return FixedNumber.from(this.totalPriorityReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get totalCommunityRewardAsToken() {
+    return FixedNumber.from(this.totalCommunityReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
+  @computed get singlePriorityRewardAsToken() {
+    return FixedNumber.from(this.singlePriorityReward).divUnsafe(this.tokenBasePrice)._value
+  }
+
   @computed get currentCommunityParticipants() {
     return subtract(this.relatedApplies.length, this.currentPriorityParticipants) ?? 0
   }
@@ -623,11 +659,15 @@ export class BountyDetailViewModel {
     )
   }
 
-  @computed get isTaskProcessFinish() {
+  @computed get isTaskProcessFinish(): boolean {
     return get(this.apply, ['data', this.currentType], []).filter((step) => !step.finished).length === 0
   }
 
   @computed get taskSocialLinks() {
     return get(this.task, 'metadata.socialLinks', {})
+  }
+
+  @computed get tokenBasePrice(): FixedNumber {
+    return FixedNumber.from(get(this.task, 'tokenBasePrice', 0))
   }
 }
