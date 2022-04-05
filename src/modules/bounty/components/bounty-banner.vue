@@ -3,26 +3,24 @@
     class="d-grid linear-gradient-bg"
     :class="$vuetify.breakpoint.mdAndUp ? 'grid-setting-web' : 'grid-setting-mobile'"
   >
-    <div v-if="$vuetify.breakpoint.mdAndUp" class="image-wrapper" style="position: relative">
-      <Circles class="full-height opacity-low" :color="'#0276F0'" style="position: relative"></Circles>
-      <div class="" style="position: absolute; top: 60px; left: 400px">
+    <div v-if="$vuetify.breakpoint.mdAndUp" class="image-wrapper position-relative">
+      <Circles class="full-height opacity-low position-relative" :color="'#0276F0'"></Circles>
+      <div class="position-absolute top-60 left-400">
         <v-img :src="require('@/assets/images/bounty-briefcase.png')" max-height="320" max-width="420"> </v-img>
       </div>
     </div>
     <div
       :class="
         $vuetify.breakpoint.mdAndUp
-          ? 'b-content-setting-web justify-self-end mt-110'
+          ? 'b-content-setting-web justify-self-end mt-110 text-no-wrap'
           : 'b-content-setting-mobile text-center align-center'
       "
       class="d-flex flex-column"
     >
-      <div class="font-size-72 mb-5 blue--text" :class="$vuetify.breakpoint.mdAndUp && 'text-no-wrap'">
-        BOUNTY HUNTER
-      </div>
+      <div class="font-size-72 mb-5 blue--text">BOUNTY HUNTER</div>
       <div class="d-flex flex-row align-center mb-5">
         <DoubleArrow></DoubleArrow>
-        <span class="mx-2 font-size-36 color-1--text">Do tasks to earn</span>
+        <span class="mx-1 font-size-36 color-1--text">Do tasks to earn</span>
         <DoubleArrowFlipped></DoubleArrowFlipped>
       </div>
       <div>
@@ -51,6 +49,22 @@ export default class extends Vue {}
 <style scoped>
 * {
   --color-1: #8197bb;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.top-60 {
+  top: 60px;
+}
+
+.left-400 {
+  left: 400px;
 }
 
 .d-grid {
