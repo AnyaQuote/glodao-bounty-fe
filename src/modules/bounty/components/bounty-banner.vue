@@ -3,24 +3,30 @@
     class="d-grid linear-gradient-bg"
     :class="$vuetify.breakpoint.mdAndUp ? 'grid-setting-web' : 'grid-setting-mobile'"
   >
-    <div v-if="$vuetify.breakpoint.mdAndUp" class="d-grid align-g-item-center justify-g-items-center image-wrapper">
-      <Circles class="circle-wrapper full-height opacity-low" :color="'#0276F0'"></Circles>
-      <v-img :src="require('@/assets/images/bounty-briefcase.png')" class="b-icon" height="320" width="420"> </v-img>
+    <div v-if="$vuetify.breakpoint.mdAndUp" class="image-wrapper" style="position: relative">
+      <Circles class="full-height opacity-low" :color="'#0276F0'" style="position: relative"></Circles>
+      <div class="" style="position: absolute; top: 60px; left: 400px">
+        <v-img :src="require('@/assets/images/bounty-briefcase.png')" max-height="320" max-width="420"> </v-img>
+      </div>
     </div>
     <div
       :class="
-        $vuetify.breakpoint.mdAndUp ? 'b-content-setting-web' : 'b-content-setting-mobile text-center align-center'
+        $vuetify.breakpoint.mdAndUp
+          ? 'b-content-setting-web justify-self-end mt-110'
+          : 'b-content-setting-mobile text-center align-center'
       "
-      class="d-flex flex-column white--text"
+      class="d-flex flex-column"
     >
-      <div class="font-size-72 mb-5 blue--text">BOUNTY HUNTER</div>
+      <div class="font-size-72 mb-5 blue--text" :class="$vuetify.breakpoint.mdAndUp && 'text-no-wrap'">
+        BOUNTY HUNTER
+      </div>
       <div class="d-flex flex-row align-center mb-5">
         <DoubleArrow></DoubleArrow>
         <span class="mx-2 font-size-36 color-1--text">Do tasks to earn</span>
         <DoubleArrowFlipped></DoubleArrowFlipped>
       </div>
       <div>
-        <v-btn color="blue" outlined> See hot pools </v-btn>
+        <v-btn class="justify-start" color="blue" outlined> See hot pools </v-btn>
       </div>
     </div>
   </div>
@@ -62,30 +68,23 @@ export default class extends Vue {}
 }
 
 .b-content-setting-web {
-  grid-area: 2 / 2 / 4 / 5;
+  grid-area: 2 / 2 / 5 / 5;
+}
+
+.mt-110 {
+  margin-right: 110px;
+}
+
+.justify-self-end {
+  justify-self: end;
 }
 
 .b-content-setting-mobile {
   grid-area: 2 / 1 / 4 / 2;
 }
 
-.b-icon {
-  grid-area: 1 / 1;
-  /* This is not a good way to do this, will fix */
-  margin-right: 130px;
-  /**=========================================== */
-}
-
-.align-g-item-center {
-  align-items: end;
-}
-
-.justify-g-items-center {
-  justify-items: end;
-}
-
 .image-wrapper {
-  grid-area: 1 / 4 / 6 / 9;
+  grid-area: 1 / 5 / 6 / 9;
 }
 
 .full-height {
