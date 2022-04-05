@@ -1,18 +1,22 @@
 <template>
   <div
     class="d-grid linear-gradient-bg"
-    :class="$vuetify.breakpoint.mdAndUp ? 'grid-setting-web' : 'grid-setting-mobile'"
+    :class="$vuetify.breakpoint.lgAndUp ? 'grid-setting-web' : 'grid-setting-mobile'"
   >
-    <div v-if="$vuetify.breakpoint.mdAndUp" class="image-wrapper position-relative">
-      <Circles class="full-height opacity-low position-relative" :color="'#0276F0'"></Circles>
-      <div class="position-absolute top-60 left-400">
+    <div
+      v-if="$vuetify.breakpoint.lgAndUp"
+      class="d-grid image-wrapper justify-self-start"
+      style="justify-items: center; align-items: end"
+    >
+      <Circles class="overlap full-height fill-width opacity-low" :color="'#0276F0'"></Circles>
+      <div class="overlap" style="margin-left: 25%">
         <v-img :src="require('@/assets/images/bounty-briefcase.png')" max-height="320" max-width="420"> </v-img>
       </div>
     </div>
     <div
       :class="
-        $vuetify.breakpoint.mdAndUp
-          ? 'b-content-setting-web justify-self-end mt-110 text-no-wrap'
+        $vuetify.breakpoint.lgAndUp
+          ? 'b-content-setting-web justify-self-end'
           : 'b-content-setting-mobile text-center align-center'
       "
       class="d-flex flex-column"
@@ -51,22 +55,6 @@ export default class extends Vue {}
   --color-1: #8197bb;
 }
 
-.position-relative {
-  position: relative;
-}
-
-.position-absolute {
-  position: absolute;
-}
-
-.top-60 {
-  top: 60px;
-}
-
-.left-400 {
-  left: 400px;
-}
-
 .d-grid {
   display: grid;
 }
@@ -85,12 +73,16 @@ export default class extends Vue {}
   grid-area: 2 / 2 / 5 / 5;
 }
 
-.mt-110 {
-  margin-right: 110px;
+.overlap {
+  grid-area: 1/1;
 }
 
 .justify-self-end {
   justify-self: end;
+}
+
+.justify-self-start {
+  justify-self: start;
 }
 
 .b-content-setting-mobile {
