@@ -135,7 +135,7 @@ export class BountyDetailViewModel {
           )
         )
           this.isValidStakeAmount = true
-        if (bigNumberHelper.gte(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
+        if (bigNumberHelper.gt(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
       }
     } catch (error: any) {
       snackController.error('Error: Cant get stake status - ' + error)
