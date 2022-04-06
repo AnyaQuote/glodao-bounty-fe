@@ -42,7 +42,7 @@
       </div>
 
       <div
-        class="justify-center align-center position-relative border-radius-8px"
+        class="justify-center align-center border-radius-8px"
         :class="{
           'd-flex  card-hover-overlay': hover,
           'd-none': !hover,
