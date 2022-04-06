@@ -554,7 +554,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get singlePriorityReward() {
-    return divide(this.totalPriorityReward, this.maxPriorityParticipants)
+    return divide(this.totalPriorityReward, this.maxPriorityParticipants || 1)
   }
 
   @computed get totalCommunityReward() {
@@ -562,23 +562,24 @@ export class BountyDetailViewModel {
   }
 
   @computed get totalRewardAsToken() {
-    return FixedNumber.from(this.rewardAmount).divUnsafe(this.tokenBasePrice)._value
+    return FixedNumber.from(`${this.rewardAmount}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get remainingRewardAsToken() {
-    return FixedNumber.from(this.remainingReward).divUnsafe(this.tokenBasePrice)._value
+    return FixedNumber.from(`${this.remainingReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get totalPriorityRewardAsToken() {
-    return FixedNumber.from(this.totalPriorityReward).divUnsafe(this.tokenBasePrice)._value
+    return FixedNumber.from(`${this.totalPriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get totalCommunityRewardAsToken() {
-    return FixedNumber.from(this.totalCommunityReward).divUnsafe(this.tokenBasePrice)._value
+    return FixedNumber.from(`${this.totalCommunityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get singlePriorityRewardAsToken() {
-    return FixedNumber.from(this.singlePriorityReward).divUnsafe(this.tokenBasePrice)._value
+    if (isNaN(this.singlePriorityReward)) return 'TBA'
+    return FixedNumber.from(`${this.singlePriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get currentCommunityParticipants() {
@@ -668,6 +669,6 @@ export class BountyDetailViewModel {
   }
 
   @computed get tokenBasePrice(): FixedNumber {
-    return FixedNumber.from(get(this.task, 'tokenBasePrice', 0))
+    return FixedNumber.from(get(this.task, 'tokenBasePrice', 1))
   }
 }
