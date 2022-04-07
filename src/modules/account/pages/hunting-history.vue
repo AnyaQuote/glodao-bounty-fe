@@ -4,8 +4,8 @@
       <v-container class="d-flex justify-center mt-20">
         <v-sheet class="transparent overflow-hidden" width="100%">
           <v-row dense>
-            <v-col cols="12" md="4" lg="4">
-              <v-sheet class="neutral100 rounded-lg pa-6" style="flex: 1" outlined>
+            <v-col cols="12" md="5" lg="4">
+              <v-sheet class="neutral100 d-flex flex-column rounded-lg pa-6" height="100%">
                 <v-sheet class="neutral15 d-flex justify-center rounded-lg pa-6" width="100%">
                   <v-sheet
                     class="twitter position-relative rounded-circle"
@@ -38,49 +38,68 @@
                     </v-sheet>
                   </v-sheet>
                 </v-sheet>
+                <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
+                  <v-sheet class="transparent">Total earning:</v-sheet>
+                  <v-sheet class="transparent font-weight-bold">$300</v-sheet>
+                </v-sheet>
+                <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-3">
+                  <v-sheet class="transparent">Today earning:</v-sheet>
+                  <v-sheet class="transparent font-weight-bold">$0</v-sheet>
+                </v-sheet>
               </v-sheet>
             </v-col>
-            <v-col>
-              <v-sheet
-                height="160"
-                outlined
-                style="flex: 2"
-                class="neutral100--bg pa-6 d-flex flex-column justify-space-between py-7"
-              >
-                <!-- <v-row dense no-gutters class="d-flex align-center fill-height pl-6">
-                  <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
-                      <div>
-                        <v-icon style="opacity: 0.8">mdi-bullseye-arrow</v-icon>
-                      </div>
-                      <div class="d-flex align-center ml-2">{{ vm.completedTaskCount }}</div>
-                    </v-sheet>
-                    <v-sheet class="caption-text neutral100--bg">Successful task</v-sheet>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
-                      <div>
-                        <v-img src="@/assets/icons/processing-spiral.svg" width="20" height="20"></v-img>
-                      </div>
-                      <div class="d-flex align-center ml-2">{{ vm.processingTaskCount }}</div>
-                    </v-sheet>
-                    <v-sheet class="caption-text neutral100--bg">Processing task</v-sheet>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
-                      <div>
-                        <v-img src="@/assets/icons/crown-mini.svg" width="20" height="20"></v-img>
-                      </div>
-                      <div class="d-flex align-center ml-2">$0.00</div>
-                    </v-sheet>
-                    <v-sheet class="caption-text neutral100--bg">Bounty earned</v-sheet>
-                  </v-col>
-                </v-row> -->
-                <div class="text-body-1 font-weight-600">
-                  Your referral link | <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
-                </div>
-                <referral-copy-board />
-              </v-sheet>
+            <v-col cols="12" md="7" lg="8">
+              <v-row dense>
+                <v-col cols="12">
+                  <v-sheet class="neutral100 d-flex flex-column rounded-lg pa-6">
+                    <v-row>
+                      <v-col cols="12">
+                        <v-sheet
+                          class="transparent d-flex justify-space-between align-center flex-wrap text-overflow-ellipsis"
+                          width="100%"
+                        >
+                          <v-sheet class="transparent d-flex align-center">
+                            <v-icon> mdi-wallet-outline </v-icon>
+                            <v-sheet class="transparent px-1" height="fit-content">
+                              0xcA41405fB875753371D0FAf6e1881D0FAf6e188
+                            </v-sheet>
+                          </v-sheet>
+                          <v-sheet class="transparent d-flex align-center">
+                            <v-sheet class="transparent" height="fit-content"> Connected </v-sheet>
+                            <v-icon>mdi-check</v-icon>
+                          </v-sheet>
+                        </v-sheet>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-sheet class="neutral15 text-center rounded-lg pa-6">
+                          <v-sheet class="transparent">GLD Staking</v-sheet>
+                          <v-sheet class="transparent pt-1">
+                            <span class="font-weight-bold">7,500</span> $1000
+                          </v-sheet>
+                        </v-sheet>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-sheet class="neutral15 text-center rounded-lg pa-6">
+                          <v-sheet class="transparent d-flex justify-center align-center" width="100%">
+                            <v-sheet class="transparent" height="fit-content"> Rank </v-sheet>
+                            <v-icon class="pl-1" color="blue" size="16">mdi-star</v-icon>
+                          </v-sheet>
+                          <v-sheet class="transparent font-weight-bold text-capitalize pt-1"> standard </v-sheet>
+                        </v-sheet>
+                      </v-col>
+                    </v-row>
+                  </v-sheet>
+                </v-col>
+                <v-col cols="12">
+                  <v-sheet class="neutral100--bg d-flex flex-column justify-space-between rounded-lg pa-6">
+                    <div class="text-body-1 font-weight-600 pb-1">
+                      Your referral link |
+                      <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
+                    </div>
+                    <referral-copy-board />
+                  </v-sheet>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </v-sheet>
