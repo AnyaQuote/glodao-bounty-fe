@@ -2,18 +2,42 @@
   <v-row>
     <v-col cols="12" class="hunter-info-container">
       <v-container class="d-flex justify-center mt-20">
-        <v-sheet class="overflow-hidden rounded-lg neutral100--bg" width="100%" elevation="3">
-          <v-row dense no-gutters>
+        <v-sheet class="transparent overflow-hidden" width="100%">
+          <v-row dense>
             <v-col cols="12" md="4" lg="4">
-              <v-sheet height="160" outlined style="flex: 1" class="neutral100--bg">
-                <div class="mt-6 d-flex justify-center">
-                  <v-avatar size="68">
-                    <img :src="authStore.user.avatar" alt="Avatar" />
-                  </v-avatar>
-                </div>
-                <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
-                  {{ authStore.user | _get('hunter.name', '') }}
-                </div>
+              <v-sheet class="neutral100 rounded-lg pa-6" style="flex: 1" outlined>
+                <v-sheet class="neutral15 d-flex justify-center rounded-lg pa-6" width="100%">
+                  <v-sheet
+                    class="twitter position-relative rounded-circle"
+                    style="border-width: 2px"
+                    outlined
+                    width="fit-content"
+                    height="fit-content"
+                  >
+                    <v-avatar size="68">
+                      <img :src="authStore.user.avatar" alt="Avatar" />
+                    </v-avatar>
+                    <v-sheet
+                      class="twitter position-absolute d-flex justify-center align-center rounded-circle"
+                      style="right: 0; bottom: 0"
+                      width="20"
+                      height="20"
+                    >
+                      <v-icon color="white" size="12">mdi-twitter</v-icon>
+                    </v-sheet>
+                  </v-sheet>
+                  <v-sheet class="transparent d-flex flex-column justify-space-between ml-3">
+                    <v-sheet class="transparent font-weight-bold username-lg-text">
+                      {{ authStore.user | _get('hunter.name', '') }}
+                    </v-sheet>
+                    <v-sheet
+                      class="blue lighten-1 d-flex justify-center align-center blue--text caption-text text-uppercase rounded-lg px-2 py-1"
+                    >
+                      <v-icon class="pr-2" color="blue" size="18">mdi-star</v-icon>
+                      giolao staker
+                    </v-sheet>
+                  </v-sheet>
+                </v-sheet>
               </v-sheet>
             </v-col>
             <v-col>
