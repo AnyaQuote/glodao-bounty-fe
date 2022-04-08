@@ -254,7 +254,7 @@ tbody {
   background-color: var(--v-neutral20-base) !important;
 }
 .section-big-title-text {
-  font-size: 24px;
+  font-size: 26px;
   line-height: 36px;
 }
 .custom-dash-divider {

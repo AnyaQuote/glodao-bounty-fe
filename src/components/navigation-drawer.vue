@@ -57,7 +57,7 @@
           <v-list-item-icon class="mr-2">
             <v-img :src="require('@/assets/icons/nav-bar/launchpad.svg')" class="filter-neutral10 fill-height"></v-img>
           </v-list-item-icon>
-          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Launch pad</v-list-item-title>
+          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Launchpad</v-list-item-title>
         </v-list-item>
 
         <v-list-group :value="true" no-action>
@@ -92,7 +92,7 @@
           <v-list-item-icon class="mr-2">
             <v-img :src="require('@/assets/icons/nav-bar/farm.svg')" class="filter-neutral10 fill-height"></v-img>
           </v-list-item-icon>
-          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Farm</v-list-item-title>
+          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Farming</v-list-item-title>
         </v-list-item>
       </v-list>
     </div>

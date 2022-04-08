@@ -27,7 +27,7 @@
               height="28"
               class="filter-neutral10 mr-1"
             ></v-img>
-            <div class="text-none nav-btn-text">Launch Pad</div>
+            <div class="text-none nav-btn-text">Launchpad</div>
           </a>
           <!-- <router-link to="/bounty" class="text-decoration-none px-4" active-class="blue-diversity--text">
             <div class="text-none nav-btn-text">Bounty Hunter</div>
@@ -98,7 +98,7 @@
               height="28"
               class="filter-neutral10 mr-1"
             ></v-img>
-            <div class="text-none nav-btn-text">Farm</div>
+            <div class="text-none nav-btn-text">Farming</div>
           </a>
         </v-col>
         <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
