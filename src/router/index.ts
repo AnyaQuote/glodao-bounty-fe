@@ -34,7 +34,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '*',
     name: 'NotFound',
-    component: () => import('@/modules/error/pages/404.vue'),
+    component: () => import('@/modules/error/pages/coming-soon.vue'),
   },
 ]
 
