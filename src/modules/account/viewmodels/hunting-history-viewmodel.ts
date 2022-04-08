@@ -1,8 +1,12 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { Zero } from '@/constants'
+import { bigNumberHelper } from '@/helpers/bignumber-helper'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { ceil, keys, lowerCase, isEmpty, get } from 'lodash-es'
+import { walletStore } from '@/stores/wallet-store'
+import { FixedNumber } from '@ethersproject/bignumber'
+import { ceil, keys, lowerCase, isEmpty, get, isEqual } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
@@ -16,6 +20,9 @@ export class HuntingHistoryViewModel {
   @observable currentApplies: any[] = []
   @observable completedTaskCount = 0
   @observable processingTaskCount = 0
+
+  @observable stakeStatus = false
+
   _disposers: IDisposer[] = []
 
   @observable sortParams = 'createdAt:DESC'
@@ -221,6 +228,55 @@ export class HuntingHistoryViewModel {
     } catch (error) {
       snackController.error(error as string)
     }
+  }
+
+  @observable stakeAmount = 0
+  @observable tokenBasePrice = 2;
+
+  @asyncAction *getStakeStatus() {
+    try {
+      if (isEmpty(walletStore.account) || isEmpty(authStore.jwt)) {
+        this.stakeStatus = false
+        // this.isValidStakeAmount = false
+      } else {
+        const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
+        // if (
+        //   bigNumberHelper.gte(
+        //     FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
+        //     MIN_STAKE_VALUE
+        //   )
+        // )
+        //   this.isValidStakeAmount = true
+        if (bigNumberHelper.gt(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
+        this.stakeAmount = res._value
+      }
+    } catch (error: any) {
+      snackController.error('Error: Cant get stake status - ' + error)
+    }
+  }
+
+  @computed get isStaked() {
+    return bigNumberHelper.gt(FixedNumber.from(this.stakeAmount), Zero)
+  }
+
+  @computed get stakeValue() {
+    return FixedNumber.from(this.stakeAmount).mulUnsafe(FixedNumber.from(this.tokenBasePrice))._value
+  }
+
+  @computed get connectedWalletAddress() {
+    return get(walletStore, 'account', '')
+  }
+
+  @computed get registedWalletAddress() {
+    return get(authStore, 'user.hunter.address', '')
+  }
+
+  @computed get isWalletConnected() {
+    return !isEmpty(this.connectedWalletAddress)
+  }
+
+  @computed get isWalletMatched() {
+    return this.isWalletConnected && isEqual(this.connectedWalletAddress, this.registedWalletAddress)
   }
 
   @computed get remainingBounty() {

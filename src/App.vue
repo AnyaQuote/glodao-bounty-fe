@@ -305,7 +305,8 @@ tbody {
   background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
 }
 .text-overflow-ellipsis {
-  text-overflow: ellipsis;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 .v-item-group {
   background: transparent !important;

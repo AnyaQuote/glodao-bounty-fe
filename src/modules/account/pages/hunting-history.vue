@@ -2,61 +2,26 @@
   <v-row>
     <v-col cols="12" class="hunter-info-container">
       <v-container class="d-flex justify-center mt-20">
-        <v-sheet class="overflow-hidden rounded-lg neutral100--bg" width="100%" elevation="3">
-          <v-row dense no-gutters>
-            <v-col cols="12" md="4" lg="4">
-              <v-sheet height="160" outlined style="flex: 1" class="neutral100--bg">
-                <div class="mt-6 d-flex justify-center">
-                  <v-avatar size="68">
-                    <img :src="authStore.user.avatar" alt="Avatar" />
-                  </v-avatar>
-                </div>
-                <div class="d-flex justify-center mt-3 username-lg-text font-weight-bold">
-                  {{ authStore.user | _get('hunter.name', '') }}
-                </div>
-              </v-sheet>
+        <v-sheet class="transparent overflow-hidden" width="100%">
+          <v-row dense>
+            <v-col cols="12" md="5" lg="4">
+              <mini-info-container />
             </v-col>
-            <v-col>
-              <v-sheet
-                height="160"
-                outlined
-                style="flex: 2"
-                class="neutral100--bg pa-6 d-flex flex-column justify-space-between py-7"
-              >
-                <!-- <v-row dense no-gutters class="d-flex align-center fill-height pl-6">
-                  <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
-                      <div>
-                        <v-icon style="opacity: 0.8">mdi-bullseye-arrow</v-icon>
-                      </div>
-                      <div class="d-flex align-center ml-2">{{ vm.completedTaskCount }}</div>
-                    </v-sheet>
-                    <v-sheet class="caption-text neutral100--bg">Successful task</v-sheet>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
-                      <div>
-                        <v-img src="@/assets/icons/processing-spiral.svg" width="20" height="20"></v-img>
-                      </div>
-                      <div class="d-flex align-center ml-2">{{ vm.processingTaskCount }}</div>
-                    </v-sheet>
-                    <v-sheet class="caption-text neutral100--bg">Processing task</v-sheet>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-sheet class="number-count-text d-flex align-center neutral100--bg">
-                      <div>
-                        <v-img src="@/assets/icons/crown-mini.svg" width="20" height="20"></v-img>
-                      </div>
-                      <div class="d-flex align-center ml-2">$0.00</div>
-                    </v-sheet>
-                    <v-sheet class="caption-text neutral100--bg">Bounty earned</v-sheet>
-                  </v-col>
-                </v-row> -->
-                <div class="text-body-1 font-weight-600">
-                  Your referral link | <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
-                </div>
-                <referral-copy-board />
-              </v-sheet>
+            <v-col cols="12" md="7" lg="8">
+              <v-row dense>
+                <v-col cols="12">
+                  <wallet-sheet-container />
+                </v-col>
+                <v-col cols="12">
+                  <v-sheet class="neutral100--bg d-flex flex-column justify-space-between rounded-lg pa-6">
+                    <div class="text-body-1 font-weight-600 pb-1">
+                      Your referral link |
+                      <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
+                    </div>
+                    <referral-copy-board class="mt-2" />
+                  </v-sheet>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </v-sheet>
@@ -244,6 +209,8 @@ import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-hi
     'referral-card': () => import('@/modules/account/components/referral-card.vue'),
     'referral-copy-board': () => import('@/modules/account/components/referral-copy-board.vue'),
     'no-referrals': () => import('@/modules/account/components/no-referrals.vue'),
+    'wallet-sheet-container': () => import('@/modules/account/components/wallet-sheet-container.vue'),
+    'mini-info-container': () => import('@/modules/account/components/mini-info-container.vue'),
   },
 })
 export default class HuntingHistory extends Vue {
@@ -286,8 +253,8 @@ export default class HuntingHistory extends Vue {
   padding-bottom: 0;
 }
 .username-lg-text {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 28px;
+  line-height: 36px;
 }
 .number-count-text {
   font-size: 20px;
