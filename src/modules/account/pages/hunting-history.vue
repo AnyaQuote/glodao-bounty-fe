@@ -5,90 +5,12 @@
         <v-sheet class="transparent overflow-hidden" width="100%">
           <v-row dense>
             <v-col cols="12" md="5" lg="4">
-              <v-sheet class="neutral100 d-flex flex-column rounded-lg pa-6" height="100%">
-                <v-sheet class="neutral15 d-flex justify-center rounded-lg pa-6" width="100%">
-                  <v-sheet
-                    class="twitter position-relative rounded-circle"
-                    style="border-width: 2px"
-                    outlined
-                    width="fit-content"
-                    height="fit-content"
-                  >
-                    <v-avatar size="68">
-                      <img :src="authStore.user.avatar" alt="Avatar" />
-                    </v-avatar>
-                    <v-sheet
-                      class="twitter position-absolute d-flex justify-center align-center rounded-circle"
-                      style="right: 0; bottom: 0"
-                      width="20"
-                      height="20"
-                    >
-                      <v-icon color="white" size="12">mdi-twitter</v-icon>
-                    </v-sheet>
-                  </v-sheet>
-                  <v-sheet class="transparent d-flex flex-column justify-space-between ml-3">
-                    <v-sheet class="transparent font-weight-bold username-lg-text">
-                      {{ authStore.user | _get('hunter.name', '') }}
-                    </v-sheet>
-                    <v-sheet
-                      class="blue lighten-1 d-flex justify-center align-center blue--text caption-text text-uppercase rounded-lg px-2 py-1"
-                    >
-                      <v-icon class="pr-2" color="blue" size="18">mdi-star</v-icon>
-                      giolao staker
-                    </v-sheet>
-                  </v-sheet>
-                </v-sheet>
-                <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
-                  <v-sheet class="transparent">Total earning:</v-sheet>
-                  <v-sheet class="transparent font-weight-bold">$300</v-sheet>
-                </v-sheet>
-                <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-3">
-                  <v-sheet class="transparent">Today earning:</v-sheet>
-                  <v-sheet class="transparent font-weight-bold">$0</v-sheet>
-                </v-sheet>
-              </v-sheet>
+              <mini-info-container />
             </v-col>
             <v-col cols="12" md="7" lg="8">
               <v-row dense>
                 <v-col cols="12">
-                  <v-sheet class="neutral100 d-flex flex-column rounded-lg pa-6">
-                    <v-row>
-                      <v-col cols="12">
-                        <v-sheet
-                          class="transparent d-flex justify-space-between align-center flex-wrap text-overflow-ellipsis"
-                          width="100%"
-                        >
-                          <v-sheet class="transparent d-flex align-center">
-                            <v-icon> mdi-wallet-outline </v-icon>
-                            <v-sheet class="transparent px-1" height="fit-content">
-                              0xcA41405fB875753371D0FAf6e1881D0FAf6e188
-                            </v-sheet>
-                          </v-sheet>
-                          <v-sheet class="transparent d-flex align-center">
-                            <v-sheet class="transparent" height="fit-content"> Connected </v-sheet>
-                            <v-icon>mdi-check</v-icon>
-                          </v-sheet>
-                        </v-sheet>
-                      </v-col>
-                      <v-col cols="6">
-                        <v-sheet class="neutral15 text-center rounded-lg pa-6">
-                          <v-sheet class="transparent">GLD Staking</v-sheet>
-                          <v-sheet class="transparent pt-1">
-                            <span class="font-weight-bold">7,500</span> $1000
-                          </v-sheet>
-                        </v-sheet>
-                      </v-col>
-                      <v-col cols="6">
-                        <v-sheet class="neutral15 text-center rounded-lg pa-6">
-                          <v-sheet class="transparent d-flex justify-center align-center" width="100%">
-                            <v-sheet class="transparent" height="fit-content"> Rank </v-sheet>
-                            <v-icon class="pl-1" color="blue" size="16">mdi-star</v-icon>
-                          </v-sheet>
-                          <v-sheet class="transparent font-weight-bold text-capitalize pt-1"> standard </v-sheet>
-                        </v-sheet>
-                      </v-col>
-                    </v-row>
-                  </v-sheet>
+                  <wallet-sheet-container />
                 </v-col>
                 <v-col cols="12">
                   <v-sheet class="neutral100--bg d-flex flex-column justify-space-between rounded-lg pa-6">
@@ -96,7 +18,7 @@
                       Your referral link |
                       <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
                     </div>
-                    <referral-copy-board />
+                    <referral-copy-board class="mt-2" />
                   </v-sheet>
                 </v-col>
               </v-row>
@@ -287,6 +209,8 @@ import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-hi
     'referral-card': () => import('@/modules/account/components/referral-card.vue'),
     'referral-copy-board': () => import('@/modules/account/components/referral-copy-board.vue'),
     'no-referrals': () => import('@/modules/account/components/no-referrals.vue'),
+    'wallet-sheet-container': () => import('@/modules/account/components/wallet-sheet-container.vue'),
+    'mini-info-container': () => import('@/modules/account/components/mini-info-container.vue'),
   },
 })
 export default class HuntingHistory extends Vue {
@@ -329,8 +253,8 @@ export default class HuntingHistory extends Vue {
   padding-bottom: 0;
 }
 .username-lg-text {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 28px;
+  line-height: 36px;
 }
 .number-count-text {
   font-size: 20px;

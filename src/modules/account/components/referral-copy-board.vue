@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex">
     <v-sheet
-      class="container-frame d-flex align-center pa-4 neutral10--text text-body-2 neutral100--bg"
+      class="container-frame d-flex align-center pa-4 neutral10--text text-body-2 neutral100--bg font-weight-600"
       rounded
       outlined
     >
