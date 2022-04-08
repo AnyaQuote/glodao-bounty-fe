@@ -78,7 +78,7 @@ export default class extends Vue {
     this.disposer = [
       autorun(() => {
         if (!this.vm.isWalletConnected) this.connectWalletText = 'not connected'
-        else if (this.vm.isWalletMatched) this.connectWalletText = 'wrong wallet'
+        else if (!this.vm.isWalletMatched) this.connectWalletText = 'wrong wallet'
         else this.connectWalletText = 'connected'
         if (this.connectWalletText === 'connected') this.labelColorClass = 'green--text'
         else this.labelColorClass = 'red--text'
