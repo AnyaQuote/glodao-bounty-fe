@@ -25,16 +25,35 @@
           {{ authStore.user | _get('hunter.name', '') }}
         </v-sheet>
         <v-sheet
+          class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
+          v-if="!vm.isWalletConnected"
+        >
+          Not connected
+        </v-sheet>
+        <v-sheet
+          class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
+          v-else-if="!vm.isWalletMatched"
+        >
+          wrong wallet
+        </v-sheet>
+        <v-sheet
           class="blue lighten-1 d-flex justify-center align-center blue--text caption-text text-uppercase rounded-lg px-2 py-1"
+          v-else-if="vm.isStaked"
         >
           <v-icon class="pr-2" color="blue" size="18">mdi-star</v-icon>
           giolao staker
+        </v-sheet>
+        <v-sheet
+          class="neutral20 neutral10--text d-flex justify-center align-center caption-text text-uppercase rounded-lg px-2 py-1"
+          v-else
+        >
+          Non staker
         </v-sheet>
       </v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
       <v-sheet class="transparent font-weight-600">Total earning:</v-sheet>
-      <v-sheet class="transparent font-weight-bold">$300</v-sheet>
+      <v-sheet class="transparent font-weight-bold">$0</v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-5">
       <v-sheet class="transparent font-weight-600">Today earning:</v-sheet>
@@ -45,11 +64,9 @@
 <script lang="ts">
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { Observer } from 'mobx-vue'
-import { promiseHelper } from '@/helpers/promise-helper'
 import { HuntingHistoryViewModel } from '../viewmodels/hunting-history-viewmodel'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
-import { get } from 'lodash'
 
 @Observer
 @Component
