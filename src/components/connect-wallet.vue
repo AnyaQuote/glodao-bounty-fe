@@ -37,7 +37,7 @@
         </v-btn>
       </v-card-title>
       <v-card-text class="pa-4 pt-0 neutral100--bg">
-        <v-card class="px-4 py-2 my-2 border-radius-8 neutral100--bg" elevation="0" outlined>
+        <v-card class="px-4 py-2 my-2 neutral100--bg" elevation="0">
           <div class="text-center my-2 neutral100--bg">
             <div
               class="d-flex align-center"
