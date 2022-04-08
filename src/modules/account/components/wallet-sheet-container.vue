@@ -14,7 +14,7 @@
                 'text-caption': $vuetify.breakpoint.xsOnly,
               }"
             >
-              0xcA41405fB875753371D0FAf6e1881D0FAf6e188
+              {{ vm.connectedWalletAddress }}
             </v-sheet>
           </v-sheet>
           <v-sheet
@@ -23,8 +23,13 @@
               'mt-2': $vuetify.breakpoint.xsOnly,
             }"
           >
-            <v-sheet class="transparent text-body-2 mr-3 neutral10--text" height="fit-content"> Connected </v-sheet>
-            <v-icon size="14" color="neutral10">mdi-check</v-icon>
+            <v-sheet
+              :class="`transparent text-body-2 mr-3 neutral10--text text-capitalize ${labelColorClass}`"
+              height="fit-content"
+            >
+              {{ connectWalletText }}
+            </v-sheet>
+            <v-icon size="14" color="green" v-if="labelColorClass === 'green--text'">mdi-check</v-icon>
           </v-sheet>
         </v-sheet>
       </v-col>
@@ -32,7 +37,7 @@
         <v-sheet class="neutral15 text-center rounded-lg pa-3 text-body-2 neutral10--text">
           <v-sheet class="transparent neutral10--text">GLD Staking</v-sheet>
           <v-sheet class="transparent pt-1 neutral10--text">
-            <span class="font-weight-bold text-body-1 primary--text">7,500</span> $1000
+            <span class="font-weight-bold text-body-1 primary--text">{{ vm.stakeAmount }}</span> ${{ vm.stakeValue }}
           </v-sheet>
         </v-sheet>
       </v-col>
@@ -53,11 +58,10 @@
 <script lang="ts">
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { Observer } from 'mobx-vue'
-import { promiseHelper } from '@/helpers/promise-helper'
 import { HuntingHistoryViewModel } from '../viewmodels/hunting-history-viewmodel'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
-import { get } from 'lodash'
+import { autorun } from 'mobx'
 
 @Observer
 @Component
@@ -65,6 +69,26 @@ export default class extends Vue {
   @Inject() vm!: HuntingHistoryViewModel
   authStore = authStore
   walletStore = walletStore
+  disposer: any[] = []
+
+  connectWalletText = 'not connected'
+  labelColorClass = 'red--text'
+
+  mounted() {
+    this.disposer = [
+      autorun(() => {
+        if (!this.vm.isWalletConnected) this.connectWalletText = 'not connected'
+        else if (this.vm.isWalletMatched) this.connectWalletText = 'wrong wallet'
+        else this.connectWalletText = 'connected'
+        if (this.connectWalletText === 'connected') this.labelColorClass = 'green--text'
+        else this.labelColorClass = 'red--text'
+      }),
+    ]
+  }
+
+  beforeDestroy() {
+    this.disposer.forEach((d) => d())
+  }
 }
 </script>
 <style scoped>
