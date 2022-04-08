@@ -42,7 +42,7 @@
       <v-container>
         <v-row>
           <v-col>
-            <div class="section-big-title-text font-weight-bold">Hunting time starts</div>
+            <div class="section-big-title-text text-uppercase blue--text font-weight-bold">Hunting time starts</div>
           </v-col>
         </v-row>
         <v-row>
@@ -98,7 +98,9 @@
       <v-container>
         <v-row>
           <v-col>
-            <div class="section-big-title-text font-weight-bold">Bounty pools ({{ vm.bountyCount }})</div>
+            <div class="section-big-title-text text-uppercase blue--text font-weight-bold">
+              Bounty pools ({{ vm.bountyCount }})
+            </div>
           </v-col>
           <!-- <v-col cols="12" lg="2" md="3" sm="3" xs="4">
             <v-btn
