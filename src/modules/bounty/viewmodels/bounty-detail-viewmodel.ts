@@ -2,6 +2,7 @@ import { loadingController } from '@/components/global-loading/global-loading-co
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { Zero } from '@/constants'
 import { bigNumberHelper } from '@/helpers/bignumber-helper'
+import { promiseHelper } from '@/helpers/promise-helper'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
@@ -245,6 +246,7 @@ export class BountyDetailViewModel {
   }
 
   @asyncAction *getRelatedApplies() {
+    return
     try {
       if (isEmpty(this.task)) return
       const res = yield apiService.applies.find({
@@ -296,29 +298,31 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
     temp[type][stepIndex].shareTime = Date.now()
-    apiService
-      .updateTaskProcess(this.apply.id, type, temp)
-      .then((res) => {
-        this.applyStepData = temp
-        this.apply = res
-        this.getTaskData()
-        const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
-        this.relatedApplies[foundIndex] = this.apply
-        snackController.updateSuccess()
-      })
-      .catch((error) => {
-        const updatedApply = get(error, 'response.data.data', {})
-        if (!isEmpty(updatedApply)) {
-          this.apply = updatedApply
-          this.applyStepData = updatedApply.data
+    promiseHelper.delay(3000).then(() => {
+      apiService
+        .updateTaskProcess(this.apply.id, type, temp)
+        .then((res) => {
+          this.applyStepData = temp
+          this.apply = res
+          this.getTaskData()
           const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
           this.relatedApplies[foundIndex] = this.apply
-        }
-        snackController.error(get(error, 'response.data.message', '') || (error as string))
-      })
-      .finally(() => {
-        this.changeTaskUpdating(false)
-      })
+          snackController.updateSuccess()
+        })
+        .catch((error) => {
+          const updatedApply = get(error, 'response.data.data', {})
+          if (!isEmpty(updatedApply)) {
+            this.apply = updatedApply
+            this.applyStepData = updatedApply.data
+            const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+            this.relatedApplies[foundIndex] = this.apply
+          }
+          snackController.error(get(error, 'response.data.message', '') || (error as string))
+        })
+        .finally(() => {
+          this.changeTaskUpdating(false)
+        })
+    })
   }
 
   @action.bound submitTaskConfirmation(type: string) {

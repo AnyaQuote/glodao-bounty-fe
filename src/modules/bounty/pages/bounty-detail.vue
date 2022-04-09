@@ -435,9 +435,9 @@
           </v-sheet>
 
           <!-- divider -->
-          <v-divider class="my-10"></v-divider>
+          <!-- <v-divider class="my-10"></v-divider> -->
 
-          <twitter-share-table />
+          <!-- <twitter-share-table /> -->
         </v-sheet>
       </v-col>
     </v-row>

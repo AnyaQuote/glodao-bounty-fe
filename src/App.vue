@@ -5,8 +5,8 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
-    <v-app-bar app>
-      <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
+    <v-app-bar app v-if="$vuetify.breakpoint.mdAndUp">
+      <navigation-bar />
     </v-app-bar>
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
@@ -64,6 +64,16 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.theme--dark {
+  .date-picker-dialog-custom {
+    .v-date-picker-header {
+      background-color: var(--v-neutral100-base);
+    }
+    .v-date-picker-table {
+      background-color: var(--v-neutral100-base);
+    }
+  }
+}
 .theme--light {
   .filter-neutral10 {
     filter: invert(40%) sepia(9%) saturate(256%) hue-rotate(178deg) brightness(93%) contrast(93%);
@@ -101,6 +111,25 @@ export default class App extends Vue {
         background: var(--v-neutral100-base) !important;
       }
     }
+  }
+  .v-data-footer {
+    background: var(--v-neutral100-base);
+    .v-btn--icon.v-size--default {
+      width: 20px;
+      height: 20px;
+    }
+    .v-btn--icon.v-size--default .v-icon {
+      font-size: 16px;
+    }
+    .v-data-footer__pagination {
+      margin-right: 24px;
+    }
+  }
+}
+.v-menu__content.theme--dark {
+  background: var(--v-neutral100-base);
+  .v-sheet {
+    background: var(--v-neutral100-base);
   }
 }
 .theme--dark {
@@ -141,6 +170,9 @@ export default class App extends Vue {
 }
 .linear-background-blue-main {
   background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
+}
+.linear-background-blue-light {
+  background: linear-gradient(90deg, rgba(2, 118, 240, 0.2) 0%, rgba(0, 229, 255, 0.2) 113.65%);
 }
 .fill-width {
   width: 100%;
@@ -261,10 +293,10 @@ tbody {
   border-top: 1px dashed var(--v-neutral20-base);
 }
 .position-relative {
-  position: relative;
+  position: relative !important;
 }
 .position-absolute {
-  position: absolute;
+  position: absolute !important;
 }
 .card-text {
   font-size: 9px;

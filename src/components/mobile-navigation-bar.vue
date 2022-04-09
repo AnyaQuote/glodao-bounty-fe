@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="neutral100" height="64px" fixed>
+  <v-app-bar class="neutral100" height="64px" fixed hide-on-scroll>
     <div class="d-flex align-center full-width">
       <v-app-bar-nav-icon @click="wallet.setNavigationDrawer(true)" style="z-index: 10"></v-app-bar-nav-icon>
       <div class="full-width d-flex justify-center"></div>
