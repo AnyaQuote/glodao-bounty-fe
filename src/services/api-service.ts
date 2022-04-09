@@ -190,9 +190,9 @@ export class ApiHandlerJWT<T> {
 
 export class ApiService {
   // fixedPool = new ApiHandler<FixedPoolModel>(axios, 'pool')
-  applies = new ApiHandlerJWT<any>(axios, 'applies', { find: false })
+  applies = new ApiHandlerJWT<any>(axios, 'applies', { find: false, count: false })
   users = new ApiHandlerJWT<any>(axios, 'users')
-  hunters = new ApiHandlerJWT<any>(axios, 'hunters')
+  hunters = new ApiHandlerJWT<any>(axios, 'hunters', { count: false })
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
 
   async getFile(id: any) {

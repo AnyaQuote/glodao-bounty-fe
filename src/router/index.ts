@@ -32,6 +32,16 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/bounty/pages/bounty-detail.vue'),
   },
   {
+    path: '/bounty-history',
+    name: 'BountyHistory',
+    component: () => import('@/modules/bounty-history/pages/bounty-history.vue'),
+  },
+  {
+    path: '/bounty-history/:taskId',
+    name: 'BountyHistoryDetail',
+    component: () => import('@/modules/bounty-history/pages/bounty-history-detail.vue'),
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: () => import('@/modules/error/pages/coming-soon.vue'),
