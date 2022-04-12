@@ -41,12 +41,15 @@ export default class EmbedTweet extends Vue {
   @Prop({ required: true }) link!: any
 
   beforeCreate() {
-    if (!document.getElementById('embedTweetScript')) {
-      const embedTweetScript = document.createElement('script')
-      embedTweetScript.setAttribute('src', 'https://platform.twitter.com/widgets.js')
-      embedTweetScript.setAttribute('id', 'embedTweetScript')
-      document.head.appendChild(embedTweetScript)
-    }
+    const embedTweetScript = document.createElement('script')
+    embedTweetScript.setAttribute('src', 'https://platform.twitter.com/widgets.js')
+    embedTweetScript.setAttribute('id', 'embedTweetScript')
+    document.head.appendChild(embedTweetScript)
+  }
+
+  destroyed() {
+    if (document.getElementById('embedTweetScript'))
+      document.head.removeChild(document.getElementById('embedTweetScript') as Node)
   }
 }
 </script>
