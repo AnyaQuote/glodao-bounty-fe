@@ -1,5 +1,5 @@
 <template>
-  <div class="fill-width">
+  <div class="fill-width ma-1">
     <div
       class="fill-width justify-center"
       v-show="$vuetify.theme.dark"
