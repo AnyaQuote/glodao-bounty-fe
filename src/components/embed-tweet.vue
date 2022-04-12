@@ -4,7 +4,7 @@
       class="fill-width justify-center"
       v-show="$vuetify.theme.dark"
       :class="{
-        'd-flex': $vuetify.theme.dark,
+        'd-flex flex-column': $vuetify.theme.dark,
       }"
     >
       <blockquote class="twitter-tweet" data-theme="dark">
@@ -17,7 +17,7 @@
       class="fill-width justify-center"
       v-show="!$vuetify.theme.dark"
       :class="{
-        'd-flex': !$vuetify.theme.dark,
+        'd-flex flex-column': !$vuetify.theme.dark,
       }"
     >
       <blockquote class="twitter-tweet" data-theme="light">
