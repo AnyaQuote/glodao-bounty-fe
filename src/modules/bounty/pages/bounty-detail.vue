@@ -397,6 +397,26 @@
                       <div class="custom-dash-divider" v-if="index !== 0"></div>
                       <twitter-mini-task :twitterTask="twitterTask" :step="index" />
                     </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <coming-soon-task title="Join Telegram group" icon="telegram" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <coming-soon-task title="Join Telegram group" icon="telegram" />
+                    </v-col>
                   </v-sheet>
                   <v-divider></v-divider>
                   <v-row class="pa-6">
@@ -464,6 +484,7 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
     'twitter-share-table': () => import('@/modules/bounty/components/bounty-detail/twitter-share-table.vue'),
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
+    'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
   },
 })
 export default class BountyDetail extends Vue {
