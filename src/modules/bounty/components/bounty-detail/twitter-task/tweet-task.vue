@@ -17,6 +17,9 @@
           v-if="vm.isHuntingProcessStarted && twitterTask.activeStep && !twitterTask.finished"
         >
           <v-sheet class="neutral100" v-show="$vuetify.breakpoint.smAndUp">
+            <div class="d-flex row justify-center" v-if="twitterTask.embedLink">
+              <embed-tweet :link="twitterTask.embedLink" class="col-10" />
+            </div>
             <v-row dense no-gutters>
               <v-col cols="9" sm="10">
                 <v-sheet outlined class="rounded rounded-r-0">
@@ -94,7 +97,8 @@
         v-show="$vuetify.breakpoint.xsOnly"
         v-if="vm.isHuntingProcessStarted && twitterTask.activeStep && !twitterTask.finished"
       >
-        <v-sheet class="neutral100 px-2 px-sm-4 mt-2">
+        <v-sheet class="neutral100 px-2 px-sm-4">
+          <embed-tweet :link="twitterTask.embedLink" v-if="twitterTask.embedLink" />
           <v-row dense no-gutters>
             <v-col cols="9" sm="10">
               <v-sheet outlined class="rounded rounded-r-0">
