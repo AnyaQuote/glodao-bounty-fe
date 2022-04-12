@@ -7,12 +7,6 @@
             :class="`flex-center-box rounded neutral20--bg-light-persistent fill-width fill-height position-relative`"
           >
             <v-icon size="22" color="white"> mdi-{{ icon }} </v-icon>
-            <v-sheet
-              width="12"
-              height="12"
-              class="rounded-circle position-absolute active-indicator greenSenamatic--bg"
-              v-if="isActive"
-            ></v-sheet>
           </v-sheet>
         </v-sheet>
       </v-col>
