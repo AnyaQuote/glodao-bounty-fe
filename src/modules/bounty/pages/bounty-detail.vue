@@ -482,7 +482,6 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'wallet-sheet': () => import('@/modules/bounty/components/bounty-detail/wallet-sheet.vue'),
     'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
-    'twitter-share-table': () => import('@/modules/bounty/components/bounty-detail/twitter-share-table.vue'),
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
   },
