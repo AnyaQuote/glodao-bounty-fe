@@ -13,7 +13,9 @@
         <chain-logo :chain="chainId" class="fill-width fill-height" />
       </div>
       <div class="mt-1 font-family-proxima font-weight-bold card-title-text">{{ name }}</div>
-      <div class="mt-1 card-text short-description">{{ shortDescription }}</div>
+      <div class="mt-1 card-text short-description">
+        {{ shortDescription }}
+      </div>
       <div class="d-flex justify-end mt-4 align-center">
         <div class="rounded-circle mr-1 d-flex justify-center align-center progress-icon-container" v-if="statusIcon">
           <v-icon size="8" :color="$vuetify.theme.dark ? 'white' : 'black'" class="font-weight-600">
@@ -125,8 +127,13 @@ export default class CurrentTask extends Vue {
   }
 }
 .short-description {
-  white-space: nowrap;
+  // text-overflow: ellipsis;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-word;
 }
 </style>
