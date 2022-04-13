@@ -220,7 +220,7 @@ export class BountyDetailViewModel {
       }
       snackController.success('Apply for bounty hunting successfully')
     } catch (error) {
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     } finally {
       this.changeIsStartingProcess(false)
     }
