@@ -1,25 +1,24 @@
 <template>
   <v-sheet class="d-flex justify-space-between align-center rounded-lg px-3 py-1 neutral100--bg">
     <slot name="prepend"></slot>
-    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+    <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold primary--text">{{ days | twoDigits }}</div>
-    </v-sheet>
+    </div>
     <div class="flex-center-box mx-3">:</div>
-    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+    <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold primary--text">{{ hours | twoDigits }}</div>
-    </v-sheet>
+    </div>
     <div class="flex-center-box mx-3">:</div>
-    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+    <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold primary--text">{{ minutes | twoDigits }}</div>
-    </v-sheet>
+    </div>
     <div class="flex-center-box mx-3">:</div>
-    <v-sheet rounded width="36" height="36" color="neutral100" class="flex-center-box">
+    <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold primary--text">{{ seconds | twoDigits }}</div>
-    </v-sheet>
+    </div>
+    <slot name="append"></slot>
   </v-sheet>
 </template>
-
-<style scoped></style>
 
 <script>
 export default {
@@ -61,3 +60,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.h-36-w-36 {
+  height: 36px;
+  width: 36px;
+}
+</style>
