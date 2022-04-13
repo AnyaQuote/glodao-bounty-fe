@@ -125,13 +125,17 @@ export class BountyHistoryDetailViewModel {
   }
 
   @asyncAction *getTotalRelatedAppliesCount() {
-    const res = yield apiService.applies.count({
-      task: this.taskId,
-      status: 'completed',
-      poolType: this.poolType,
-      ...this.dateRangeFilterParams,
-    })
-    this.totalPageCount = _.ceil(res / PAGE_LIMIT)
+    try {
+      const res = yield apiService.applies.count({
+        task: this.taskId,
+        status: 'completed',
+        poolType: this.poolType,
+        ...this.dateRangeFilterParams,
+      })
+      this.totalPageCount = _.ceil(res / PAGE_LIMIT)
+    } catch (error) {
+      snackController.error(_.get(error, 'response.data.message', '') || (error as string))
+    }
   }
 
   @action.bound changeStartDateDialog(val: boolean) {

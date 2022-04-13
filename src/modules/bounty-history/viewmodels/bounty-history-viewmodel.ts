@@ -108,7 +108,7 @@ export class BountyHistoryViewModel {
       this.getTotalBountyCount()
     } catch (error) {
       this.bountyList = []
-      snackController.error(error as string)
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
     } finally {
       this.bountyListLoading = false
     }
@@ -120,12 +120,16 @@ export class BountyHistoryViewModel {
   }
 
   @asyncAction *getTotalProjectCount() {
-    this.totalProjectCount = yield apiService.tasks.count()
-    this.endedProjectCount = yield apiService.tasks.count({ status: 'ended' })
-    this.userCount = yield apiService.hunters.count()
-    this.uniqueParticipantCount = yield apiService.hunters.count({
-      participationStatus_ne: 'guest',
-    })
+    try {
+      this.totalProjectCount = yield apiService.tasks.count()
+      this.endedProjectCount = yield apiService.tasks.count({ status: 'ended' })
+      this.userCount = yield apiService.hunters.count()
+      this.uniqueParticipantCount = yield apiService.hunters.count({
+        participationStatus_ne: 'guest',
+      })
+    } catch (error) {
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
+    }
   }
 
   @action.bound changeDateRangeDialog(value: boolean) {
