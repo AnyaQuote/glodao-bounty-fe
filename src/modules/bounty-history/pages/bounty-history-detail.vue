@@ -41,7 +41,7 @@
                   :max-width="$vuetify.breakpoint.xsOnly ? 24 : 48"
                   class="mr-3 background-transparent"
                 >
-                  <chain-logo class="fill-height fill-width" />
+                  <chain-logo class="fill-height fill-width" :chain="vm.task.chainId" />
                 </v-sheet>
                 {{ vm.taskName }}
               </div>
