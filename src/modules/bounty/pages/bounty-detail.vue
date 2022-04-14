@@ -28,7 +28,7 @@
           <v-sheet width="32" height="32" class="rounded-circle d-flex justify-center align-center">
             <chain-logo :chain="vm.task | _get('chainId')" class="logo-chain" />
           </v-sheet>
-          <div class="d-flex align-center ml-3 mt-1 section-big-title-text font-weight-bold">
+          <div class="d-flex align-center ml-3 mt-1 text-h4 font-weight-bold">
             {{ vm.task | _get('name') }}
             <v-sheet width="10" height="10" class="rounded-circle mx-4" color="bluePrimary"></v-sheet>
             <div class="text-uppercase">
@@ -69,8 +69,7 @@
           </v-sheet>
 
           <!-- subtitle -->
-          <v-sheet class="mb-4 card-subtitle-1 neutral15">
-            {{ vm.task | _get('metadata.caption') }}
+          <v-sheet class="mb-4 card-subtitle-1 neutral15" v-html="$options.filters._get(vm.task, 'metadata.caption')">
           </v-sheet>
           <v-sheet class="neutral15">
             <v-sheet class="d-flex transparent mb-3">
