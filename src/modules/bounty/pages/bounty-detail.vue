@@ -89,6 +89,7 @@
                 height="24"
                 :href="value"
                 target="_blank"
+                depressed
               >
                 <v-icon color="white" dark size="16"> {{ `mdi-${key}` }}</v-icon>
               </v-btn>
@@ -104,7 +105,7 @@
           <v-sheet class="mb-4 neutral15">
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3" style="border: 1px solid red">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
                   <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-1"></v-img>
@@ -113,7 +114,7 @@
                 </v-sheet>
               </v-col>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3" style="border: 1px solid red">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
                   <div class="card-subtitle-1">Remaining ({{ vm.rewardToken }})</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-1"></v-img>
