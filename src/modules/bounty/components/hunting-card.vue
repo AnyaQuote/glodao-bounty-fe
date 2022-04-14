@@ -1,30 +1,46 @@
 <template>
   <v-sheet class="overflow-hidden rounded-lg neutral100--bg fill-height" elevation="3">
-    <v-sheet class="position-relative">
-      <v-img height="236" :src="coverImageUrl" :aspect-ratio="1.5"></v-img>
-      <v-sheet class="d-flex justify-end countdown-container transparent pa-6">
-        <countdown class="countdown rounded-lg" :targetDate="endTime">
-          <template slot="prepend">
-            <v-sheet class="d-flex justify-center align-center transparent" width="24" height="31">🔥</v-sheet>
+    <v-img :src="coverImageUrl" :aspect-ratio="1.5"></v-img>
+
+    <div class="d-flex flex-column pa-6">
+      <div class="d-flex align-center mb-6">
+        <img :src="require(`@/assets/icons/${chainId || 'bsc'}-icon.svg`)" width="64" height="64" />
+        <div class="title blue--text ml-6 text-truncate flex-grow-1">
+          {{ name }}
+        </div>
+      </div>
+
+      <!-- Total reward start -->
+      <div class="d-flex justify-start flex-wrap mb-6">
+        <div class="d-flex flex-column mr-6 overflow-hidden">
+          <div class="neutral10--text font-size-20">Total reward</div>
+          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+            {{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}
+          </div>
+        </div>
+        <!-- Total reward end -->
+        <!-- Participants start -->
+        <div class="d-flex flex-column overflow-hidden">
+          <div class="neutral10--text font-size-20">Participants</div>
+          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+            {{ participant | formatNumber(0, 0) }}
+          </div>
+        </div>
+      </div>
+      <!-- Participants end -->
+
+      <!-- Countdown start -->
+      <div class="rounded-lg mb-6 custom-border">
+        <countdown class="countdown bluePrimary lighten-1" :targetDate="endTime">
+          <template slot="append">
+            <div class="font-weight-bold neutral10--text text-truncate mx-2">left</div>
+            <div class="flame-emoji">🔥</div>
           </template>
         </countdown>
-      </v-sheet>
-      <v-sheet class="title-container d-flex align-center px-5 py-3">
-        <img :src="require(`@/assets/icons/${chainId || 'bsc'}-icon.svg`)" width="30" height="30" v-bind="$attrs" />
-        <v-sheet class="transparent title blue--text px-3">{{ name }}</v-sheet>
-      </v-sheet>
-    </v-sheet>
-    <v-sheet class="d-flex transparent px-6 py-4">
-      <v-sheet class="d-flex transparent flex-column">
-        <v-sheet class="transparent neutral10--text">Total reward</v-sheet>
-        <v-sheet class="transparent mt-1">{{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}</v-sheet>
-      </v-sheet>
-      <v-sheet class="d-flex transparent flex-column ml-9">
-        <v-sheet class="transparent font-weight-bold neutral10--text">Participants</v-sheet>
-        <v-sheet class="transparent font-weight-bold mt-1">{{ participant | formatNumber(0, 0) }}</v-sheet>
-      </v-sheet>
-    </v-sheet>
-    <v-sheet class="transparent px-6 pb-6">
+      </div>
+      <!-- Countdown end -->
+
+      <!-- Button start -->
       <v-btn
         class="btn transparent btn-text text-capitalize white--text rounded-lg"
         width="100%"
@@ -34,7 +50,8 @@
         <v-img class="mr-3" :src="require('@/assets/icons/crown-white.svg')" max-height="25" max-width="25"></v-img>
         Start hunting
       </v-btn>
-    </v-sheet>
+      <!-- Button end -->
+    </div>
   </v-sheet>
 </template>
 
@@ -84,7 +101,7 @@ export default class HuntingTimeCard extends Vue {
 }
 .title {
   font-weight: 700;
-  font-size: 48px;
+  font-size: 32px !important;
   line-height: 130%;
 }
 .btn {
@@ -94,5 +111,18 @@ export default class HuntingTimeCard extends Vue {
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
+}
+.custom-border {
+  border: 1px solid #00b3ff;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.font-size-20 {
+  font-size: 20px;
+}
+.flame-emoji {
+  line-height: 42px;
+  font-size: 24px;
 }
 </style>
