@@ -578,6 +578,10 @@ export class BountyDetailViewModel {
     return FixedNumber.from(`${this.singlePriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
+  @computed get singlePriorityRewardExchanged() {
+    return FixedNumber.from(`${this.singlePriorityReward}`).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
+  }
+
   @computed get currentCommunityParticipants() {
     return subtract(this.relatedApplies.length, this.currentPriorityParticipants) ?? 0
   }

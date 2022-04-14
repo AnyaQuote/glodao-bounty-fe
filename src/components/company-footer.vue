@@ -38,16 +38,16 @@
               'justify-start': $vuetify.breakpoint.xs,
             }"
           >
-            <a href="">
+            <a href="https://medium.com/@glodao-official">
               <v-icon> fab fa-medium-m </v-icon>
             </a>
-            <a href="" class="ml-8">
+            <a href="https://t.me/GloDAO_Group" class="ml-8">
               <v-icon> fab fa-telegram </v-icon>
             </a>
-            <a href="" class="ml-8">
+            <a href="https://twitter.com/GloDAO_Official" class="ml-8">
               <v-icon> fab fa-twitter </v-icon>
             </a>
-            <a href="" class="ml-8">
+            <a href="https://t.me/GloDAO_Channel" class="ml-8">
               <v-icon> fab fa-telegram-plane </v-icon>
             </a>
             <v-btn icon class="ml-6" @click="changeTheme">
