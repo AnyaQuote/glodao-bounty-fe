@@ -75,7 +75,9 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }}
+                {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                  vm.singlePriorityRewardExchanged | usdCustom
+                }})
               </v-sheet>
             </v-sheet>
           </v-sheet>
