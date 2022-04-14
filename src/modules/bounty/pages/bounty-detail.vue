@@ -113,7 +113,7 @@
                       max-width="19"
                       class="mr-1"
                     ></v-img>
-                    {{ vm.totalReward | formatNumber }}
+                    {{ vm.rewardAmount | formatNumber }}
                   </div>
                 </v-sheet>
               </v-col>

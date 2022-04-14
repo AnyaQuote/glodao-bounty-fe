@@ -445,10 +445,6 @@ export class BountyDetailViewModel {
     return 'Unlimited'
   }
 
-  @computed get totalReward() {
-    return this.task.rewardAmount ?? 0
-  }
-
   @computed get remainingReward() {
     if (!this.task?.rewardAmount) return 0
     const totalSpentReward = sumBy(this.relatedApplies, (apply) => {
