@@ -5,7 +5,6 @@
     }"
   >
     <v-row no-gutters dense>
-      <!-- breadcrumbs -->
       <v-col cols="12">
         <v-sheet height="50" class="neutral15">
           <v-breadcrumbs :items="vm.breadcrumbsItems" divider=">" class="pa-0">
@@ -132,23 +131,6 @@
               <v-col cols="12" md="4">
                 <v-sheet width="100%" class="neutral15 pa-6 border-radius-8">
                   <div class="text-h6 font-weight-bold">Filters</div>
-                  <!-- <div class="mt-6">
-                    <v-autocomplete
-                      dense
-                      flat
-                      solo
-                      outlined
-                      hide-details
-                      :v-model="vm.nameInputModel"
-                      :items="vm.uniqueHunterNameList"
-                      @change="vm.onNameFilterChange"
-                      item-text="hunterName"
-                      item-value="hunterName"
-                      label="All account name"
-                      class="ma-0 pa-0 text-caption neutral100--bg link-submit-custom-input"
-                    >
-                    </v-autocomplete>
-                  </div> -->
                   <div class="mt-6 d-flex align-center">
                     <v-btn
                       depressed
@@ -190,31 +172,6 @@
                   <div class="text-h6 font-weight-bold">Task done history</div>
                   <div class="mt-6">
                     <task-complete-list :applyList="vm.relatedApplies" />
-                    <!-- <v-data-table
-                        :headers="headers"
-                        :items="vm.displayedTwitterSharedLinkList"
-                        class="fill-width elevation-0 rounded-lg task-detail-twitter-share-data-table"
-                        :hide-default-footer="vm.displayedTwitterSharedLinkList.length < 10"
-                      >
-                        <template v-slot:[`item.name`]="{ item }">
-                          <v-row dense no-gutters justify="center" align="center" class="ma-2">
-                            <v-avatar>
-                              <img :src="item.hunterAvatar" alt="Avatar" />
-                            </v-avatar>
-                            <div class="ml-4 font-weight-medium">{{ `@${item.hunterName}` }}</div>
-                          </v-row>
-                        </template>
-                        <template v-slot:[`item.time`]="{ item }">
-                          <div>{{ item.shareTime | normalizeTimeDuration }}</div>
-                        </template>
-                        <template v-slot:[`item.link`]="{ item }">
-                          <v-row no-gutters dense justify="center">
-                            <div class="bluePrimary--text" @click="openLink(item.link)">
-                              Link<v-icon size="14" color="bluePrimary" class="ml-2">mdi-open-in-new</v-icon>
-                            </div>
-                          </v-row>
-                        </template>
-                      </v-data-table> -->
                   </div>
                 </v-sheet>
               </v-col>
