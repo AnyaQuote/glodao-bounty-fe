@@ -7,7 +7,7 @@ import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
-import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte, isEmpty } from 'lodash-es'
+import { divide, get, gte, isEmpty, isEqual, keys, merge, subtract, sumBy, uniqBy } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
@@ -566,19 +566,31 @@ export class BountyDetailViewModel {
   }
 
   @computed get totalRewardAsToken() {
-    return FixedNumber.from(`${this.rewardAmount}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    // return FixedNumber.from(`${this.rewardAmount}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    return FixedNumber.from(`${this.rewardAmount}`)._value || 'TBA'
   }
 
   @computed get remainingRewardAsToken() {
-    return FixedNumber.from(`${this.remainingReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    // return FixedNumber.from(`${this.remainingReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    return FixedNumber.from(`${this.remainingReward}`)._value || 'TBA'
   }
 
   @computed get totalPriorityRewardAsToken() {
-    return FixedNumber.from(`${this.totalPriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    // return FixedNumber.from(`${this.totalPriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    return FixedNumber.from(`${this.totalPriorityReward}`)._value || 'TBA'
+  }
+
+  @computed get totalPriorityRewardExchanged() {
+    return FixedNumber.from(`${this.totalPriorityReward}`).mulUnsafe(this.tokenBasePrice) || 'TBA'
   }
 
   @computed get totalCommunityRewardAsToken() {
-    return FixedNumber.from(`${this.totalCommunityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    // return FixedNumber.from(`${this.totalCommunityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+    return FixedNumber.from(`${this.totalCommunityReward}`)._value || 'TBA'
+  }
+
+  @computed get totalCommunityRewardExchanged() {
+    return FixedNumber.from(`${this.totalCommunityReward}`).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get singlePriorityRewardAsToken() {

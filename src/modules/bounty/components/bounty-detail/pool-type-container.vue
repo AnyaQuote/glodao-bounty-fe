@@ -60,7 +60,9 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalPriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
+                {{ vm.totalPriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }} ({{
+                  vm.totalPriorityRewardExchanged | usdCustom
+                }})
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex justify-space-between neutral100--bg">
@@ -92,7 +94,9 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalCommunityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
+                {{ vm.totalCommunityRewardAsToken | formatNumber }} {{ vm.rewardToken }} ({{
+                  vm.totalCommunityRewardExchanged | usdCustom
+                }})
               </v-sheet>
             </v-sheet>
             <v-sheet class="d-flex justify-space-between neutral100--bg">
