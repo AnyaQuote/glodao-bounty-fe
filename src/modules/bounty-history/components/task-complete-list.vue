@@ -23,6 +23,7 @@
             }"
           />
         </v-list>
+        <div v-if="applyList.length < 1" class="text-center neutral10--text">No data</div>
       </div>
     </v-sheet>
 
@@ -52,10 +53,6 @@ import { BountyHistoryDetailViewModel } from '@/modules/bounty-history/viewmodel
 export default class ExpandableListItem extends Vue {
   @Prop({ required: true }) applyList
   @Inject() vm!: BountyHistoryDetailViewModel
-
-  mounted() {
-    console.log('ah', this.applyList)
-  }
 }
 </script>
 
