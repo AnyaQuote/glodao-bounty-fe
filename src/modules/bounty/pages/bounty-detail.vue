@@ -25,8 +25,8 @@
       <!-- BOUNTY NAME -->
       <v-col cols="12">
         <v-sheet class="d-flex align-center mb-4 neutral15">
-          <v-sheet width="32" height="32" class="rounded-circle d-flex justify-center align-center">
-            <chain-logo :chain="vm.task | _get('chainId')" class="logo-chain" />
+          <v-sheet width="48" height="48" class="rounded-circle d-flex justify-center align-center">
+            <chain-logo :chain="vm.task | _get('chainId')" class="fill-width fill-height" />
           </v-sheet>
           <div class="d-flex align-center ml-3 mt-1 text-h4 font-weight-bold">
             {{ vm.task | _get('name') }}
@@ -608,11 +608,6 @@ export default class BountyDetail extends Vue {
 
 .ba-dotted {
   border: 1px dashed var(--v-neutral20-base);
-}
-
-.logo-chain {
-  width: 32px;
-  height: 32px;
 }
 
 .card-status {
