@@ -6,7 +6,7 @@
           <v-sheet
             :class="`flex-center-box rounded neutral20--bg-light-persistent fill-width fill-height position-relative`"
           >
-            <v-icon size="22" color="white"> mdi-{{ icon }} </v-icon>
+            <v-icon size="22" color="white"> {{ icon }} </v-icon>
           </v-sheet>
         </v-sheet>
       </v-col>
