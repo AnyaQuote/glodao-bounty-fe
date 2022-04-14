@@ -28,8 +28,9 @@
           height="100%"
         >
           <div class="text-uppercase title-2">
-            {{ !vm.isTaskEnded ? 'time for mission' : 'time to hunting' }}
+            {{ !vm.isTaskEnded ? 'time for mission' : 'time to hunting' }}<span class="body-2"> (Local Time)</span>
           </div>
+
           <ul class="li-text">
             <li>From: {{ vm.task.startTime | MMMddYYYYhhmm }}</li>
             <li>To: {{ vm.task.endTime | MMMddYYYYhhmm }}</li>
@@ -60,7 +61,7 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalPriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }} ({{
+                {{ vm.totalPriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
                   vm.totalPriorityRewardExchanged | usdCustom
                 }})
               </v-sheet>
@@ -74,7 +75,7 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.singlePriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
+                {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }}
               </v-sheet>
             </v-sheet>
           </v-sheet>
@@ -94,7 +95,7 @@
             <v-sheet class="d-flex justify-space-between neutral100--bg">
               <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
               <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalCommunityRewardAsToken | formatNumber }} {{ vm.rewardToken }} ({{
+                {{ vm.totalCommunityReward | formatNumber }} {{ vm.rewardToken }} ({{
                   vm.totalCommunityRewardExchanged | usdCustom
                 }})
               </v-sheet>

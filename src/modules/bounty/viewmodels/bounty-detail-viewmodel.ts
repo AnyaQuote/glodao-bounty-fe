@@ -445,6 +445,10 @@ export class BountyDetailViewModel {
     return 'Unlimited'
   }
 
+  @computed get totalReward() {
+    return this.task.rewardAmount ?? 0
+  }
+
   @computed get remainingReward() {
     if (!this.task?.rewardAmount) return 0
     const totalSpentReward = sumBy(this.relatedApplies, (apply) => {
@@ -565,28 +569,8 @@ export class BountyDetailViewModel {
     return subtract(this.rewardAmount, this.totalPriorityReward)
   }
 
-  @computed get totalRewardAsToken() {
-    // return FixedNumber.from(`${this.rewardAmount}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
-    return FixedNumber.from(`${this.rewardAmount}`)._value || 'TBA'
-  }
-
-  @computed get remainingRewardAsToken() {
-    // return FixedNumber.from(`${this.remainingReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
-    return FixedNumber.from(`${this.remainingReward}`)._value || 'TBA'
-  }
-
-  @computed get totalPriorityRewardAsToken() {
-    // return FixedNumber.from(`${this.totalPriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
-    return FixedNumber.from(`${this.totalPriorityReward}`)._value || 'TBA'
-  }
-
   @computed get totalPriorityRewardExchanged() {
     return FixedNumber.from(`${this.totalPriorityReward}`).mulUnsafe(this.tokenBasePrice) || 'TBA'
-  }
-
-  @computed get totalCommunityRewardAsToken() {
-    // return FixedNumber.from(`${this.totalCommunityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
-    return FixedNumber.from(`${this.totalCommunityReward}`)._value || 'TBA'
   }
 
   @computed get totalCommunityRewardExchanged() {
