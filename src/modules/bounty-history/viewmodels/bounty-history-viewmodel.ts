@@ -177,7 +177,6 @@ export class BountyHistoryViewModel {
 
   @action.bound changeStartDateValue(val) {
     this.startDate = val
-    console.log(typeof val)
   }
   @action.bound changeEndDateDialog(val: boolean) {
     this.endDateDialog = val
@@ -185,7 +184,6 @@ export class BountyHistoryViewModel {
 
   @action.bound changeEndDateValue(val) {
     this.endDate = val
-    console.log(typeof val)
   }
 
   @computed get liveProjectCount() {

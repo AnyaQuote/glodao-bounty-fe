@@ -77,11 +77,6 @@ export class BountyHistoryDetailViewModel {
     this.taskId = taskId
   }
 
-  @action.bound logAhShit(val) {
-    console.log('value', val)
-    console.log(this.nameInputModel)
-  }
-
   @action.bound onNameFilterChange(val) {
     this.nameInputModel = val
   }
@@ -250,21 +245,15 @@ export class BountyHistoryDetailViewModel {
 
   @computed get displayedTwitterSharedLinkList() {
     let result = this.twitterSharedLinkList
-    console.log(result)
-
     if (!_.isEmpty(this.nameInputModel)) result = result.filter((item) => item.hunterName === this.nameInputModel)
     return result
   }
 
   @computed get totalTwitterShare() {
-    console.log(this.uniqueHunterNameList)
-
     return this.twitterSharedLinkList.length || 0
   }
 
   @computed get uniqueHunterNameList() {
-    console.log(_.uniqBy(this.twitterSharedLinkList, 'hunterName'))
-
     return _.uniqBy(this.twitterSharedLinkList, 'hunterName')
   }
 
