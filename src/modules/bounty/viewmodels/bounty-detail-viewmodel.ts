@@ -583,7 +583,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get totalParticipants() {
-    return this.relatedApplies.length
+    return get(this.task, 'totalParticipants', 0)
   }
 
   @computed get isCurrentWalletMatchRegistered() {
@@ -669,6 +669,6 @@ export class BountyDetailViewModel {
   }
 
   @computed get tokenLogo() {
-    return get(this.task.metadata, 'tokenLogo', '')
+    return get(this.task, 'metadata.tokenLogo', '')
   }
 }
