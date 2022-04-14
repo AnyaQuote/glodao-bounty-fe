@@ -83,10 +83,10 @@
                         <td class="font-weight-600">Total Awarded</td>
                         <td class="text-end font-weight-bold">{{ vm.totalAwarded }} {{ vm.rewardToken }}</td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <td class="font-weight-600">Total shared</td>
                         <td class="text-end font-weight-bold">{{ vm.totalTwitterShare }}</td>
-                      </tr>
+                      </tr> -->
                     </table>
                   </v-sheet>
                 </v-sheet>
