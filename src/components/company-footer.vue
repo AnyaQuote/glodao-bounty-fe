@@ -10,7 +10,7 @@
       <v-container class="px-6 py-4">
         <v-row>
           <v-col cols="12" sm="6" class="d-flex flex-column">
-            <div class="d-flex align-center">
+            <div class="d-flex align-center cursor-pointer" @click="openLink('https://cyberk-glodao.netlify.app/')">
               <v-img
                 alt="Vuetify Logo"
                 class="shrink mr-2"
@@ -83,11 +83,17 @@ export default class Footer extends Vue {
   changeTheme() {
     this.providers.toggleLightMode(this.$vuetify)
   }
+  openLink(url) {
+    window.open(url, '_blank')
+  }
 }
 </script>
 
 <style lang="scss">
 .footer {
   max-height: 124px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>
