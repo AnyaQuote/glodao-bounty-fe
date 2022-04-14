@@ -405,7 +405,7 @@
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Join Telegram group" icon="telegram" />
+                      <coming-soon-task title="Join Telegram group" icon="fab fa-telegram-plane" />
                     </v-col>
                     <v-col
                       cols="12"
@@ -415,7 +415,17 @@
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Join Telegram group" icon="telegram" />
+                      <coming-soon-task title="Join Discord group" icon="fab fa-discord" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <coming-soon-task title="Like Facebook page" icon="fab fa-facebook" />
                     </v-col>
                   </v-sheet>
                   <v-divider></v-divider>
