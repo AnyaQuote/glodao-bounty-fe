@@ -667,4 +667,8 @@ export class BountyDetailViewModel {
   @computed get tokenBasePrice(): FixedNumber {
     return FixedNumber.from(get(this.task, 'tokenBasePrice', 1))
   }
+
+  @computed get tokenLogo() {
+    return get(this.task.metadata, 'tokenLogo', '')
+  }
 }
