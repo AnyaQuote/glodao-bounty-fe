@@ -7,7 +7,7 @@ import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
-import { keys, merge, sumBy, uniqBy, divide, get, isEqual, subtract, gte, isEmpty } from 'lodash-es'
+import { divide, get, gte, isEmpty, isEqual, keys, merge, subtract, sumBy, uniqBy } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
@@ -565,20 +565,12 @@ export class BountyDetailViewModel {
     return subtract(this.rewardAmount, this.totalPriorityReward)
   }
 
-  @computed get totalRewardAsToken() {
-    return FixedNumber.from(`${this.rewardAmount}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+  @computed get totalPriorityRewardExchanged() {
+    return FixedNumber.from(`${this.totalPriorityReward}`).mulUnsafe(this.tokenBasePrice) || 'TBA'
   }
 
-  @computed get remainingRewardAsToken() {
-    return FixedNumber.from(`${this.remainingReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
-  }
-
-  @computed get totalPriorityRewardAsToken() {
-    return FixedNumber.from(`${this.totalPriorityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
-  }
-
-  @computed get totalCommunityRewardAsToken() {
-    return FixedNumber.from(`${this.totalCommunityReward}`).divUnsafe(this.tokenBasePrice)._value || 'TBA'
+  @computed get totalCommunityRewardExchanged() {
+    return FixedNumber.from(`${this.totalCommunityReward}`).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get singlePriorityRewardAsToken() {
@@ -591,7 +583,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get totalParticipants() {
-    return this.relatedApplies.length
+    return get(this.task, 'totalParticipants', 0)
   }
 
   @computed get isCurrentWalletMatchRegistered() {
@@ -674,5 +666,9 @@ export class BountyDetailViewModel {
 
   @computed get tokenBasePrice(): FixedNumber {
     return FixedNumber.from(get(this.task, 'tokenBasePrice', 1))
+  }
+
+  @computed get tokenLogo() {
+    return get(this.task, 'metadata.tokenLogo', '')
   }
 }
