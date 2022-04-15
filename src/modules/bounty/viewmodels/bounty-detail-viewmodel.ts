@@ -455,6 +455,10 @@ export class BountyDetailViewModel {
     return this.task.rewardAmount - totalSpentReward
   }
 
+  @computed get remainingRewardExchanged() {
+    return FixedNumber.from(this.remainingReward.toString()).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
+  }
+
   @computed get taskProgressPercentage() {
     return (this.relatedApplies.length / this.task.maxParticipant) * 100
   }
@@ -540,6 +544,10 @@ export class BountyDetailViewModel {
 
   @computed get rewardAmount() {
     return get(this.task, 'rewardAmount', 0)
+  }
+
+  @computed get rewardAmountExchanged() {
+    return FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
   @computed get currentPriorityParticipants() {
