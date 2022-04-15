@@ -6,14 +6,11 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">Quote a Twitter post</div>
+          <div class="text-body-1 font-weight-600">Reply a Twitter post</div>
           <div class="text-caption mt-1">
-            Quote <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
+            Reply <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
-            }}""
-            <span v-if="twitterTask.hashtag">
-              using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span> </span
-            >, share why you want to have this project’s primary market exposure.
+            }}"" , then submit the link to your reply tweet here
           </div>
         </div>
         <div

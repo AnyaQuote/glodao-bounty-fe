@@ -43,6 +43,7 @@
                   height="100%"
                   @click="submitLink"
                   :loading="!twitterTask.finished && vm.isTaskUpdating"
+                  :disabled="vm.shouldDisableTaskProcessing"
                 >
                   Submit
                 </v-btn>
@@ -122,6 +123,7 @@
                 height="100%"
                 @click="submitLink"
                 :loading="!twitterTask.finished && vm.isTaskUpdating"
+                :disabled="vm.shouldDisableTaskProcessing"
               >
                 Submit
               </v-btn>

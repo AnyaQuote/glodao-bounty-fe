@@ -6,9 +6,10 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">Follow {{ page }} page</div>
+          <div class="text-body-1 font-weight-600">Like tweet from {{ page }}</div>
           <div class="text-caption mt-1">
-            Please follow <span class="blue--text">{{ page }}</span> Twitter page to complete this task.
+            Please like <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> to complete this
+            task.
           </div>
         </div>
         <div
@@ -17,6 +18,9 @@
             $vuetify.breakpoint.smAndUp && vm.isHuntingProcessStarted && twitterTask.activeStep && !twitterTask.finished
           "
         >
+          <div class="d-flex row justify-center" v-if="twitterTask.embedLink">
+            <embed-tweet :link="twitterTask.embedLink" class="col-10" />
+          </div>
           <v-btn
             class="white--text text-none linear-background-blue-main text-caption"
             elevation="0"
@@ -25,7 +29,7 @@
             :disabled="vm.shouldDisableTaskProcessing"
           >
             <v-icon left size="14">mdi-twitter</v-icon>
-            Follow {{ page }}
+            I have liked the tweet
           </v-btn>
         </div>
       </v-col>
@@ -69,19 +73,25 @@
           </v-sheet>
         </div>
       </v-col>
-      <v-col cols="12" class="mb-3">
+      <v-col
+        cols="12"
+        class="mb-3"
+        v-if="
+          $vuetify.breakpoint.xsOnly && vm.isHuntingProcessStarted && twitterTask.activeStep && !twitterTask.finished
+        "
+      >
+        <div class="d-flex row justify-center" v-if="twitterTask.embedLink">
+          <embed-tweet :link="twitterTask.embedLink" class="col-10" />
+        </div>
         <v-btn
           class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
           elevation="0"
           @click="openFollowTwitterLink"
-          v-if="
-            $vuetify.breakpoint.xsOnly && vm.isHuntingProcessStarted && twitterTask.activeStep && !twitterTask.finished
-          "
           :loading="!twitterTask.finished && vm.isTaskUpdating"
           :disabled="vm.shouldDisableTaskProcessing"
         >
           <v-icon left size="14">mdi-twitter</v-icon>
-          Follow {{ page }}
+          I have liked the tweet
         </v-btn>
       </v-col>
     </v-row>
@@ -110,7 +120,7 @@ export default class BountyDetail extends Vue {
   title = ''
 
   openFollowTwitterLink() {
-    this.openLink(get(this.twitterTask, 'link', ''))
+    // this.openLink(get(this.twitterTask, 'link', ''))
     this.vm.submitLink('twitter', '', this.step)
   }
   openLink(link: string) {

@@ -364,7 +364,13 @@
                         elevation
                         class="white--text text-none linear-background-blue-main"
                         @click="vm.startHunting"
-                        :disabled="!vm.isTaskStarted || vm.isTaskEnded || !vm.isAccountAgeQualify || !vm.currentWallet"
+                        :disabled="
+                          !vm.isTaskStarted ||
+                          vm.isTaskEnded ||
+                          !vm.isAccountAgeQualify ||
+                          !vm.currentWallet ||
+                          !vm.isCurrentWalletMatchRegistered
+                        "
                         :loading="vm.isStartingProcess"
                         height="40"
                       >
