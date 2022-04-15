@@ -22,6 +22,7 @@
             elevation="0"
             @click="openFollowTwitterLink"
             :loading="!twitterTask.finished && vm.isTaskUpdating"
+            :disabled="vm.shouldDisableTaskProcessing"
           >
             <v-icon left size="14">mdi-twitter</v-icon>
             Follow {{ page }}
@@ -77,6 +78,7 @@
             $vuetify.breakpoint.xsOnly && vm.isHuntingProcessStarted && twitterTask.activeStep && !twitterTask.finished
           "
           :loading="!twitterTask.finished && vm.isTaskUpdating"
+          :disabled="vm.shouldDisableTaskProcessing"
         >
           <v-icon left size="14">mdi-twitter</v-icon>
           Follow {{ page }}
