@@ -26,9 +26,10 @@
             elevation="0"
             @click="openFollowTwitterLink"
             :loading="!twitterTask.finished && vm.isTaskUpdating"
+            :disabled="vm.shouldDisableTaskProcessing"
           >
             <v-icon left size="14">mdi-twitter</v-icon>
-            I had liked the tweet
+            I have liked the tweet
           </v-btn>
         </div>
       </v-col>
@@ -87,9 +88,10 @@
           elevation="0"
           @click="openFollowTwitterLink"
           :loading="!twitterTask.finished && vm.isTaskUpdating"
+          :disabled="vm.shouldDisableTaskProcessing"
         >
           <v-icon left size="14">mdi-twitter</v-icon>
-          I had liked the tweet
+          I have liked the tweet
         </v-btn>
       </v-col>
     </v-row>
