@@ -105,29 +105,31 @@
           <v-sheet class="mb-4 neutral15">
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
-                  <div class="card-big-title-text font-weight-bold d-flex align-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-1"></v-img>
-                    {{ vm.rewardAmount | formatNumber }}
+                  <div class="card-big-title-text font-weight-bold d-flex justify-start">
+                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
+                    <span>{{ vm.rewardAmount | formatNumber }} ({{ vm.rewardAmountExchanged | usdCustom(2, 2) }})</span>
                   </div>
                 </v-sheet>
               </v-col>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Remaining ({{ vm.rewardToken }})</div>
-                  <div class="card-big-title-text font-weight-bold d-flex align-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-1"></v-img>
-                    {{ vm.remainingReward | formatNumber }}
+                  <div class="card-big-title-text font-weight-bold d-flex justify-start">
+                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
+                    <span>
+                      {{ vm.remainingReward | formatNumber }} ({{ vm.remainingRewardExchanged | usdCustom(2, 2) }})
+                    </span>
                   </div>
                 </v-sheet>
               </v-col>
               <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg" elevation="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
-                  <div class="card-big-title-text font-weight-bold d-flex align-center">
-                    <v-icon size="20" class="mr-1" color="bluePrimary">mdi-account-circle</v-icon>
-                    {{ vm.totalParticipants }}
+                  <div class="card-big-title-text font-weight-bold d-flex justify-start">
+                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
+                    <span>{{ vm.totalParticipants }}</span>
                   </div>
                 </v-sheet>
               </v-col>
