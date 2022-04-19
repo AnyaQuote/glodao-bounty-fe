@@ -67,7 +67,7 @@
                 :iconColor="'green'"
               />
             </div>
-            <div v-else>Connect one of your wallets to use Diversity!</div>
+            <div v-else>Connect one of your wallets to use GloDAO!</div>
           </div>
         </v-card>
 
