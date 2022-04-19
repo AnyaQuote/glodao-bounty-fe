@@ -3,7 +3,7 @@
     <div class="nav-container mx-auto" style="width: 100%">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
-          <div class="pl-4 cursor-pointer" @click="openLink('https://cyberk-glodao.netlify.app/')">
+          <div class="pl-4 cursor-pointer" @click="openLink('https://glodao.io/')">
             <v-img
               :src="
                 $vuetify.theme.dark
