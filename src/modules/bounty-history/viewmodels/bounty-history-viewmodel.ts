@@ -20,6 +20,7 @@ export class BountyHistoryViewModel {
 
   @observable totalProjectCount = 0
   @observable endedProjectCount = 0
+  @observable liveProjectCount = 0
   @observable userCount = 0
   @observable uniqueParticipantCount = 0
 
@@ -123,6 +124,7 @@ export class BountyHistoryViewModel {
     try {
       this.totalProjectCount = yield apiService.tasks.count()
       this.endedProjectCount = yield apiService.tasks.count({ status: 'ended' })
+      this.liveProjectCount = yield apiService.tasks.count({ status: 'live' })
       this.userCount = yield apiService.hunters.count()
       this.uniqueParticipantCount = yield apiService.hunters.count({
         participationStatus_ne: 'guest',
@@ -184,10 +186,6 @@ export class BountyHistoryViewModel {
 
   @action.bound changeEndDateValue(val) {
     this.endDate = val
-  }
-
-  @computed get liveProjectCount() {
-    return this.totalProjectCount - this.endedProjectCount
   }
 
   @computed get remainingBounty() {
