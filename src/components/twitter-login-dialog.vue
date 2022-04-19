@@ -24,8 +24,8 @@
             </v-btn>
           </div>
           <div class="mt-8 px-10">
-            By connect you accept Diversity’s
-            <a href="#" class="blue-diversity--text">Ternms and Conditions</a> and
+            By connect you accept GloDAO’s
+            <a href="#" class="blue-diversity--text">Terms and Conditions</a> and
             <a href="#" class="blue-diversity--text">Privacy Policy</a>
           </div>
         </v-sheet>
@@ -40,7 +40,7 @@
           <div>
             <v-avatar size="48" color="blue"></v-avatar>
           </div>
-          <div class="mt-2 card-title-text font-weight-600">Diversity is requesting access to:</div>
+          <div class="mt-2 card-title-text font-weight-600">GloDAO is requesting access to:</div>
           <div class="mt-2 neutral10--text">Your name, profile picture, activity</div>
         </div>
         <div class="mt-6"><a href="#" class="blue-diversity--text">View access</a></div>
@@ -61,9 +61,9 @@
           Cancel
         </v-btn>
         <div class="dialog-small-text neutral10--text mt-6">
-          By continuing, Diversity will receive ongoing access to the information you share. <br />
+          By continuing, GloDAO will receive ongoing access to the information you share. <br />
           <a class="blue-diversity--text" href="#">Learn more</a> about this sharing and the settings you have.<br />
-          Diversity's <a class="blue-diversity--text" href="#">Privacy Policy</a>
+          GloDAO's <a class="blue-diversity--text" href="#">Privacy Policy</a>
         </div>
       </v-sheet>
       <v-icon class="close-icon" @click="authStore.changeTwitterLoginDialog(false)">mdi-window-close</v-icon>
