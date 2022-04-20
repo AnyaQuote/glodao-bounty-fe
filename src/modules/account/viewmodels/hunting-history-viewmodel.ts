@@ -178,10 +178,6 @@ export class HuntingHistoryViewModel {
     }
   }
 
-  @computed get totalReferralPage() {
-    return ceil(this.referralList.length / PAGE_LIMIT)
-  }
-
   @asyncAction *getHuntingListByPage(page?: number) {
     try {
       if (!authStore.jwt) return
@@ -253,6 +249,10 @@ export class HuntingHistoryViewModel {
     } catch (error: any) {
       snackController.error('Error: Cant get stake status - ' + error)
     }
+  }
+
+  @computed get totalReferralPage() {
+    return ceil(this.referralList.length / PAGE_LIMIT)
   }
 
   @computed get isStaked() {
@@ -336,5 +336,16 @@ export class HuntingHistoryViewModel {
         { _or: [...this.statusFilterParams] },
       ],
     }
+  }
+
+  @computed get totalReferralCommission() {
+    return this.referralList.reduce((acc, current) => {
+      acc += current.commission
+    }, 0)
+  }
+  @computed get totalReferralCommissionToday() {
+    return this.referralList.reduce((acc, current) => {
+      acc += current.commissionToday
+    }, 0)
   }
 }
