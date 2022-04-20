@@ -51,4 +51,12 @@ export default class BountyUpcomingCard extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #c4c4c4;
+  border-radius: 50%;
+  display: inline-block;
+}
+</style>
