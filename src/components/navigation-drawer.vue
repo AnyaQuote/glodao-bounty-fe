@@ -195,7 +195,7 @@ import { Observer } from 'mobx-vue'
     'connect-wallet': () => import('@/components/connect-wallet.vue'),
   },
 })
-export default class Staking extends Vue {
+export default class NavigationDrawer extends Vue {
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
