@@ -5,7 +5,6 @@
     </v-col>
     <template v-if="$vuetify.breakpoint.mdAndUp">
       <v-col cols="12">
-        <!-- <v-hover v-slot="{ hover }"> -->
         <div class="p-relative">
           <v-tabs-items v-model="tab" class="rounded-lg">
             <!-- Background image start (This width and height will decide the structure) -->
@@ -71,7 +70,6 @@
             <!-- slider end -->
           </div>
         </div>
-        <!-- </v-hover> -->
       </v-col>
     </template>
     <template v-else>
@@ -145,15 +143,7 @@ export default class BountyUpcoming extends Vue {
 
 .test {
   background: rgba(255, 255, 255, 0.42) !important;
-  backdrop-filter: blur(8px);
-}
-
-.dot {
-  height: 8px;
-  width: 8px;
-  background-color: #c4c4c4;
-  border-radius: 50%;
-  display: inline-block;
+  backdrop-filter: blur(6px);
 }
 
 .hidden {
