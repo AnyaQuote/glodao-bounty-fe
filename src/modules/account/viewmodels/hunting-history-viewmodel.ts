@@ -6,7 +6,7 @@ import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
-import { ceil, keys, lowerCase, isEmpty, get, isEqual } from 'lodash-es'
+import { ceil, get, isEmpty, isEqual, keys, lowerCase, orderBy } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
@@ -49,17 +49,17 @@ export class HuntingHistoryViewModel {
 
   @observable referralCode = get(authStore, 'user.hunter.referralCode', '')
   @observable referralList: any[] = []
-  @observable referralCount = 0
-  @observable referralPage = 1
-  @observable referralSortParams = 'createdAt:DESC'
+  @observable referralWorkingList: any[] = []
+  @observable referralPage = 0
+  @observable referralSortParams = ['joinTime', 'asc']
   @observable referralSortList = [
     {
       text: 'Recently join',
-      value: 'createdAt:DESC',
+      value: ['joinTime', 'desc'],
     },
     {
       text: 'Name ascending',
-      value: 'name:ASC',
+      value: ['name', 'asc'],
     },
   ]
 
@@ -103,14 +103,29 @@ export class HuntingHistoryViewModel {
       reaction(
         () => this.referralPage,
         () => {
-          this.getReferralList(this.referralPage)
+          this.referralWorkingList = this.referralList
+            .slice((this.referralPage - 1) * PAGE_LIMIT, this.referralPage * PAGE_LIMIT)
+            .map(({ id, name, createdAt, metadata, totalEarn, commission, commissionToday }) => ({
+              id,
+              name,
+              joinTime: createdAt,
+              avatar: get(metadata, 'avatar', ''),
+              totalEarn,
+              commission,
+              commissionToday,
+            }))
+          this.onReferralSortConditionChange([]) // Reset sortParams when going new page
         }
       ),
       reaction(
         () => this.referralSortParams,
         () => {
-          if (this.referralPage !== 1) this.referralPage = 1
-          else this.getReferralList(1)
+          if (!this.referralSortParams.length) return // omit when sortParam is reset
+          this.referralWorkingList = orderBy(
+            this.referralWorkingList,
+            [this.referralSortParams[0]],
+            [this.referralSortParams[1] as 'asc' | 'desc']
+          )
         }
       ),
     ]
@@ -125,7 +140,6 @@ export class HuntingHistoryViewModel {
     this.getTotalHuntingCount()
     this.getProcessingAndCompletedTaskCount()
     this.getReferralList()
-    this.getTotalReferralCount()
   }
 
   @action onShouldGetHuntingList() {
@@ -149,37 +163,23 @@ export class HuntingHistoryViewModel {
     this.dateRanges = value
   }
 
-  @action.bound onReferralSortConditionChange(value: string) {
+  @action.bound onReferralSortConditionChange(value: string[]) {
     this.referralSortParams = value
   }
 
-  @asyncAction *getReferralList(page?: number) {
+  @asyncAction *getReferralList() {
     try {
-      if (page) this.referralPage = page
-      const _start = ((this.referralPage ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.hunters.find(
-        { referrerCode: this.referralCode },
-        {
-          _limit: PAGE_LIMIT,
-          _start: _start,
-          _sort: this.referralSortParams,
-        }
-      )
+      const hunterId = params['hunter.id']
+      const res = yield apiService.getReferrals(hunterId)
       this.referralList = res
+      this.referralPage = 1 // Setting page from 0 (default) to 1 will invoke the working list
     } catch (error) {
-      this.referralList = []
       snackController.error(('Cant get referral list:' + error) as string)
     }
   }
 
-  @asyncAction *getTotalReferralCount() {
-    try {
-      if (!authStore.jwt) return
-      const res = yield apiService.hunters.count({ referrerCode: this.referralCode })
-      this.referralCount = res
-    } catch (error) {
-      snackController.error(error as string)
-    }
+  @computed get totalReferralPage() {
+    return ceil(this.referralList.length / PAGE_LIMIT)
   }
 
   @asyncAction *getHuntingListByPage(page?: number) {
@@ -336,20 +336,5 @@ export class HuntingHistoryViewModel {
         { _or: [...this.statusFilterParams] },
       ],
     }
-  }
-
-  @computed get totalReferralPageCount() {
-    return ceil(this.referralCount / PAGE_LIMIT)
-  }
-
-  @computed get convertedReferralList() {
-    return this.referralList.map(({ id, name, createdAt, metadata }) => {
-      return {
-        id,
-        name,
-        joinTime: createdAt,
-        avatar: get(metadata, 'avatar', ''),
-      }
-    })
   }
 }
