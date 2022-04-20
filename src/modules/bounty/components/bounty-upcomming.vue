@@ -72,12 +72,12 @@
 
               <!-- slider start -->
               <v-slide-x-reverse-transition>
-                <div v-show="hover" class="flex-center p-absolute t-r-0 fill-height">
-                  <div class="d-flex align-center justify-end">
+                <div v-show="hover" class="p-absolute t-r-0 fill-height">
+                  <!-- <div class="d-flex align-center justify-end">
                     <div class="test rounded-tl-lg rounded-bl-lg py-8">
                       <v-icon size="50">mdi-chevron-left</v-icon>
                     </div>
-                  </div>
+                  </div> -->
                   <div
                     class="pa-3 scrollable fill-height transparent test rounded-tl-lg rounded-bl-lg"
                     style="width: 218px"
@@ -166,12 +166,8 @@ export default class BountyUpcoming extends Vue {
 }
 
 .test {
-  background: radial-gradient(
-    66.84% 180.1% at 19.81% 27.89%,
-    rgba(255, 255, 255, 0.42) 0%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
-  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.42) !important;
+  backdrop-filter: blur(8px);
 }
 
 .dot {
