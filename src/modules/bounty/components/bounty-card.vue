@@ -23,7 +23,9 @@
         <div class="pa-4">
           <div>
             <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-              <chain-logo :chain="chainId" class="fill-width fill-height" />
+              <v-sheet class="rounded-circle" width="32" height="32">
+                <v-img :src="projectLogo"></v-img>
+              </v-sheet>
             </div>
             <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
               {{ name }}
@@ -90,6 +92,7 @@ export default class BountyCard extends Vue {
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
   isEnded = moment(this.endTime).isBefore(moment())
+  projectLogo = this.metadata?.projectLogo ?? ''
 
   openLink() {
     this.$router.push(`bounty/${this.id}`)

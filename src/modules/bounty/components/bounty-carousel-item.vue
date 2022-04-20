@@ -12,7 +12,10 @@
     </div>
     <div class="d-flex flex-column justify-space-between mx-4 my-3">
       <div class="d-flex flex-column mb-3">
-        <ChainLogo :chain="chainId" class="w-32 h-32 align-self-start flex-shrink-0 mb-2" />
+        <!-- <ChainLogo :chain="chainId" class="w-32 h-32 align-self-start flex-shrink-0 mb-2" /> -->
+        <v-sheet class="rounded-circle" width="32" height="32">
+          <v-img :src="projectLogo"></v-img>
+        </v-sheet>
         <div class="d-flex flex-column flex-1">
           <div class="blue--text font-size-18 text-truncate">{{ name }}</div>
           <div class="d-flex">
@@ -58,6 +61,7 @@ export default class BountyCarouselItem extends Vue {
   @Prop({ required: true }) maxParticipant!: number
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
+  projectLogo = this.metadata?.projectLogo ?? ''
 }
 </script>
 
