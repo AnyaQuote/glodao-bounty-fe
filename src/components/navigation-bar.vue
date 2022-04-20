@@ -16,13 +16,12 @@
           </div>
         </v-col>
         <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
-          <a
-            @click="openLink('https://dev.glodao.io/launchpad')"
-            class="text-decoration-none px-4 d-flex align-center"
-            active-class="blue-diversity--text"
-          >
-            <div class="text-none nav-btn-text">Launchpad</div>
-          </a>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <div class="text-none nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launchpad</div>
+            </template>
+            <span>Coming Soon!</span>
+          </v-tooltip>
           <!-- <router-link to="/bounty" class="text-decoration-none px-4" active-class="blue-diversity--text">
             <div class="text-none nav-btn-text">Bounty Hunter</div>
           </router-link> -->
@@ -40,7 +39,7 @@
                       <router-link
                         to="/bounty"
                         class="text-decoration-none px-4 text-none text-body-2 d-flex align-center"
-                        active-class="filter-bluePrimary font-weight-600"
+                        active-class="filter-bluePrimary black--text font-weight-600"
                       >
                         <img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 mr-1" />
                         Bounty project
@@ -51,8 +50,8 @@
                     <v-list-item-title>
                       <router-link
                         to="/bounty-history"
-                        class="text-decoration-none px-4 text-none text-body-2 d-flex align-center white--text"
-                        active-class="filter-bluePrimary font-weight-600"
+                        class="text-decoration-none px-4 text-none text-body-2 d-flex align-center"
+                        active-class="filter-bluePrimary black--text font-weight-600"
                       >
                         <img :src="require('@/assets/icons/nav-bar/launchpad.svg')" class="filter-neutral10 mr-1" />
                         Bounty history
@@ -61,7 +60,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4">
+                      <div class="d-flex align-center px-4 neutral10--text">
                         <v-icon class="mr-2" size="20">mdi-check</v-icon>
                         <div>Apply project (Coming soon)</div>
                       </div>
@@ -77,31 +76,21 @@
                 Staking <v-icon>mdi-chevron-down</v-icon>
               </div>
             </template>
-            <v-sheet class="neutral100" width="180">
+            <v-sheet class="neutral100" width="220">
               <v-list>
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <a
-                        @click="openLink('https://dev.glodao.io/staking')"
-                        class="text-decoration-none px-4 d-flex align-center"
-                        active-class="blue-diversity--text"
-                      >
-                        <img :src="require('@/assets/icons/nav-bar/staking.svg')" class="filter-neutral10 mr-1" />
-                        <div class="text-none nav-btn-text">$Staking</div>
-                      </a>
+                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text">
+                        <div>$Staking (Coming soon)</div>
+                      </div>
                     </v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <a
-                        @click="openLink('https://dev.glodao.io/farm')"
-                        class="text-decoration-none px-4 d-flex align-center"
-                        active-class="blue-diversity--text"
-                      >
-                        <img :src="require('@/assets/icons/nav-bar/farm.svg')" class="filter-neutral10 mr-1" />
-                        <div class="text-none nav-btn-text">Farming</div>
-                      </a>
+                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text">
+                        <div>Farm (Coming soon)</div>
+                      </div>
                     </v-list-item-title>
                   </v-list-item-content>
                 </v-list-item-group>
@@ -125,7 +114,7 @@
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4">
+                      <div class="d-flex align-center px-4 neutral10--text">
                         <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
                         <div>Locker (Coming soon)</div>
                       </div>
@@ -133,7 +122,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4">
+                      <div class="d-flex align-center px-4 neutral10--text">
                         <v-icon class="mr-2" size="20">mdi-cached</v-icon>
                         <div>Bulkclaimer (Coming soon)</div>
                       </div>
@@ -141,7 +130,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4">
+                      <div class="d-flex align-center px-4 neutral10--text">
                         <v-icon class="mr-2" size="20">mdi-flare</v-icon>
                         <div>Claimer (Coming soon)</div>
                       </div>
@@ -149,7 +138,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4">
+                      <div class="d-flex align-center px-4 neutral10--text">
                         <v-icon class="mr-2" size="20">mdi-alert-circle-outline</v-icon>
                         <div>Unapprove (Coming soon)</div>
                       </div>
@@ -243,7 +232,7 @@ export default class Staking extends Vue {
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
   openLink(url) {
-    window.open(url, '_blank')
+    window.open(url, '_self')
   }
 
   goToHuntingHistoryScreen() {
@@ -264,7 +253,6 @@ export default class Staking extends Vue {
   line-height: 20px;
   margin-top: 4px;
   margin-bottom: 4px;
-  color: var(--v-neutral10-base);
 }
 .nav-container {
   max-width: 1280px;
