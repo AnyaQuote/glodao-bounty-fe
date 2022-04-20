@@ -10,7 +10,7 @@
       <v-container class="px-6 py-4">
         <v-row>
           <v-col cols="12" sm="6" class="d-flex flex-column">
-            <div class="d-flex align-center cursor-pointer" @click="openLink('https://cyberk-glodao.netlify.app/')">
+            <div class="d-flex align-center cursor-pointer" @click="openLink('https://glodao.io/')">
               <v-img
                 alt="Vuetify Logo"
                 class="shrink mr-2"

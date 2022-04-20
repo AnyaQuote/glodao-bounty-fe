@@ -22,9 +22,7 @@
       </v-row>
     </v-sheet>
     <div class="mt-7 d-flex justify-center">
-      <v-btn class="background-blue-diversity white--text rounded-0 text-capitalize" depressed>
-        Sell on Diversity
-      </v-btn>
+      <v-btn class="background-blue-diversity white--text rounded-0 text-capitalize" depressed> Sell on GloDAO </v-btn>
     </div>
     <v-sheet
       outlined

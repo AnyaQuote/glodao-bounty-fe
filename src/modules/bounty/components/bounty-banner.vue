@@ -27,9 +27,9 @@
         <span class="mx-1 font-size-36 color-1--text">Do tasks to earn</span>
         <DoubleArrowFlipped></DoubleArrowFlipped>
       </div>
-      <div>
+      <!-- <div>
         <v-btn class="justify-start" color="blue" outlined> See hot pools </v-btn>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

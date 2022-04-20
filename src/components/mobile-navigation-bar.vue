@@ -16,7 +16,7 @@ import { Observer } from 'mobx-vue'
 @Component({
   components: {},
 })
-export default class Staking extends Vue {
+export default class MobileNavigationBar extends Vue {
   wallet = walletStore
   openLink(url) {
     window.open(url, '_blank')
