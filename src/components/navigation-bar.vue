@@ -72,7 +72,7 @@
           </v-menu>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <div class="text-none nav-btn-text d-flex align-center" :class="stakingClass" v-on="on" v-bind="attrs">
+              <div class="text-none nav-btn-text d-flex align-center" v-on="on" v-bind="attrs">
                 Staking <v-icon>mdi-chevron-down</v-icon>
               </div>
             </template>

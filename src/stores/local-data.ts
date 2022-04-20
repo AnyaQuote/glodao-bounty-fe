@@ -3,12 +3,13 @@ export class LocalData {
     if (enable) {
       localStorage.setItem('lightmode', 'enable')
     } else {
-      localStorage.removeItem('lightmode')
+      localStorage.setItem('lightmode', 'disable')
     }
   }
 
   get lightmode() {
-    return !!localStorage.getItem('lightmode')
+    if (!localStorage.getItem('lightmode') || localStorage.getItem('lightmode') === 'enable') return true
+    return false
   }
 }
 
