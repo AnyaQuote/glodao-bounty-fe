@@ -298,7 +298,7 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
     temp[type][stepIndex].shareTime = Date.now()
-    promiseHelper.delay(3000).then(() => {
+    promiseHelper.delay(2000).then(() => {
       apiService
         .updateTaskProcess(this.apply.id, type, temp)
         .then((res) => {
