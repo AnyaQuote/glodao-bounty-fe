@@ -22,9 +22,9 @@
     <div class="d-flex flex-column" style="margin-right: 58px">
       <div class="mb-2">Social link:</div>
       <div class="ml-n2">
-        <v-btn :href="metadata.website" icon><v-icon color="white">mdi-domain</v-icon></v-btn>
+        <v-btn :href="metadata.website" icon><v-icon small>mdi-domain</v-icon></v-btn>
         <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
-          <v-icon color="white" v-html="`mdi-${icon}`"></v-icon>
+          <v-icon small v-html="`mdi-${icon}`"></v-icon>
         </v-btn>
       </div>
     </div>
