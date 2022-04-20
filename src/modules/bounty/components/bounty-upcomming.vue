@@ -22,41 +22,16 @@
               <div class="d-flex flex-column justify-end" style="flex-grow: 1">
                 <v-tabs-items v-model="tab">
                   <v-tab-item v-for="(pool, index) in upcomingPoolList" :value="index" :key="pool.id" eager>
-                    <v-sheet
-                      class="test transparent d-flex rounded-lg pa-5 mr-10"
-                      :style="hover && 'width: calc(100% - 250px);'"
-                    >
-                      <div class="d-flex" style="flex-grow: 1">
-                        <v-sheet width="64" height="64" class="transparent">
-                          <ChainLogo :chain="pool.chainId" class="fill-width fill-height" />
-                        </v-sheet>
-                        <div class="d-flex flex-column justify-space-between ml-2">
-                          <div class="d-flex align-center">
-                            <span class="bluePrimary--text font-weight-bold" style="font-size: 1.5rem">{{
-                              pool.name
-                            }}</span>
-                            <div class="dot mx-2"></div>
-                            <span style="font-size: 1.5rem"
-                              >{{ pool.rewardAmount | formatNumber(2, 0) }} {{ pool.metadata.rewardToken }}</span
-                            >
-                          </div>
-                          <div class="d-flex">
-                            <span>{{ pool.startTime | datetime }}</span>
-                            <span>&nbsp;-&nbsp;</span>
-                            <span>{{ pool.endTime | datetime }}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="d-flex flex-column" style="margin-right: 58px">
-                        <div class="font-size-16 mb-2">Social link</div>
-                        <div class="ml-n2">
-                          <v-btn :href="pool.metadata.website" icon><v-icon color="white">mdi-domain</v-icon></v-btn>
-                          <v-btn v-for="(link, icon) in pool.metadata.socialLinks" :key="icon" :href="link" icon>
-                            <v-icon color="white" v-html="`mdi-${icon}`"></v-icon>
-                          </v-btn>
-                        </div>
-                      </div>
-                    </v-sheet>
+                    <bounty-upcoming-card
+                      :name="pool.name"
+                      :startTime="pool.startTime"
+                      :endTime="pool.endTime"
+                      :rewardAmount="pool.rewardAmount"
+                      :chainId="pool.chainId"
+                      :maxParticipant="pool.maxParticipant"
+                      :metadata="pool.metadata"
+                      :hover="hover"
+                    ></bounty-upcoming-card>
                   </v-tab-item>
                 </v-tabs-items>
               </div>
@@ -190,5 +165,13 @@ export default class BountyUpcoming extends Vue {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.z-index-0 {
+  z-index: 0;
+}
+
+.z-index-1 {
+  z-index: 1;
 }
 </style>

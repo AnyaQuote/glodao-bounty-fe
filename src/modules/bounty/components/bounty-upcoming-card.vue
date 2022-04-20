@@ -1,44 +1,34 @@
 <template>
-  <div class="position-relative h-560">
-    <v-img
-      class="position-relative w-fill h-fill z-index-0 object-fit-cover border-radius-16"
-      :src="coverImage"
-    ></v-img>
-    <div
-      class="position-absolute top-0 left-0 z-index-1 w-fill h-fill d-flex flex-column justify-space-between align-items-start pa-10"
-    >
-      <div>
-        <v-sheet class="neutral100--bg d-flex flex-row align-center border-radius-16 pa-5">
-          <div class="w-64 h-64 flex-shrink-0">
-            <ChainLogo :chain="chainId" class="fill-width fill-height" />
-          </div>
-          <div class="d-flex flex-column flex-1 pl-5">
-            <div class="d-flex flex-row align-center justify-space-between mb-3">
-              <div class="font-size-24 blue--text text-no-wrap text-truncate">{{ name }}</div>
-              <div class="dot flex-shrink-0 mx-2"></div>
-              <div class="font-size-24 text-no-wrap text-truncate text-end">
-                {{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}
-              </div>
-            </div>
-            <div class="d-flex flex-row justify-space-between text-no-wrap text-truncate">
-              <div class="">{{ startTime | datetime }}</div>
-              <div class="flex-shrink-0 mx-2">-</div>
-              <div>{{ endTime | datetime }}</div>
-            </div>
-          </div>
-        </v-sheet>
-      </div>
-      <v-sheet class="background-transparent position-relative z-index-1 d-flex flex-column white--text">
-        <div class="d-block font-size-16 mb-2">Social link:</div>
-        <div class="d-block ml-n2">
-          <v-btn :href="metadata.website" icon><v-icon color="white">mdi-domain</v-icon></v-btn>
-          <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
-            <v-icon color="white" v-html="`mdi-${icon}`"></v-icon>
-          </v-btn>
-        </div>
+  <v-sheet class="test transparent d-flex rounded-lg pa-5 mr-10" :style="hover && 'width: calc(100% - 250px);'">
+    <div class="d-flex" style="flex-grow: 1">
+      <v-sheet width="64" height="64" class="transparent">
+        <ChainLogo :chain="chainId" class="fill-width fill-height" />
       </v-sheet>
+      <div class="d-flex flex-column ml-2">
+        <div class="d-flex align-center">
+          <span class="bluePrimary--text font-weight-bold" style="font-size: 1.5rem">{{ name }}</span>
+          <div class="dot mx-4"></div>
+          <span class="font-weight-bold" style="font-size: 1.5rem"
+            >{{ rewardAmount | formatNumber(2, 0) }} {{ metadata.rewardToken }}</span
+          >
+        </div>
+        <div class="d-flex">
+          <span>{{ startTime | datetime }}</span>
+          <span>&nbsp;-&nbsp;</span>
+          <span>{{ endTime | datetime }}</span>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="d-flex flex-column" style="margin-right: 58px">
+      <div class="mb-2">Social link:</div>
+      <div class="ml-n2">
+        <v-btn :href="metadata.website" icon><v-icon color="white">mdi-domain</v-icon></v-btn>
+        <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
+          <v-icon color="white" v-html="`mdi-${icon}`"></v-icon>
+        </v-btn>
+      </div>
+    </div>
+  </v-sheet>
 </template>
 
 <script lang="ts">
@@ -57,6 +47,7 @@ export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) maxParticipant!: number
+  @Prop({ required: true }) hover!: boolean
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
 }
@@ -108,7 +99,7 @@ export default class BountyUpcomingCard extends Vue {
 }
 
 .top-0 {
-  top: 0;
+  bottom: 0;
 }
 
 .left-0 {
@@ -141,7 +132,7 @@ export default class BountyUpcomingCard extends Vue {
   width: 8px;
   height: 8px;
   border-radius: 10px;
-  background: grey;
+  background: #c4c4c4;
 }
 
 .flex-shrink-0 {
@@ -152,5 +143,14 @@ export default class BountyUpcomingCard extends Vue {
   font-size: 16;
   line-height: 24px;
   font-weight: 600;
+}
+
+.test {
+  background: radial-gradient(
+    66.84% 180.1% at 19.81% 27.89%,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(24px);
 }
 </style>
