@@ -53,11 +53,11 @@
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
       <v-sheet class="transparent font-weight-600">Total earning:</v-sheet>
-      <v-sheet class="transparent font-weight-bold">$0</v-sheet>
+      <v-sheet class="transparent font-weight-bold">{{ vm.totalEarning | usdCustom(2, 2) }}</v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-5">
       <v-sheet class="transparent font-weight-600">Today earning:</v-sheet>
-      <v-sheet class="transparent font-weight-bold">$0</v-sheet>
+      <v-sheet class="transparent font-weight-bold">{{ vm.totalEarningToday | usdCustom(2, 2) }}</v-sheet>
     </v-sheet>
   </v-sheet>
 </template>
