@@ -64,6 +64,11 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.router-link-exact-active {
+  .filter-neutral10 {
+    filter: none !important;
+  }
+}
 .theme--dark {
   .date-picker-dialog-custom {
     .v-date-picker-header {

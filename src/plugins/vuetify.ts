@@ -16,7 +16,6 @@ export default new Vuetify({
     },
   },
   theme: {
-    // dark: !localData.lightmode,
     dark: !localData.lightmode,
     options: {
       customProperties: true,
