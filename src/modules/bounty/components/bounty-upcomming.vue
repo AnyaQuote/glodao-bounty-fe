@@ -3,15 +3,15 @@
     <v-col cols="12">
       <div class="section-big-title-text text-uppercase blue--text font-weight-bold">Upcoming pools</div>
     </v-col>
-    <div v-if="$vuetify.breakpoint.mdAndUp">
+    <template v-if="$vuetify.breakpoint.mdAndUp">
       <v-col cols="12">
         <v-hover v-slot="{ hover }">
-          <div class="p-relative" style="width: 1000px; height: 700px">
+          <div class="p-relative">
             <v-tabs-items v-model="tab" class="rounded-lg">
               <!-- Background image start (This width and height will decide the structure) -->
-              <v-sheet class="fill-height p-relative" height="700" width="1000">
+              <v-sheet class="fill-height p-relative">
                 <v-tab-item v-for="(pool, index) in upcomingPoolList" :value="index" :key="pool.id">
-                  <v-img width="1000" height="700" :src="pool.metadata.coverImage" aspect-ratio="3.5"></v-img>
+                  <v-img height="700" :src="pool.metadata.coverImage" aspect-ratio="1.5"></v-img>
                 </v-tab-item>
               </v-sheet>
               <!-- Background image end -->
@@ -63,7 +63,7 @@
               <!-- info header end -->
 
               <!-- slider button start -->
-              <div class="p-absolute t-b-l-r-0" :class="{ 'd-flex align-center justify-end': !hover, hidden: hover }">
+              <div v-show="!hover" class="p-absolute t-b-l-r-0 flex-center-end">
                 <div class="test rounded-tl-lg rounded-bl-lg py-8">
                   <v-icon size="50">mdi-chevron-left</v-icon>
                 </div>
@@ -98,8 +98,8 @@
           </div>
         </v-hover>
       </v-col>
-    </div>
-    <div v-else>
+    </template>
+    <template v-else>
       <v-col cols="12" sm="6" v-for="(pool, index) in upcomingPoolList" :key="index">
         <BountyCarouselItem
           :maxParticipant="pool.maxParticipant"
@@ -114,7 +114,7 @@
         >
         </BountyCarouselItem>
       </v-col>
-    </div>
+    </template>
   </v-row>
 </template>
 
@@ -171,7 +171,7 @@ export default class BountyUpcoming extends Vue {
     rgba(255, 255, 255, 0.42) 0%,
     rgba(255, 255, 255, 0.06) 100%
   );
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(4px);
 }
 
 .dot {
@@ -188,6 +188,11 @@ export default class BountyUpcoming extends Vue {
 
 .flex-center {
   display: flex;
-  align-content: center;
+  align-items: center;
+}
+.flex-center-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>
