@@ -133,7 +133,9 @@
             <v-row class="mt-1">
               <v-col cols="12" sm="6" md="3">
                 <v-sheet class="transparent d-flex align-center" height="100%">
-                  <v-sheet class="transparent font-weight-bold neutral0--text pr-1">{{ vm.referralCount }}</v-sheet>
+                  <v-sheet class="transparent font-weight-bold neutral0--text pr-1">{{
+                    vm.referralList.length
+                  }}</v-sheet>
                   <v-sheet class="transparent neutral0--text">Refferals</v-sheet>
                 </v-sheet>
               </v-col>
@@ -145,18 +147,22 @@
                   dense
                   height="40"
                   hide-details
+                  :value="vm.referralSortParams"
                   @change="vm.onReferralSortConditionChange"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" v-if="vm.convertedReferralList.length > 0">
+              <v-col cols="12" v-if="vm.referralWorkingList.length > 0">
                 <referral-card
-                  v-for="item in vm.convertedReferralList"
+                  v-for="item in vm.referralWorkingList"
                   :key="item.id"
                   :name="item.name"
                   :joinTime="item.joinTime"
                   :avatar="item.avatar"
+                  :commission="item.commission"
+                  :totalEarn="item.totalEarn"
+                  :commissionToday="item.commissionToday"
                   :id="item.id"
                   class="mb-2"
                 ></referral-card>
@@ -164,10 +170,10 @@
               <v-col cols="12" v-else>
                 <no-referrals />
               </v-col>
-              <v-col cols="12" class="my-8" v-if="vm.totalReferralPageCount > 1">
+              <v-col cols="12" class="my-8" v-if="vm.totalReferralPage > 1">
                 <v-pagination
                   v-model="vm.referralPage"
-                  :length="vm.totalReferralPageCount"
+                  :length="vm.totalReferralPage"
                   :total-visible="7"
                   color="blue"
                   :value="vm.referralPage"

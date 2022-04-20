@@ -25,8 +25,9 @@
       <!-- BOUNTY NAME -->
       <v-col cols="12">
         <v-sheet class="d-flex align-center mb-4 neutral15">
-          <v-sheet width="48" height="48" class="rounded-circle d-flex justify-center align-center">
-            <chain-logo :chain="vm.task | _get('chainId')" class="fill-width fill-height" />
+          <v-sheet width="48" height="48" class="rounded-circle d-flex justify-center align-center transparent">
+            <!-- <chain-logo :chain="vm.task | _get('chainId')" class="fill-width fill-height" /> -->
+            <v-img :src="vm.projectLogo" class="rounded-circle" />
           </v-sheet>
           <div class="d-flex align-center ml-3 mt-1 text-h4 font-weight-bold">
             {{ vm.task | _get('name') }}
@@ -107,7 +108,7 @@
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
-                  <div class="card-big-title-text font-weight-bold d-flex justify-start">
+                  <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>{{ vm.rewardAmount | formatNumber }} ({{ vm.rewardAmountExchanged | usdCustom(2, 2) }})</span>
                   </div>
@@ -116,7 +117,7 @@
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Remaining ({{ vm.rewardToken }})</div>
-                  <div class="card-big-title-text font-weight-bold d-flex justify-start">
+                  <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>
                       {{ vm.remainingReward | formatNumber }} ({{ vm.remainingRewardExchanged | usdCustom(2, 2) }})
@@ -127,7 +128,7 @@
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
-                  <div class="card-big-title-text font-weight-bold d-flex justify-start">
+                  <div class="card-big-title-text font-weight-bold d-flex">
                     <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
                     <span>{{ vm.totalParticipants }}</span>
                   </div>

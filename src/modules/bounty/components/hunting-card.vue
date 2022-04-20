@@ -4,7 +4,9 @@
 
     <div class="d-flex flex-column pa-6">
       <div class="d-flex align-center mb-6">
-        <img :src="require(`@/assets/icons/${chainId || 'bsc'}-icon.svg`)" width="64" height="64" />
+        <v-sheet width="64" height="64" class="rounded-circle transparent">
+          <v-img :src="projectLogo" class="rounded-circle" />
+        </v-sheet>
         <div class="title blue--text ml-6 text-truncate flex-grow-1">
           {{ name }}
         </div>
@@ -74,6 +76,7 @@ export default class HuntingTimeCard extends Vue {
   @Prop({ required: true }) tokenName!: string
   @Prop({ required: true }) participant!: number
   @Prop({ required: true }) id!: string
+  @Prop({ required: true }) projectLogo!: string
 
   openLink() {
     this.$router.push(`bounty/${this.id}`)

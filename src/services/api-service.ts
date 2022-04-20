@@ -258,6 +258,18 @@ export class ApiService {
     return res.data
   }
 
+  async getReferrals(hunterId: string) {
+    const res = await axios.get('hunters/referrals', {
+      params: {
+        id: hunterId,
+      },
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
+    return res.data
+  }
+
   async applyForPriorityPool(
     walletAddress: string,
     signature: string,
