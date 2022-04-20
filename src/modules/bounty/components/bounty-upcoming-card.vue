@@ -1,7 +1,7 @@
 <template>
   <v-sheet class="blur-bg transparent d-flex rounded-lg pa-5 mr-10" :style="retract && 'width: calc(100% - 250px);'">
     <div class="d-flex" style="flex-grow: 1">
-      <v-sheet width="64" height="64" class="rounded-circle">
+      <v-sheet width="64" height="64" class="rounded-circle transparent">
         <v-img :src="projectLogo"></v-img>
       </v-sheet>
       <div class="d-flex flex-column ml-2">

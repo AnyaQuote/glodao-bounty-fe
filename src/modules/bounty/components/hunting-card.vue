@@ -4,7 +4,7 @@
 
     <div class="d-flex flex-column pa-6">
       <div class="d-flex align-center mb-6">
-        <v-sheet width="64" height="64" class="rounded-circle">
+        <v-sheet width="64" height="64" class="rounded-circle transparent">
           <v-img :src="projectLogo" class="rounded-circle" />
         </v-sheet>
         <div class="title blue--text ml-6 text-truncate flex-grow-1">

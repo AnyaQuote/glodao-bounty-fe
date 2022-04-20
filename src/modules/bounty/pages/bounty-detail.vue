@@ -25,7 +25,7 @@
       <!-- BOUNTY NAME -->
       <v-col cols="12">
         <v-sheet class="d-flex align-center mb-4 neutral15">
-          <v-sheet width="48" height="48" class="rounded-circle d-flex justify-center align-center">
+          <v-sheet width="48" height="48" class="rounded-circle d-flex justify-center align-center transparent">
             <!-- <chain-logo :chain="vm.task | _get('chainId')" class="fill-width fill-height" /> -->
             <v-img :src="vm.projectLogo" class="rounded-circle" />
           </v-sheet>

@@ -23,7 +23,7 @@
         <div class="pa-4">
           <div>
             <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-              <v-sheet class="rounded-circle" width="32" height="32">
+              <v-sheet class="rounded-circle transparent" width="32" height="32">
                 <v-img :src="projectLogo"></v-img>
               </v-sheet>
             </div>

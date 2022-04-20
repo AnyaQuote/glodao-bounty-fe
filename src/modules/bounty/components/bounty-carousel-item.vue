@@ -13,7 +13,7 @@
     <div class="d-flex flex-column justify-space-between mx-4 my-3">
       <div class="d-flex flex-column mb-3">
         <!-- <ChainLogo :chain="chainId" class="w-32 h-32 align-self-start flex-shrink-0 mb-2" /> -->
-        <v-sheet class="rounded-circle" width="32" height="32">
+        <v-sheet class="rounded-circle transparent" width="32" height="32">
           <v-img :src="projectLogo"></v-img>
         </v-sheet>
         <div class="d-flex flex-column flex-1">
