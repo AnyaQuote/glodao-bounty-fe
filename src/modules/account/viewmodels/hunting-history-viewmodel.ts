@@ -68,7 +68,10 @@ export class HuntingHistoryViewModel {
       router.push('/bounty').catch(() => {
         //
       })
-    else this.fetchData()
+    else {
+      this.fetchData()
+      this.getCompletedHuntingBounty()
+    }
   }
 
   initReaction() {
@@ -140,6 +143,25 @@ export class HuntingHistoryViewModel {
     this.getTotalHuntingCount()
     this.getProcessingAndCompletedTaskCount()
     this.getReferralList()
+  }
+
+  @observable completedHuntingList: any[] = [];
+
+  @asyncAction *getCompletedHuntingBounty() {
+    try {
+      const huntingListParams = {
+        _where: [
+          { ...params },
+          {
+            _or: [{ status: 'completed' }, { status: 'awarded' }],
+          },
+        ],
+      }
+      const res = yield apiService.applies.find(huntingListParams)
+      this.completedHuntingList = res
+    } catch (error) {
+      snackController.error(error as string)
+    }
   }
 
   @action onShouldGetHuntingList() {
@@ -339,13 +361,33 @@ export class HuntingHistoryViewModel {
   }
 
   @computed get totalReferralCommission() {
-    return this.referralList.reduce((acc, current) => {
-      acc += current.commission
-    }, 0)
+    return this.referralList.reduce(
+      (acc, current) => acc.addUnsafe(FixedNumber.from(current.commission)),
+      FixedNumber.from('0')
+    )._value
   }
+
   @computed get totalReferralCommissionToday() {
-    return this.referralList.reduce((acc, current) => {
-      acc += current.commissionToday
-    }, 0)
+    return this.referralList.reduce(
+      (acc, current) => acc.addUnsafe(FixedNumber.from(current.commissionToday)),
+      FixedNumber.from('0')
+    )._value
+  }
+
+  @computed get totalHuntingListBounty() {
+    return this.completedHuntingList.reduce(
+      (acc, current) => acc.addUnsafe(FixedNumber.from(current.bounty)),
+      FixedNumber.from('0')
+    )._value
+  }
+
+  @computed get totalEarning() {
+    return FixedNumber.from(this.totalReferralCommission).addUnsafe(FixedNumber.from(this.totalHuntingListBounty))
+      ._value
+  }
+
+  @computed get totalEarningToday() {
+    return FixedNumber.from(this.totalReferralCommissionToday).addUnsafe(FixedNumber.from(this.totalHuntingListBounty))
+      ._value
   }
 }
