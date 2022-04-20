@@ -538,6 +538,10 @@ export class BountyDetailViewModel {
     return authStore.accountAge > ACCOUNT_MIN_AGE_IN_DAYS
   }
 
+  @computed get projectLogo() {
+    return get(this.task, 'metadata.projectLogo', '')
+  }
+
   @computed get rewardToken() {
     return get(this.task, 'metadata.rewardToken', 'USDT')
   }

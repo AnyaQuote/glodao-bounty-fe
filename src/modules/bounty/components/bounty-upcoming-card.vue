@@ -1,8 +1,8 @@
 <template>
   <v-sheet class="blur-bg transparent d-flex rounded-lg pa-5 mr-10" :style="retract && 'width: calc(100% - 250px);'">
     <div class="d-flex" style="flex-grow: 1">
-      <v-sheet width="64" height="64" class="transparent">
-        <ChainLogo :chain="chainId" class="fill-width fill-height" />
+      <v-sheet width="64" height="64" class="rounded-circle">
+        <v-img :src="projectLogo"></v-img>
       </v-sheet>
       <div class="d-flex flex-column ml-2">
         <div class="d-flex align-center">
@@ -48,6 +48,7 @@ export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) retract!: boolean
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
+  projectLogo = this.metadata?.projectLogo ?? ''
 }
 </script>
 

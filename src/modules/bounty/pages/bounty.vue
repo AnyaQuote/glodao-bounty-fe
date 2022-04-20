@@ -53,6 +53,7 @@
               :chainId="bounty.chainId"
               :name="bounty.name"
               :rewardAmount="bounty.rewardAmount"
+              :projectLogo="bounty.projectLogo"
               :tokenName="bounty.tokenName"
               :participant="bounty.participant"
               :id="bounty.id"

@@ -189,6 +189,7 @@ export class BountyHunterViewModel {
           'metadata.coverImage',
           'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
         ),
+        projectLogo: bounty.metadata.projectLogo,
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
         participant: bounty.totalParticipants,
