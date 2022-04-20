@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="test transparent d-flex rounded-lg pa-5 mr-10" :style="hover && 'width: calc(100% - 250px);'">
+  <v-sheet class="test transparent d-flex rounded-lg pa-5 mr-10" :style="retract && 'width: calc(100% - 250px);'">
     <div class="d-flex" style="flex-grow: 1">
       <v-sheet width="64" height="64" class="transparent">
         <ChainLogo :chain="chainId" class="fill-width fill-height" />
@@ -45,7 +45,7 @@ export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) chainId!: number
   @Prop({ required: true }) metadata!: any
   @Prop({ required: true }) maxParticipant!: number
-  @Prop({ required: true }) hover!: boolean
+  @Prop({ required: true }) retract!: boolean
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
 }
