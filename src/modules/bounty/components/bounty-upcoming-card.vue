@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="test transparent d-flex rounded-lg pa-5 mr-10" :style="retract && 'width: calc(100% - 250px);'">
+  <v-sheet class="blur-bg transparent d-flex rounded-lg pa-5 mr-10" :style="retract && 'width: calc(100% - 250px);'">
     <div class="d-flex" style="flex-grow: 1">
       <v-sheet width="64" height="64" class="transparent">
         <ChainLogo :chain="chainId" class="fill-width fill-height" />
