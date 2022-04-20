@@ -22,6 +22,18 @@
         Twitter
       </v-sheet>
     </v-sheet>
+    <v-sheet class="transparent d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
+      <v-sheet class="transparent neutral10--text">Commission</v-sheet>
+      <v-sheet class="transparent font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
+        {{ commission }}
+      </v-sheet>
+    </v-sheet>
+    <v-sheet class="transparent d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
+      <v-sheet class="transparent neutral10--text">Last 24h</v-sheet>
+      <v-sheet class="transparent font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
+        {{ commissionToday }}
+      </v-sheet>
+    </v-sheet>
   </v-sheet>
 </template>
 
@@ -36,6 +48,9 @@ export default class ReferralCard extends Vue {
   @Prop({ required: true }) joinTime!: string
   @Prop({ required: true }) avatar!: string
   @Prop({ required: true }) name!: string
+  @Prop({ required: true }) totalEarn!: string
+  @Prop({ required: true }) commission!: string
+  @Prop({ required: true }) commissionToday!: string
 }
 </script>
 
