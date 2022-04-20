@@ -25,14 +25,14 @@
     <div class="d-flex flex-md-column pa-3 py-0">
       <div class="neutral10--text">Commission</div>
       <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
-        {{ commission }}
+        {{ commission | usdCustom(2, 2) }}
       </div>
       <!-- pr-md-10 py-0 ml-0 ml-md-auto -->
     </div>
     <div class="d-flex flex-md-column pa-3 py-0">
       <div class="neutral10--text">Commission last 24h</div>
       <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
-        {{ commissionToday }}
+        {{ commissionToday | usdCustom(2, 2) }}
       </div>
     </div>
   </v-sheet>
