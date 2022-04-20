@@ -44,8 +44,6 @@ export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) rewardAmount!: number
   @Prop({ required: true }) chainId!: number
   @Prop({ required: true }) metadata!: any
-  @Prop({ required: true }) id!: string
-  @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) maxParticipant!: number
   @Prop({ required: true }) hover!: boolean
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
