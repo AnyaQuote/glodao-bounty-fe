@@ -20,7 +20,7 @@
             @{{ data | _get('hunter.name', 'TBA') }}
           </v-list-item-title>
           <v-list-item-title class="col col-6 text-body-2 neutral10--text">
-            {{ data | _get('updatedAt') | datetime }}
+            {{ data | _get('completeTime') | datetime }}
           </v-list-item-title>
         </v-list-item-content>
       </template>
@@ -63,7 +63,7 @@
             </tr>
             <tr>
               <td>Time:</td>
-              <td class="text-end">{{ data | _get('updatedAt') | ddmmyyyyhhmm }}</td>
+              <td class="text-end">{{ data | _get('completeTime') | ddmmyyyyhhmm }}</td>
             </tr>
           </table>
         </v-list-item-content>

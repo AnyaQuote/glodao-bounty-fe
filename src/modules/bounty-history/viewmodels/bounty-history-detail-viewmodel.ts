@@ -274,7 +274,7 @@ export class BountyHistoryDetailViewModel {
         _where: [
           ...result._where,
           {
-            updatedAt_gte: moment.utc(sortedDateRanges[0]).toISOString(),
+            completeTime_gte: moment.utc(sortedDateRanges[0]).toISOString(),
           },
         ],
       }
@@ -283,7 +283,7 @@ export class BountyHistoryDetailViewModel {
         _where: [
           ...result._where,
           {
-            updatedAt_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
+            completeTime_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
           },
         ],
       }
