@@ -41,7 +41,7 @@
           v-else-if="vm.isStaked"
         >
           <v-icon class="pr-2" color="blue" size="18">mdi-star</v-icon>
-          giolao staker
+          GLD staker
         </v-sheet>
         <v-sheet
           class="neutral20 neutral10--text d-flex justify-center align-center caption-text text-uppercase rounded-lg px-2 py-1"

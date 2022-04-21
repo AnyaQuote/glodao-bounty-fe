@@ -48,12 +48,12 @@
           <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
             <v-sheet class="text-uppercase primary--text mr-3 neutral100--bg" height="100%"> priority pool </v-sheet>
             <v-chip class="blue lighten-1 blue--text font-italic" small>
-              For GDAO stakers
+              For GLD stakers
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                 </template>
-                <span>GDAO stakers who have staked more than 1000$ can participate in priority pool</span>
+                <span>GLD stakers who have staked more than 1000$ can participate in priority pool</span>
               </v-tooltip>
             </v-chip>
           </v-sheet>
