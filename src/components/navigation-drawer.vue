@@ -53,8 +53,10 @@
     <v-divider></v-divider>
     <div class="d-flex flex-column">
       <v-list class="px-4 mt-4" dense nav>
-        <v-list-item class="neutral10--text" @click="openLink('https://dev.glodao.io/launchpad')">
-          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Launchpad</v-list-item-title>
+        <v-list-item class="neutral10--text">
+          <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">
+            Launchpad (Coming soon)
+          </v-list-item-title>
         </v-list-item>
 
         <v-list-group :value="true" no-action>
@@ -70,7 +72,7 @@
             <v-list-item-icon class="mr-2">
               <v-img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 fill-height"></v-img>
             </v-list-item-icon>
-            <v-list-item-title class="nav-btn-text text-none">Bounty hunter</v-list-item-title>
+            <v-list-item-title class="text-none">Bounty hunter</v-list-item-title>
           </v-list-item>
           <v-list-item active-class="filter-bluePrimary black--text" to="/bounty-history">
             <v-list-item-icon class="mr-2">
@@ -79,13 +81,13 @@
                 class="filter-neutral10 fill-height"
               ></v-img>
             </v-list-item-icon>
-            <v-list-item-title class="nav-btn-text text-none">Bounty history</v-list-item-title>
+            <v-list-item-title class="text-none">Bounty history</v-list-item-title>
           </v-list-item>
           <v-list-item>
             <v-list-item-icon class="mr-2">
               <v-icon>mdi-check</v-icon>
             </v-list-item-icon>
-            <v-list-item-title class="nav-btn-text text-none">Apply project (Coming soon)</v-list-item-title>
+            <v-list-item-title class="text-none neutral10--text">Apply project (Coming soon)</v-list-item-title>
           </v-list-item>
         </v-list-group>
 
@@ -102,41 +104,49 @@
           </v-list-item-icon>
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">Farming</v-list-item-title>
         </v-list-item> -->
-        <v-list-group no-action>
+        <v-list-group no-action class="">
           <template v-slot:activator>
             <v-list-item class="ml-0 pl-0">
-              <v-list-item-title class="nav-btn-text text-none">Staking</v-list-item-title>
+              <v-list-item-title class="nav-btn-text text-none neutral10--text">Staking</v-list-item-title>
             </v-list-item>
           </template>
           <template v-slot:appendIcon>
             <v-icon color="bluePrimary">mdi-chevron-down</v-icon>
           </template>
-          <v-list-item active-class="filter-bluePrimary" @click="openLink('https://dev.glodao.io/staking')">
-            <v-list-item-icon>
+          <v-list-item active-class="filter-bluePrimary">
+            <!-- <v-list-item-icon>
               <img :src="require('@/assets/icons/nav-bar/staking.svg')" class="filter-neutral10" />
-            </v-list-item-icon>
+            </v-list-item-icon> -->
             <v-list-item-title>
-              <div class="text-none nav-btn-text">$Staking</div>
+              <div class="neutral10--text">$Staking (Coming soon)</div>
             </v-list-item-title>
           </v-list-item>
-          <v-list-item active-class="filter-bluePrimary" @click="openLink('https://dev.glodao.io/farm')">
-            <v-list-item-icon>
+          <v-list-item active-class="filter-bluePrimary">
+            <!-- <v-list-item-icon>
               <img :src="require('@/assets/icons/nav-bar/farm.svg')" class="filter-neutral10" />
-            </v-list-item-icon>
+            </v-list-item-icon> -->
             <v-list-item-title>
-              <div class="text-none nav-btn-text">Farming</div>
+              <div class="neutral10--text">Farming (Coming soon)</div>
             </v-list-item-title>
           </v-list-item>
         </v-list-group>
         <v-list-item class="my-2">
-          <v-list-item-title class="nav-btn-text" block depressed large rounded color="primary" outlined>
+          <v-list-item-title
+            class="nav-btn-text neutral10--text"
+            block
+            depressed
+            large
+            rounded
+            color="primary"
+            outlined
+          >
             DAO voting (Coming soon)
           </v-list-item-title>
         </v-list-item>
         <v-list-group no-action>
           <template v-slot:activator>
             <v-list-item class="ml-0 pl-0">
-              <v-list-item-title class="nav-btn-text text-none">Utilities</v-list-item-title>
+              <v-list-item-title class="nav-btn-text text-none neutral10--text">Utilities</v-list-item-title>
             </v-list-item>
           </template>
           <template v-slot:appendIcon>
@@ -144,7 +154,7 @@
           </template>
           <v-list-item active-class="filter-bluePrimary">
             <v-list-item-title>
-              <div class="d-flex align-center">
+              <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
                 <div>Locker (Coming soon)</div>
               </div>
@@ -152,7 +162,7 @@
           </v-list-item>
           <v-list-item active-class="filter-bluePrimary">
             <v-list-item-title>
-              <div class="d-flex align-center">
+              <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-cached</v-icon>
                 <div>Bulkclaimer (Coming soon)</div>
               </div>
@@ -160,7 +170,7 @@
           </v-list-item>
           <v-list-item active-class="filter-bluePrimary">
             <v-list-item-title>
-              <div class="d-flex align-center">
+              <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-flare</v-icon>
                 <div>Claimer (Coming soon)</div>
               </div>
@@ -168,7 +178,7 @@
           </v-list-item>
           <v-list-item active-class="filter-bluePrimary">
             <v-list-item-title>
-              <div class="d-flex align-center">
+              <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-alert-circle-outline</v-icon>
                 <div>Unapprove (Coming soon)</div>
               </div>
