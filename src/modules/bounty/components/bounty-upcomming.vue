@@ -39,17 +39,17 @@
             <!-- slider button start -->
             <div v-show="!showSide" class="p-absolute t-b-l-r-0 flex-center-end">
               <div class="blur-bg rounded-tl-lg rounded-bl-lg py-8" @click="toggleSide">
-                <v-icon size="40">mdi-chevron-left</v-icon>
+                <v-icon size="40" color="white">mdi-chevron-left</v-icon>
               </div>
             </div>
             <!-- slider button end -->
 
             <!-- slider start -->
-            <v-slide-x-reverse-transition>
+            <v-expand-x-transition>
               <div v-show="showSide" class="flex-center p-absolute t-r-0 fill-height">
                 <div class="d-flex align-center justify-end">
                   <div class="blur-bg rounded-tl-lg rounded-bl-lg py-8" @click="toggleSide">
-                    <v-icon size="40">mdi-chevron-left</v-icon>
+                    <v-icon size="40" color="white">mdi-chevron-right</v-icon>
                   </div>
                 </div>
                 <div
@@ -66,7 +66,7 @@
                   ></BountyUpcomingPreview>
                 </div>
               </div>
-            </v-slide-x-reverse-transition>
+            </v-expand-x-transition>
             <!-- slider end -->
           </div>
         </div>

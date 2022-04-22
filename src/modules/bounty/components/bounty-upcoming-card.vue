@@ -1,5 +1,8 @@
 <template>
-  <v-sheet class="blur-bg transparent d-flex rounded-lg pa-5 mr-10" :style="retract && 'width: calc(100% - 250px);'">
+  <v-sheet
+    class="blur-bg transparent d-flex rounded-lg pa-5 mr-10 white--text"
+    :style="retract && 'width: calc(100% - 250px);'"
+  >
     <div class="d-flex" style="flex-grow: 1">
       <v-sheet width="64" height="64" class="rounded-circle transparent">
         <v-img :src="projectLogo"></v-img>
@@ -22,9 +25,9 @@
     <div class="d-flex flex-column" style="margin-right: 58px">
       <div class="mb-2">Social link:</div>
       <div class="ml-n2">
-        <v-btn :href="metadata.website" icon><v-icon small>mdi-domain</v-icon></v-btn>
+        <v-btn :href="metadata.website" icon><v-icon small color="white">mdi-domain</v-icon></v-btn>
         <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
-          <v-icon small v-html="`mdi-${icon}`"></v-icon>
+          <v-icon small v-html="`mdi-${icon}`" color="white"></v-icon>
         </v-btn>
       </div>
     </div>
