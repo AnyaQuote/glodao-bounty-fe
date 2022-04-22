@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <div class="section-big-title-text text-uppercase blue--text font-weight-bold">Upcoming pools</div>
+      <div class="section-big-title-text text-uppercase font-weight-bold">Upcoming pools</div>
     </v-col>
     <template v-if="$vuetify.breakpoint.mdAndUp">
       <v-col cols="12">
