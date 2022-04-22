@@ -46,7 +46,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col lg="4" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
+          <v-col lg="6" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
             <hunting-time-card
               :coverImageUrl="bounty.coverImage"
               :endTime="bounty.endTime"
@@ -57,43 +57,12 @@
               :tokenName="bounty.tokenName"
               :participant="bounty.participant"
               :id="bounty.id"
+              :task="bounty"
             ></hunting-time-card>
           </v-col>
         </v-row>
       </v-container>
     </v-col>
-    <!-- <v-col cols="12">
-      <v-divider class="my-4"></v-divider>
-      <v-container>
-        <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
-      </v-container>
-    </v-col> -->
-
-    <!-- <v-col cols="12">
-      <v-divider class="my-4"></v-divider>
-      <v-container>
-        <v-row>
-          <v-col>
-            <div class="section-big-title-text font-weight-bold">Live pools</div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col md="6" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
-            <bounty-card
-              :name="bounty.name"
-              :id="bounty.id"
-              :startTime="bounty.startTime"
-              :rewardAmount="bounty.rewardAmount"
-              :chainId="bounty.chainId"
-              :metadata="bounty.metadata"
-              :types="bounty.types"
-              :maxParticipant="bounty.maxParticipant"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-col> -->
-
     <v-col cols="12">
       <v-divider class="my-4"></v-divider>
       <v-container>
@@ -126,20 +95,6 @@
             ></v-select>
           </v-col>
         </v-row>
-        <!-- <v-row>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="missions" :info="vm.bountyCount"></info-card>
-          </v-col>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="rewards" :info="'10000' | formatNumber(2, 0)"></info-card>
-          </v-col>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="users" :info="'100' | formatNumber(2, 0)"></info-card>
-          </v-col>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="participants" :info="'1000' | formatNumber(2, 0)"></info-card>
-          </v-col>
-        </v-row> -->
         <v-row>
           <v-col md="4" sm="6" cols="12" v-for="bounty in vm.convertedBountyList" :key="bounty.id">
             <bounty-card
@@ -164,7 +119,7 @@
                 class="rounded-0 font-weight-600 button-small text-capitalize"
                 @click="vm.getBountyListByPage()"
               >
-                Loadmore ({{ vm.remainingBounty }} bounty hunters)
+                View more ({{ vm.remainingBounty }} bounty hunters)
               </v-btn>
             </div>
           </v-col>
