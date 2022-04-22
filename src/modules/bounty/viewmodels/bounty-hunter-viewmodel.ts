@@ -193,6 +193,8 @@ export class BountyHunterViewModel {
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
         participant: bounty.totalParticipants,
+        tokenBasePrice: bounty.tokenBasePrice,
+        shortDescription: get(bounty, 'metadata.shortDescription', 'TBA'),
       }
     })
   }
