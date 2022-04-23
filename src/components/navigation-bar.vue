@@ -60,7 +60,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-check</v-icon>
                         <div>Apply project (Coming soon)</div>
                       </div>
@@ -81,14 +81,14 @@
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text">
+                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text text-body-2">
                         <div>$Staking (Coming soon)</div>
                       </div>
                     </v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text">
+                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text text-body-2">
                         <div>Farm (Coming soon)</div>
                       </div>
                     </v-list-item-title>
@@ -114,7 +114,7 @@
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
                         <div>Locker (Coming soon)</div>
                       </div>
@@ -122,7 +122,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-cached</v-icon>
                         <div>Bulkclaimer (Coming soon)</div>
                       </div>
@@ -130,7 +130,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-flare</v-icon>
                         <div>Claimer (Coming soon)</div>
                       </div>
@@ -138,7 +138,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-alert-circle-outline</v-icon>
                         <div>Unapprove (Coming soon)</div>
                       </div>
@@ -264,9 +264,8 @@ export default class NavigationBar extends Vue {
 .nav-btn-text {
   font-style: normal;
   font-weight: 600;
-  font-size: 16px !important;
-  line-height: 24px;
-  letter-spacing: 0.02em !important;
+  font-size: 0.875rem !important;
+  line-height: 20px;
   color: var(--v-neutral10-base);
 }
 .active {
