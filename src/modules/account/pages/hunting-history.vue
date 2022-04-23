@@ -4,10 +4,10 @@
       <v-container class="d-flex justify-center mt-20">
         <v-sheet class="transparent overflow-hidden" width="100%">
           <v-row dense>
-            <v-col cols="12" md="5" lg="4">
+            <v-col cols="12" md="6" lg="5">
               <mini-info-container />
             </v-col>
-            <v-col cols="12" md="7" lg="8">
+            <v-col cols="12" md="6" lg="7">
               <v-row dense>
                 <v-col cols="12">
                   <wallet-sheet-container />

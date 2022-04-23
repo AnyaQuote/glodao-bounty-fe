@@ -1,6 +1,6 @@
 <template>
   <v-app-bar height="80px" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
-    <div class="nav-container mx-auto" style="width: 100%">
+    <div class="nav-container mx-auto" style="width: 100%; max-width: 1090px">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
           <div class="pl-4 cursor-pointer" @click="openLink('https://glodao.io/')">
@@ -15,7 +15,7 @@
             ></v-img>
           </div>
         </v-col>
-        <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
+        <v-col col="12" sm="12" md="7" class="d-flex align-center justify-space-between">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div class="text-none nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launchpad</div>
@@ -60,7 +60,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-check</v-icon>
                         <div>Apply project (Coming soon)</div>
                       </div>
@@ -81,14 +81,14 @@
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text">
+                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text text-body-2">
                         <div>$Staking (Coming soon)</div>
                       </div>
                     </v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text">
+                      <div class="d-flex align-center px-4 cursor-pointer neutral10--text text-body-2">
                         <div>Farm (Coming soon)</div>
                       </div>
                     </v-list-item-title>
@@ -114,7 +114,7 @@
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
                         <div>Locker (Coming soon)</div>
                       </div>
@@ -122,7 +122,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-cached</v-icon>
                         <div>Bulkclaimer (Coming soon)</div>
                       </div>
@@ -130,7 +130,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-flare</v-icon>
                         <div>Claimer (Coming soon)</div>
                       </div>
@@ -138,7 +138,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div class="d-flex align-center px-4 neutral10--text">
+                      <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-alert-circle-outline</v-icon>
                         <div>Unapprove (Coming soon)</div>
                       </div>
@@ -149,11 +149,11 @@
             </v-sheet>
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
+        <!-- <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
+        </v-col> -->
+        <v-col col="auto" class="d-flex justify-end">
           <connect-wallet class="fill-width" />
-        </v-col>
-        <v-col col="12" sm="12" md="1">
-          <div class="d-flex align-center justify-end pr-6">
+          <div class="ml-6 d-flex align-center justify-end pr-6">
             <v-btn
               depressed
               outlined
@@ -264,9 +264,8 @@ export default class NavigationBar extends Vue {
 .nav-btn-text {
   font-style: normal;
   font-weight: 600;
-  font-size: 16px !important;
-  line-height: 24px;
-  letter-spacing: 0.02em !important;
+  font-size: 0.875rem !important;
+  line-height: 20px;
   color: var(--v-neutral10-base);
 }
 .active {

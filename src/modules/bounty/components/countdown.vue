@@ -2,19 +2,19 @@
   <v-sheet class="d-flex justify-space-between align-center rounded-lg px-3 py-1 neutral100--bg">
     <slot name="prepend"></slot>
     <div class="flex-center-box h-36-w-36">
-      <div class="font-weight-bold primary--text">{{ days | twoDigits }}</div>
+      <div class="font-weight-bold">{{ days | twoDigits }}</div>
     </div>
     <div class="flex-center-box mx-3">:</div>
     <div class="flex-center-box h-36-w-36">
-      <div class="font-weight-bold primary--text">{{ hours | twoDigits }}</div>
+      <div class="font-weight-bold">{{ hours | twoDigits }}</div>
     </div>
     <div class="flex-center-box mx-3">:</div>
     <div class="flex-center-box h-36-w-36">
-      <div class="font-weight-bold primary--text">{{ minutes | twoDigits }}</div>
+      <div class="font-weight-bold">{{ minutes | twoDigits }}</div>
     </div>
     <div class="flex-center-box mx-3">:</div>
     <div class="flex-center-box h-36-w-36">
-      <div class="font-weight-bold primary--text">{{ seconds | twoDigits }}</div>
+      <div class="font-weight-bold">{{ seconds | twoDigits }}</div>
     </div>
     <slot name="append"></slot>
   </v-sheet>

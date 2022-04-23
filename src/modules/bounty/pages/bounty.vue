@@ -42,11 +42,11 @@
       <v-container>
         <v-row>
           <v-col>
-            <div class="section-big-title-text text-uppercase blue--text font-weight-bold">Hunting time starts</div>
+            <div class="section-big-title-text text-uppercase font-weight-bold">Hunting time starts</div>
           </v-col>
         </v-row>
         <v-row>
-          <v-col lg="4" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
+          <v-col lg="6" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
             <hunting-time-card
               :coverImageUrl="bounty.coverImage"
               :endTime="bounty.endTime"
@@ -57,89 +57,20 @@
               :tokenName="bounty.tokenName"
               :participant="bounty.participant"
               :id="bounty.id"
+              :task="bounty"
             ></hunting-time-card>
           </v-col>
         </v-row>
       </v-container>
     </v-col>
-    <!-- <v-col cols="12">
-      <v-divider class="my-4"></v-divider>
-      <v-container>
-        <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
-      </v-container>
-    </v-col> -->
-
-    <!-- <v-col cols="12">
-      <v-divider class="my-4"></v-divider>
-      <v-container>
-        <v-row>
-          <v-col>
-            <div class="section-big-title-text font-weight-bold">Live pools</div>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col md="6" sm="6" cols="12" v-for="bounty in vm.convertedLiveBountyList" :key="bounty.id">
-            <bounty-card
-              :name="bounty.name"
-              :id="bounty.id"
-              :startTime="bounty.startTime"
-              :rewardAmount="bounty.rewardAmount"
-              :chainId="bounty.chainId"
-              :metadata="bounty.metadata"
-              :types="bounty.types"
-              :maxParticipant="bounty.maxParticipant"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-col> -->
-
     <v-col cols="12">
       <v-divider class="my-4"></v-divider>
       <v-container>
         <v-row>
           <v-col>
-            <div class="section-big-title-text text-uppercase blue--text font-weight-bold">
-              Bounty pools ({{ vm.bountyCount }})
-            </div>
-          </v-col>
-          <!-- <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <v-btn
-              outlined
-              depressed
-              class="fill-width text-none text-start font-weight-regular d-flex justify-start align-center"
-              height="40"
-              @click="vm.changeDateRangeDialog(true)"
-              style="border: thin solid rgba(0, 0, 0, 0.38) !important"
-            >
-              Filter by start time
-            </v-btn>
-          </v-col> -->
-          <v-col cols="12" lg="2" md="3" sm="3" xs="4">
-            <v-select
-              :items="vm.sortList"
-              label="Sort"
-              outlined
-              dense
-              height="40"
-              @change="vm.onSortConditionChange"
-            ></v-select>
+            <div class="section-big-title-text text-uppercase font-weight-bold">FINISHED POOLS</div>
           </v-col>
         </v-row>
-        <!-- <v-row>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="missions" :info="vm.bountyCount"></info-card>
-          </v-col>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="rewards" :info="'10000' | formatNumber(2, 0)"></info-card>
-          </v-col>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="users" :info="'100' | formatNumber(2, 0)"></info-card>
-          </v-col>
-          <v-col lg="3" md="6" sm="6" cols="12">
-            <info-card type="participants" :info="'1000' | formatNumber(2, 0)"></info-card>
-          </v-col>
-        </v-row> -->
         <v-row>
           <v-col md="4" sm="6" cols="12" v-for="bounty in vm.convertedBountyList" :key="bounty.id">
             <bounty-card
@@ -156,34 +87,21 @@
             />
           </v-col>
         </v-row>
-        <v-row dense no-gutters v-if="vm.remainingBounty > 0">
+        <v-row dense no-gutters>
           <v-col>
-            <div class="my-10 d-flex justify-center align-center">
+            <div class="my-10 mb-4 d-flex justify-center align-center">
               <v-btn
                 outlined
                 class="rounded-0 font-weight-600 button-small text-capitalize"
-                @click="vm.getBountyListByPage()"
+                @click="goToBountyHistoryPage"
               >
-                Loadmore ({{ vm.remainingBounty }} bounty hunters)
+                View more
               </v-btn>
             </div>
           </v-col>
         </v-row>
       </v-container>
     </v-col>
-    <v-dialog v-model="vm.dateRangeDialog" width="300" persistent>
-      <v-sheet>
-        <v-sheet class="d-flex justify-center">
-          <v-date-picker v-model="dates" range no-title></v-date-picker>
-        </v-sheet>
-        <v-sheet class="d-flex justify-space-between pa-4">
-          <v-btn class="rounded-0" depressed @click="closeDialog()">Cancel</v-btn>
-          <v-btn class="rounded-0 background-blue-diversity white--text" depressed @click="changeDateRange()">
-            Select
-          </v-btn>
-        </v-sheet>
-      </v-sheet>
-    </v-dialog>
   </v-row>
 </template>
 
@@ -215,6 +133,10 @@ export default class BountyPage extends Vue {
     this.vm.initReaction()
   }
 
+  goToBountyHistoryPage() {
+    this.$router.push('/bounty-history')
+  }
+
   goToHuntingHistory() {
     this.$router.push('hunting-history')
   }
@@ -240,5 +162,8 @@ export default class BountyPage extends Vue {
 .button-small {
   font-size: 14px;
   line-height: 24px;
+}
+.section-big-title-text {
+  color: var(--v-primary-base) !important;
 }
 </style>

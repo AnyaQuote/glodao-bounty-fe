@@ -24,40 +24,44 @@
         <v-sheet class="transparent font-weight-bold username-lg-text">
           {{ authStore.user | _get('hunter.name', '') }}
         </v-sheet>
-        <v-sheet
-          class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
-          v-if="!vm.isWalletConnected"
-        >
-          Not connected
-        </v-sheet>
-        <v-sheet
-          class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
-          v-else-if="!vm.isWalletMatched"
-        >
-          wrong wallet
-        </v-sheet>
-        <v-sheet
-          class="blue lighten-1 d-flex justify-center align-center blue--text caption-text text-uppercase rounded-lg px-2 py-1"
-          v-else-if="vm.isStaked"
-        >
-          <v-icon class="pr-2" color="blue" size="18">mdi-star</v-icon>
-          GLD staker
-        </v-sheet>
-        <v-sheet
-          class="neutral20 neutral10--text d-flex justify-center align-center caption-text text-uppercase rounded-lg px-2 py-1"
-          v-else
-        >
-          Non staker
-        </v-sheet>
+        <div class="d-flex">
+          <v-sheet
+            class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
+            v-if="!vm.isWalletConnected"
+          >
+            Not connected
+          </v-sheet>
+          <v-sheet
+            class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
+            v-else-if="!vm.isWalletMatched"
+          >
+            wrong wallet
+          </v-sheet>
+          <v-sheet
+            class="blue lighten-1 d-flex justify-center align-center blue--text caption-text text-uppercase rounded-lg px-2 py-1"
+            v-else-if="vm.isStaked"
+          >
+            <v-icon class="pr-2" color="blue" size="18">mdi-star</v-icon>
+            GLD staker
+          </v-sheet>
+          <v-sheet
+            class="neutral20 neutral10--text d-flex justify-center align-center caption-text text-uppercase rounded-lg px-2 py-1"
+            v-else
+          >
+            Non staker
+          </v-sheet>
+        </div>
       </v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
       <v-sheet class="transparent font-weight-600">Total earning:</v-sheet>
-      <v-sheet class="transparent font-weight-bold">{{ vm.totalEarning | usdCustom(2, 2) }}</v-sheet>
+      <v-sheet class="transparent font-weight-bold number-count-text">{{ vm.totalEarning | usdCustom(2, 2) }}</v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-5">
       <v-sheet class="transparent font-weight-600">Today earning:</v-sheet>
-      <v-sheet class="transparent font-weight-bold">{{ vm.totalEarningToday | usdCustom(2, 2) }}</v-sheet>
+      <v-sheet class="transparent font-weight-bold number-count-text">{{
+        vm.totalEarningToday | usdCustom(2, 2)
+      }}</v-sheet>
     </v-sheet>
   </v-sheet>
 </template>
@@ -87,14 +91,13 @@ export default class extends Vue {
   line-height: 36px;
 }
 .number-count-text {
-  font-size: 20px;
-  line-height: 26px;
+  font-size: 18px;
+  line-height: 24px;
   font-weight: 700;
-  margin-bottom: 8px;
 }
 .caption-text {
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 20px;
 }
 .font-weight-600 {
   font-weight: 600 !important;
