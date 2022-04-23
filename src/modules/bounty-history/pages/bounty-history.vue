@@ -127,27 +127,32 @@
           <v-col cols="6" sm="4" md="3">
             <v-btn
               depressed
-              class="neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
+              class="rounded-pill neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
               @click="vm.changeStartDateDialog(true)"
               outlined
               min-width="100"
             >
-              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> From {{ vm.startDate || '' }}
+              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> From {{ vm.startDate || '(date)' }}
             </v-btn>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-btn
               depressed
-              class="neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
+              class="rounded-pill neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
               @click="vm.changeEndDateDialog(true)"
               outlined
               min-width="100"
             >
-              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> To {{ vm.endDate || '' }}
+              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> To {{ vm.endDate || '(date)' }}
             </v-btn>
           </v-col>
           <v-col>
-            <v-btn class="text-capitalize white--text" color="bluePrimary" depressed @click="vm.changeDateRangeFilter">
+            <v-btn
+              class="text-capitalize white--text rounded-pill"
+              color="bluePrimary"
+              depressed
+              @click="vm.changeDateRangeFilter"
+            >
               <v-icon color="white" left>mdi-filter</v-icon>
               Filter
             </v-btn>
