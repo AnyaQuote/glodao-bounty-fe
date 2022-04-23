@@ -199,7 +199,7 @@
                       class="mr-2 ml-0"
                     ></v-img>
 
-                    Hunting history
+                    My account
                   </v-btn>
                   <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()">
                     Log out
