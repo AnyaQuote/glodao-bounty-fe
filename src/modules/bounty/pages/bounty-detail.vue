@@ -110,17 +110,17 @@
                   <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ vm.rewardAmount | formatNumber }} ({{ vm.rewardAmountExchanged | usdCustom(2, 2) }})</span>
+                    <span>{{ vm.rewardAmount | formatNumber }}</span>
                   </div>
                 </v-sheet>
               </v-col>
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Remaining ({{ vm.rewardToken }})</div>
+                  <div class="card-subtitle-1">Reward value (USD)</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>
-                      {{ vm.remainingReward | formatNumber }} ({{ vm.remainingRewardExchanged | usdCustom(2, 2) }})
+                      {{ vm.rewardAmountExchanged | usdCustom(2, 2) }}
                     </span>
                   </div>
                 </v-sheet>
