@@ -1,49 +1,50 @@
 <template>
-  <v-hover v-slot="{ hover }">
-    <v-card class="mx-auto overflow-hidden border-radius-8px neutral100 fill-height" elevation="3" outlined>
-      <div
-        :class="{
-          'backdrop-hover-overlay': hover,
-        }"
-      >
-        <div class="position-relative">
-          <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
-          <div class="start-date-container" v-if="isEnded"></div>
-          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
-            Closed: {{ endTime | datetime }}
-          </div>
-          <div class="position-absolute custom-chevron-flag-container rounded-0">
+  <router-link :to="`/bounty-history/${id}`">
+    <v-hover v-slot="{ hover }">
+      <v-card class="mx-auto overflow-hidden border-radius-8px neutral100 fill-height" elevation="3" outlined>
+        <div
+          :class="{
+            'backdrop-hover-overlay': hover,
+          }"
+        >
+          <div class="position-relative">
+            <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
+            <div class="start-date-container" v-if="isEnded"></div>
+            <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
+              Closed: {{ endTime | datetime }}
+            </div>
+            <!-- <div class="position-absolute custom-chevron-flag-container rounded-0">
             <div class="custom-chevron-flag d-flex flex-column justify-center align-center pt-6 pb-3 elavation-10">
               <v-icon color="white" size="14" class="mb-2" v-for="type in types" :key="type">
                 {{ `mdi-${type}` }}
               </v-icon>
             </div>
+          </div> -->
+          </div>
+          <div class="pa-4">
+            <div>
+              <div class="rounded-circle d-flex justify-center card-project-medium-icon">
+                <v-sheet class="rounded-circle transparent" width="32" height="32">
+                  <v-img :src="projectLogo"></v-img>
+                </v-sheet>
+              </div>
+              <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
+                {{ name }}
+              </div>
+              <div class="custom-dash-divider my-3"></div>
+              <div class="d-flex justify-space-between">
+                <div>Total reward</div>
+                <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}</div>
+              </div>
+              <div class="d-flex justify-space-between mt-2">
+                <div>Participants</div>
+                <div class="font-weight-bold">{{ totalParticipants }}</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="pa-4">
-          <div>
-            <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-              <v-sheet class="rounded-circle transparent" width="32" height="32">
-                <v-img :src="projectLogo"></v-img>
-              </v-sheet>
-            </div>
-            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
-              {{ name }}
-            </div>
-            <div class="custom-dash-divider my-3"></div>
-            <div class="d-flex justify-space-between">
-              <div>Total reward</div>
-              <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}</div>
-            </div>
-            <div class="d-flex justify-space-between mt-2">
-              <div>Participants</div>
-              <div class="font-weight-bold">{{ totalParticipants }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div
+        <!-- <div
         class="justify-center align-center border-radius-8px"
         :class="{
           'd-flex  card-hover-overlay': hover,
@@ -63,9 +64,10 @@
             <div class="text-none font-weight-bold card-big-title-text black--text">View bounty</div>
           </div>
         </v-btn>
-      </div>
-    </v-card>
-  </v-hover>
+      </div> -->
+      </v-card>
+    </v-hover>
+  </router-link>
 </template>
 
 <script lang="ts">

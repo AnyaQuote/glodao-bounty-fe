@@ -183,7 +183,7 @@ export default class App extends Vue {
   width: 100%;
 }
 .container {
-  max-width: 1250px !important;
+  max-width: 1090px !important;
 }
 
 .v-application {

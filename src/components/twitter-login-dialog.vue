@@ -24,9 +24,14 @@
             </v-btn>
           </div>
           <div class="mt-8 px-10">
-            By connect you accept GloDAO’s
-            <a href="#" class="blue-diversity--text">Terms and Conditions</a> and
-            <a href="#" class="blue-diversity--text">Privacy Policy</a>
+            By connect you accept GloDAO’s <br />
+            <a href="https://glodao.io/doc/TERMS-OF-USE.pdf" class="blue-diversity--text" target="_blank"
+              >Terms of use</a
+            >
+            and
+            <a href="https://glodao.io/doc/Privacy-Policy.pdf" class="blue-diversity--text" target="_blank"
+              >Privacy Policy</a
+            >
           </div>
         </v-sheet>
       </v-sheet>
@@ -62,8 +67,9 @@
         </v-btn>
         <div class="dialog-small-text neutral10--text mt-6">
           By continuing, GloDAO will receive ongoing access to the information you share. <br />
-          <a class="blue-diversity--text" href="#">Learn more</a> about this sharing and the settings you have.<br />
-          GloDAO's <a class="blue-diversity--text" href="#">Privacy Policy</a>
+          <a class="blue-diversity--text" href="https://glodao.io/doc/TERMS-OF-USE.pdf">Learn more</a> about this
+          sharing and the settings you have.<br />
+          GloDAO's <a class="blue-diversity--text" href="https://glodao.io/doc/Privacy-Policy.pdf">Privacy Policy</a>
         </div>
       </v-sheet>
       <v-icon class="close-icon" @click="authStore.changeTwitterLoginDialog(false)">mdi-window-close</v-icon>

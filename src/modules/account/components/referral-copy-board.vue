@@ -27,7 +27,7 @@ import { get } from 'lodash'
 @Component
 export default class extends Vue {
   @Inject() vm!: HuntingHistoryViewModel
-  referralLink = `https://cyberk-bounty.netlify.app/bounty?ref=${get(authStore.user, 'hunter.referralCode')}`
+  referralLink = `https://app.glodao.io/bounty?ref=${get(authStore.user, 'hunter.referralCode')}`
   authStore = authStore
   isCopied = false
   mouseoverEvent = new Event('mouseleave')

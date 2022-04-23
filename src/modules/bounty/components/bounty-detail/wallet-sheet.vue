@@ -44,7 +44,7 @@
           }"
           v-else-if="vm.isStaker"
         >
-          <v-icon size="12" class="mr-1 blue--text">mdi-star</v-icon> GLO STAKER
+          <v-icon size="12" class="mr-1 blue--text">mdi-star</v-icon> GLD STAKER
         </v-chip>
         <v-chip
           class="ma-2 text-uppercase font-weight-regular text-caption neutral10--text neutral20 font-weight-bold"
@@ -60,7 +60,7 @@
     <v-sheet v-if="vm.shouldShowStakeSuggestion" class="neutral100--bg">
       <v-divider></v-divider>
       <v-sheet class="mt-2 text-body-2 neutral10--text neutral100--bg">
-        Priority pool is not full yet. Stake GDAO to enter!
+        Priority pool is not full yet. Stake GLD to enter!
         <a href="#" class="bluePrimary--text ml-2">
           Stake now
           <v-icon size="18" class="bluePrimary--text">mdi-arrow-top-right</v-icon>

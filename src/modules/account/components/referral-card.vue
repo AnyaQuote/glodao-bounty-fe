@@ -23,13 +23,13 @@
       </div>
     </div>
     <div class="d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
-      <div class="neutral10--text">Commission</div>
+      <div class="neutral10--text">Total commission</div>
       <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
         {{ commission | usdCustom(2, 2) }}
       </div>
     </div>
     <div class="d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
-      <div class="neutral10--text">Commission last 24h</div>
+      <div class="neutral10--text">Today commission</div>
       <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
         {{ commissionToday | usdCustom(2, 2) }}
       </div>
