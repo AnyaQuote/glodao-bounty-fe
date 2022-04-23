@@ -1,6 +1,6 @@
 <template>
   <v-app-bar height="80px" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
-    <div class="nav-container mx-auto" style="width: 100%">
+    <div class="nav-container mx-auto" style="width: 100%; max-width: 1090px">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
           <div class="pl-4 cursor-pointer" @click="openLink('https://glodao.io/')">
@@ -15,7 +15,7 @@
             ></v-img>
           </div>
         </v-col>
-        <v-col col="12" sm="12" md="6" class="d-flex align-center justify-space-between">
+        <v-col col="12" sm="12" md="7" class="d-flex align-center justify-space-between">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div class="text-none nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launchpad</div>
@@ -149,11 +149,11 @@
             </v-sheet>
           </v-menu>
         </v-col>
-        <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
+        <!-- <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
+        </v-col> -->
+        <v-col col="auto" class="d-flex justify-end">
           <connect-wallet class="fill-width" />
-        </v-col>
-        <v-col col="12" sm="12" md="1">
-          <div class="d-flex align-center justify-end pr-6">
+          <div class="ml-6 d-flex align-center justify-end pr-6">
             <v-btn
               depressed
               outlined
