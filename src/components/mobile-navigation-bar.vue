@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="neutral100" height="46" fixed hide-on-scroll>
+  <v-app-bar class="neutral100" :height="$vuetify.breakpoint.xsOnly ? 46 : 60" fixed hide-on-scroll>
     <div class="d-flex align-center full-width">
       <v-app-bar-nav-icon
         @click="wallet.setNavigationDrawer(true)"
