@@ -67,8 +67,10 @@
                       </v-sheet>
                       <div class="text-h5 text-sm-h4 blue--text font-weight-bold">{{ vm.totalProjectCount }}</div>
                     </div>
-                    <div class="neutral10--text-persistent font-weight-600 mt-1 text-body-2 text-sm-body-1">
-                      BOUNTY PROJECT
+                    <div
+                      class="neutral10--text-persistent font-weight-600 mt-1 text-body-2 text-sm-body-1 text-uppercase"
+                    >
+                      BOUNTY PROJECTS
                     </div>
                   </v-col>
                   <v-col cols="6">
@@ -79,7 +81,7 @@
                       <div class="text-h5 text-sm-h4 blue--text font-weight-bold">{{ vm.uniqueParticipantCount }}</div>
                     </div>
                     <div
-                      class="neutral10--text-persistent font-weight-600 mt-1 text-uppercase text-body-2 text-sm-body-1"
+                      class="neutral10--text-persistent font-weight-600 mt-1 text-uppercase text-body-2 text-sm-body-1 text-uppercase"
                     >
                       UNIQUE PARTICIPANTS
                     </div>
@@ -89,20 +91,26 @@
                 <v-sheet class="d-flex justify-space-between align-center fill-width" light>
                   <div>
                     <div class="text-h6 text-sm-h5 font-weight-bold black--text">{{ vm.liveProjectCount }}</div>
-                    <div class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1">
-                      LIVE PROJECT
+                    <div
+                      class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1 text-uppercase"
+                    >
+                      LIVE PROJECTS
                     </div>
                   </div>
                   <div>
                     <div class="text-h6 text-sm-h5 font-weight-bold black--text">{{ vm.endedProjectCount }}</div>
-                    <div class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1">
-                      COMPLETED PROJECT
+                    <div
+                      class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1 text-uppercase"
+                    >
+                      COMPLETED PROJECTS
                     </div>
                   </div>
                   <div>
                     <div class="text-h6 text-sm-h5 font-weight-bold black--text">{{ vm.userCount }}</div>
-                    <div class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1">
-                      USER ACCOUNT
+                    <div
+                      class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1 text-uppercase"
+                    >
+                      USER ACCOUNTS
                     </div>
                   </div>
                 </v-sheet>
