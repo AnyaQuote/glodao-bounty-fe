@@ -15,7 +15,7 @@
             ></v-img>
           </div>
         </v-col>
-        <v-col class="d-flex align-center justify-space-between">
+        <v-col class="d-flex align-center justify-space-between pr-10">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div class="text-none nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launchpad</div>
@@ -151,7 +151,7 @@
         </v-col>
         <!-- <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
         </v-col> -->
-        <v-col col="auto" class="d-flex justify-end align-center">
+        <v-col class="d-flex justify-end align-center col-auto">
           <connect-wallet class="fill-width" />
           <div class="ml-6 d-flex align-center justify-end pr-6">
             <v-btn
