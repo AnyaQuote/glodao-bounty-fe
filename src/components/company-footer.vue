@@ -50,11 +50,11 @@
             <a href="https://t.me/GloDAO_Channel" class="ml-8">
               <v-icon> fab fa-telegram-plane </v-icon>
             </a>
-            <v-btn icon class="ml-6" @click="changeTheme">
+            <!-- <v-btn icon class="ml-6" @click="changeTheme">
               <v-icon>
-                {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
+                {{ !$vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
               </v-icon>
-            </v-btn>
+            </v-btn> -->
           </v-col>
         </v-row>
       </v-container>
