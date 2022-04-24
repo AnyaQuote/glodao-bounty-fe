@@ -52,7 +52,7 @@
             </a>
             <v-btn icon class="ml-6" @click="changeTheme">
               <v-icon>
-                {{ $vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
+                {{ !$vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
               </v-icon>
             </v-btn>
           </v-col>

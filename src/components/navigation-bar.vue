@@ -15,7 +15,7 @@
             ></v-img>
           </div>
         </v-col>
-        <v-col col="12" sm="12" md="7" class="d-flex align-center justify-space-between">
+        <v-col class="d-flex align-center justify-space-between">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div class="text-none nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">Launchpad</div>
@@ -151,7 +151,7 @@
         </v-col>
         <!-- <v-col cols="12" sm="12" md="2" class="d-flex justify-end">
         </v-col> -->
-        <v-col col="auto" class="d-flex justify-end">
+        <v-col col="auto" class="d-flex justify-end align-center">
           <connect-wallet class="fill-width" />
           <div class="ml-6 d-flex align-center justify-end pr-6">
             <v-btn
@@ -208,6 +208,13 @@
               </v-sheet>
             </v-menu>
           </div>
+          <div>
+            <v-btn icon @click="changeTheme" class="rounded-circle change-theme-btn" width="40" height="40" outlined>
+              <v-icon color="bluePrimary">
+                {{ !$vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
+              </v-icon>
+            </v-btn>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -215,10 +222,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Inject, Vue } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
-
+import { AppProvider } from '@/app-providers'
 import { Observer } from 'mobx-vue'
 
 @Observer
@@ -228,11 +235,15 @@ import { Observer } from 'mobx-vue'
   },
 })
 export default class NavigationBar extends Vue {
+  @Inject() providers!: AppProvider
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
   openLink(url) {
     window.open(url, '_self')
+  }
+  changeTheme() {
+    this.providers.toggleLightMode(this.$vuetify)
   }
 
   goToHuntingHistoryScreen() {
@@ -244,6 +255,10 @@ export default class NavigationBar extends Vue {
 </script>
 
 <style scoped lang="scss">
+.change-theme-btn {
+  border-color: var(--v-bluePrimary-base) !important;
+  background: var(--v-bluePrimary-lighten1) !important;
+}
 .menu-btn {
   border-radius: 0 !important;
   display: flex;
