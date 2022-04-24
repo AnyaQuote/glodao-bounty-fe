@@ -52,14 +52,14 @@
     </v-sheet>
     <v-divider></v-divider>
     <div class="d-flex flex-column">
-      <v-list class="px-4 mt-4" dense nav>
+      <v-list class="px-4 mt-1" dense nav>
         <v-list-item class="neutral10--text">
           <v-list-item-title class="nav-btn-text text-capitalize neutral10--text">
             Launchpad (Coming soon)
           </v-list-item-title>
         </v-list-item>
 
-        <v-list-group :value="true" no-action>
+        <v-list-group no-action>
           <template v-slot:activator>
             <v-list-item class="ml-0 pl-0">
               <v-list-item-title class="nav-btn-text text-none bluePrimary--text">Bounty hunter</v-list-item-title>
@@ -85,7 +85,7 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-icon class="mr-2">
-              <v-icon>mdi-check</v-icon>
+              <v-icon color="neutral10">mdi-check</v-icon>
             </v-list-item-icon>
             <v-list-item-title class="text-none neutral10--text">Apply project (Coming soon)</v-list-item-title>
           </v-list-item>
@@ -111,7 +111,7 @@
             </v-list-item>
           </template>
           <template v-slot:appendIcon>
-            <v-icon color="bluePrimary">mdi-chevron-down</v-icon>
+            <v-icon color="neutral10">mdi-chevron-down</v-icon>
           </template>
           <v-list-item active-class="filter-bluePrimary">
             <!-- <v-list-item-icon>
@@ -150,7 +150,7 @@
             </v-list-item>
           </template>
           <template v-slot:appendIcon>
-            <v-icon color="bluePrimary">mdi-chevron-down</v-icon>
+            <v-icon color="neutral10">mdi-chevron-down</v-icon>
           </template>
           <v-list-item active-class="filter-bluePrimary">
             <v-list-item-title>
@@ -187,17 +187,23 @@
         </v-list-group>
       </v-list>
     </div>
-    <div class="flex-center-box">
-      <connect-wallet btnClass="rounded-0 fill-width"></connect-wallet>
+    <div class="d-flex align-center justify-space-between px-10">
+      <connect-wallet btnClass="rounded fill-width"></connect-wallet>
+      <v-btn icon @click="changeTheme" class="rounded-circle change-theme-btn" width="40" height="40" outlined>
+        <v-icon color="bluePrimary">
+          {{ !$vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
+        </v-icon>
+      </v-btn>
     </div>
   </v-navigation-drawer>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Inject, Vue } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { Observer } from 'mobx-vue'
+import { AppProvider } from '@/app-providers'
 
 @Observer
 @Component({
@@ -206,6 +212,7 @@ import { Observer } from 'mobx-vue'
   },
 })
 export default class NavigationDrawer extends Vue {
+  @Inject() providers!: AppProvider
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
@@ -216,6 +223,9 @@ export default class NavigationDrawer extends Vue {
   backToHome() {
     this.$router.push('/')
   }
+  changeTheme() {
+    this.providers.toggleLightMode(this.$vuetify)
+  }
   goToHuntingHistoryScreen() {
     this.$router.push('/hunting-history').catch(() => {
       //
@@ -225,6 +235,10 @@ export default class NavigationDrawer extends Vue {
 </script>
 
 <style scoped>
+.change-theme-btn {
+  border-color: var(--v-bluePrimary-base) !important;
+  background: var(--v-bluePrimary-lighten1) !important;
+}
 .btn-theme {
   position: absolute;
   bottom: 24px;
