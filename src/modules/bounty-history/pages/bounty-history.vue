@@ -67,8 +67,10 @@
                       </v-sheet>
                       <div class="text-h5 text-sm-h4 blue--text font-weight-bold">{{ vm.totalProjectCount }}</div>
                     </div>
-                    <div class="neutral10--text-persistent font-weight-600 mt-1 text-body-2 text-sm-body-1">
-                      BOUNTY PROJECT
+                    <div
+                      class="neutral10--text-persistent font-weight-600 mt-1 text-body-2 text-sm-body-1 text-uppercase"
+                    >
+                      BOUNTY PROJECTS
                     </div>
                   </v-col>
                   <v-col cols="6">
@@ -79,7 +81,7 @@
                       <div class="text-h5 text-sm-h4 blue--text font-weight-bold">{{ vm.uniqueParticipantCount }}</div>
                     </div>
                     <div
-                      class="neutral10--text-persistent font-weight-600 mt-1 text-uppercase text-body-2 text-sm-body-1"
+                      class="neutral10--text-persistent font-weight-600 mt-1 text-uppercase text-body-2 text-sm-body-1 text-uppercase"
                     >
                       UNIQUE PARTICIPANTS
                     </div>
@@ -89,20 +91,26 @@
                 <v-sheet class="d-flex justify-space-between align-center fill-width" light>
                   <div>
                     <div class="text-h6 text-sm-h5 font-weight-bold black--text">{{ vm.liveProjectCount }}</div>
-                    <div class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1">
-                      LIVE PROJECT
+                    <div
+                      class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1 text-uppercase"
+                    >
+                      LIVE PROJECTS
                     </div>
                   </div>
                   <div>
                     <div class="text-h6 text-sm-h5 font-weight-bold black--text">{{ vm.endedProjectCount }}</div>
-                    <div class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1">
-                      COMPLETED PROJECT
+                    <div
+                      class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1 text-uppercase"
+                    >
+                      COMPLETED PROJECTS
                     </div>
                   </div>
                   <div>
                     <div class="text-h6 text-sm-h5 font-weight-bold black--text">{{ vm.userCount }}</div>
-                    <div class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1">
-                      USER ACCOUNT
+                    <div
+                      class="neutral10--text-persistent text-caption text-sm-body-2 font-weight-600 mt-1 text-uppercase"
+                    >
+                      USER ACCOUNTS
                     </div>
                   </div>
                 </v-sheet>
@@ -119,27 +127,32 @@
           <v-col cols="6" sm="4" md="3">
             <v-btn
               depressed
-              class="neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
+              class="rounded-pill neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
               @click="vm.changeStartDateDialog(true)"
               outlined
               min-width="100"
             >
-              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> From {{ vm.startDate || '' }}
+              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> From {{ vm.startDate || '(date)' }}
             </v-btn>
           </v-col>
           <v-col cols="6" sm="4" md="3">
             <v-btn
               depressed
-              class="neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
+              class="rounded-pill neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
               @click="vm.changeEndDateDialog(true)"
               outlined
               min-width="100"
             >
-              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> To {{ vm.endDate || '' }}
+              <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> To {{ vm.endDate || '(date)' }}
             </v-btn>
           </v-col>
           <v-col>
-            <v-btn class="text-capitalize white--text" color="bluePrimary" depressed @click="vm.changeDateRangeFilter">
+            <v-btn
+              class="text-capitalize white--text rounded-pill"
+              color="bluePrimary"
+              depressed
+              @click="vm.changeDateRangeFilter"
+            >
               <v-icon color="white" left>mdi-filter</v-icon>
               Filter
             </v-btn>
