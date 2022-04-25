@@ -25,6 +25,7 @@
               :status="task.status"
               :name="task.name"
               :chainId="task.chainId"
+              :taskId="task.taskId"
             />
           </v-col>
         </v-row>

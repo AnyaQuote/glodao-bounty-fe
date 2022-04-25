@@ -228,6 +228,7 @@ export class BountyHunterViewModel {
         type: types[0],
         currentStep: firstTask.filter((step) => step.finished === true).length,
         totalStep: firstTask.length,
+        taskId: task.id,
       }
     })
   }

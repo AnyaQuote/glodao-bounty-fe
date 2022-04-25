@@ -1,56 +1,61 @@
 <template>
-  <v-sheet
-    outlined
-    class="d-flex pa-3 pb-2 card-text neutral100 fill-height"
-    rounded
-    elevation="3"
-    style="position: relative"
-  >
-    <div class="custom-flag-container">
-      <div
-        class="custom-flag-css d-flex justify-end align-center pb-2 flex-column"
-        :style="`background-color: var(--v-${flagColor}-base)`"
-      >
-        <v-icon color="white" size="18"> {{ `mdi-${type}` }} </v-icon>
+  <router-link :to="navigationLink">
+    <v-sheet
+      outlined
+      class="d-flex pa-3 pb-2 card-text neutral100 fill-height"
+      rounded
+      elevation="3"
+      style="position: relative"
+    >
+      <div class="custom-flag-container">
+        <div
+          class="custom-flag-css d-flex justify-end align-center pb-2 flex-column"
+          :style="`background-color: var(--v-${flagColor}-base)`"
+        >
+          <v-icon color="white" size="18"> {{ `mdi-${type}` }} </v-icon>
+        </div>
       </div>
-    </div>
-    <div class="d-flex flex-column flex-1">
-      <div class="rounded-circle d-flex justify-center card-project-small-icon">
-        <chain-logo :chain="chainId" class="fill-width fill-height" />
-      </div>
-      <div class="mt-1 font-family-proxima font-weight-bold card-title-text">{{ name }}</div>
-      <div class="mt-1 card-text short-description">
-        {{ shortDescription }}
-      </div>
-      <div class="mt-auto">
-        <div class="d-flex justify-end mt-4 align-center">
-          <div class="rounded-circle mr-1 d-flex justify-center align-center progress-icon-container" v-if="statusIcon">
-            <v-icon size="8" :color="$vuetify.theme.dark ? 'white' : 'black'" class="font-weight-600">
-              {{ this.statusIcon }}
-            </v-icon>
+      <div class="d-flex flex-column flex-1">
+        <div class="rounded-circle d-flex justify-center card-project-small-icon">
+          <chain-logo :chain="chainId" class="fill-width fill-height" />
+        </div>
+        <div class="mt-1 font-family-proxima font-weight-bold card-title-text">{{ name }}</div>
+        <div class="mt-1 card-text short-description">
+          {{ shortDescription }}
+        </div>
+        <div class="mt-auto">
+          <div class="d-flex justify-end mt-4 align-center">
+            <div
+              class="rounded-circle mr-1 d-flex justify-center align-center progress-icon-container"
+              v-if="statusIcon"
+            >
+              <v-icon size="8" :color="$vuetify.theme.dark ? 'white' : 'black'" class="font-weight-600">
+                {{ this.statusIcon }}
+              </v-icon>
+            </div>
+            <div class="mr-2 font-italic font-weight-600 text-capitalize">{{ status }}</div>
+            <v-sheet
+              width="18"
+              height="18"
+              class="font-weight-bold d-flex align-center justify-center line-height-6 card-text background-neutral"
+            >
+              <span>{{ currentStep }}/{{ totalStep }}</span>
+            </v-sheet>
           </div>
-          <div class="mr-2 font-italic font-weight-600 text-capitalize">{{ status }}</div>
-          <v-sheet
-            width="18"
-            height="18"
-            class="font-weight-bold d-flex align-center justify-center line-height-6 card-text background-neutral"
-          >
-            <span>{{ currentStep }}/{{ totalStep }}</span>
-          </v-sheet>
-        </div>
-        <div class="mt-1 d-flex justify-space-between">
-          <v-sheet v-for="i in currentStep" class="progress-step background-blue-diversity" :key="`currentStep${i}`">
-          </v-sheet>
-          <v-sheet
-            v-for="i in totalStep - currentStep"
-            class="background-neutral progress-step"
-            :key="`unfinishedStep${i}`"
-          >
-          </v-sheet>
+          <div class="mt-1 d-flex justify-space-between">
+            <v-sheet v-for="i in currentStep" class="progress-step background-blue-diversity" :key="`currentStep${i}`">
+            </v-sheet>
+            <v-sheet
+              v-for="i in totalStep - currentStep"
+              class="background-neutral progress-step"
+              :key="`unfinishedStep${i}`"
+            >
+            </v-sheet>
+          </div>
         </div>
       </div>
-    </div>
-  </v-sheet>
+    </v-sheet>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -66,6 +71,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 })
 export default class CurrentTask extends Vue {
   @Prop({ required: true }) id!: string
+  @Prop({ required: true }) taskId!: string
   @Prop({ required: true }) currentStep!: number
   @Prop({ required: true }) totalStep!: number
   @Prop({ required: true }) type!: string
@@ -76,20 +82,24 @@ export default class CurrentTask extends Vue {
 
   statusIcon = ''
   flagColor = ''
+  navigationLink = ''
   mounted() {
     const lowercaseStatus = lowerCase(this.status)
     switch (lowercaseStatus) {
       case 'completed':
         this.flagColor = 'greenSenamatic'
         this.statusIcon = 'mdi-check'
+        this.navigationLink = `bounty-history/${this.taskId}`
         break
       case 'rejected':
         this.flagColor = 'redSenamatic'
         this.statusIcon = 'mdi-exclamation'
+        this.navigationLink = `bounty-history/${this.taskId}`
         break
       case 'processing':
         this.flagColor = 'bluePrimary'
         this.statusIcon = 'mdi-dots-horizontal'
+        this.navigationLink = `bounty/${this.taskId}`
         break
       default:
         this.flagColor = 'purple'
