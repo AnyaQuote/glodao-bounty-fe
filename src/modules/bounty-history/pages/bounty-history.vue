@@ -170,6 +170,7 @@
                 :endTime="task.endTime"
                 :rewardToken="task.rewardToken"
                 :totalParticipants="task.totalParticipants"
+                :projectLogo="task.projectLogo"
               />
             </div>
           </v-col>

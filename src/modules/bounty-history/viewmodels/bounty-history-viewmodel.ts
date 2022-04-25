@@ -207,6 +207,7 @@ export class BountyHistoryViewModel {
           'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
         ),
         rewardToken: get(bounty, 'metadata.rewardToken', 'GLD'),
+        projectLogo: get(bounty, 'metadata.projectLogo', ''),
       }
     })
   }
