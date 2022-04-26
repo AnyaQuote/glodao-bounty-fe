@@ -9,7 +9,7 @@
     >
       <v-container class="py-8">
         <v-row>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="6" align-self="center">
             <v-sheet
               class="fill-width fill-height background-transparent"
               :width="$vuetify.breakpoint.mdAndUp ? '95%' : '100%'"
