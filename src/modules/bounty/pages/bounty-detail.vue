@@ -399,6 +399,18 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(telegramTask, index) in vm.displayedTelegramData"
+                      :key="index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider" v-if="index !== 0"></div>
+                      <telegram-mini-task :telegramTask="telegramTask" :step="index" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
@@ -492,6 +504,7 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
+    'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
   },
 })
