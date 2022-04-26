@@ -498,12 +498,8 @@ export class BountyDetailViewModel {
     return moment(this.currentTime).isAfter(this.task.startTime)
   }
 
-  @computed get isTaskFull() {
-    return gte(this.totalParticipants, get(this.task, 'maxParticipant', 0))
-  }
-
   @computed get isTaskEnded() {
-    return moment(this.currentTime).isAfter(this.task.endTime) || this.isTaskFull
+    return moment(this.currentTime).isAfter(this.task.endTime)
   }
 
   @computed get twitterSharedLinkList() {
