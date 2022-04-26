@@ -16,8 +16,7 @@
             >
               <div class="banner-gradient-text">BOUNTY HISTORY</div>
               <div class="mt-2 primary--text intro-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s
+                All bounty projects are enthusiastically hunted on GloDAO. Check it now!
               </div>
               <div>
                 <v-sheet
