@@ -327,8 +327,4 @@ export default class BountyHistoryPage extends Vue {
 .neutral10--text-persistent {
   color: #5f6267;
 }
-
-.debug {
-  border: 1px solid red !important;
-}
 </style>
