@@ -687,4 +687,8 @@ export class BountyDetailViewModel {
   @computed get tokenLogo() {
     return get(this.task, 'metadata.tokenLogo', '')
   }
+
+  @computed get registeredWalletAdress() {
+    return authStore.registeredWallet
+  }
 }
