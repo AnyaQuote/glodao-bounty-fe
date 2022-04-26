@@ -405,7 +405,7 @@
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
                     >
-                      <div class="custom-dash-divider" v-if="index !== 0"></div>
+                      <div class="custom-dash-divider"></div>
                       <telegram-mini-task :telegramTask="telegramTask" :step="index" />
                     </v-col>
                     <v-col
