@@ -35,6 +35,9 @@
     <v-col cols="12">
       <v-container>
         <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
+        <div class="fill-width flex-center-box text-center" v-if="vm.convertedUpcomingBountyList.length === 0">
+          Please be patient! There will be more tasks coming soon
+        </div>
       </v-container>
     </v-col>
 
@@ -61,6 +64,9 @@
               :task="bounty"
             ></hunting-time-card>
           </v-col>
+          <div class="fill-width flex-center-box text-center" v-if="vm.convertedLiveBountyList.length === 0">
+            There are no tasks right now! Please comeback later
+          </div>
         </v-row>
       </v-container>
     </v-col>
@@ -88,7 +94,7 @@
             />
           </v-col>
         </v-row>
-        <v-row dense no-gutters>
+        <v-row dense no-gutters v-if="vm.convertedBountyList.length > 0">
           <v-col>
             <div class="my-10 mb-4 d-flex justify-center align-center">
               <v-btn
@@ -101,6 +107,9 @@
             </div>
           </v-col>
         </v-row>
+        <div class="fill-width flex-center-box text-center" v-else>
+          Tasks will be completed very soon! Take your chances and claim the rewards
+        </div>
       </v-container>
     </v-col>
   </v-row>

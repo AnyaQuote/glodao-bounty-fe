@@ -92,7 +92,7 @@
                 target="_blank"
                 depressed
               >
-                <v-icon color="white" dark size="16"> {{ `mdi-${key}` }}</v-icon>
+                <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
               </v-btn>
             </v-sheet>
           </v-sheet>
@@ -399,12 +399,14 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(telegramTask, index) in vm.displayedTelegramData"
+                      :key="index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Join Telegram group" icon="fab fa-telegram-plane" />
+                      <telegram-mini-task :telegramTask="telegramTask" :step="index" />
                     </v-col>
                     <v-col
                       cols="12"
@@ -492,6 +494,7 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'hunting-status': () => import('@/modules/bounty/components/bounty-detail/hunting-status.vue'),
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
+    'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
   },
 })

@@ -5,9 +5,7 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
-    <v-app-bar app v-if="$vuetify.breakpoint.mdAndUp">
-      <navigation-bar />
-    </v-app-bar>
+    <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
     <v-main app class="neutral15 overflow-hidden pb-6">
@@ -162,6 +160,13 @@ export default class App extends Vue {
   .v-input__control {
     .v-input__slot {
       background: transparent !important;
+    }
+  }
+  &.no-padding {
+    .v-input__control {
+      .v-input__slot {
+        padding: 0 !important;
+      }
     }
   }
 }
