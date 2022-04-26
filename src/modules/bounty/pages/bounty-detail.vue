@@ -92,7 +92,7 @@
                 target="_blank"
                 depressed
               >
-                <v-icon color="white" dark size="16"> {{ `mdi-${key}` }}</v-icon>
+                <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
               </v-btn>
             </v-sheet>
           </v-sheet>
