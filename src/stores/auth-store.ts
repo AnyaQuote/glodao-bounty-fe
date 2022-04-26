@@ -2,12 +2,12 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { localdata } from '@/helpers/local-data'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
+import { walletStore } from '@/stores/wallet-store'
+import jwtDecode from 'jwt-decode'
+import { get } from 'lodash-es'
 import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
-import { walletStore } from '@/stores/wallet-store'
-import { get } from 'lodash-es'
-import jwtDecode from 'jwt-decode'
 
 export class AuthStore {
   @observable attachWalletDialog = false
@@ -57,7 +57,7 @@ export class AuthStore {
       snackController.updateSuccess()
       this.changeAttachWalletDialog(false)
     } catch (error) {
-      snackController.error(get(error, 'response.data.message', '') || (error as string))
+      snackController.error(get(error, 'response.data.message', '') || get(error, 'message', '') || (error as string))
     } finally {
       this.isWalletUpdating = false
     }
