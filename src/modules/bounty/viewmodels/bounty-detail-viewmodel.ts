@@ -693,7 +693,10 @@ export class BountyDetailViewModel {
   }
 
   @computed get isTaskProcessFinish(): boolean {
-    return get(this.apply, ['data', this.currentType], []).filter((step) => !step.finished).length === 0
+    return (
+      get(this.apply, ['data', 'twitter'], []).filter((step) => !step.finished).length === 0 &&
+      get(this.apply, ['data', 'telegram'], []).filter((step) => !step.finished).length === 0
+    )
   }
 
   @computed get taskSocialLinks() {
