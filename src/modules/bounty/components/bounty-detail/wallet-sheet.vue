@@ -35,7 +35,13 @@
           color="error"
           outlined
         >
-          The wallet isn't matched
+          <span class="mr-1">Wrong wallet</span>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon right small v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
+            </template>
+            <span>Connect to your wallet {{ vm.registeredWalletAdress | shortAddress(4, 4) }} </span>
+          </v-tooltip>
         </v-chip>
         <v-chip
           class="ma-2 text-uppercase font-weight-regular text-caption blue--text blue lighten-1 font-weight-bold"

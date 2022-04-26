@@ -702,4 +702,8 @@ export class BountyDetailViewModel {
     if (this.isHuntingProcessStarted && !this.isInPriorityPool) return true
     return false
   }
+
+  @computed get registeredWalletAdress() {
+    return authStore.registeredWallet
+  }
 }
