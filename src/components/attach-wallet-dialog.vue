@@ -104,8 +104,4 @@ export default class AttachWalletDialog extends Vue {
 .v-btn--disabled {
   background-image: none;
 }
-
-.debug {
-  border: 1px solid red !important;
-}
 </style>
