@@ -3,7 +3,6 @@ import { apiService } from '@/services/api-service'
 import * as _ from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
-
 import moment from 'moment'
 
 const DEFAULT_BREADCRUMBS = [
@@ -289,5 +288,9 @@ export class BountyHistoryDetailViewModel {
       }
     }
     return result
+  }
+
+  @computed get projectLogo() {
+    return _.get(this.task, 'metadata.projectLogo', '')
   }
 }

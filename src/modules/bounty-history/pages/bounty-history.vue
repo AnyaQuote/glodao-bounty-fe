@@ -9,15 +9,14 @@
     >
       <v-container class="py-8">
         <v-row>
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="6" align-self="center">
             <v-sheet
               class="fill-width fill-height background-transparent"
               :width="$vuetify.breakpoint.mdAndUp ? '95%' : '100%'"
             >
               <div class="banner-gradient-text">BOUNTY HISTORY</div>
               <div class="mt-2 primary--text intro-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s
+                All bounty projects are enthusiastically hunted on GloDAO. Check it now!
               </div>
               <div>
                 <v-sheet
@@ -170,6 +169,7 @@
                 :endTime="task.endTime"
                 :rewardToken="task.rewardToken"
                 :totalParticipants="task.totalParticipants"
+                :projectLogo="task.projectLogo"
               />
             </div>
           </v-col>

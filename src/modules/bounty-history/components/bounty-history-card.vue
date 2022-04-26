@@ -14,8 +14,8 @@
         <v-col cols="6" md="3" class="d-flex align-center">
           <div>
             <div>
-              <v-sheet width="26" height="26" class="background-transparent">
-                <chain-logo :chain="chainId" class="fill-width fill-height" />
+              <v-sheet width="26" height="26" class="background-transparent rounded-circle">
+                <v-img :src="projectLogo"></v-img>
               </v-sheet>
             </div>
             <div class="card-title-text mt-2 font-weight-bold bluePrimary--text">{{ name }}</div>
@@ -62,8 +62,8 @@
         <v-col cols="12" class="d-flex align-center">
           <div class="d-flex align-center mt-2 fill-width">
             <div class="mr-4">
-              <v-sheet width="26" height="26">
-                <chain-logo :chain="chainId" class="fill-width fill-height" />
+              <v-sheet width="26" height="26" class="transparent rounded-circle">
+                <v-img :src="projectLogo"></v-img>
               </v-sheet>
             </div>
             <div class="card-title-text font-weight-bold bluePrimary--text">{{ name }}</div>
@@ -111,6 +111,7 @@ export default class HuntingHistoryCard extends Vue {
   @Prop({ required: true }) rewardToken!: string
   @Prop({ required: true }) totalReward!: string
   @Prop({ required: true }) totalParticipants!: string
+  @Prop({ required: true }) projectLogo!: string
 }
 </script>
 

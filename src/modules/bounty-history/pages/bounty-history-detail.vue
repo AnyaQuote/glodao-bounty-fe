@@ -38,9 +38,9 @@
                 <v-sheet
                   :max-height="$vuetify.breakpoint.xsOnly ? 24 : 48"
                   :max-width="$vuetify.breakpoint.xsOnly ? 24 : 48"
-                  class="mr-3 background-transparent"
+                  class="mr-3 background-transparent rounded-circle"
                 >
-                  <chain-logo class="fill-height fill-width" :chain="vm.task.chainId" />
+                  <v-img :src="vm.projectLogo"></v-img>
                 </v-sheet>
                 {{ vm.taskName }}
               </div>
