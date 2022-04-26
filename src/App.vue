@@ -162,6 +162,13 @@ export default class App extends Vue {
       background: transparent !important;
     }
   }
+  &.no-padding {
+    .v-input__control {
+      .v-input__slot {
+        padding: 0 !important;
+      }
+    }
+  }
 }
 .custom-tabs-bar-bounty-detail {
   background: transparent;
