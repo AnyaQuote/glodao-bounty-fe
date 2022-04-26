@@ -4,13 +4,13 @@
       outlined
       class="position-relative pa-8 text-center dialog-normal-text overflow-hidden rounded neutral100--bg"
     >
-      <div class="d-flex align-center">
-        <v-avatar size="64">
-          <img :src="authStore.user.avatar" alt="Avatar" />
-        </v-avatar>
-        <div class="mt-3 ml-3 card-title-text font-weight-600" style="font-size: 24px">Set the attached wallet</div>
-      </div>
-      <div class="mt-6 font-weight-600 text-start">Connect your wallet to continue:</div>
+      <!-- <div class="d-flex align-center"> -->
+      <v-avatar size="64">
+        <img :src="authStore.user.avatar" alt="Avatar" />
+      </v-avatar>
+      <div class="mt-3 ml-3 card-title-text font-weight-600">Set the attached wallet</div>
+      <!-- </div> -->
+      <div class="mt-6 font-weight-600">Connect your wallet to continue:</div>
       <v-sheet class="mt-4 py-1 px-2 d-flex align-center neutral100--bg rounded" outlined>
         <v-text-field
           hide-details
@@ -24,29 +24,31 @@
           readonly
         >
           <template v-slot:append>
-            <v-btn
-              width="90"
-              class="dialog-btn rounded white--text linear-background-blue-main"
-              block
-              @click="authStore.saveAttachWallet()"
-              :loading="authStore.isWalletUpdating"
-              :disabled="!walletStore.account"
-            >
-              Set
-            </v-btn>
+            <div class="pl-2">
+              <v-btn
+                width="90"
+                class="dialog-btn rounded white--text linear-background-blue-main"
+                block
+                @click="authStore.saveAttachWallet()"
+                :loading="authStore.isWalletUpdating"
+                :disabled="!walletStore.account"
+              >
+                Set
+              </v-btn>
+            </div>
           </template>
         </v-text-field>
         <!-- <v-icon>mdi-wallet-outline</v-icon> -->
       </v-sheet>
-      <!-- <div class="mt-3">
-        <v-btn
+      <div class="mt-3">
+        <!-- <v-btn
           class="dialog-btn rounded-0 black--text background-neutral"
           depressed
           @click="authStore.changeAttachWalletDialog(false)"
           :disabled="authStore.isWalletUpdating"
           >Ok, I'll set later</v-btn
-        >
-      </div> -->
+        > -->
+      </div>
       <div class="mt-3">
         <connect-wallet btnClass="fill-width" />
       </div>
