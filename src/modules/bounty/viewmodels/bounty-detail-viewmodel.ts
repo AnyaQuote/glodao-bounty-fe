@@ -85,6 +85,8 @@ export class BountyDetailViewModel {
 
   @observable currentType = 'twitter'
 
+  @observable currentPriorityParticipants = 0
+
   disposes: IReactionDisposer[] = []
 
   constructor() {
@@ -232,6 +234,7 @@ export class BountyDetailViewModel {
     this.initEmptyStepData()
     yield this.getRelatedApplies()
     yield this.getApplyData()
+    yield this.getParticipantCount()
     yield this.getStakeStatus()
     loadingController.decreaseRequest()
   }
@@ -242,6 +245,14 @@ export class BountyDetailViewModel {
       this.task = res
     } catch (error) {
       snackController.error(get(error, 'response.data.message', '') || (error as string))
+    }
+  }
+
+  @asyncAction *getParticipantCount() {
+    try {
+      this.currentPriorityParticipants = yield apiService.applies.count({ poolType: 'priority' })
+    } catch (error) {
+      snackController.error('Can not get pool statistics! Please try again later')
     }
   }
 
@@ -395,8 +406,7 @@ export class BountyDetailViewModel {
           0
         )
         this.apply = res
-        const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
-        this.relatedApplies[foundIndex] = this.apply
+        this.currentPriorityParticipants += 1
         snackController.success('Apply for priority pool successfully')
         // authStore.getUserData()
       }
@@ -554,13 +564,6 @@ export class BountyDetailViewModel {
     return FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
   }
 
-  @computed get currentPriorityParticipants() {
-    return (
-      this.relatedApplies.filter((apply) => isEqual(get(apply, 'poolType', 'community'), POOL_TYPES.PRIORITY)).length ??
-      0
-    )
-  }
-
   @computed get maxPriorityParticipants() {
     return this.task.maxPriorityParticipants ?? 0
   }
@@ -595,7 +598,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get currentCommunityParticipants() {
-    return subtract(this.relatedApplies.length, this.currentPriorityParticipants) ?? 0
+    return subtract(this.totalParticipants, this.currentPriorityParticipants) ?? 0
   }
 
   @computed get totalParticipants() {
@@ -686,5 +689,17 @@ export class BountyDetailViewModel {
 
   @computed get tokenLogo() {
     return get(this.task, 'metadata.tokenLogo', '')
+  }
+
+  @computed get shouldGlowPriorityPool() {
+    if (!this.isHuntingProcessStarted && !this.isPriorityPoolFull) return true
+    if (this.isHuntingProcessStarted && this.isInPriorityPool) return true
+    return false
+  }
+
+  @computed get shouldGlowCommunityPool() {
+    if (!this.isHuntingProcessStarted && this.isPriorityPoolFull) return true
+    if (this.isHuntingProcessStarted && !this.isInPriorityPool) return true
+    return false
   }
 }
