@@ -48,7 +48,14 @@
             <v-icon class="pl-1" color="blue" size="16">mdi-star</v-icon>
           </v-sheet>
           <v-sheet class="transparent font-weight-bold text-capitalize pt-1 text-body-1 neutral10--text">
-            standard
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <div v-bind="attrs" v-on="on">
+                  <span>Standard</span>
+                </div>
+              </template>
+              <span> Earn 3% commission for every referred bounty </span>
+            </v-tooltip>
           </v-sheet>
         </v-sheet>
       </v-col>
