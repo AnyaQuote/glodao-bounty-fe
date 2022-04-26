@@ -35,7 +35,13 @@
             class="red lighten-1 d-flex justify-center align-center white--text caption-text text-uppercase rounded-lg px-2 py-1"
             v-else-if="!vm.isWalletMatched"
           >
-            wrong wallet
+            Wrong wallet
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon right small color="white" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
+              </template>
+              <span>Connect to your wallet {{ authStore.registeredWallet | shortAddress(4, 4) }} </span>
+            </v-tooltip>
           </v-sheet>
           <v-sheet
             class="blue lighten-1 d-flex justify-center align-center blue--text caption-text text-uppercase rounded-lg px-2 py-1"
