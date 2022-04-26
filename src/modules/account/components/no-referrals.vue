@@ -14,7 +14,7 @@
       </div>
       <div class="card-big-title-text mt-5 font-weight-bold">No referral found</div>
       <div class="card-title-text mt-3 px-2">
-        You have not sent out any referrals yet! Send your referral link to new user to earn 5% commission for every
+        You have not sent out any referrals yet! Send your referral link to new user to earn 3% commission for every
         bounty they earn
       </div>
     </v-sheet>

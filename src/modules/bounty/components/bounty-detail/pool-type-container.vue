@@ -4,7 +4,7 @@
     <v-row>
       <v-col v-if="!vm.isTaskEnded">
         <v-sheet class="d-flex flex-column justify-space-between transparent" height="100%">
-          <v-sheet class="title-2 white--text text-uppercase transparent mb-3">POOL ENDS IN</v-sheet>
+          <v-sheet class="title-2 primary--text text-uppercase transparent mb-3">POOL ENDS IN</v-sheet>
           <countdown :targetDate="vm.task.endTime" />
         </v-sheet>
       </v-col>
@@ -24,7 +24,7 @@
         }"
       >
         <v-sheet
-          class="d-flex flex-column justify-space-between white--text font-family-proxima transparent"
+          class="d-flex flex-column justify-space-between primary--text font-family-proxima transparent"
           height="100%"
         >
           <div class="text-uppercase title-2">
@@ -40,88 +40,108 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-sheet
-          class="d-flex flex-column justify-space-between align-center rounded-lg pa-5 neutral100--bg"
-          width="100%"
-          height="100%"
+        <div
+          :class="{
+            'active-pool': vm.shouldGlowPriorityPool,
+          }"
         >
-          <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
-            <v-sheet class="text-uppercase primary--text mr-3 neutral100--bg" height="100%"> priority pool </v-sheet>
-            <v-chip class="blue lighten-1 blue--text font-italic" small>
-              For GLD stakers
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
-                </template>
-                <span>GLD stakers who have staked more than 1000$ can participate in priority pool</span>
-              </v-tooltip>
-            </v-chip>
-          </v-sheet>
-          <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
-            <v-sheet class="d-flex justify-space-between neutral100--bg">
-              <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
-              <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalPriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
-                  vm.totalPriorityRewardExchanged | usdCustom
-                }})
+          <div class="active-pool-inner-border">
+            <v-sheet
+              class="d-flex flex-column justify-space-between align-center rounded-lg pa-5 neutral100--bg"
+              width="100%"
+              height="100%"
+            >
+              <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
+                <v-sheet class="text-uppercase primary--text mr-3 neutral100--bg" height="100%">
+                  priority pool
+                </v-sheet>
+                <v-chip class="blue lighten-1 blue--text font-italic" small>
+                  For GLD stakers
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
+                    </template>
+                    <span>GLD stakers who have staked more than 1000$ can participate in priority pool</span>
+                  </v-tooltip>
+                </v-chip>
+              </v-sheet>
+              <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
+                <v-sheet class="d-flex justify-space-between neutral100--bg">
+                  <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
+                  <v-sheet class="primary--text number-font neutral100--bg">
+                    {{ vm.totalPriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                      vm.totalPriorityRewardExchanged | usdCustom
+                    }})
+                  </v-sheet>
+                </v-sheet>
+                <v-sheet class="d-flex justify-space-between neutral100--bg">
+                  <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
+                  <v-sheet class="primary--text number-font neutral100--bg">
+                    {{ vm.currentPriorityParticipants }}/{{ vm.maxPriorityParticipants }}
+                  </v-sheet>
+                </v-sheet>
+                <v-sheet class="d-flex justify-space-between neutral100--bg">
+                  <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
+                  <v-sheet class="primary--text number-font neutral100--bg">
+                    {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                      vm.singlePriorityRewardExchanged | usdCustom
+                    }})
+                  </v-sheet>
+                </v-sheet>
               </v-sheet>
             </v-sheet>
-            <v-sheet class="d-flex justify-space-between neutral100--bg">
-              <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
-              <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.currentPriorityParticipants }}/{{ vm.maxPriorityParticipants }}
-              </v-sheet>
-            </v-sheet>
-            <v-sheet class="d-flex justify-space-between neutral100--bg">
-              <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
-              <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
-                  vm.singlePriorityRewardExchanged | usdCustom
-                }})
-              </v-sheet>
-            </v-sheet>
-          </v-sheet>
-        </v-sheet>
+          </div>
+        </div>
       </v-col>
       <v-col>
-        <v-sheet
-          class="d-flex flex-column justify-space-between align-center neutral100--bg rounded-lg pa-5"
-          width="100%"
-          height="100%"
+        <div
+          :class="{
+            'active-pool': vm.shouldGlowCommunityPool,
+          }"
         >
-          <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
-            <v-sheet class="text-uppercase neutral100--bg primary--text mr-3" height="100%"> community pool </v-sheet>
-            <v-chip class="blue lighten-1 blue--text font-italic" small>For community</v-chip>
-          </v-sheet>
-          <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
-            <v-sheet class="d-flex justify-space-between neutral100--bg">
-              <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
-              <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.totalCommunityReward | formatNumber }} {{ vm.rewardToken }} ({{
-                  vm.totalCommunityRewardExchanged | usdCustom
-                }})
+          <div class="active-pool-inner-border">
+            <v-sheet
+              class="d-flex flex-column justify-space-between align-center neutral100--bg rounded-lg pa-5"
+              width="100%"
+              height="100%"
+            >
+              <v-sheet class="d-flex mb-3 neutral100--bg" width="100%">
+                <v-sheet class="text-uppercase neutral100--bg primary--text mr-3" height="100%">
+                  community pool
+                </v-sheet>
+                <v-chip class="blue lighten-1 blue--text font-italic" small>For community</v-chip>
+              </v-sheet>
+              <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
+                <v-sheet class="d-flex justify-space-between neutral100--bg">
+                  <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
+                  <v-sheet class="primary--text number-font neutral100--bg">
+                    {{ vm.totalCommunityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                      vm.totalCommunityRewardExchanged | usdCustom
+                    }})
+                  </v-sheet>
+                </v-sheet>
+                <v-sheet class="d-flex justify-space-between neutral100--bg">
+                  <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
+                  <v-sheet class="primary--text number-font neutral100--bg">
+                    {{ vm.currentCommunityParticipants }}
+                  </v-sheet>
+                </v-sheet>
+                <v-sheet class="d-flex justify-space-between neutral100--bg">
+                  <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
+                  <v-sheet class="primary--text number-font neutral100--bg">
+                    Sharing pool mission
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon color="primary" size="15" v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
+                      </template>
+                      <span>Pool rewards will be divided equally among all participants</span>
+                    </v-tooltip>
+                  </v-sheet>
+                </v-sheet>
               </v-sheet>
             </v-sheet>
-            <v-sheet class="d-flex justify-space-between neutral100--bg">
-              <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
-              <v-sheet class="primary--text number-font neutral100--bg">
-                {{ vm.currentCommunityParticipants }}
-              </v-sheet>
-            </v-sheet>
-            <v-sheet class="d-flex justify-space-between neutral100--bg">
-              <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
-              <v-sheet class="primary--text number-font neutral100--bg">
-                Sharing pool mission
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon color="primary" size="15" v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
-                  </template>
-                  <span>Pool rewards will be divided equally among all participants</span>
-                </v-tooltip>
-              </v-sheet>
-            </v-sheet>
-          </v-sheet>
-        </v-sheet>
+          </div>
+        </div>
       </v-col>
     </v-row>
   </v-sheet>
@@ -145,18 +165,22 @@ export default class PoolTypeContainer extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.pool-type-container {
-  background: url('~@/assets/images/pool-type-container-bg.png');
-  background-size: cover;
-}
 .theme--light {
   .custom-check-dot {
     border: thin solid var(--v-primary-base);
+  }
+  .pool-type-container {
+    background: url('~@/assets/images/pool-type-container-bg.png');
+    background-size: cover;
   }
 }
 .theme--dark {
   .custom-check-dot {
     border: thin solid var(--v-bluePrimary-base);
+  }
+  .pool-type-container {
+    background: url('~@/assets/images/pool-type-container-bg-dark.png');
+    background-size: cover;
   }
 }
 
@@ -253,5 +277,92 @@ export default class PoolTypeContainer extends Vue {
   font-weight: 700;
   font-size: 14px;
   line-height: 150%;
+}
+
+.active-pool {
+  background: hsl(0, 0%, 100%);
+  position: relative;
+  z-index: 2;
+  border-radius: 9px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01);
+  .active-pool-inner-border {
+    background: hsl(0, 0%, 100%);
+    position: relative;
+    z-index: 2;
+    border-radius: 9px;
+    padding: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01);
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0px;
+      left: 0;
+      right: 0;
+      z-index: -1;
+      border-radius: 9px;
+      height: 100%;
+      width: 100%;
+      transform: scale(1) translateZ(0);
+      background: radial-gradient(
+        circle,
+        #eeff92,
+        #cfffa6,
+        #b3ffbd,
+        #9cffd4,
+        #8fffe8,
+        #7cf9f0,
+        #6cf3f8,
+        #61ecff,
+        #55dbff,
+        #8fc3ff,
+        #d1a3ff,
+        #ff80ce
+      );
+      background-size: 200% 200%;
+      animation: animateGlow 3s linear infinite;
+      animation-direction: reverse;
+    }
+  }
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    border-radius: 9px;
+    height: 100%;
+    width: 100%;
+    transform: scale(1) translateZ(0);
+    filter: blur(8px);
+    background: radial-gradient(
+      circle,
+      #fb58e5,
+      #dd61ee,
+      #bc69f4,
+      #986ff7,
+      #6e73f6,
+      #5480fc,
+      #368cff,
+      #0096ff,
+      #00acff,
+      #00c1ff,
+      #00d4ff,
+      #00e5ff
+    );
+    background-size: 200% 200%;
+    animation: animateGlow 3s linear infinite;
+    animation-direction: reverse;
+  }
+}
+
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 </style>
