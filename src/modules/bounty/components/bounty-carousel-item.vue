@@ -2,13 +2,6 @@
   <v-sheet class="neutral100--bg d-flex flex-column rounded-lg ma-1 fill-height" elevation="3" eager>
     <div class="position-relative flex-shrink-0">
       <v-img class="rounded-lg rounded-b-0" :src="coverImage" :aspect-ratio="1.5"></v-img>
-      <div
-        class="position-absolute top-0 right-28 custom-chevron-flag d-flex flex-column align-center pt-2 pb-5 elavation-10"
-      >
-        <v-btn class="mb-n3" v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon depressed>
-          <v-icon color="white" size="14" v-html="`mdi-${icon}`"></v-icon>
-        </v-btn>
-      </div>
     </div>
     <div class="d-flex flex-column justify-space-between mx-4 my-3">
       <div class="d-flex flex-column mb-3">
