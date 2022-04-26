@@ -29,6 +29,7 @@
                 width="90"
                 class="dialog-btn rounded white--text linear-background-blue-main"
                 block
+                depressed
                 @click="authStore.saveAttachWallet()"
                 :loading="authStore.isWalletUpdating"
                 :disabled="!walletStore.account"
