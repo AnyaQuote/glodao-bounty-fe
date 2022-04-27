@@ -387,7 +387,7 @@
                       cols="12"
                       class="py-0"
                       v-for="(twitterTask, index) in vm.displayedTwitterData"
-                      :key="index"
+                      :key="'twitter' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
@@ -399,7 +399,7 @@
                       cols="12"
                       class="py-0"
                       v-for="(telegramTask, index) in vm.displayedTelegramData"
-                      :key="index"
+                      :key="'telegram' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
