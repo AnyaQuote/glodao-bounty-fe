@@ -12,6 +12,7 @@
               <v-tab-item v-for="(pool, index) in upcomingPoolList" :value="index" :key="pool.id">
                 <v-img height="700" :src="pool.metadata.coverImage" aspect-ratio="1.5"></v-img>
               </v-tab-item>
+              <div class="fill-width fill-height position-absolute backdrop-shadow" style="top: 0; left: 0"></div>
             </v-sheet>
             <!-- Background image end -->
           </v-tabs-items>
@@ -109,7 +110,7 @@ export default class BountyUpcoming extends Vue {
   toggleTab(tabIndex: number) {
     this.tab = tabIndex
   }
-  showSide = false
+  showSide = true
   toggleSide() {
     this.showSide = !this.showSide
   }
@@ -166,5 +167,14 @@ export default class BountyUpcoming extends Vue {
 
 .z-index-1 {
   z-index: 1;
+}
+.backdrop-shadow {
+  background: linear-gradient(
+    2.56deg,
+    rgba(0, 0, 0, 0.9) 3.01%,
+    rgba(0, 0, 0, 0.85) 17.56%,
+    rgba(0, 0, 0, 0) 60.76%
+  ) !important;
+  filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.15));
 }
 </style>
