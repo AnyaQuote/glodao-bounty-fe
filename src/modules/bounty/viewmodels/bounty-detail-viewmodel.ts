@@ -28,7 +28,7 @@ const POOL_TYPES = {
   COMMUNITY: 'community',
 }
 
-const ACCOUNT_MIN_AGE_IN_DAYS = 180
+const ACCOUNT_MIN_AGE_IN_DAYS = 90
 
 const MIN_STAKE_VALUE = FixedNumber.from(1000)
 

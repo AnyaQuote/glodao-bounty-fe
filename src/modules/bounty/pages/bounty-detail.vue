@@ -173,7 +173,7 @@
                           Your account does not qualify for task hunting
                         </div>
                       </template>
-                      <span>Your twitter account must be older than 6 months</span>
+                      <span>Your twitter account must be older than 3 months</span>
                     </v-tooltip>
                     <div class="d-flex mt-5">
                       <v-btn
