@@ -118,7 +118,6 @@
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Reward value (USD)</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>
                       {{ vm.rewardAmountExchanged | usdCustom(2, 2) }}
                     </span>
