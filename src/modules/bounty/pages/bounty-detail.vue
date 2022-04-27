@@ -118,7 +118,6 @@
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Reward value (USD)</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>
                       {{ vm.rewardAmountExchanged | usdCustom(2, 2) }}
                     </span>
@@ -154,190 +153,6 @@
           </v-row>
           <!-- TASK -->
           <v-sheet class="rounded-lg overflow-hidden neutral100" elevation="3">
-            <!-- <v-tabs v-model="tab" color="bluePrimary" class="rounded-lg neutral100 custom-tabs-bar-bounty-detail">
-              <v-tab v-for="(item, index) in items" :key="index" :disabled="index !== 0" class="text-caption">
-                <span class="text-caption text-none primary--text">
-                  {{ item }}
-                </span>
-              </v-tab>
-            </v-tabs> -->
-            <!-- <v-tabs-items v-model="tab" class="">
-              <v-tab-item>
-                <v-row
-                  dense
-                  no-gutters
-                  class="neutral100--bg"
-                  justify="center"
-                  :class="{
-                    'px-4': $vuetify.breakpoint.smAndDown,
-                  }"
-                >
-                  <v-col cols="12" md="10">
-                    <div class="text-center my-4">
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify" v-bind="attrs" v-on="on">
-                            Your account does not qualify for task hunting
-                          </div>
-                        </template>
-                        <span>Your twitter account must be older than 6 months</span>
-                      </v-tooltip>
-                      <div v-if="vm.status === HUNTING.start">
-                        <v-btn
-                          elevation
-                          class="white--text text-none linear-background-blue-main"
-                          @click="vm.startHunting"
-                          :disabled="!vm.isAccountAgeQualify || !vm.currentWallet"
-                          :loading="vm.isStartingProcess"
-                        >
-                          <v-icon left>mdi-power</v-icon>
-                          Start hunting
-                        </v-btn>
-                      </div>
-                      <hunting-status v-else />
-                    </div>
-                  </v-col> -->
-            <!-- <v-col cols="12" md="9">
-                    <div class="custom-dash-divider mb-7"></div>
-                    <div v-for="(twitterTask, index) in vm.displayedTwitterData" :key="index">
-                      <v-row
-                        dense
-                        no-gutters
-                        class="mb-4"
-                        v-if="vm.displayedTwitterData.length > 0 && twitterTask.type !== 'retweet'"
-                      > -->
-            <!-- TASK COL 1 -->
-            <!-- <v-col cols="1" v-if="$vuetify.breakpoint.smAndUp">
-                          <v-sheet class="pb-1 neutral100">
-                            <v-sheet
-                              width="18"
-                              height="18"
-                              class="rounded-circle flex-center-box background-transparent custom-check-dot"
-                            >
-                              <v-sheet
-                                width="10"
-                                height="10"
-                                class="rounded-circle"
-                                :color="$vuetify.theme.dark ? 'bluePrimary' : 'black'"
-                                v-if="twitterTask.finished || twitterTask.activeStep"
-                              >
-                              </v-sheet>
-                            </v-sheet>
-                          </v-sheet>
-                          <v-sheet class="fill-height pb-7 neutral100">
-                            <div class="divider"></div>
-                          </v-sheet>
-                        </v-col> -->
-            <!-- TASK COL 2 -->
-            <!-- <v-col :cols="$vuetify.breakpoint.smAndUp ? 10 : 12">
-                          <v-sheet outlined rounded class="mini-task-container-sheet">
-                            <v-container fluid>
-                              <div class="d-flex align-center">
-                                <v-sheet
-                                  width="10"
-                                  height="10"
-                                  class="rounded-circle flex-center-box primary--border-thin mr-1"
-                                  v-if="twitterTask.finished || twitterTask.activeStep"
-                                >
-                                  <v-icon size="8" color="primary" v-if="twitterTask.finished">mdi-check</v-icon>
-                                  <v-icon size="8" color="primary" v-else-if="twitterTask.activeStep">
-                                    mdi-dots-horizontal
-                                  </v-icon>
-                                </v-sheet>
-                                <div class="text-caption text-weight-400 line-height" v-if="twitterTask.finished">
-                                  Completed
-                                </div>
-                                <div
-                                  class="text-caption text-weight-400 line-height"
-                                  v-else-if="twitterTask.activeStep"
-                                >
-                                  Processing
-                                </div>
-                              </div>
-                              <div class="mb-4">
-                                <div class="text-subtitle-2 font-weight-medium">{{ twitterTask | titleTask }}</div>
-                                <ul v-if="twitterTask.type === 'follow'">
-                                  <li class="text-caption">
-                                    Please follow “{{ vm.task | _get('name') }}” Twitter page to complete this task.
-                                  </li>
-                                </ul>
-                                <ul v-if="twitterTask.type === 'tweet'">
-                                  <li class="text-caption">
-                                    Post a Tweet using
-                                    <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
-                                    >, share why you want to have this project’s primary market exposure.
-                                  </li>
-                                  <li class="text-caption">Please enter your share link post to complete task.</li>
-                                </ul>
-                                <ul v-if="twitterTask.type === 'referral'">
-                                  <li class="text-caption">Share and referral with your friend.</li>
-                                  <li class="text-caption">Please enter your referral link to complete task.</li>
-                                </ul>
-                              </div>
-                              <div class="text-end">
-                                <v-btn
-                                  v-if="twitterTask.type === 'follow' && vm.status !== HUNTING.finished"
-                                  class="white--text text-none linear-background-blue-main text-caption"
-                                  :disabled="vm.shouldDisableTaskProcessing || twitterTask.finished"
-                                  elevation="0"
-                                  @click="openFollowTwitterLink(twitterTask.link, index)"
-                                  :loading="!twitterTask.finished && vm.isTaskSubmiting"
-                                >
-                                  <v-icon left size="14">mdi-twitter</v-icon>
-                                  Twitter follow
-                                </v-btn>
-                                <link-submit class="mt-4" v-else :twitterTask="twitterTask" :step="index" />
-                              </div>
-                            </v-container>
-                          </v-sheet>
-                        </v-col> -->
-            <!-- TASK COL 3 -->
-            <!-- <v-col cols="1" class="" v-if="$vuetify.breakpoint.smAndUp">
-                          <v-sheet rounded class="fill-height ml-3 ba-dotted" min-width="40">
-                            <v-sheet outlined rounded class="fill-height d-flex justify-center align-center neutral100">
-                              <v-icon v-if="twitterTask && twitterTask.finished">mdi-check </v-icon>
-                            </v-sheet>
-                          </v-sheet>
-                        </v-col>
-                      </v-row>
-                    </div> -->
-
-            <!-- <v-sheet class="my-7">
-                      <div class="custom-dash-divider"></div>
-                    </v-sheet> -->
-
-            <!-- button -->
-            <!-- <v-row class="mb-8">
-                      <v-col cols="12" sm="6" class="text-center">
-                        <v-btn
-                          elevation="0"
-                          color="bluePrimary"
-                          class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="!vm.isPriorityPoolAvailable || !vm.isValidStakeAmount"
-                          @click="vm.applyForPriorityPool()"
-                          v-if="!vm.isInPriorityPool"
-                          :loading="vm.isApplyPrioritying"
-                        >
-                          Apply for priority pool
-                        </v-btn>
-                      </v-col>
-                      <v-col cols="12" :sm="!vm.isInPriorityPool ? 6 : 12" class="text-center">
-                        <v-btn
-                          elevation="0"
-                          color="bluePrimary"
-                          class="white--text text-none linear-background-blue-main text-caption"
-                          :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
-                          @click="vm.changeEarnDialog(true)"
-                          :loading="vm.isTaskSubmiting"
-                        >
-                          Confirm to complete
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                  </v-col>
-                </v-row>
-              </v-tab-item>
-              <v-tab-item> -->
             <v-sheet class="neutral100--bg fill-width pa-7">
               <v-row dense no-gutters>
                 <v-col cols="12">
@@ -388,7 +203,7 @@
                       cols="12"
                       class="py-0"
                       v-for="(twitterTask, index) in vm.displayedTwitterData"
-                      :key="index"
+                      :key="'twitter' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
@@ -400,7 +215,7 @@
                       cols="12"
                       class="py-0"
                       v-for="(telegramTask, index) in vm.displayedTelegramData"
-                      :key="index"
+                      :key="'telegram' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
