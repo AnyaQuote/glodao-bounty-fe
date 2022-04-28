@@ -12,7 +12,9 @@
           class="custom-flag-css d-flex justify-end align-center pb-2 flex-column"
           :style="`background-color: var(--v-${flagColor}-base)`"
         >
-          <v-icon color="white" size="18"> {{ `mdi-${type}` }} </v-icon>
+          <v-icon color="white" size="16" v-for="type in types" :key="`${id}-${type}`" class="mb-1">
+            {{ `fab fa-${type === 'telegram' ? 'telegram-plane' : type}` }}
+          </v-icon>
         </div>
       </div>
       <div class="d-flex flex-column flex-1">
@@ -74,7 +76,9 @@ export default class CurrentTask extends Vue {
   @Prop({ required: true }) taskId!: string
   @Prop({ required: true }) currentStep!: number
   @Prop({ required: true }) totalStep!: number
-  @Prop({ required: true }) type!: string
+  // @Prop({ required: true }) type!: string
+  @Prop({ required: true }) types!: string[]
+  @Prop({ required: true }) projectLogo!: string[]
   @Prop({ required: true }) shortDescription!: string
   @Prop({ required: true }) status!: string
   @Prop({ required: true }) name!: string

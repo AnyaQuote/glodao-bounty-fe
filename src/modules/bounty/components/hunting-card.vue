@@ -1,7 +1,21 @@
 <template>
   <v-sheet class="overflow-hidden rounded-lg neutral100--bg fill-height" elevation="3">
     <v-sheet class="position-relative">
-      <v-img :src="coverImageUrl" :aspect-ratio="1.5"></v-img>
+      <div class="position-relative">
+        <v-img :src="coverImageUrl" :aspect-ratio="1.5"></v-img>
+        <!-- <video
+          width="100%"
+          height="100%"
+          loop
+          autoplay
+          muted
+          v-if="coverVideo"
+          style="position: absolute; top: 0; left: 0; object-fit: cover"
+        >
+          <source :src="coverVideo" type="video/mp4" />
+          Your browser does not support HTML video.
+        </video> -->
+      </div>
       <div class="fill-width" style="position: absolute; bottom: 0">
         <div class="d-flex justify-center">
           <div class="border-radius-8 mb-3 linear-border-blue-main">
@@ -21,7 +35,7 @@
         <v-sheet width="64" height="64" class="rounded-circle transparent">
           <v-img :src="projectLogo" class="rounded-circle" />
         </v-sheet>
-        <div class="title blue--text ml-6 text-truncate flex-grow-1">
+        <div class="title bluePrimary--text ml-6 text-truncate flex-grow-1">
           {{ name }}
         </div>
       </div>
@@ -74,6 +88,7 @@
 <script lang="ts">
 import { apiService } from '@/services/api-service'
 import { FixedNumber } from '@ethersproject/bignumber'
+import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
@@ -95,6 +110,7 @@ export default class HuntingTimeCard extends Vue {
   @Prop({ required: true }) projectLogo!: string
   @Prop({ required: true }) task!: any
   value = `${this.rewardAmount}`
+  coverVideo = get(this.task, 'metadata.coverVideo', '')
   missionCompleteCount: any = 'TBA'
 
   mounted() {
