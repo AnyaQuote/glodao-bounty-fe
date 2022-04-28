@@ -35,7 +35,7 @@
         <v-sheet width="64" height="64" class="rounded-circle transparent">
           <v-img :src="projectLogo" class="rounded-circle" />
         </v-sheet>
-        <div class="title blue--text ml-6 text-truncate flex-grow-1">
+        <div class="title bluePrimary--text ml-6 text-truncate flex-grow-1">
           {{ name }}
         </div>
       </div>
