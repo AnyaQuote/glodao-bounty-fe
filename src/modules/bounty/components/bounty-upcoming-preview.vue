@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-2" @click="toggleTab" v-ripple>
-    <v-img class="rounded-lg" :src="coverImage" :aspect-ratio="1.55"></v-img>
+  <div class="preview-card rounded-lg mb-2" @click="toggleTab" v-ripple>
+    <v-img class="preview-img rounded-lg" :src="coverImage" :aspect-ratio="1.55"></v-img>
   </div>
 </template>
 
@@ -18,4 +18,13 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.preview-card {
+  &:hover {
+    background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
+  }
+  .preview-img {
+    border: 1px solid transparent !important;
+  }
+}
+</style>
