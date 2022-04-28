@@ -11,35 +11,29 @@
       <div class="mt-3 ml-3 card-title-text font-weight-600">Set the attached wallet</div>
       <!-- </div> -->
       <div class="mt-6 font-weight-600">Connect your wallet to continue:</div>
-      <v-sheet class="mt-4 py-1 px-2 d-flex align-center neutral100--bg rounded" outlined>
+      <v-sheet outlined class="d-flex align-center justify-center mt-4 pa-1 neutral100--bg rounded">
         <v-text-field
           hide-details
           dense
           placeholder="Your wallet address"
           flat
           solo
-          class="neutral100--bg link-submit-custom-input no-padding pl-2"
+          class="neutral100--bg link-submit-custom-input"
           @input="authStore.changeWalletDialogInput"
           :value="walletStore.account"
           readonly
         >
-          <template v-slot:append>
-            <div class="pl-2">
-              <v-btn
-                width="90"
-                class="dialog-btn rounded white--text linear-background-blue-main"
-                block
-                depressed
-                @click="authStore.saveAttachWallet()"
-                :loading="authStore.isWalletUpdating"
-                :disabled="!walletStore.account"
-              >
-                Set
-              </v-btn>
-            </div>
-          </template>
         </v-text-field>
-        <!-- <v-icon>mdi-wallet-outline</v-icon> -->
+        <v-btn
+          width="100"
+          class="dialog-btn rounded white--text linear-background-blue-main"
+          depressed
+          @click="authStore.saveAttachWallet()"
+          :loading="authStore.isWalletUpdating"
+          :disabled="!walletStore.account"
+        >
+          Set
+        </v-btn>
       </v-sheet>
       <div class="mt-3">
         <!-- <v-btn
