@@ -10,7 +10,21 @@
             <!-- Background image start (This width and height will decide the structure) -->
             <v-sheet class="fill-height p-relative">
               <v-tab-item v-for="(pool, index) in upcomingPoolList" :value="index" :key="pool.id">
-                <v-img height="700" :src="pool.metadata.coverImage" aspect-ratio="1.5"></v-img>
+                <div class="fill-width fill-height position-relative">
+                  <v-img height="700" :src="pool.metadata.coverImage" aspect-ratio="1.5"></v-img>
+                  <video
+                    width="100%"
+                    height="100%"
+                    loop
+                    autoplay
+                    muted
+                    v-if="pool.metadata.coverVideo"
+                    style="position: absolute; top: 0; left: 0; object-fit: cover"
+                  >
+                    <source :src="pool.metadata.coverVideo" type="video/mp4" />
+                    Your browser does not support HTML video.
+                  </video>
+                </div>
               </v-tab-item>
               <div class="fill-width fill-height position-absolute backdrop-shadow" style="top: 0; left: 0"></div>
             </v-sheet>

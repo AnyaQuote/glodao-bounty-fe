@@ -250,7 +250,7 @@ export class BountyDetailViewModel {
 
   @asyncAction *getParticipantCount() {
     try {
-      this.currentPriorityParticipants = yield apiService.applies.count({ poolType: 'priority' })
+      this.currentPriorityParticipants = yield apiService.applies.count({ task: this.taskId, poolType: 'priority' })
     } catch (error) {
       snackController.error('Can not get pool statistics! Please try again later')
     }
@@ -567,6 +567,10 @@ export class BountyDetailViewModel {
 
   @computed get projectLogo() {
     return get(this.task, 'metadata.projectLogo', '')
+  }
+
+  @computed get coverVideo() {
+    return get(this.task, 'metadata.coverVideo', '')
   }
 
   @computed get rewardToken() {

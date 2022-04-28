@@ -42,11 +42,16 @@
       <!-- LEFT -->
       <v-col cols="12" md="4">
         <div>
-          <v-sheet class="mb-4 position-relative rounded-lg overflow-hidden">
+          <v-sheet class="mb-4 position-relative rounded-lg overflow-hidden transparent">
             <!-- image -->
-            <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg"></v-img>
+            <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg" v-if="!vm.coverVideo"></v-img>
+            <video width="100%" loop autoplay muted v-if="vm.coverVideo" style="border-radius: 8px">
+              <source :src="vm.coverVideo" type="video/mp4" />
+              Your browser does not support HTML video.
+            </video>
+
             <!-- status -->
-            <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1 white">
+            <!-- <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1 white">
               <v-sheet
                 class="rounded-circle flex-center-box background-transparent"
                 :class="vm.task | _get('status') | statusBorder"
@@ -66,7 +71,7 @@
               >
                 {{ vm.task | _get('status') }}
               </div>
-            </div>
+            </div> -->
           </v-sheet>
 
           <!-- subtitle -->
@@ -432,6 +437,7 @@ export default class BountyDetail extends Vue {
   top: 18px;
   left: 18px;
   background-color: rgba(255, 255, 255, 0.3);
+  opacity: 0.5;
 }
 .green-border-custom {
   border: thin solid var(--v-green-base);
