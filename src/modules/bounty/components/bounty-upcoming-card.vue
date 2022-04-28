@@ -1,11 +1,11 @@
 <template>
   <v-sheet
     class="blur-bg transparent d-flex rounded-lg pa-5 mr-10 white--text"
-    :style="retract && 'width: calc(100% - 250px);'"
+    :class="retract ? 'retract-animation' : 'expand-animation'"
   >
     <div class="d-flex" style="flex-grow: 1">
-      <v-sheet width="64" height="64" class="rounded-circle transparent align-self-center">
-        <v-img :src="projectLogo"></v-img>
+      <v-sheet width="64" height="64" class="back-layer rounded-circle">
+        <v-img :src="projectLogo" aspect-ratio="1" contain></v-img>
       </v-sheet>
       <div class="d-flex flex-column justify-center ml-2">
         <div class="d-flex align-center">
@@ -65,7 +65,15 @@ export default class BountyUpcomingCard extends Vue {
   border-radius: 50%;
   display: inline-block;
 }
-.debug {
-  border: 1px solid red !important;
+.retract-animation {
+  width: calc(100% - 250px);
+  transition: width 160ms ease-in-out;
+}
+.expand-animation {
+  width: 96%;
+  transition: width 200ms ease-in-out;
+}
+.back-layer {
+  background: #092249;
 }
 </style>
