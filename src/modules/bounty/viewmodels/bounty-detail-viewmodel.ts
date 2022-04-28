@@ -569,6 +569,10 @@ export class BountyDetailViewModel {
     return get(this.task, 'metadata.projectLogo', '')
   }
 
+  @computed get coverVideo() {
+    return get(this.task, 'metadata.coverVideo', '')
+  }
+
   @computed get rewardToken() {
     return get(this.task, 'metadata.rewardToken', 'USDT')
   }

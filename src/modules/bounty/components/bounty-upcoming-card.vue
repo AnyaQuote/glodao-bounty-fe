@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex flex-column" style="margin-right: 58px">
+    <div class="d-flex flex-column">
       <div class="mb-2">Social link:</div>
       <div class="ml-n2">
         <v-btn :href="metadata.website" icon><v-icon small color="white">mdi-domain</v-icon></v-btn>
