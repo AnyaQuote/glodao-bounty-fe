@@ -1,12 +1,6 @@
 <template>
   <div class="p-relative mb-2" @click="toggleTab" v-ripple>
-    <v-img class="p-relative z-index-0 rounded-lg" :src="coverImage" :aspect-ratio="1.55"></v-img>
-    <div
-      class="p-absolute z-index-1 left-0 bottom-0 rounded-lg rounded-t-0 text-truncate blue--text pa-2 fill-width font-weight-medium"
-      style="font-size: 1.125rem; background: rgba(255, 255, 255, 0.7)"
-    >
-      {{ name }}
-    </div>
+    <v-img class="rounded-lg" :src="coverImage" :aspect-ratio="1.55"></v-img>
   </div>
 </template>
 
