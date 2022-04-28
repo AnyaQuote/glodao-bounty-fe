@@ -218,7 +218,12 @@ export class BountyHunterViewModel {
     return this.currentApplies.map((apply) => {
       const task = apply.task
       const types = keys(task.data)
-      const firstTask = apply.data[types[0]]
+      let currentStepCount = 0
+      let totalStepCount = 0
+      types.forEach((type) => {
+        currentStepCount += apply.data[type].filter((step) => step.finished).length
+        totalStepCount += apply.data[type].length
+      })
       return {
         id: apply.id,
         status: apply.status,
@@ -226,9 +231,12 @@ export class BountyHunterViewModel {
         shortDescription: task.metadata?.shortDescription,
         chainId: task.chainId,
         type: types[0],
-        currentStep: firstTask.filter((step) => step.finished === true).length,
-        totalStep: firstTask.length,
+        // currentStep: firstTask.filter((step) => step.finished === true).length,
+        currentStep: currentStepCount,
+        totalStep: totalStepCount,
         taskId: task.id,
+        types,
+        projectLogo: get(task, 'metadata.projectLogo', ''),
       }
     })
   }
