@@ -21,6 +21,8 @@ export default class extends Vue {
 <style lang="scss" scoped>
 .preview-card {
   &:hover {
+    transform: scale(1.05);
+    transition: transform 200ms ease-in-out;
     background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
   }
   .preview-img {
