@@ -1409,6 +1409,16 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@hcaptcha/types@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@hcaptcha/types/-/types-1.0.1.tgz#1766374715526c56b6a57d6f0f92e61a0d69a0ab"
+  integrity sha512-l0etN3sKLFlsgcPa4afsS5HW5uRvelVnKDaTuFrWE/SjFF+YpaHIZKbZGpEbripjfxM4pfQoOUFX1mWVYMuoAw==
+
+"@hcaptcha/vue-hcaptcha@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.npmjs.org/@hcaptcha/vue-hcaptcha/-/vue-hcaptcha-0.3.2.tgz#0f77d6fc19bc47eadb6b2181eee5fc132441a942"
+  integrity sha512-JiJsAJh+fSe+uf9N3ek7CKzX/r79+hx+rMPch+e2/h9+Ei3VyJtb2Dgk1DhG/dyUdrooPIzkNMr6gfo75Cn22g==
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -10715,11 +10725,6 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-recaptcha-v3@^1.8.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/recaptcha-v3/-/recaptcha-v3-1.10.0.tgz#f966b5a0d8021fd2ed85ac4be832f6acb6ec1ed1"
-  integrity sha512-aGTxYSk3FFNKnXeKDbLpgRDRyIHRZNBF5HyaXXAN1Aj4TSyyZvmoAn9CylvpqLV3pYpIQavwc+2rzhNFn5SsLQ==
-
 rechoir@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
@@ -12825,18 +12830,6 @@ vue-property-decorator@^9.1.2:
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-9.1.2.tgz#266a2eac61ba6527e2e68a6933cfb98fddab5457"
   integrity sha512-xYA8MkZynPBGd/w5QFJ2d/NM0z/YeegMqYTphy7NJQXbZcuU6FC6AOdUAcy4SXP+YnkerC6AfH+ldg7PDk9ESQ==
-
-vue-recaptcha-v3@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/vue-recaptcha-v3/-/vue-recaptcha-v3-1.9.0.tgz#6315ea07e2ae34abbb11e840ab9f18a427c5d53b"
-  integrity sha512-WQIlhcOcETk3SYbEC88podUSq1J7UjmHpKgJhSy0Xm3DAjTIPjl19g9kn5KRdyTxNLiS/eR5C6H3Jk3c7b9baA==
-  dependencies:
-    recaptcha-v3 "^1.8.0"
-
-vue-recaptcha@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-1.3.0.tgz#e668e54f798c6333057ef38b4425a72f451ce478"
-  integrity sha512-9Qf1niyHq4QbEUhsvdUkS8BoOyhYwpp8v+imUSj67ffDo9RQ6h8Ekq8EGnw/GKViXCwWalp7EEY/n/fOtU0FyA==
 
 vue-router@^3.2.0:
   version "3.5.3"
