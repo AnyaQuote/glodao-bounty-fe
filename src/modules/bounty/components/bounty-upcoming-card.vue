@@ -22,6 +22,7 @@
         </div>
       </div>
     </div>
+
     <div class="d-flex flex-column justify-center ml-2">
       <div class="text-body-1 font-weight-medium">Social link:</div>
       <div class="ml-n2">
