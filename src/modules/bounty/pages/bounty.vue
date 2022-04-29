@@ -68,7 +68,7 @@
           </v-col>
           <v-sheet
             elevation="3"
-            class="white ma-3 rounded-lg fill-width flex-center-box text-center fill-width fill-height pa-10 text-center"
+            class="neutral100 ma-3 rounded-lg fill-width flex-center-box text-center fill-width fill-height pa-10 text-center"
             v-if="vm.convertedLiveBountyList.length === 0"
           >
             <v-sheet class="text-h5 font-weight-bold transparent" max-width="700">
