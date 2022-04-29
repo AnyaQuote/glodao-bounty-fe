@@ -33,7 +33,7 @@
     <div class="d-flex flex-column pa-6 mt-2">
       <div class="d-flex align-center">
         <project-logo :src="projectLogo"></project-logo>
-        <div class="title blue--text ml-6 text-truncate flex-grow-1">
+        <div class="title bluePrimary--text ml-6 text-truncate flex-grow-1">
           {{ name }}
         </div>
       </div>
