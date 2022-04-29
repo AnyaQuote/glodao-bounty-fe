@@ -1,12 +1,6 @@
 <template>
-  <div class="p-relative mb-2" @click="toggleTab" v-ripple>
-    <v-img class="p-relative z-index-0 rounded-lg" :src="coverImage" :aspect-ratio="1.55"></v-img>
-    <div
-      class="p-absolute z-index-1 left-0 bottom-0 rounded-lg rounded-t-0 text-truncate blue--text pa-2 fill-width font-weight-medium"
-      style="font-size: 1.125rem; background: rgba(255, 255, 255, 0.7)"
-    >
-      {{ name }}
-    </div>
+  <div class="preview-card rounded-lg mb-2" @click="toggleTab" v-ripple>
+    <v-img class="preview-img rounded-lg" :src="coverImage" :aspect-ratio="1.55"></v-img>
   </div>
 </template>
 
@@ -24,28 +18,15 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped>
-.p-relative {
-  position: relative;
-}
-
-.p-absolute {
-  position: absolute;
-}
-
-.left-0 {
-  left: 0;
-}
-
-.bottom-0 {
-  bottom: 0;
-}
-
-.flex-1 {
-  flex: 1;
-}
-
-.align-items-start {
-  align-items: flex-start;
+<style lang="scss" scoped>
+.preview-card {
+  &:hover {
+    transform: scale(1.05);
+    transition: transform 200ms ease-in-out;
+    background-image: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
+  }
+  .preview-img {
+    border: 1px solid transparent !important;
+  }
 }
 </style>

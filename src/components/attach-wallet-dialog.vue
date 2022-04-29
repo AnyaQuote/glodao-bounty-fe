@@ -26,7 +26,7 @@
         </v-text-field>
         <v-btn
           width="100"
-          class="dialog-btn rounded white--text linear-background-blue-main"
+          class="dialog-btn rounded white--text linear-background-blue-main text-uppercase"
           depressed
           @click="authStore.saveAttachWallet()"
           :loading="authStore.isWalletUpdating"
