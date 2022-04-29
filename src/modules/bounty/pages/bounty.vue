@@ -66,6 +66,7 @@
               :task="bounty"
             ></hunting-time-card>
           </v-col>
+          
           <v-sheet
             elevation="3"
             class="neutral100 ma-3 rounded-lg fill-width flex-center-box text-center fill-width fill-height pa-10 text-center"
