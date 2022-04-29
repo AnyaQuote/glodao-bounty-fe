@@ -1,29 +1,29 @@
 <template>
   <v-sheet
     class="blur-bg transparent d-flex rounded-lg pa-5 mr-10 white--text"
-    :style="retract && 'width: calc(100% - 250px);'"
+    :class="retract ? 'retract-animation' : 'expand-animation'"
   >
     <div class="d-flex" style="flex-grow: 1">
-      <v-sheet width="64" height="64" class="rounded-circle transparent">
-        <v-img :src="projectLogo"></v-img>
-      </v-sheet>
-      <div class="d-flex flex-column ml-2">
+      <project-logo :src="projectLogo"></project-logo>
+      <div class="d-flex flex-column justify-center ml-2">
         <div class="d-flex align-center">
-          <span class="bluePrimary--text font-weight-bold" style="font-size: 1.5rem">{{ name }}</span>
-          <div class="dot mx-4"></div>
-          <span class="font-weight-bold" style="font-size: 1.5rem"
+          <span class="mint--text font-weight-bold text-truncate" style="font-size: 1.8rem; line-height: 1.8rem">{{
+            name
+          }}</span>
+          <div class="dot mx-2"></div>
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em"
             >{{ rewardAmount | formatNumber(2, 0) }} {{ metadata.rewardToken }}</span
           >
         </div>
-        <div class="d-flex">
+        <div class="d-flex text-body-1 font-weight-medium">
           <span>{{ startTime | datetime }}</span>
           <span>&nbsp;-&nbsp;</span>
           <span>{{ endTime | datetime }}</span>
         </div>
       </div>
     </div>
-    <div class="d-flex flex-column">
-      <div class="mb-2">Social link:</div>
+    <div class="d-flex flex-column justify-center ml-2">
+      <div class="text-body-1 font-weight-medium">Social link:</div>
       <div class="ml-n2">
         <v-btn :href="metadata.website" icon><v-icon small color="white">mdi-domain</v-icon></v-btn>
         <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
@@ -38,7 +38,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component({
-  components: { ChainLogo: () => import('@/components/chain-logo.vue') },
+  components: { ProjectLogo: () => import('@/components/project-logo.vue') },
 })
 export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) name!: string
@@ -62,5 +62,16 @@ export default class BountyUpcomingCard extends Vue {
   background-color: #c4c4c4;
   border-radius: 50%;
   display: inline-block;
+}
+.retract-animation {
+  width: calc(100% - 250px);
+  transition: width 160ms ease-in-out;
+}
+.expand-animation {
+  width: 96%;
+  transition: width 200ms ease-in-out;
+}
+.back-layer {
+  background: #092249;
 }
 </style>
