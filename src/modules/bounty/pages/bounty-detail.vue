@@ -269,7 +269,7 @@
                         color="bluePrimary"
                         class="white--text text-none linear-background-blue-main text-caption"
                         :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
-                        @click="vm.changeEarnDialog(true)"
+                        @click="requestChallenge"
                         :loading="vm.isTaskSubmiting"
                       >
                         Confirm to complete
@@ -294,14 +294,23 @@
     </v-row>
     <recaptcha-dialog />
     <confirm-and-earn-dialog />
+    <vue-hcaptcha
+      sitekey="e5651f89-7669-4385-89da-90571faf78c0"
+      size="invisible"
+      ref="vueHcaptcha"
+      @opened="hcaptchaOnOpen"
+      @verify="hcaptchaOnVerify"
+      @expired="vm.resetHCaptchaToken"
+      theme="dark"
+    ></vue-hcaptcha>
   </v-container>
 </template>
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
+import { Component, Provide, Ref, Vue, Watch } from 'vue-property-decorator'
 import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
-
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
 @Observer
 @Component({
   components: {
@@ -316,11 +325,29 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
+    VueHcaptcha,
   },
 })
 export default class BountyDetail extends Vue {
   @Provide() vm = new BountyDetailViewModel()
   HUNTING = HUNTING
+  @Ref('vueHcaptcha') vueHcaptcha: any
+
+  loading = false
+
+  hcaptchaOnOpen() {
+    this.loading = false
+    this.vm.resetHCaptchaToken()
+  }
+
+  async requestChallenge() {
+    this.loading = true
+    this.vueHcaptcha.hcaptcha.execute()
+  }
+
+  async hcaptchaOnVerify(token) {
+    this.vm.changeEarnDialog(true)
+  }
 
   @Watch('$route.params.taskId', { immediate: true }) onIdChanged(val: string) {
     if (val) {

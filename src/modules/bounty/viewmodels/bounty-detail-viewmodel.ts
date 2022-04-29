@@ -87,6 +87,8 @@ export class BountyDetailViewModel {
 
   @observable currentPriorityParticipants = 0
 
+  @observable hCaptchaToken = ''
+
   disposes: IReactionDisposer[] = []
 
   constructor() {
@@ -381,6 +383,10 @@ export class BountyDetailViewModel {
 
   @action.bound changeTaskSubmiting(value: boolean) {
     this.isTaskSubmiting = value
+  }
+
+  @action resetHCaptchaToken() {
+    this.hCaptchaToken = ''
   }
 
   @asyncAction *applyForPriorityPool() {
