@@ -66,9 +66,39 @@
               :task="bounty"
             ></hunting-time-card>
           </v-col>
-          <div class="fill-width flex-center-box text-center" v-if="vm.convertedLiveBountyList.length === 0">
-            There are no tasks right now! Please comeback later
-          </div>
+          <v-sheet
+            elevation="3"
+            class="white ma-3 rounded-lg fill-width flex-center-box text-center fill-width fill-height pa-10 text-center"
+            v-if="vm.convertedLiveBountyList.length === 0"
+          >
+            <v-sheet class="text-h5 font-weight-bold transparent" max-width="700">
+              There is currently no mission, follow our Twitter and Telegram for latest updates
+              <div class="d-flex justify-center text-body-1 font-weight-600 text-capitalize">
+                <v-sheet max-width="315" class="fill-width transparent mt-7 d-flex justify-space-between">
+                  <v-btn
+                    height="48"
+                    class="text-capitalize"
+                    outlined
+                    depressed
+                    color="bluePrimary"
+                    style="letter-spacing: 0"
+                    @click="openLink(`https://t.me/GloDAO_Channel`)"
+                    >join telegram <v-icon right>fab fa-telegram</v-icon></v-btn
+                  >
+                  <v-btn
+                    height="48"
+                    class="text-capitalize"
+                    outlined
+                    depressed
+                    color="bluePrimary"
+                    style="letter-spacing: 0"
+                    @click="openLink(`https://twitter.com/GloDAO_Official`)"
+                    >follow Twitter <v-icon right>fab fa-twitter</v-icon></v-btn
+                  >
+                </v-sheet>
+              </div>
+            </v-sheet>
+          </v-sheet>
         </v-row>
       </v-container>
     </v-col>
@@ -166,6 +196,10 @@ export default class BountyPage extends Vue {
 
   beforeDestroy() {
     this.vm.destroyReaction()
+  }
+
+  openLink(url) {
+    window.open(url, '_blank')
   }
 }
 </script>
