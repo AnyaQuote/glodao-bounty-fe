@@ -24,9 +24,10 @@
           <div class="pa-4">
             <div>
               <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-                <v-sheet class="rounded-circle transparent" width="32" height="32">
+                <!-- <v-sheet class="rounded-circle transparent" width="32" height="32">
                   <v-img :src="projectLogo"></v-img>
-                </v-sheet>
+                </v-sheet> -->
+                <project-logo :src="projectLogo" :size="32"></project-logo>
               </div>
               <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
                 {{ name }}
@@ -78,7 +79,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Observer
 @Component({
   components: {
-    'chain-logo': () => import('@/components/chain-logo.vue'),
+    ProjectLogo: () => import('@/components/project-logo.vue'),
   },
 })
 export default class BountyCard extends Vue {

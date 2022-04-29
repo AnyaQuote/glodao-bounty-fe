@@ -4,9 +4,7 @@
     :class="retract ? 'retract-animation' : 'expand-animation'"
   >
     <div class="d-flex" style="flex-grow: 1">
-      <v-sheet width="64" height="64" class="back-layer rounded-circle">
-        <v-img :src="projectLogo" aspect-ratio="1" contain></v-img>
-      </v-sheet>
+      <project-logo :src="projectLogo"></project-logo>
       <div class="d-flex flex-column justify-center ml-2">
         <div class="d-flex align-center">
           <span class="mint--text font-weight-bold text-truncate" style="font-size: 1.8rem; line-height: 1.8rem">{{
@@ -40,7 +38,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component({
-  components: { ChainLogo: () => import('@/components/chain-logo.vue') },
+  components: { ProjectLogo: () => import('@/components/project-logo.vue') },
 })
 export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) name!: string

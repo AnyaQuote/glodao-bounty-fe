@@ -25,16 +25,24 @@
       <!-- BOUNTY NAME -->
       <v-col cols="12">
         <v-sheet class="d-flex align-center mb-4 neutral15">
-          <v-sheet width="48" height="48" class="rounded-circle d-flex justify-center align-center transparent">
-            <!-- <chain-logo :chain="vm.task | _get('chainId')" class="fill-width fill-height" /> -->
-            <v-img :src="vm.projectLogo" class="rounded-circle" />
-          </v-sheet>
-          <div class="d-flex align-center ml-3 mt-1 text-h4 font-weight-bold">
-            {{ vm.task | _get('name') }}
-            <v-sheet width="10" height="10" class="rounded-circle mx-4" color="bluePrimary"></v-sheet>
-            <div class="text-uppercase">
+          <project-logo :src="vm.projectLogo" size="48"></project-logo>
+          <div
+            class="d-flex flex-column flex-md-row align-md-center font-weight-bold text-h4 ml-3"
+            style="flex-grow: 1; line-height: 2rem"
+          >
+            <span>
+              {{ vm.task | _get('name') }}
+            </span>
+            <v-sheet
+              v-show="$vuetify.breakpoint.mdAndUp"
+              width="10"
+              height="10"
+              class="rounded-circle mx-4"
+              color="bluePrimary"
+            ></v-sheet>
+            <span class="text-uppercase">
               {{ vm.task | _get('chainId') }}
-            </div>
+            </span>
           </div>
         </v-sheet>
       </v-col>
@@ -314,7 +322,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
 @Observer
 @Component({
   components: {
-    'chain-logo': () => import('@/components/chain-logo.vue'),
+    ProjectLogo: () => import('@/components/project-logo.vue'),
     'link-submit': () => import('@/modules/bounty/components/bounty-detail/link-submit.vue'),
     'recaptcha-dialog': () => import('@/modules/bounty/components/bounty-detail/recaptcha-dialog.vue'),
     'confirm-and-earn-dialog': () => import('@/modules/bounty/components/bounty-detail/confirm-and-earn-dialog.vue'),
