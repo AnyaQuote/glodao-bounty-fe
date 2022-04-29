@@ -32,10 +32,8 @@
 
     <div class="d-flex flex-column pa-6 mt-2">
       <div class="d-flex align-center">
-        <v-sheet width="64" height="64" class="rounded-circle transparent">
-          <v-img :src="projectLogo" class="rounded-circle" />
-        </v-sheet>
-        <div class="title bluePrimary--text ml-6 text-truncate flex-grow-1">
+        <project-logo :src="projectLogo"></project-logo>
+        <div class="title blue--text ml-6 text-truncate flex-grow-1">
           {{ name }}
         </div>
       </div>
@@ -96,6 +94,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component({
   components: {
     countdown: () => import('@/modules/bounty/components/countdown.vue'),
+    ProjectLogo: () => import('@/components/project-logo.vue'),
   },
 })
 export default class HuntingTimeCard extends Vue {

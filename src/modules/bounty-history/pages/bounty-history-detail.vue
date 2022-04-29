@@ -35,13 +35,11 @@
               }"
             >
               <div class="font-weight-bold d-flex align-center">
-                <v-sheet
-                  :max-height="$vuetify.breakpoint.xsOnly ? 24 : 48"
-                  :max-width="$vuetify.breakpoint.xsOnly ? 24 : 48"
-                  class="mr-3 background-transparent rounded-circle"
-                >
-                  <v-img :src="vm.projectLogo"></v-img>
-                </v-sheet>
+                <project-logo
+                  :src="vm.projectLogo"
+                  :size="$vuetify.breakpoint.xsOnly ? 24 : 48"
+                  class="mr-3"
+                ></project-logo>
                 {{ vm.taskName }}
               </div>
               <div class="d-flex align-center bluePrimary--text font-weight-600">
@@ -231,7 +229,7 @@ import { BountyHistoryDetailViewModel } from '@/modules/bounty-history/viewmodel
 @Observer
 @Component({
   components: {
-    'chain-logo': () => import('@/components/chain-logo.vue'),
+    ProjectLogo: () => import('@/components/project-logo.vue'),
     'task-complete-list': () => import('@/modules/bounty-history/components/task-complete-list.vue'),
   },
 })
