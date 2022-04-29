@@ -11,15 +11,14 @@
         <div class="d-flex align-center ml-4">{{ vm.task.name }}</div>
       </div>
       <div class="d-flex justify-center mb-4">
-        <vue-recaptcha
-          sitekey="6LcTviQfAAAAAFftWmtT77h8ha_eA6H6H5h7rZrX"
-          :loadRecaptchaScript="true"
-          @render="onCaptchaRender"
+        <vue-hcaptcha
+          sitekey="10000000-ffff-ffff-ffff-000000000001"
+          @rendered="onCaptchaRender"
           @verify="onCaptchaVerify"
           @expired="onCaptchaExpired"
           ref="recaptcha"
         >
-        </vue-recaptcha>
+        </vue-hcaptcha>
       </div>
       <v-icon class="close-icon" @click="vm.changeRecaptchaDialog(false)">mdi-window-close</v-icon>
     </v-sheet>
@@ -29,14 +28,15 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
-import VueRecaptcha from 'vue-recaptcha'
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
+
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 
 @Observer
 @Component({
   components: {
-    VueRecaptcha,
+    VueHcaptcha,
     'chain-logo': () => import('@/components/chain-logo.vue'),
   },
 })
