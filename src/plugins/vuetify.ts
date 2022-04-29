@@ -79,6 +79,9 @@ export default new Vuetify({
           base: '#F9F9F9',
           lighten1: '#E5E5E5',
         },
+        mint: {
+          base: '#00E5FF',
+        },
       },
       dark: {
         primary: {
@@ -127,6 +130,9 @@ export default new Vuetify({
           base: '#0276F0',
           lighten1: '#E6F1FE',
           lighten2: '#55ACE3',
+        },
+        mint: {
+          base: '#00E5FF',
         },
       },
     },

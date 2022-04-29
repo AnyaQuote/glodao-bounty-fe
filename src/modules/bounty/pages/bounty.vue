@@ -72,7 +72,7 @@
         </v-row>
       </v-container>
     </v-col>
-    <v-col cols="12">
+    <v-col cols="12" v-if="vm.convertedBountyList.length > 0">
       <v-divider class="my-4"></v-divider>
       <v-container>
         <v-row>
