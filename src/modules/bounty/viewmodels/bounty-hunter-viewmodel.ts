@@ -95,7 +95,7 @@ export class BountyHunterViewModel {
         {
           _start: 0,
           _limit: limit,
-          _sort: 'startTime:ASC',
+          _sort: 'name:DESC',
         }
       )
       this.upcomingBountyList = res
