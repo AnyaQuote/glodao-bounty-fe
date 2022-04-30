@@ -183,7 +183,7 @@ export class BountyHistoryDetailViewModel {
   }
 
   @computed get totalParticipants(): number {
-    return this.relatedApplies.length || _.get(this.task, 'totalParticipants', 0)
+    return _.get(this.task, 'totalParticipants', 0)
   }
 
   @computed get totalPriorityParticipants(): number {
