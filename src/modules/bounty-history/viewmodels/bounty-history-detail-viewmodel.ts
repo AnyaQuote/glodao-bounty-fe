@@ -24,6 +24,7 @@ export class BountyHistoryDetailViewModel {
   @observable poolType = 'priority'
 
   @observable relatedApplies: any[] = []
+  @observable totalCompletedTaskCount = 0
 
   @observable nameInputModel = null
 
@@ -82,6 +83,7 @@ export class BountyHistoryDetailViewModel {
 
   @asyncAction *fetchData() {
     yield this.getTaskData()
+    this.getTotalCompletedMission()
     this.getRelatedApplies()
   }
 
@@ -101,10 +103,16 @@ export class BountyHistoryDetailViewModel {
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
       const res = yield apiService.applies.find(
         {
-          task: this.taskId,
-          status: 'completed',
-          poolType: this.poolType,
-          ...this.dateRangeFilterParams,
+          _where: [
+            {
+              task: this.taskId,
+              poolType: this.poolType,
+              ...this.dateRangeFilterParams,
+            },
+            {
+              _or: [{ status: 'completed' }, { status: 'awarded' }],
+            },
+          ],
         },
         {
           _limit: PAGE_LIMIT,
@@ -118,13 +126,36 @@ export class BountyHistoryDetailViewModel {
     }
   }
 
+  @asyncAction *getTotalCompletedMission() {
+    try {
+      this.totalCompletedTaskCount = yield apiService.applies.count({
+        _where: [
+          {
+            task: this.taskId,
+          },
+          {
+            _or: [{ status: 'completed' }, { status: 'awarded' }],
+          },
+        ],
+      })
+    } catch (error) {
+      snackController.error(_.get(error, 'response.data.message', '') || (error as string))
+    }
+  }
+
   @asyncAction *getTotalRelatedAppliesCount() {
     try {
       const res = yield apiService.applies.count({
-        task: this.taskId,
-        status: 'completed',
-        poolType: this.poolType,
-        ...this.dateRangeFilterParams,
+        _where: [
+          {
+            task: this.taskId,
+            poolType: this.poolType,
+            ...this.dateRangeFilterParams,
+          },
+          {
+            _or: [{ status: 'completed' }, { status: 'awarded' }],
+          },
+        ],
       })
       this.totalPageCount = _.ceil(res / PAGE_LIMIT)
     } catch (error) {
@@ -191,7 +222,7 @@ export class BountyHistoryDetailViewModel {
   }
 
   @computed get totalCommunityParticipants(): number {
-    return _.isNumber(this.totalParticipants) ? this.totalParticipants - this.totalPriorityParticipants : 0
+    return _.isNumber(this.totalCompletedTaskCount) ? this.totalCompletedTaskCount - this.totalPriorityParticipants : 0
   }
 
   @computed get totalAwarded() {
