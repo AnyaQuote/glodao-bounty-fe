@@ -236,6 +236,7 @@ export class BountyHunterViewModel {
         totalStep: totalStepCount,
         taskId: task.id,
         types,
+        task: task,
         projectLogo: get(task, 'metadata.projectLogo', ''),
       }
     })
