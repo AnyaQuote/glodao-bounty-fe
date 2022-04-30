@@ -323,6 +323,7 @@ export class HuntingHistoryViewModel {
         startTime: apply.createdAt,
         bountyEarn: apply.bounty ?? 0,
         rewardToken: task.metadata?.rewardToken,
+        projectLogo: task.metadata?.projectLogo,
       }
     })
   }
