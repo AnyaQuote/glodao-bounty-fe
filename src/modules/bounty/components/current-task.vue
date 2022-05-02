@@ -19,7 +19,7 @@
       </div>
       <div class="d-flex flex-column flex-1">
         <div class="rounded-circle d-flex justify-center card-project-small-icon">
-          <chain-logo :chain="chainId" class="fill-width fill-height" />
+          <project-logo :src="projectLogo" :size="28" />
         </div>
         <div class="mt-1 font-family-proxima font-weight-bold card-title-text">{{ name }}</div>
         <div class="mt-1 card-text short-description">
@@ -68,7 +68,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Observer
 @Component({
   components: {
-    'chain-logo': () => import('@/components/chain-logo.vue'),
+    'project-logo': () => import('@/components/project-logo.vue'),
   },
 })
 export default class CurrentTask extends Vue {
