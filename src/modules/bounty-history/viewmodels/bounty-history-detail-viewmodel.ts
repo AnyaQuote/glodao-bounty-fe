@@ -296,26 +296,16 @@ export class BountyHistoryDetailViewModel {
 
   @computed get dateRangeFilterParams() {
     const sortedDateRanges = this.dateRanges.slice().sort()
-    let result: any = {
-      _where: [],
-    }
+    let result: any = {}
     if (this.dateRanges.length > 0)
       result = {
-        _where: [
-          ...result._where,
-          {
-            completeTime_gte: moment.utc(sortedDateRanges[0]).toISOString(),
-          },
-        ],
+        ...result,
+        completeTime_gte: moment.utc(sortedDateRanges[0]).toISOString(),
       }
     if (this.dateRanges.length > 1) {
       result = {
-        _where: [
-          ...result._where,
-          {
-            completeTime_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
-          },
-        ],
+        ...result,
+        completeTime_lte: moment.utc(sortedDateRanges[1]).add(1, 'd').toISOString(),
       }
     }
     return result
