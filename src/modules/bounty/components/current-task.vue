@@ -19,7 +19,7 @@
       </div>
       <div class="d-flex flex-column flex-1">
         <div class="rounded-circle d-flex justify-center card-project-small-icon">
-          <chain-logo :chain="chainId" class="fill-width fill-height" />
+          <project-logo :src="projectLogo" :size="28" />
         </div>
         <div class="mt-1 font-family-proxima font-weight-bold card-title-text">{{ name }}</div>
         <div class="mt-1 card-text short-description">
@@ -68,12 +68,13 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Observer
 @Component({
   components: {
-    'chain-logo': () => import('@/components/chain-logo.vue'),
+    'project-logo': () => import('@/components/project-logo.vue'),
   },
 })
 export default class CurrentTask extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) taskId!: string
+  @Prop({ required: true }) task!: any
   @Prop({ required: true }) currentStep!: number
   @Prop({ required: true }) totalStep!: number
   // @Prop({ required: true }) type!: string
@@ -89,6 +90,7 @@ export default class CurrentTask extends Vue {
   navigationLink = ''
   mounted() {
     const lowercaseStatus = lowerCase(this.status)
+    const finished = this.task.status === 'ended'
     switch (lowercaseStatus) {
       case 'completed':
         this.flagColor = 'greenSenamatic'
@@ -103,10 +105,12 @@ export default class CurrentTask extends Vue {
       case 'processing':
         this.flagColor = 'bluePrimary'
         this.statusIcon = 'mdi-dots-horizontal'
-        this.navigationLink = `bounty/${this.taskId}`
+        if (finished) this.navigationLink = `bounty-history/${this.taskId}`
+        else this.navigationLink = `bounty/${this.taskId}`
         break
       default:
         this.flagColor = 'purple'
+        this.navigationLink = `bounty-history/${this.taskId}`
         break
     }
   }

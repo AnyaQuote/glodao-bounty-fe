@@ -111,6 +111,7 @@
                     :totalStep="task.totalStep"
                     :type="task.type"
                     :rewardToken="task.rewardToken"
+                    :projectLogo="task.projectLogo"
                   />
                 </div>
               </v-col>

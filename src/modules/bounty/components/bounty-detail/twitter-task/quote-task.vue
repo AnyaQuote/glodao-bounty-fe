@@ -10,7 +10,7 @@
           <div class="text-caption mt-1">
             Quote <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
-            }}""
+            }}"
             <span v-if="twitterTask.hashtag">
               using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span> </span
             >, share why you want to have this project’s primary market exposure.

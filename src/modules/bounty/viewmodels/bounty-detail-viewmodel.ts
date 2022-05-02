@@ -315,7 +315,7 @@ export class BountyDetailViewModel {
       apiService
         .updateTaskProcess(this.apply.id, type, temp)
         .then((res) => {
-          this.applyStepData = temp
+          this.applyStepData = res.data
           this.apply = res
           this.getTaskData()
           const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))

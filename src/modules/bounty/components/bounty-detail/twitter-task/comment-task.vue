@@ -10,7 +10,7 @@
           <div class="text-caption mt-1">
             Reply <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
-            }}"" , then submit the link to your reply tweet here
+            }}" , then submit the link to your reply tweet here
           </div>
         </div>
         <div

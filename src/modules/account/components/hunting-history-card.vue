@@ -23,9 +23,8 @@
       <v-col cols="6" md="3" class="d-flex align-center">
         <div>
           <div>
-            <v-sheet width="26" height="26">
-              <chain-logo :chain="chainId" class="fill-width fill-height" />
-            </v-sheet>
+            <!-- <chain-logo :chain="chainId" class="fill-width fill-height" /> -->
+            <project-logo :src="projectLogo" :size="26"></project-logo>
             <!-- <v-avatar color="primary" size="26"></v-avatar> -->
           </div>
           <div class="card-title-text mt-2 font-weight-600">{{ name }}</div>
@@ -134,6 +133,7 @@ import { lowerCase } from 'lodash'
 @Component({
   components: {
     'chain-logo': () => import('@/components/chain-logo.vue'),
+    'project-logo': () => import('@/components/project-logo.vue'),
   },
 })
 export default class HuntingHistoryCard extends Vue {
@@ -149,6 +149,7 @@ export default class HuntingHistoryCard extends Vue {
   @Prop({ required: true }) bountyEarn!: number
   @Prop({ required: true }) type!: string
   @Prop({ required: true }) rewardToken!: string
+  @Prop({ required: true }) projectLogo!: string
 
   statusIcon = ''
   buttonColor = ''

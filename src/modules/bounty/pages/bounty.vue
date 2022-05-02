@@ -28,6 +28,7 @@
               :taskId="task.taskId"
               :types="task.types"
               :projectLogo="task.projectLogo"
+              :task="task.task"
             />
           </v-col>
         </v-row>

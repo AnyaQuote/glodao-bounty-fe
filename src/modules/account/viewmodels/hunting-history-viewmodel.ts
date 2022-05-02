@@ -323,6 +323,7 @@ export class HuntingHistoryViewModel {
         startTime: apply.createdAt,
         bountyEarn: apply.bounty ?? 0,
         rewardToken: task.metadata?.rewardToken,
+        projectLogo: task.metadata?.projectLogo,
       }
     })
   }
@@ -381,13 +382,21 @@ export class HuntingHistoryViewModel {
     )._value
   }
 
+  @computed get todayHuntingListBounty() {
+    return this.completedHuntingList.reduce(
+      (acc, current) =>
+        acc.addUnsafe(FixedNumber.from(moment().diff(moment(current.updatedAt), 'hours') <= 24 ? current.bounty : '0')),
+      FixedNumber.from('0')
+    )._value
+  }
+
   @computed get totalEarning() {
     return FixedNumber.from(this.totalReferralCommission).addUnsafe(FixedNumber.from(this.totalHuntingListBounty))
       ._value
   }
 
   @computed get totalEarningToday() {
-    return FixedNumber.from(this.totalReferralCommissionToday).addUnsafe(FixedNumber.from(this.totalHuntingListBounty))
+    return FixedNumber.from(this.totalReferralCommissionToday).addUnsafe(FixedNumber.from(this.todayHuntingListBounty))
       ._value
   }
 }

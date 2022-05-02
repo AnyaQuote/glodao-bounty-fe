@@ -33,7 +33,7 @@
             <span>
               {{ vm.task | _get('name') }}
             </span>
-            <v-sheet
+            <!-- <v-sheet
               v-show="$vuetify.breakpoint.mdAndUp"
               width="10"
               height="10"
@@ -41,8 +41,8 @@
               color="bluePrimary"
             ></v-sheet>
             <span class="text-uppercase">
-              {{ vm.task | _get('chainId') }}
-            </span>
+              {{ vm.task | _get('metadata.rewardToken') }}
+            </span> -->
           </div>
         </v-sheet>
       </v-col>

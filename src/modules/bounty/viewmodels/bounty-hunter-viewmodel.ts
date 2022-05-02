@@ -95,7 +95,7 @@ export class BountyHunterViewModel {
         {
           _start: 0,
           _limit: limit,
-          _sort: 'startTime:ASC',
+          _sort: 'name:DESC',
         }
       )
       this.upcomingBountyList = res
@@ -236,6 +236,7 @@ export class BountyHunterViewModel {
         totalStep: totalStepCount,
         taskId: task.id,
         types,
+        task: task,
         projectLogo: get(task, 'metadata.projectLogo', ''),
       }
     })

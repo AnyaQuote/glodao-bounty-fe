@@ -65,9 +65,13 @@
                   <v-sheet class="pa-6 fill-height neutral100--bg" style="border-radius: 6px">
                     <table class="fill-width fill-height table-text">
                       <tr>
-                        <td class="font-weight-600">Total participants</td>
-                        <td class="text-end font-weight-bold">{{ vm.totalParticipants }} user(s)</td>
+                        <td class="font-weight-600">Completed tasks</td>
+                        <td class="text-end font-weight-bold">{{ vm.totalCompletedTaskCount }} task(s)</td>
                       </tr>
+                      <!-- <tr>
+                        <td class="font-weight-600">Completed missions</td>
+                        <td class="text-end font-weight-bold">{{ vm.totalCompletedTaskCount }} mission(s)</td>
+                      </tr> -->
                       <tr>
                         <td class="font-weight-600">Priority pool</td>
                         <td class="text-end font-weight-bold">{{ vm.totalPriorityParticipants }} user(s)</td>
