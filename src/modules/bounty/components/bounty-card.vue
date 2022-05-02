@@ -9,6 +9,15 @@
         >
           <div class="position-relative">
             <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
+            <div class="position-absolute" style="top: 10px; left: 10px">
+              <v-sheet
+                class="rounded-circle flex-center-box text-center black--text"
+                width="25"
+                height="25"
+                color="white"
+                >{{ task | _get('missionIndex', 0) }}</v-sheet
+              >
+            </div>
             <div class="start-date-container" v-if="isEnded"></div>
             <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
               Closed: {{ endTime | datetime }}
@@ -92,6 +101,7 @@ export default class BountyCard extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) totalParticipants!: number
+  @Prop({ required: true }) task!: any
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
   isEnded = moment(this.endTime).isBefore(moment())

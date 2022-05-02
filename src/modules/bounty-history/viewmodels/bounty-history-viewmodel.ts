@@ -208,6 +208,7 @@ export class BountyHistoryViewModel {
         ),
         rewardToken: get(bounty, 'metadata.rewardToken', 'GLD'),
         projectLogo: get(bounty, 'metadata.projectLogo', ''),
+        missionIndex: get(bounty, 'missionIndex', 0),
       }
     })
   }

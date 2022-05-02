@@ -170,6 +170,7 @@ export class BountyHunterViewModel {
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
         totalParticipants: bounty.totalParticipants,
+        missionIndex: get(bounty, 'missionIndex', 0),
       }
     })
   }
@@ -195,6 +196,7 @@ export class BountyHunterViewModel {
         participant: bounty.totalParticipants,
         tokenBasePrice: bounty.tokenBasePrice,
         shortDescription: get(bounty, 'metadata.shortDescription', 'TBA'),
+        missionIndex: get(bounty, 'missionIndex', 0),
       }
     })
   }
@@ -210,6 +212,7 @@ export class BountyHunterViewModel {
         metadata: bounty.metadata,
         types: keys(bounty.data),
         maxParticipant: bounty.maxParticipant,
+        missionIndex: get(bounty, 'missionIndex', 0),
       }
     })
   }
