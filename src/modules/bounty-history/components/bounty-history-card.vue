@@ -9,7 +9,18 @@
             'pr-8': $vuetify.breakpoint.mdAndUp,
           }"
         >
-          <v-img class="rounded-lg bounty-image-md" min-height="70" :src="coverImage" :aspect-ratio="1.5"></v-img>
+          <div class="position-relative">
+            <v-img class="rounded-lg bounty-image-md" min-height="70" :src="coverImage" :aspect-ratio="1.5"></v-img>
+            <div class="position-absolute" style="top: 5px; left: 5px">
+              <v-sheet
+                class="rounded-circle flex-center-box text-center black--text text-caption"
+                width="20"
+                height="20"
+                color="white"
+                >{{ task | _get('missionIndex', 0) }}</v-sheet
+              >
+            </div>
+          </div>
         </v-col>
         <v-col cols="6" md="3" class="d-flex align-center">
           <div>
@@ -46,16 +57,27 @@
       </v-row>
       <v-row dense no-gutters v-else>
         <v-col cols="12" md="2">
-          <v-img
-            class="rounded-lg"
-            min-height="70"
-            :class="{
-              'bounty-image-sm': $vuetify.breakpoint.smAndDown,
-              'bounty-image-sm-lg': $vuetify.breakpoint.smOnly,
-            }"
-            :src="coverImage"
-            :aspect-ratio="1.5"
-          ></v-img>
+          <div class="position-relative">
+            <v-img
+              class="rounded-lg"
+              min-height="70"
+              :class="{
+                'bounty-image-sm': $vuetify.breakpoint.smAndDown,
+                'bounty-image-sm-lg': $vuetify.breakpoint.smOnly,
+              }"
+              :src="coverImage"
+              :aspect-ratio="1.5"
+            ></v-img>
+            <div class="position-absolute" style="top: 10px; left: 10px">
+              <v-sheet
+                class="rounded-circle flex-center-box text-center black--text"
+                width="25"
+                height="25"
+                color="white"
+                >{{ task | _get('missionIndex', 0) }}</v-sheet
+              >
+            </div>
+          </div>
         </v-col>
         <v-col cols="12" class="d-flex align-center">
           <div class="d-flex align-center mt-2 fill-width">
@@ -108,6 +130,7 @@ export default class HuntingHistoryCard extends Vue {
   @Prop({ required: true }) totalReward!: string
   @Prop({ required: true }) totalParticipants!: string
   @Prop({ required: true }) projectLogo!: string
+  @Prop({ required: true }) task!: any
 }
 </script>
 

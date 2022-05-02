@@ -24,6 +24,15 @@
                     <source :src="pool.metadata.coverVideo" type="video/mp4" />
                     Your browser does not support HTML video.
                   </video>
+                  <div class="position-absolute" style="top: 20px; left: 20px">
+                    <v-sheet
+                      class="rounded-circle flex-center-box text-center black--text"
+                      width="25"
+                      height="25"
+                      color="white"
+                      >{{ pool | _get('missionIndex', 0) }}</v-sheet
+                    >
+                  </div>
                 </div>
               </v-tab-item>
               <div class="fill-width fill-height position-absolute backdrop-shadow" style="top: 0; left: 0"></div>

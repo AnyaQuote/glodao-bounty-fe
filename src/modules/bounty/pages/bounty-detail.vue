@@ -33,16 +33,18 @@
             <span>
               {{ vm.task | _get('name') }}
             </span>
-            <!-- <v-sheet
+            <v-sheet
               v-show="$vuetify.breakpoint.mdAndUp"
               width="10"
               height="10"
               class="rounded-circle mx-4"
               color="bluePrimary"
+              v-if="vm.task.missionIndex"
             ></v-sheet>
-            <span class="text-uppercase">
-              {{ vm.task | _get('metadata.rewardToken') }}
-            </span> -->
+            <span class="text-none" v-if="vm.task.missionIndex">
+              Mission No.
+              {{ vm.task | _get('missionIndex') }}
+            </span>
           </div>
         </v-sheet>
       </v-col>
