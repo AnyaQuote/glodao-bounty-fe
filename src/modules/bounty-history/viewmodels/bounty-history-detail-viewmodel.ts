@@ -21,7 +21,7 @@ export class BountyHistoryDetailViewModel {
   @observable task: any = {}
   @observable page = 1
   @observable totalPageCount = 1
-  @observable poolType = 'priority'
+  @observable poolType = ''
 
   @observable relatedApplies: any[] = []
   @observable totalCompletedTaskCount = 0
@@ -106,7 +106,7 @@ export class BountyHistoryDetailViewModel {
           _where: [
             {
               task: this.taskId,
-              poolType: this.poolType,
+              poolType: this.poolType || undefined,
               ...this.dateRangeFilterParams,
             },
             {
@@ -149,7 +149,7 @@ export class BountyHistoryDetailViewModel {
         _where: [
           {
             task: this.taskId,
-            poolType: this.poolType,
+            poolType: this.poolType || undefined,
             ...this.dateRangeFilterParams,
           },
           {
