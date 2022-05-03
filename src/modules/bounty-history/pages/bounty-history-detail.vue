@@ -182,6 +182,15 @@
                       row
                       class="d-flex fill-width align-center justify-space-between"
                     >
+                      <v-radio
+                        class="ma-1"
+                        :class="{
+                          'fill-width': $vuetify.breakpoint.mdAndUp,
+                        }"
+                        label="All"
+                        value=""
+                      >
+                      </v-radio>
                       <v-radio class="ma-1" label="Priority pool" value="priority"> </v-radio>
                       <v-radio class="ma-1" label="Community pool" value="community"> </v-radio>
                     </v-radio-group>
