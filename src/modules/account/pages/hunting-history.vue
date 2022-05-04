@@ -126,7 +126,7 @@
                   :total-visible="7"
                   color="blue"
                   :value="vm.page"
-                  v-if="vm.page > 1"
+                  v-if="vm.totalPageCount > 1"
                 ></v-pagination>
               </v-col>
             </v-row>
