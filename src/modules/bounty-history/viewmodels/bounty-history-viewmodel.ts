@@ -1,7 +1,7 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
-import { ceil, get } from 'lodash-es'
+import { ceil, get, orderBy } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
@@ -193,7 +193,7 @@ export class BountyHistoryViewModel {
   }
 
   @computed get convertedBountyList() {
-    return this.bountyList.map((bounty) => {
+    return orderBy(this.bountyList, 'missionIndex', ['desc']).map((bounty) => {
       return {
         name: bounty.name,
         id: bounty.id,
@@ -208,6 +208,7 @@ export class BountyHistoryViewModel {
         ),
         rewardToken: get(bounty, 'metadata.rewardToken', 'GLD'),
         projectLogo: get(bounty, 'metadata.projectLogo', ''),
+        missionIndex: get(bounty, 'missionIndex', 0),
       }
     })
   }

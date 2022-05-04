@@ -40,7 +40,26 @@
                   :size="$vuetify.breakpoint.xsOnly ? 24 : 48"
                   class="mr-3"
                 ></project-logo>
-                {{ vm.taskName }}
+                <div
+                  class="align-center"
+                  :class="{
+                    'd-flex': $vuetify.breakpoint.smAndUp,
+                  }"
+                >
+                  <div>{{ vm.taskName }}</div>
+                  <v-sheet
+                    v-show="$vuetify.breakpoint.smAndUp"
+                    width="10"
+                    height="10"
+                    class="rounded-circle mx-4"
+                    color="bluePrimary"
+                    v-if="vm.task.missionIndex"
+                  ></v-sheet>
+                  <span class="text-none" v-if="vm.task.missionIndex">
+                    Mission No.
+                    {{ vm.task | _get('missionIndex', 0) }}
+                  </span>
+                </div>
               </div>
               <div class="d-flex align-center bluePrimary--text font-weight-600">
                 STATICS
@@ -163,6 +182,15 @@
                       row
                       class="d-flex fill-width align-center justify-space-between"
                     >
+                      <v-radio
+                        class="ma-1"
+                        :class="{
+                          'fill-width': $vuetify.breakpoint.mdAndUp,
+                        }"
+                        label="All"
+                        value=""
+                      >
+                      </v-radio>
                       <v-radio class="ma-1" label="Priority pool" value="priority"> </v-radio>
                       <v-radio class="ma-1" label="Community pool" value="community"> </v-radio>
                     </v-radio-group>

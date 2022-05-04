@@ -10,15 +10,26 @@
           'mb-2': $vuetify.breakpoint.smAndDown,
         }"
       >
-        <v-img
-          class="rounded-lg"
-          min-height="70"
-          :class="{
-            'bounty-image-sm': $vuetify.breakpoint.smAndDown,
-            'bounty-image-md': $vuetify.breakpoint.mdAndUp,
-          }"
-          :src="coverImage"
-        ></v-img>
+        <div class="position-relative">
+          <v-img
+            class="rounded-lg"
+            min-height="70"
+            :class="{
+              'bounty-image-sm': $vuetify.breakpoint.smAndDown,
+              'bounty-image-md': $vuetify.breakpoint.mdAndUp,
+            }"
+            :src="coverImage"
+          ></v-img>
+          <div class="position-absolute" style="top: 5px; left: 5px">
+            <v-sheet
+              class="rounded-circle flex-center-box text-center black--text text-caption"
+              width="20"
+              height="20"
+              color="white"
+              >{{ task | _get('missionIndex', 0) }}</v-sheet
+            >
+          </div>
+        </div>
       </v-col>
       <v-col cols="6" md="3" class="d-flex align-center">
         <div>
@@ -150,6 +161,7 @@ export default class HuntingHistoryCard extends Vue {
   @Prop({ required: true }) type!: string
   @Prop({ required: true }) rewardToken!: string
   @Prop({ required: true }) projectLogo!: string
+  @Prop({ required: true }) task!: any
 
   statusIcon = ''
   buttonColor = ''
