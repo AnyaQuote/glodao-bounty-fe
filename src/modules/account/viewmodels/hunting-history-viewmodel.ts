@@ -355,7 +355,7 @@ export class HuntingHistoryViewModel {
   @computed get filterParams() {
     return {
       _where: [
-        { 'hunter.id': get(authStore, 'user.hunter.id', '') },
+        { hunter: get(authStore, 'user.hunter.id', '') },
         ...this.dateRangeFilterParams,
         { _or: [...this.statusFilterParams] },
       ],
