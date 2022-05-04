@@ -124,6 +124,8 @@
               :types="bounty.types"
               :maxParticipant="bounty.maxParticipant"
               :totalParticipants="bounty.totalParticipants"
+              :missionIndex="bounty.missionIndex"
+              :task="bounty"
             />
           </v-col>
         </v-row>

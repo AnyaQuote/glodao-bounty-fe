@@ -15,6 +15,15 @@
           <source :src="coverVideo" type="video/mp4" />
           Your browser does not support HTML video.
         </video> -->
+        <div class="position-absolute" style="top: 10px; left: 10px">
+          <v-sheet
+            class="rounded-circle flex-center-box text-center primary--text"
+            width="25"
+            height="25"
+            color="neutral100"
+            >{{ task | _get('missionIndex', 0) }}</v-sheet
+          >
+        </div>
       </div>
       <div class="fill-width" style="position: absolute; bottom: 0">
         <div class="d-flex justify-center">

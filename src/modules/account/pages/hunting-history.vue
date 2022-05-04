@@ -112,6 +112,7 @@
                     :type="task.type"
                     :rewardToken="task.rewardToken"
                     :projectLogo="task.projectLogo"
+                    :task="task"
                   />
                 </div>
               </v-col>
