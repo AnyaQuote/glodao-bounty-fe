@@ -35,7 +35,7 @@
       </v-container>
       <v-divider class="mt-8" />
     </v-col>
-    <v-col cols="12">
+    <v-col cols="12" v-if="vm.convertedUpcomingBountyList.length > 0">
       <v-container>
         <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
         <div class="fill-width flex-center-box text-center" v-if="vm.convertedUpcomingBountyList.length === 0">

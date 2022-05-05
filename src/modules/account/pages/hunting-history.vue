@@ -97,27 +97,30 @@
               </v-col>
             </v-row>
             <v-row dense no-gutters>
-              <v-col v-if="vm.convertedHuntingHistoryList.length > 0">
-                <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
-                  <hunting-history-card
-                    :coverImage="task.coverImage"
-                    :id="task.id"
-                    :chainId="task.chainId"
-                    :bountyEarn="task.bountyEarn"
-                    :currentStep="task.currentStep"
-                    :name="task.name"
-                    :startTime="task.startTime"
-                    :status="task.status"
-                    :totalStep="task.totalStep"
-                    :type="task.type"
-                    :rewardToken="task.rewardToken"
-                    :projectLogo="task.projectLogo"
-                    :task="task"
-                  />
-                </div>
-              </v-col>
-              <v-col cols="12" v-else>
-                <no-items />
+              <v-col cols="12">
+                <loading-component :loading="vm.loading"></loading-component>
+                <v-scale-transition origin="bottom center 0" v-if="!vm.loading">
+                  <div v-if="vm.convertedHuntingHistoryList.length > 0">
+                    <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
+                      <hunting-history-card
+                        :coverImage="task.coverImage"
+                        :id="task.id"
+                        :chainId="task.chainId"
+                        :bountyEarn="task.bountyEarn"
+                        :currentStep="task.currentStep"
+                        :name="task.name"
+                        :startTime="task.startTime"
+                        :status="task.status"
+                        :totalStep="task.totalStep"
+                        :type="task.type"
+                        :rewardToken="task.rewardToken"
+                        :projectLogo="task.projectLogo"
+                        :task="task"
+                      />
+                    </div>
+                  </div>
+                  <no-items v-else />
+                </v-scale-transition>
               </v-col>
               <v-col cols="12" class="my-8">
                 <v-pagination
@@ -135,10 +138,8 @@
             <v-row class="mt-1">
               <v-col cols="12" sm="6" md="3">
                 <v-sheet class="transparent d-flex align-center" height="100%">
-                  <v-sheet class="transparent font-weight-bold neutral0--text pr-1">{{
-                    vm.referralList.length
-                  }}</v-sheet>
-                  <v-sheet class="transparent neutral0--text">Refferals</v-sheet>
+                  <span class="transparent font-weight-bold neutral0--text pr-1">{{ vm.referralList.length }}</span>
+                  <span class="neutral0--text">Refferals</span>
                 </v-sheet>
               </v-col>
               <v-col class="ml-auto" cols="12" sm="6" md="3">
@@ -155,22 +156,25 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" v-if="vm.referralWorkingList.length > 0">
-                <referral-card
-                  v-for="item in vm.referralWorkingList"
-                  :key="item.id"
-                  :name="item.name"
-                  :joinTime="item.joinTime"
-                  :avatar="item.avatar"
-                  :commission="item.commission"
-                  :totalEarn="item.totalEarn"
-                  :commissionToday="item.commissionToday"
-                  :id="item.id"
-                  class="mb-2"
-                ></referral-card>
-              </v-col>
-              <v-col cols="12" v-else>
-                <no-referrals />
+              <v-col cols="12">
+                <loading-component :loading="vm.loading"></loading-component>
+                <v-scale-transition origin="bottom center 0" v-if="!vm.loading">
+                  <div v-if="vm.referralWorkingList.length > 0">
+                    <referral-card
+                      v-for="item in vm.referralWorkingList"
+                      :key="item.id"
+                      :name="item.name"
+                      :joinTime="item.joinTime"
+                      :avatar="item.avatar"
+                      :commission="item.commission"
+                      :totalEarn="item.totalEarn"
+                      :commissionToday="item.commissionToday"
+                      :id="item.id"
+                      class="mb-2"
+                    ></referral-card>
+                  </div>
+                  <no-referrals v-else />
+                </v-scale-transition>
               </v-col>
               <v-col cols="12" class="my-8" v-if="vm.totalReferralPage > 1">
                 <v-pagination
@@ -219,6 +223,7 @@ import { HuntingHistoryViewModel } from '@/modules/account/viewmodels/hunting-hi
     'no-referrals': () => import('@/modules/account/components/no-referrals.vue'),
     'wallet-sheet-container': () => import('@/modules/account/components/wallet-sheet-container.vue'),
     'mini-info-container': () => import('@/modules/account/components/mini-info-container.vue'),
+    'loading-component': () => import('@/modules/account/components/loading-component.vue'),
   },
 })
 export default class HuntingHistory extends Vue {
@@ -256,7 +261,7 @@ export default class HuntingHistory extends Vue {
 
 <style scoped lang="scss">
 .hunter-info-container {
-  background-image: url('~@/assets/images/blue-bg.svg');
+  background: linear-gradient(85.85deg, #daecff 36.82%, rgba(140, 250, 230, 0) 130.67%);
   background-size: cover;
   padding-bottom: 0;
 }
