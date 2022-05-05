@@ -63,6 +63,8 @@ export class HuntingHistoryViewModel {
     },
   ]
 
+  @observable loading = false
+
   constructor() {
     if (isEmpty(authStore.jwt))
       router.push('/bounty').catch(() => {
@@ -70,7 +72,6 @@ export class HuntingHistoryViewModel {
       })
     else {
       this.fetchData()
-      this.getCompletedHuntingBounty()
     }
   }
 
@@ -139,10 +140,16 @@ export class HuntingHistoryViewModel {
   }
 
   @action fetchData() {
-    this.getHuntingListByPage()
-    this.getTotalHuntingCount()
-    this.getProcessingAndCompletedTaskCount()
-    this.getReferralList()
+    this.loading = true
+    Promise.allSettled([
+      this.getHuntingListByPage(),
+      this.getTotalHuntingCount(),
+      this.getProcessingAndCompletedTaskCount(),
+      this.getReferralList(),
+      this.getCompletedHuntingBounty(),
+    ]).finally(() => {
+      this.loading = false
+    })
   }
 
   @observable completedHuntingList: any[] = [];
@@ -150,12 +157,9 @@ export class HuntingHistoryViewModel {
   @asyncAction *getCompletedHuntingBounty() {
     try {
       const huntingListParams = {
-        _where: [
-          { ...params },
-          {
-            _or: [{ status: 'completed' }, { status: 'awarded' }],
-          },
-        ],
+        _limit: -1,
+        ...params,
+        status: 'awarded',
       }
       const res = yield apiService.applies.find(huntingListParams)
       this.completedHuntingList = res
