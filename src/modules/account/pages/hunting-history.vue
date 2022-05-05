@@ -261,7 +261,7 @@ export default class HuntingHistory extends Vue {
 
 <style scoped lang="scss">
 .hunter-info-container {
-  background-image: url('~@/assets/images/blue-bg.svg');
+  background: linear-gradient(85.85deg, #daecff 36.82%, rgba(140, 250, 230, 0) 130.67%);
   background-size: cover;
   padding-bottom: 0;
 }
