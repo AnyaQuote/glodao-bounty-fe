@@ -122,13 +122,30 @@ export class BountyHistoryViewModel {
 
   @asyncAction *getTotalProjectCount() {
     try {
-      this.totalProjectCount = yield apiService.tasks.count()
-      this.endedProjectCount = yield apiService.tasks.count({ status: 'ended' })
-      this.liveProjectCount = yield apiService.tasks.count({ status: 'live' })
-      this.userCount = yield apiService.hunters.count()
-      this.uniqueParticipantCount = yield apiService.hunters.count({
-        participationStatus_ne: 'guest',
-      })
+      const responses = yield Promise.allSettled([
+        apiService.tasks.count(),
+        apiService.tasks.count({ status: 'ended' }),
+        apiService.tasks.count({ status: 'live' }),
+        apiService.hunters.count(),
+        apiService.hunters.count({
+          participationStatus_ne: 'guest',
+        }),
+      ])
+      if (responses[0].status === 'fulfilled') {
+        this.totalPageCount = responses[0].value
+      }
+      if (responses[1].status === 'fulfilled') {
+        this.endedProjectCount = responses[1].value
+      }
+      if (responses[2].status === 'fulfilled') {
+        this.liveProjectCount = responses[2].value
+      }
+      if (responses[3].status === 'fulfilled') {
+        this.userCount = responses[3].value
+      }
+      if (responses[4].status === 'fulfilled') {
+        this.uniqueParticipantCount = responses[4].value
+      }
     } catch (error) {
       snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
