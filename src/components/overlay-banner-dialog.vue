@@ -1,6 +1,6 @@
 <template>
   <v-dialog :value="true" width="80%">
-    <v-img :src="require('@/assets/images/popup-01.jpg')" @click="openBannerLink"></v-img>
+    <v-img :src="require('@/assets/images/popup-01.png')" @click="openBannerLink"></v-img>
   </v-dialog>
 </template>
 
