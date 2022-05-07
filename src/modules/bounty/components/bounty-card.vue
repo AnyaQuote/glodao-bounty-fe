@@ -108,7 +108,7 @@ export default class BountyCard extends Vue {
   projectLogo = this.metadata?.projectLogo ?? ''
 
   openLink() {
-    this.$router.push(`bounty/${this.id}`)
+    this.$router.push(`/bounty/${this.id}`)
   }
 }
 </script>
