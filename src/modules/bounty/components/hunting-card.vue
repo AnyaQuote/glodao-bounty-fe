@@ -131,7 +131,7 @@ export default class HuntingTimeCard extends Vue {
   }
 
   openLink() {
-    this.$router.push(`bounty/${this.id}`)
+    this.$router.push(`/bounty/${this.id}`)
   }
 }
 </script>
