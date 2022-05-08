@@ -1,6 +1,8 @@
 <template>
   <v-dialog :value="true" width="80%">
-    <v-img :src="require('@/assets/images/popup-01.png')" @click="openBannerLink"></v-img>
+    <a href="https://glodao-official.medium.com/glodao-awards-handbook-9c17a4b22801" target="_blank">
+      <v-img :src="require('@/assets/images/popup-01.png')"></v-img>
+    </a>
   </v-dialog>
 </template>
 
@@ -8,11 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class OverlayBannerDialog extends Vue {
-  openBannerLink = () => {
-    // window.open('https://medium.com', '_blank')
-  }
-}
+export default class OverlayBannerDialog extends Vue {}
 </script>
 
 <style scoped></style>
