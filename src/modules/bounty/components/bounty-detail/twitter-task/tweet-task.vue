@@ -9,7 +9,7 @@
           <div class="text-body-1 font-weight-600">Tweet a Twitter post</div>
           <div class="text-caption mt-1">
             Post a Tweet using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
-            >, share why you want to have this project’s primary market exposure. (At least 5 meaning words)
+            >, share why you want to have this project’s primary market exposure. (At least 50 characters)
           </div>
         </div>
         <div
