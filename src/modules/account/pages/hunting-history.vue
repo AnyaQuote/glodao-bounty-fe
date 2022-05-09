@@ -99,7 +99,7 @@
             <v-row dense no-gutters>
               <v-col cols="12">
                 <loading-component :loading="vm.loading"></loading-component>
-                <v-scale-transition origin="bottom center 0" v-if="!vm.loading">
+                <v-scale-transition v-if="!vm.loading">
                   <div v-if="vm.convertedHuntingHistoryList.length > 0">
                     <div class="mt-2" v-for="task in vm.convertedHuntingHistoryList" :key="task.id">
                       <hunting-history-card
@@ -158,7 +158,7 @@
             <v-row>
               <v-col cols="12">
                 <loading-component :loading="vm.loading"></loading-component>
-                <v-scale-transition origin="bottom center 0" v-if="!vm.loading">
+                <v-scale-transition v-if="!vm.loading">
                   <div v-if="vm.referralWorkingList.length > 0">
                     <referral-card
                       v-for="item in vm.referralWorkingList"

@@ -183,7 +183,7 @@ export default class BountyPage extends Vue {
   }
 
   goToHuntingHistory() {
-    this.$router.push('hunting-history')
+    this.$router.push('/hunting-history')
   }
 
   closeDialog() {

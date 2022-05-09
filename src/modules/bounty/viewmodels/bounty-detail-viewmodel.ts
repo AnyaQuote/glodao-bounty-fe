@@ -193,8 +193,8 @@ export class BountyDetailViewModel {
     try {
       apiService.applies
         .count({
-          'task.id': this.taskId,
-          'hunter.id': this.hunterId,
+          task: this.taskId,
+          hunter: this.hunterId,
         })
         .then((res) => {
           if (res === 0) {
@@ -288,8 +288,8 @@ export class BountyDetailViewModel {
     try {
       if (!authStore.jwt || !this.taskId) return
       const res = yield apiService.applies.find({
-        'task.id': this.taskId,
-        'hunter.id': this.hunterId,
+        task: this.taskId,
+        hunter: this.hunterId,
       })
       if (res.length > 0 && res[0].data) {
         const apply = res[0]
