@@ -13,7 +13,7 @@
             }}"
             <span v-if="twitterTask.hashtag">
               using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span> </span
-            >, share why you want to have this project’s primary market exposure. (At least 5 meaning words)
+            >, share why you want to have this project’s primary market exposure. (At least 50 characters)
           </div>
         </div>
         <div

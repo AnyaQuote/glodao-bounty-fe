@@ -106,16 +106,12 @@ export default class DateRangePicker extends Vue {
       reaction(
         () => this.date1,
         () => {
-          console.log(this.date1)
-
           this.startDate = this.date1
         }
       ),
       reaction(
         () => this.date2,
         () => {
-          console.log(this.date2)
-
           this.endDate = this.date2
         }
       ),

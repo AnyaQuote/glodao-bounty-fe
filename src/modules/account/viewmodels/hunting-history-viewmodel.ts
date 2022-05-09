@@ -178,7 +178,7 @@ export class HuntingHistoryViewModel {
   }
 
   @action.bound onStatusFilterChange(value: string) {
-    console.log(value)
+    // console.log(value)
   }
 
   @action.bound changeDateRangeDialog(value: boolean) {
