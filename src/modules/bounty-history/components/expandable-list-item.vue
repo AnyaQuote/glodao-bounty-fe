@@ -100,21 +100,19 @@ export default class ExpandableListItem extends Vue {
   linkData: any[] = []
 
   mounted() {
-    console.log(this.data)
     this.flatArray()
   }
 
   flatArray() {
     const flattenedArr: any[] = []
     for (const [key, value] of Object.entries(this.data.data)) {
-      console.log(value, typeof value)
       if (key !== 'twitter') continue
       ;(value as any).forEach((element) => {
         if (element.type === 'follow') return
+        else if (element.type === 'like') return
         flattenedArr.push({ ...element, taskCategory: key })
       })
     }
-    console.log(flattenedArr)
     this.linkData = flattenedArr
   }
   openLink(link: string) {
