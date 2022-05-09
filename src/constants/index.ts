@@ -1,2 +1,6 @@
 import { FixedNumber } from '@ethersproject/bignumber'
 export const Zero = FixedNumber.from(0)
+
+export const TWEET_MIN_LENGTH = 20
+
+export const TWEET_MIN_WORDS_COUNT = 5
