@@ -20,7 +20,6 @@
         <v-col cols="5">
           <div class="image-wrapper">
             <circles v-show="!$vuetify.theme.dark" class="circle" style=""></circles>
-            <div v-show="$vuetify.theme.dark" class="shadow-wrapper white-shadow"></div>
             <v-img class="image" contain :src="require('@/assets/images/bounty-briefcase.png')"> </v-img>
           </div>
         </v-col>
@@ -87,23 +86,6 @@ export default class BountyBanner extends Vue {}
     overflow: visible;
     opacity: 0.1;
   }
-  .shadow-wrapper {
-    width: 370px;
-    height: 300px;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    right: 160px;
-    z-index: 0;
-    opacity: 1;
-    &.white-shadow {
-      background: #ffffff;
-      -webkit-box-shadow: 25px 30px 80px 38px #ffffff;
-      box-shadow: 25px 30px 80px 38px #ffffff;
-      filter: blur(60px);
-    }
-  }
-
   .image {
     position: absolute;
     top: 10px;
