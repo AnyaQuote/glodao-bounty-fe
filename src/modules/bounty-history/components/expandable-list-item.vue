@@ -111,6 +111,7 @@ export default class ExpandableListItem extends Vue {
       if (key !== 'twitter') continue
       ;(value as any).forEach((element) => {
         if (element.type === 'follow') return
+        else if (element.type === 'like') return
         flattenedArr.push({ ...element, taskCategory: key })
       })
     }
