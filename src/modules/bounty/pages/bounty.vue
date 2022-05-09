@@ -45,7 +45,7 @@
     </v-col>
 
     <v-col cols="12">
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-4" v-if="vm.convertedUpcomingBountyList.length > 0"></v-divider>
       <v-container>
         <v-row>
           <v-col>
