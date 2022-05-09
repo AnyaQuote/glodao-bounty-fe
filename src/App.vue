@@ -5,6 +5,7 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
+    <overlay-banner-dialog />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
@@ -35,6 +36,7 @@ import { get } from 'lodash'
     'company-footer': () => import('@/components/company-footer.vue'),
     'mobile-navigation-bar': () => import('@/components/mobile-navigation-bar.vue'),
     'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
+    'overlay-banner-dialog': () => import('@/components/overlay-banner-dialog.vue'),
     'attach-wallet-dialog': () => import('@/components/attach-wallet-dialog.vue'),
   },
 })

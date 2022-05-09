@@ -95,7 +95,7 @@ export class BountyHunterViewModel {
         {
           _start: 0,
           _limit: limit,
-          _sort: 'name:DESC',
+          _sort: 'startTime:ASC',
         }
       )
       this.upcomingBountyList = res
@@ -133,7 +133,7 @@ export class BountyHunterViewModel {
   @asyncAction *getCurrentTask() {
     try {
       if (!authStore.jwt) return
-      const res = yield apiService.applies.find({ 'hunter.id': authStore.user.hunter.id }, { _limit: 4 })
+      const res = yield apiService.applies.find({ hunter: authStore.user.hunter.id }, { _limit: 4 })
       this.currentApplies = res
     } catch (error) {
       this.currentApplies = []

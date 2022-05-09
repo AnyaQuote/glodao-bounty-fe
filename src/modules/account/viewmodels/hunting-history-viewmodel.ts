@@ -12,7 +12,7 @@ import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
 
 const PAGE_LIMIT = 6
-const params = { 'hunter.id': get(authStore, 'user.hunter.id', '') }
+const params = { hunter: get(authStore, 'user.hunter.id', '') }
 export class HuntingHistoryViewModel {
   @observable huntingList: any[] = []
   @observable huntingCount = 0
@@ -178,7 +178,7 @@ export class HuntingHistoryViewModel {
   }
 
   @action.bound onStatusFilterChange(value: string) {
-    console.log(value)
+    // console.log(value)
   }
 
   @action.bound changeDateRangeDialog(value: boolean) {
@@ -195,7 +195,7 @@ export class HuntingHistoryViewModel {
 
   @asyncAction *getReferralList() {
     try {
-      const hunterId = params['hunter.id']
+      const hunterId = params['hunter']
       const res = yield apiService.getReferrals(hunterId)
       this.referralList = res
       this.referralPage = 1 // Setting page from 0 (default) to 1 will invoke the working list
