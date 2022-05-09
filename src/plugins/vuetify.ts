@@ -36,6 +36,7 @@ export default new Vuetify({
         info: '#2196F3',
         warning: '#FFC107',
         grey1: '#72687A',
+        grey2: '#8197BB',
         subtitle: '#969696',
         red1: '#FF0000',
         background: {
@@ -93,6 +94,7 @@ export default new Vuetify({
         twitter: '#039BE5',
         lightGray: '#969696',
         grey1: '#B9B9B1',
+        grey2: '#8197BB',
         subtitle: '#969696',
         red1: '#F6616A',
         background: {

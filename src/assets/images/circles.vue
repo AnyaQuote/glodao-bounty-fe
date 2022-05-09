@@ -96,7 +96,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class Circles extends Vue {
-  @Prop({ default: '#1E1E1E' }) color: string | undefined
+  @Prop({ default: '#0276F0' }) color!: string
 }
 </script>
 
