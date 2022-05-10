@@ -27,7 +27,7 @@ export class BountyHistoryViewModel {
   @observable taskNameInputLoading = false
   @observable suggestedList: any[] = []
 
-  @observable sortParams = 'endTime:DESC'
+  @observable sortParams = 'missionIndex:DESC'
   sortList = [
     {
       text: 'Recently added',
