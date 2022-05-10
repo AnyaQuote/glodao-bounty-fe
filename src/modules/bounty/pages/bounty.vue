@@ -8,7 +8,7 @@
         <v-row>
           <v-col cols="12">
             <div class="d-flex justify-space-between align-center">
-              <div class="section-big-title-text font-weight-bold">Your current task</div>
+              <div class="section-big-title-text font-weight-bold">Your recent tasks</div>
               <div class="card-title-text font-weight-600 d-flex align-center">
                 <router-link to="/hunting-history" class="blue-diversity--text">View all</router-link>
                 <v-icon>mdi-chevron-right</v-icon>
@@ -45,7 +45,7 @@
     </v-col>
 
     <v-col cols="12">
-      <v-divider class="my-4"></v-divider>
+      <v-divider class="my-4" v-if="vm.convertedUpcomingBountyList.length > 0"></v-divider>
       <v-container>
         <v-row>
           <v-col>

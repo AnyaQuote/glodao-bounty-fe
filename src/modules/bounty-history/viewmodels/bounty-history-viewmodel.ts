@@ -27,7 +27,7 @@ export class BountyHistoryViewModel {
   @observable taskNameInputLoading = false
   @observable suggestedList: any[] = []
 
-  @observable sortParams = 'endTime:DESC'
+  @observable sortParams = 'missionIndex:DESC'
   sortList = [
     {
       text: 'Recently added',
@@ -132,7 +132,7 @@ export class BountyHistoryViewModel {
         }),
       ])
       if (responses[0].status === 'fulfilled') {
-        this.totalPageCount = responses[0].value
+        this.totalProjectCount = responses[0].value
       }
       if (responses[1].status === 'fulfilled') {
         this.endedProjectCount = responses[1].value
