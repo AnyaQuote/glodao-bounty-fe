@@ -1,3 +1,4 @@
+import { authStore } from '@/stores/auth-store'
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
@@ -23,8 +24,18 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/hunting-history',
-    name: 'Hunting history',
+    name: 'HuntingHistory',
     component: () => import('@/modules/account/pages/hunting-history.vue'),
+  },
+  {
+    path: '/company-profile',
+    name: 'CompanyProfile',
+    component: () => import('@/modules/account/pages/company-profile.vue'),
+  },
+  {
+    path: '/campaign-detail',
+    name: 'CampaignDetail',
+    component: () => import('@/modules/account/pages/campaign-detail.vue'),
   },
   {
     path: '/bounty/:taskId',
@@ -57,9 +68,14 @@ const router = new VueRouter({
   },
 })
 
-// router.beforeEach(async (to, from, next) => {
-//   await when(() => walletStore.loaded)
-//   next()
-// })
+router.beforeEach(async (to, from, next) => {
+  if (to.name === 'HuntingHistory') {
+    if (authStore.user.hunter.hunterRole === 'company') next('/company-profile')
+  }
+  if (to.name === 'CompanyProfile') {
+    if (authStore.user.hunter.hunterRole !== 'company') next('/hunting-history')
+  }
+  next()
+})
 
 export default router
