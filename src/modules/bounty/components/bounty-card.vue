@@ -1,80 +1,47 @@
 <template>
-  <router-link :to="`/bounty-history/${id}`">
+  <router-link tag="div" :to="`/bounty-history/${id}`">
     <v-hover v-slot="{ hover }">
-      <v-card class="mx-auto overflow-hidden border-radius-8px neutral100 fill-height" elevation="3" outlined>
-        <div
-          :class="{
-            'backdrop-hover-overlay': hover,
-          }"
-        >
-          <div class="position-relative">
-            <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
-            <div class="position-absolute" style="top: 10px; left: 10px">
-              <v-sheet
-                class="rounded-circle flex-center-box text-center black--text"
-                width="25"
-                height="25"
-                color="white"
-                >{{ task | _get('missionIndex', 0) }}</v-sheet
-              >
-            </div>
-            <div class="start-date-container" v-if="isEnded"></div>
-            <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
-              Closed: {{ endTime | datetime }}
-            </div>
-            <!-- <div class="position-absolute custom-chevron-flag-container rounded-0">
-            <div class="custom-chevron-flag d-flex flex-column justify-center align-center pt-6 pb-3 elavation-10">
-              <v-icon color="white" size="14" class="mb-2" v-for="type in types" :key="type">
-                {{ `mdi-${type}` }}
-              </v-icon>
-            </div>
-          </div> -->
+      <v-card
+        class="mx-auto overflow-hidden border-radius-8px neutral100 fill-height"
+        :class="{ bounce: hover }"
+        elevation="3"
+        outlined
+      >
+        <div class="position-relative">
+          <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
+          <div class="position-absolute" style="top: 10px; left: 10px">
+            <v-sheet
+              class="rounded-circle flex-center-box text-center black--text"
+              width="25"
+              height="25"
+              color="white"
+              >{{ task | _get('missionIndex', 0) }}</v-sheet
+            >
           </div>
-          <div class="pa-4">
-            <div>
-              <div class="rounded-circle d-flex justify-center card-project-medium-icon">
-                <!-- <v-sheet class="rounded-circle transparent" width="32" height="32">
-                  <v-img :src="projectLogo"></v-img>
-                </v-sheet> -->
-                <project-logo :src="projectLogo" :size="32"></project-logo>
-              </div>
-              <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
-                {{ name }}
-              </div>
-              <div class="custom-dash-divider my-3"></div>
-              <div class="d-flex justify-space-between">
-                <div>Total reward</div>
-                <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}</div>
-              </div>
-              <div class="d-flex justify-space-between mt-2">
-                <div>Participants</div>
-                <div class="font-weight-bold">{{ totalParticipants }}</div>
-              </div>
+          <div class="start-date-container" v-if="isEnded"></div>
+          <div class="start-date-label d-flex justify-end py-2 pr-8 font-weight-600 black--text" v-if="isEnded">
+            Closed: {{ endTime | datetime }}
+          </div>
+        </div>
+        <div class="pa-4">
+          <div>
+            <div class="rounded-circle d-flex justify-center card-project-medium-icon">
+              <project-logo :src="projectLogo" :size="32"></project-logo>
+            </div>
+            <div class="mt-2 font-family-proxima font-weight-bold card-big-title-text bluePrimary--text">
+              {{ name }}
+            </div>
+            <div class="custom-dash-divider my-3"></div>
+            <div class="d-flex justify-space-between">
+              <div>Total reward</div>
+              <div class="font-weight-bold">{{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}</div>
+            </div>
+            <div class="d-flex justify-space-between mt-2">
+              <div>Participants</div>
+              <div class="font-weight-bold">{{ totalParticipants }}</div>
             </div>
           </div>
         </div>
-
-        <!-- <div
-        class="justify-center align-center border-radius-8px"
-        :class="{
-          'd-flex  card-hover-overlay': hover,
-          'd-none': !hover,
-        }"
-      >
-        <div
-          class="position-absolute linear-background-blue-main fill-width fill-height rounded-0"
-          style="opacity: 0.3"
-        ></div>
-        <v-btn width="152" height="124" @click="openLink()" class="white">
-          <div>
-            <div class="d-flex justify-center">
-              <v-img :src="require('@/assets/icons/crown-black.svg')" max-height="50" max-width="50"></v-img>
-            </div>
-            <br />
-            <div class="text-none font-weight-bold card-big-title-text black--text">View bounty</div>
-          </div>
-        </v-btn>
-      </div> -->
       </v-card>
     </v-hover>
   </router-link>
@@ -117,32 +84,7 @@ export default class BountyCard extends Vue {
 .border-radius-8px {
   border-radius: 8px !important;
 }
-.backdrop-hover-overlay {
-  filter: blur(2px);
-  z-index: -1;
-}
-.card-hover-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  // background-color: rgba(255, 255, 255, 0.6);
-  top: 0;
-  left: 0;
-  z-index: 2;
-  border: 1px solid var(--v-bluePrimary-base);
-  filter: blur(0) !important;
-}
-.custom-chevron-flag-container {
-  top: 0;
-  right: 28px;
-  filter: drop-shadow(-1px 6px 3px rgba(50, 50, 0, 0.5));
-}
-.custom-chevron-flag {
-  clip-path: polygon(100% 0, 100% 100%, 50% 82%, 0 100%, 0% 0%);
-  background-image: linear-gradient(to bottom, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
-  width: 24px;
-  min-height: 50px;
-}
+
 .start-date-container {
   height: 42px;
   width: 100%;
@@ -166,5 +108,25 @@ export default class BountyCard extends Vue {
 .card-project-medium-icon {
   width: 32px;
   height: 32px;
+}
+
+.bounce {
+  animation: bouncing 400ms ease-in-out;
+  -webkit-animation: bouncing 400ms ease-in-out;
+  -ms-animation: bouncing 400ms ease-in-out;
+}
+
+@keyframes bouncing {
+  40% {
+    -webkit-transform: translateY(-3px);
+    -ms-transform: translateY(-3px);
+    transform: translateY(-3px);
+  }
+  0%,
+  90% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
 }
 </style>
