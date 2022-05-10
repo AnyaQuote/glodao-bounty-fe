@@ -10,7 +10,7 @@
           <div class="text-caption mt-1">
             Reply <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
-            }}", then submit the link to your reply tweet here (At least 50 characters)
+            }}", then submit the link to your reply tweet here (At least {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
         </div>
         <div
@@ -142,6 +142,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { TWEET_MIN_WORDS_COUNT } from '@/constants'
 
 @Observer
 @Component({
@@ -150,7 +151,8 @@ import { get } from 'lodash-es'
     'task-icon-container': () => import('@/modules/bounty/components/bounty-detail/task-icon-container.vue'),
   },
 })
-export default class BountyDetail extends Vue {
+export default class CommentTask extends Vue {
+  TWEET_MIN_WORDS_COUNT = TWEET_MIN_WORDS_COUNT
   @Inject() vm!: BountyDetailViewModel
   @Prop({ required: true }) twitterTask!: any
   @Prop({ required: true }) step!: number

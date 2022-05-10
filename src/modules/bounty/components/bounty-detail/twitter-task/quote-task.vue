@@ -13,7 +13,8 @@
             }}"
             <span v-if="twitterTask.hashtag">
               using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span> </span
-            >, share why you want to have this project’s primary market exposure. (At least 50 characters)
+            >, share why you want to have this project’s primary market exposure. (At least
+            {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
         </div>
         <div
@@ -145,6 +146,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { TWEET_MIN_WORDS_COUNT } from '@/constants'
 
 @Observer
 @Component({
@@ -153,7 +155,8 @@ import { get } from 'lodash-es'
     'task-icon-container': () => import('@/modules/bounty/components/bounty-detail/task-icon-container.vue'),
   },
 })
-export default class BountyDetail extends Vue {
+export default class QuoteTask extends Vue {
+  TWEET_MIN_WORDS_COUNT = TWEET_MIN_WORDS_COUNT
   @Inject() vm!: BountyDetailViewModel
   @Prop({ required: true }) twitterTask!: any
   @Prop({ required: true }) step!: number
