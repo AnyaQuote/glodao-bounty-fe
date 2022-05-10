@@ -1,11 +1,11 @@
 <template>
-  <v-sheet class="text-h5 pa-6 border-radius-8 neutral100--bg" outlined>
+  <v-sheet class="text-h6 pa-6 border-radius-8 neutral100--bg" outlined>
     <div class="font-weight-bold">Campaign June 2021</div>
     <div class="mt-6 font-weight-bold d-flex align-center">
       1000 <span class="text-body-1 font-weight-600 neutral10--text ml-2">referrals</span>
     </div>
     <div class="d-flex">
-      <v-sheet class="mt-6 blue lighten-1 pa-3 text-body-1 font-weight-600 border-radius-8"
+      <v-sheet class="mt-6 blue lighten-1 py-2 px-4 text-body-1 font-weight-600 border-radius-8"
         >Code
         <span class="ml-6 bluePrimary--text font-weight-bold">
           5hna7H
