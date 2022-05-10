@@ -3,7 +3,7 @@
     <v-hover v-slot="{ hover }">
       <v-card
         class="mx-auto overflow-hidden border-radius-8px neutral100 fill-height"
-        :class="{ bounce: hover }"
+        :class="{ bounce: hover, unbounce: !hover }"
         elevation="3"
         outlined
       >
@@ -111,22 +111,12 @@ export default class BountyCard extends Vue {
 }
 
 .bounce {
-  animation: bouncing 400ms ease-in-out;
-  -webkit-animation: bouncing 400ms ease-in-out;
-  -ms-animation: bouncing 400ms ease-in-out;
+  transform: translateY(-12px);
+  transition: transform 300ms ease-in-out;
 }
 
-@keyframes bouncing {
-  40% {
-    -webkit-transform: translateY(-3px);
-    -ms-transform: translateY(-3px);
-    transform: translateY(-3px);
-  }
-  0%,
-  90% {
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-  }
+.unbounce {
+  transform: translateY(-0px);
+  transition: transform 300ms ease-in-out;
 }
 </style>
