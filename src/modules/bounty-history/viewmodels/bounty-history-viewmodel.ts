@@ -132,7 +132,7 @@ export class BountyHistoryViewModel {
         }),
       ])
       if (responses[0].status === 'fulfilled') {
-        this.totalPageCount = responses[0].value
+        this.totalProjectCount = responses[0].value
       }
       if (responses[1].status === 'fulfilled') {
         this.endedProjectCount = responses[1].value
