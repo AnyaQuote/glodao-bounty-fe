@@ -19,6 +19,7 @@ export class CompanyProfileViewModel {
   @observable newCampaignDialogInput = ''
   @observable randomCampaignCode = ''
   @observable newCampaignDialogLoading = false
+  @observable campaignList: any[] = []
 
   @observable huntingList: any[] = []
   @observable huntingCount = 0
@@ -53,6 +54,8 @@ export class CompanyProfileViewModel {
   @observable dateRangeDialog = false
 
   @observable loading = false
+
+  @observable completedHuntingList: any[] = []
 
   constructor() {
     if (isEmpty(authStore.jwt))
@@ -98,12 +101,11 @@ export class CompanyProfileViewModel {
       this.getTotalHuntingCount(),
       this.getProcessingAndCompletedTaskCount(),
       this.getCompletedHuntingBounty(),
+      this.getAllCampaigns(),
     ]).finally(() => {
       this.loading = false
     })
   }
-
-  @observable completedHuntingList: any[] = [];
 
   @asyncAction *getCompletedHuntingBounty() {
     try {
@@ -114,6 +116,14 @@ export class CompanyProfileViewModel {
       }
       const res = yield apiService.applies.find(huntingListParams)
       this.completedHuntingList = res
+    } catch (error) {
+      snackController.error(error as string)
+    }
+  }
+
+  @asyncAction *getAllCampaigns() {
+    try {
+      this.campaignList = yield apiService.campaigns.find({ owner: authStore.hunterId }, { _limit: -1 })
     } catch (error) {
       snackController.error(error as string)
     }
