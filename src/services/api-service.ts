@@ -2,7 +2,7 @@ import { authStore } from '@/stores/auth-store'
 import Axios from 'axios'
 import qs from 'qs'
 
-export type ApiRouteType = 'applies' | 'hunters' | 'logs' | 'pool-regists' | 'pools' | 'tasks' | 'users'
+export type ApiRouteType = 'applies' | 'hunters' | 'logs' | 'pool-regists' | 'pools' | 'tasks' | 'users' | 'campaigns'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
 axios.interceptors.request.use((config) => {
@@ -194,6 +194,7 @@ export class ApiService {
   users = new ApiHandlerJWT<any>(axios, 'users')
   hunters = new ApiHandlerJWT<any>(axios, 'hunters', { count: false })
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
+  campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')
 
   async getFile(id: any) {
     const res = await axios.get(`upload/files/${id}`)
