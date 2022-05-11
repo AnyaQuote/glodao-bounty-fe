@@ -33,7 +33,7 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/account/pages/company-profile.vue'),
   },
   {
-    path: '/campaign-detail',
+    path: '/campaign-detail/:id',
     name: 'CampaignDetail',
     component: () => import('@/modules/account/pages/campaign-detail.vue'),
   },
