@@ -228,7 +228,6 @@ export class CompanyProfileViewModel {
   }
 
   @asyncAction *submitNewCampaignForm() {
-    console.log(this.newCampaignDialogInput, this.randomCampaignCode)
     if (!this.newCampaignDialogInput || !this.randomCampaignCode || !authStore.hunterId) {
       snackController.error('Can not create new campaign: missing data')
       return
@@ -240,7 +239,6 @@ export class CompanyProfileViewModel {
         code: this.randomCampaignCode,
         owner: authStore.hunterId,
       })
-      console.log(res)
       this.changeNewCampaignDialog(false)
       snackController.success('Create new campaign successfully')
     } catch (error) {
