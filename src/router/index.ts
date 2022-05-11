@@ -70,10 +70,10 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.name === 'HuntingHistory') {
-    if (authStore.user.hunter.hunterRole === 'company') next('/company-profile')
+    if (authStore.userRole === 'company') next('/company-profile')
   }
   if (to.name === 'CompanyProfile') {
-    if (authStore.user.hunter.hunterRole !== 'company') next('/hunting-history')
+    if (authStore.userRole !== 'company') next('/hunting-history')
   }
   next()
 })
