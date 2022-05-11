@@ -1,5 +1,5 @@
 <template>
-  <v-dialog class="rounded overflow-hidden" max-width="475" persistent>
+  <v-dialog v-model="vm.newCampaignDialog" class="rounded overflow-hidden" max-width="475" persistent eager>
     <v-sheet
       outlined
       class="position-relative pa-6 text-center rounded dialog-normal-text overflow-hidden neutral100--bg"
@@ -7,7 +7,9 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <div class="mb-6 font-weight-bold dialog-title-text d-flex align-center justify-space-between">
           <div class="d-flex align-center">Create new campaign</div>
-          <v-icon>mdi-window-close</v-icon>
+          <v-icon :disabled="vm.newCampaignDialogLoading" @click="vm.changeNewCampaignDialog(false)"
+            >mdi-window-close</v-icon
+          >
         </div>
         <div class="d-flex align-center mt-7 font-weight-bold dialog-title-text">Campaign name</div>
         <v-sheet class="rounded mt-2">
@@ -20,13 +22,17 @@
             height="44"
             :rules="[$rules.required]"
             outlined
+            :value="vm.newCampaignDialogInput"
+            @input="vm.changeNewCampaignDialogInput"
           >
           </v-text-field>
         </v-sheet>
         <div class="d-flex align-center font-weight-bold dialog-title-text">Referral code</div>
         <v-sheet class="rounded mt-2 d-flex align-center justify-space-between px-4 py-3" outlined height="44">
-          <div class="text-body-2 mr-6 bluePrimary--text font-weight-600">gh56k9</div>
-          <div class="text-caption text-truncate mr-5">https://www.waggle.network/v=gJJzlpw8fG8</div>
+          <div class="text-body-2 mr-6 bluePrimary--text font-weight-600">{{ vm.randomCampaignCode }}</div>
+          <div class="text-caption text-truncate mr-5">
+            https://app.glodao.io/bounty?ref={{ vm.randomCampaignCode }}
+          </div>
           <div>
             <v-tooltip bottom style="display: inline-block !important">
               <template v-slot:activator="{ on, attrs }">
@@ -42,7 +48,12 @@
           Use this link to refer your friends to join and get commission.
         </div>
 
-        <v-btn depressed block class="mt-7 border-radius-4 text-none white--text" color="bluePrimary" @click="validate"
+        <v-btn
+          depressed
+          block
+          class="mt-7 border-radius-4 text-none white--text linear-background-blue-main"
+          @click="validate"
+          :loading="vm.newCampaignDialogLoading"
           >Create</v-btn
         >
       </v-form>
@@ -52,22 +63,34 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Ref, Vue } from 'vue-property-decorator'
+import { Component, Inject, Ref, Vue } from 'vue-property-decorator'
 import { promiseHelper } from '@/helpers/promise-helper'
-import { authStore } from '@/stores/auth-store'
-import { get } from 'lodash'
+import { CompanyProfileViewModel } from '../viewmodels/company-profile-viewmodel'
+import { IReactionDisposer, reaction } from 'mobx'
 
 @Observer
 @Component({
   components: {},
 })
 export default class NewCampaignDialog extends Vue {
-  @Ref('form') form: any
-  referralLink = `https://app.glodao.io/bounty?ref=${get(authStore.user, 'hunter.referralCode')}`
-  authStore = authStore
+  @Ref('form') form!: any
+  @Inject() vm!: CompanyProfileViewModel
+  referralLink = `https://app.glodao.io/bounty?ref=${this.vm.randomCampaignCode}`
   isCopied = false
   valid = true
   mouseoverEvent = new Event('mouseleave')
+  disposers: IReactionDisposer[] = []
+
+  mounted() {
+    this.disposers = [
+      reaction(
+        () => this.vm.newCampaignDialog,
+        () => {
+          this.form.reset()
+        }
+      ),
+    ]
+  }
 
   async copyAddressDesktop() {
     navigator.clipboard.writeText(this.referralLink)
@@ -80,7 +103,11 @@ export default class NewCampaignDialog extends Vue {
   }
 
   validate() {
-    console.log(this.form.validate())
+    if (this.form.validate()) this.vm.submitNewCampaignForm()
+  }
+
+  beforeDestroy() {
+    this.disposers.forEach((d) => d())
   }
 }
 </script>

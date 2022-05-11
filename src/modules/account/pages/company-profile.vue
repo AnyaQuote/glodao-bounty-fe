@@ -14,11 +14,6 @@
                 </v-col>
                 <v-col cols="12">
                   <v-sheet class="neutral100--bg d-flex justify-space-between rounded-lg pa-6 mt-6">
-                    <!-- <div class="text-body-1 font-weight-600 pb-1">
-                      Your referral link |
-                      <span class="neutral10--text text-body-2">Refer friends and earn reward</span>
-                    </div>
-                    <referral-copy-board class="mt-2" /> -->
                     <div>
                       <div class="neutral10--text font-weight-600">Total campaign</div>
                       <div class="text-h6 font-weight-bold">100</div>
@@ -28,7 +23,11 @@
                       <div class="text-h6 font-weight-bold">1000</div>
                     </div>
                     <div class="d-flex align-center">
-                      <v-btn depressed height="40" class="text-none white--text linear-background-blue-main rounded"
+                      <v-btn
+                        depressed
+                        height="40"
+                        class="text-none white--text linear-background-blue-main rounded"
+                        @click="vm.changeNewCampaignDialog(true)"
                         >New campaign</v-btn
                       >
                     </div>
@@ -168,9 +167,6 @@ import { CompanyProfileViewModel } from '@/modules/account/viewmodels/company-pr
   components: {
     'hunting-history-card': () => import('@/modules/account/components/hunting-history-card.vue'),
     'no-items': () => import('@/modules/account/components/no-items.vue'),
-    'referral-card': () => import('@/modules/account/components/referral-card.vue'),
-    'referral-copy-board': () => import('@/modules/account/components/referral-copy-board.vue'),
-    'no-referrals': () => import('@/modules/account/components/no-referrals.vue'),
     'wallet-sheet-container': () => import('@/modules/account/components/wallet-sheet-container.vue'),
     'mini-info-container': () => import('@/modules/account/components/mini-info-container.vue'),
     'loading-component': () => import('@/modules/account/components/loading-component.vue'),
@@ -215,7 +211,4 @@ export default class CompanyProfile extends Vue {
 
 <style scoped lang="scss">
 @import '../styles/index.scss';
-
-.a {
-}
 </style>

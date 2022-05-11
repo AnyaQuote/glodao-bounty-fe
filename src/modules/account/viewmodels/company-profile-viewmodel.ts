@@ -1,5 +1,6 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { Zero } from '@/constants'
+import { generateRandomString } from '@/helpers'
 import { bigNumberHelper } from '@/helpers/bignumber-helper'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
@@ -14,10 +15,14 @@ import moment from 'moment'
 const PAGE_LIMIT = 6
 const params = { hunter: get(authStore, 'user.hunter.id', '') }
 export class CompanyProfileViewModel {
+  @observable newCampaignDialog = false
+  @observable newCampaignDialogInput = ''
+  @observable randomCampaignCode = ''
+  @observable newCampaignDialogLoading = false
+
   @observable huntingList: any[] = []
   @observable huntingCount = 0
   @observable page = 1
-  @observable currentApplies: any[] = []
   @observable completedTaskCount = 0
   @observable processingTaskCount = 0
 
@@ -47,22 +52,6 @@ export class CompanyProfileViewModel {
   @observable dateRanges = []
   @observable dateRangeDialog = false
 
-  @observable referralCode = get(authStore, 'user.hunter.referralCode', '')
-  @observable referralList: any[] = []
-  @observable referralWorkingList: any[] = []
-  @observable referralPage = 0
-  @observable referralSortParams = ['joinTime', 'asc']
-  @observable referralSortList = [
-    {
-      text: 'Recently join',
-      value: ['joinTime', 'desc'],
-    },
-    {
-      text: 'Name ascending',
-      value: ['name', 'asc'],
-    },
-  ]
-
   @observable loading = false
 
   constructor() {
@@ -77,15 +66,6 @@ export class CompanyProfileViewModel {
 
   initReaction() {
     this._disposers = [
-      reaction(
-        () => authStore.jwt,
-        () => {
-          if (authStore.jwt) {
-            this.referralCode = get(authStore, 'user.hunter.referralCode', '')
-            this.fetchData()
-          }
-        }
-      ),
       reaction(
         () => this.page,
         () => {
@@ -104,34 +84,6 @@ export class CompanyProfileViewModel {
           this.getHuntingListByPage(1)
         }
       ),
-      reaction(
-        () => this.referralPage,
-        () => {
-          this.referralWorkingList = this.referralList
-            .slice((this.referralPage - 1) * PAGE_LIMIT, this.referralPage * PAGE_LIMIT)
-            .map(({ id, name, createdAt, metadata, totalEarn, commission, commissionToday }) => ({
-              id,
-              name,
-              joinTime: createdAt,
-              avatar: get(metadata, 'avatar', ''),
-              totalEarn,
-              commission,
-              commissionToday,
-            }))
-          this.onReferralSortConditionChange([]) // Reset sortParams when going new page
-        }
-      ),
-      reaction(
-        () => this.referralSortParams,
-        () => {
-          if (!this.referralSortParams.length) return // omit when sortParam is reset
-          this.referralWorkingList = orderBy(
-            this.referralWorkingList,
-            [this.referralSortParams[0]],
-            [this.referralSortParams[1] as 'asc' | 'desc']
-          )
-        }
-      ),
     ]
   }
 
@@ -145,7 +97,6 @@ export class CompanyProfileViewModel {
       this.getHuntingListByPage(),
       this.getTotalHuntingCount(),
       this.getProcessingAndCompletedTaskCount(),
-      this.getReferralList(),
       this.getCompletedHuntingBounty(),
     ]).finally(() => {
       this.loading = false
@@ -188,22 +139,6 @@ export class CompanyProfileViewModel {
   @action.bound changeDateRange(value) {
     this.dateRanges = value
   }
-
-  @action.bound onReferralSortConditionChange(value: string[]) {
-    this.referralSortParams = value
-  }
-
-  @asyncAction *getReferralList() {
-    try {
-      const hunterId = params['hunter']
-      const res = yield apiService.getReferrals(hunterId)
-      this.referralList = res
-      this.referralPage = 1 // Setting page from 0 (default) to 1 will invoke the working list
-    } catch (error) {
-      snackController.error(('Cant get referral list:' + error) as string)
-    }
-  }
-
   @asyncAction *getHuntingListByPage(page?: number) {
     try {
       if (!authStore.jwt) return
@@ -277,8 +212,42 @@ export class CompanyProfileViewModel {
     }
   }
 
-  @computed get totalReferralPage() {
-    return ceil(this.referralList.length / PAGE_LIMIT)
+  @action.bound changeNewCampaignDialog(value: boolean) {
+    this.newCampaignDialog = value
+    this.resetNewCampaignDialog()
+  }
+
+  @action resetNewCampaignDialog() {
+    //
+    this.randomCampaignCode = generateRandomString()
+    this.newCampaignDialogInput = ''
+  }
+
+  @action.bound changeNewCampaignDialogInput(value: string) {
+    this.newCampaignDialogInput = value
+  }
+
+  @asyncAction *submitNewCampaignForm() {
+    console.log(this.newCampaignDialogInput, this.randomCampaignCode)
+    if (!this.newCampaignDialogInput || !this.randomCampaignCode || !authStore.hunterId) {
+      snackController.error('Can not create new campaign: missing data')
+      return
+    }
+    try {
+      this.newCampaignDialogLoading = true
+      const res = yield apiService.campaigns.create({
+        name: this.newCampaignDialogInput,
+        code: this.randomCampaignCode,
+        owner: authStore.hunterId,
+      })
+      console.log(res)
+      this.changeNewCampaignDialog(false)
+      snackController.success('Create new campaign successfully')
+    } catch (error) {
+      snackController.error(error as string)
+    } finally {
+      this.newCampaignDialogLoading = false
+    }
   }
 
   @computed get isStaked() {
@@ -365,21 +334,6 @@ export class CompanyProfileViewModel {
       ],
     }
   }
-
-  @computed get totalReferralCommission() {
-    return this.referralList.reduce(
-      (acc, current) => acc.addUnsafe(FixedNumber.from(current.commission)),
-      FixedNumber.from('0')
-    )._value
-  }
-
-  @computed get totalReferralCommissionToday() {
-    return this.referralList.reduce(
-      (acc, current) => acc.addUnsafe(FixedNumber.from(current.commissionToday)),
-      FixedNumber.from('0')
-    )._value
-  }
-
   @computed get totalHuntingListBounty() {
     return this.completedHuntingList.reduce(
       (acc, current) => acc.addUnsafe(FixedNumber.from(current.bounty)),
@@ -396,12 +350,10 @@ export class CompanyProfileViewModel {
   }
 
   @computed get totalEarning() {
-    return FixedNumber.from(this.totalReferralCommission).addUnsafe(FixedNumber.from(this.totalHuntingListBounty))
-      ._value
+    return FixedNumber.from('0').addUnsafe(FixedNumber.from(this.totalHuntingListBounty))._value
   }
 
   @computed get totalEarningToday() {
-    return FixedNumber.from(this.totalReferralCommissionToday).addUnsafe(FixedNumber.from(this.todayHuntingListBounty))
-      ._value
+    return FixedNumber.from('0').addUnsafe(FixedNumber.from(this.todayHuntingListBounty))._value
   }
 }
