@@ -152,6 +152,7 @@
         </v-sheet>
       </v-sheet>
     </v-dialog>
+    <new-campaign-dialog></new-campaign-dialog>
   </v-row>
 </template>
 
@@ -174,6 +175,7 @@ import { CompanyProfileViewModel } from '@/modules/account/viewmodels/company-pr
     'mini-info-container': () => import('@/modules/account/components/mini-info-container.vue'),
     'loading-component': () => import('@/modules/account/components/loading-component.vue'),
     'campaign-list-item': () => import('@/modules/account/components/campaign-list-item.vue'),
+    'new-campaign-dialog': () => import('@/modules/account/components/new-campaign-dialog.vue'),
   },
 })
 export default class CompanyProfile extends Vue {
