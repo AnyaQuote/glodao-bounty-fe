@@ -172,8 +172,6 @@ export default class CompanyProfile extends Vue {
   tab = null
 
   mounted() {
-    console.log('company-profile-page')
-
     this.vm.initReaction()
   }
 
