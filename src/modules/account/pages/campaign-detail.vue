@@ -6,16 +6,20 @@
       </v-col>
       <v-col cols="12">
         <v-sheet outlined class="pa-6 mt-10 border-radius-8 neutral100--bg">
-          <div class="d-flex justify-space-between">
-            <div>
-              <div class="font-size-28 font-weight-bold">Campaign June 2021</div>
-              <div class="neutral10--text mt-2">Created time: 22/10/2022</div>
+          <div class="row">
+            <div class="col">
+              <div class="font-size-28 font-weight-bold text-truncate">
+                {{ vm.campaignDetail | _get('name', 'TBA') }}
+              </div>
+              <div class="neutral10--text mt-2">
+                Created time: {{ vm.campaignDetail | _get('createdAt', 'TBA') | datetime }}
+              </div>
             </div>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column col-auto">
               <v-sheet class="blue lighten-1 py-2 px-4 text-body-1 font-weight-600 border-radius-8"
                 >Code
                 <span class="ml-6 bluePrimary--text font-weight-bold">
-                  5hna7H
+                  {{ vm.campaignCode }}
                   <v-tooltip bottom style="display: inline-block !important">
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon
@@ -38,15 +42,19 @@
           <v-divider class="my-6"></v-divider>
           <div class="d-flex justify-space-between">
             <div class="text-center" style="flex: 1">
-              <div class="font-size-28 font-weight-bold">1000</div>
+              <div class="font-size-28 font-weight-bold">{{ vm.referralList | _get('length') }}</div>
               <div class="neutral10--text font-weight-600 font-size-18">Referrals</div>
             </div>
             <div class="text-center" style="flex: 1">
-              <div class="font-size-28 font-weight-bold">1000</div>
+              <div class="font-size-28 font-weight-bold">
+                {{ vm.totalCommissionObj | _get('pastDayCommission') | usdCustom(4, 6) }}
+              </div>
               <div class="neutral10--text font-weight-600 font-size-18">Today commission</div>
             </div>
             <div class="text-center" style="flex: 1">
-              <div class="font-size-28 font-weight-bold">1000</div>
+              <div class="font-size-28 font-weight-bold">
+                {{ vm.totalCommissionObj | _get('totalCommission') | usdCustom(4, 6) }}
+              </div>
               <div class="neutral10--text font-weight-600 font-size-18">Total commission</div>
             </div>
           </div>
@@ -55,11 +63,11 @@
       <v-row class="mt-10 mb-6" dense no-gutters>
         <v-col cols="auto">
           <v-sheet class="transparent d-flex align-center" height="100%">
-            <span class="transparent font-weight-bold neutral0--text pr-1">0</span>
+            <span class="transparent font-weight-bold neutral0--text pr-1">{{ vm.referralList | _get('length') }}</span>
             <span class="neutral0--text">Refferals</span>
           </v-sheet>
         </v-col>
-        <v-col class="ml-auto" cols="12" sm="6" md="3">
+        <v-col class="ml-auto" cols="12" sm="3" md="3">
           <v-select
             :items="vm.referralSortList"
             label="Sort"
@@ -75,12 +83,12 @@
       <v-col cols="12">
         <loading-component :loading="vm.loading"></loading-component>
         <v-scale-transition v-if="!vm.loading">
-          <div v-if="vm.referralList.length > 0">
+          <div v-if="vm.displayedReferralList.length > 0">
             <referral-card
-              v-for="item in vm.referralList"
+              v-for="item in vm.displayedReferralList"
               :key="item.id"
               :name="item.name"
-              :joinTime="item.joinTime"
+              :joinTime="item.createdAt"
               :avatar="item.metadata.avatar"
               :commission="item.commission"
               :totalEarn="item.totalEarn"
@@ -107,7 +115,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Provide } from 'vue-property-decorator'
+import { Component, Vue, Provide, Watch } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { CampaignDetailViewModel } from '@/modules/account/viewmodels/campaign-detail-viewmodel'
@@ -130,6 +138,13 @@ export default class CampaignDetail extends Vue {
 
   isCopied = false
   mouseoverEvent = new Event('mouseleave')
+
+  @Watch('$route.params.id', { immediate: true }) onIdChanged(val: string) {
+    if (val) {
+      this.vm.fetchData(val)
+    }
+  }
+
   async copyAddressDesktop() {
     navigator.clipboard.writeText(this.referralLink)
     this.isCopied = true
@@ -141,8 +156,6 @@ export default class CampaignDetail extends Vue {
   }
 
   mounted() {
-    console.log('company-profile-page')
-
     this.vm.initReaction()
   }
 
