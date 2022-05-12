@@ -133,9 +133,6 @@ export default class CampaignDetail extends Vue {
   @Provide() vm = new CampaignDetailViewModel()
   walletStore = walletStore
   authStore = authStore
-
-  referralLink = `https://app.glodao.io/bounty?ref=`
-
   isCopied = false
   mouseoverEvent = new Event('mouseleave')
 
@@ -146,7 +143,7 @@ export default class CampaignDetail extends Vue {
   }
 
   async copyAddressDesktop() {
-    navigator.clipboard.writeText(this.referralLink)
+    navigator.clipboard.writeText(`https://app.glodao.io/bounty?ref=${this.vm.campaignCode}`)
     this.isCopied = true
     await promiseHelper.delay(3000)
     this.isCopied = false
