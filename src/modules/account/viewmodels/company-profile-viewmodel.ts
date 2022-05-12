@@ -138,10 +138,6 @@ export class CompanyProfileViewModel {
     this.sortParams = value
   }
 
-  @action.bound onStatusFilterChange(value: string) {
-    console.log(value)
-  }
-
   @action.bound changeDateRangeDialog(value: boolean) {
     this.dateRangeDialog = value
   }
