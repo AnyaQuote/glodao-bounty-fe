@@ -2,7 +2,9 @@
   <v-container style="max-width: 900px !important" class="pa-4">
     <v-row class="mt-6" dense no-gutters>
       <v-col cols="12">
-        <v-icon color="primary">mdi-arrow-left</v-icon>
+        <router-link to="/company-profile">
+          <v-icon color="primary">mdi-arrow-left</v-icon>
+        </router-link>
       </v-col>
       <v-col cols="12">
         <v-sheet outlined class="pa-6 mt-10 border-radius-8 neutral100--bg">
