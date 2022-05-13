@@ -5,7 +5,7 @@
         <v-sheet class="transparent overflow-hidden" width="100%">
           <v-row dense>
             <v-col cols="12" md="6" lg="5">
-              <mini-info-container />
+              <mini-info-container :totalTaskOnly="true" />
             </v-col>
             <v-col cols="12" md="6" lg="7">
               <v-row dense>
