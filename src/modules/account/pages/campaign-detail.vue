@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="d-flex flex-column col-auto">
-              <v-sheet class="blue lighten-1 py-2 px-4 text-body-1 font-weight-600 border-radius-8"
+              <v-sheet class="blue lighten-3 py-2 px-4 text-body-1 font-weight-600 border-radius-8"
                 >Code
                 <span class="ml-6 bluePrimary--text font-weight-bold">
                   {{ vm.campaignCode }}

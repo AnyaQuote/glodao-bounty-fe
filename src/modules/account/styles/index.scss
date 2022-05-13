@@ -2,6 +2,9 @@
   background: linear-gradient(to right, #daecff, #cff0ff, #c4f4ff, #bcf8fa, #bbfbef);
   background-size: cover;
   padding-bottom: 0;
+  &.theme--dark {
+    background: linear-gradient(90deg, #013066 0%, #014c6a 113.65%);
+  }
 }
 .username-lg-text {
   font-size: 28px;

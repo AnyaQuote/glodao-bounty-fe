@@ -6,7 +6,7 @@
         {{ hunterCount }} <span class="text-body-1 font-weight-600 neutral10--text ml-2">referrals</span>
       </div>
       <div class="d-flex">
-        <v-sheet class="mt-6 blue lighten-1 py-2 px-4 text-body-1 font-weight-600 border-radius-8" @click.prevent=""
+        <v-sheet class="mt-6 blue lighten-3 py-2 px-4 text-body-1 font-weight-600 border-radius-8" @click.prevent=""
           >Code
           <span class="ml-6 bluePrimary--text font-weight-bold">
             {{ code }}

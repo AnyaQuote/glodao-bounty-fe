@@ -1,6 +1,12 @@
 <template>
   <v-row>
-    <v-col cols="12" class="hunter-info-container">
+    <v-col
+      cols="12"
+      class="hunter-info-container"
+      :class="{
+        'theme--dark': $vuetify.theme.dark,
+      }"
+    >
       <v-container class="d-flex justify-center mt-10">
         <v-sheet class="transparent overflow-hidden" width="100%">
           <v-row dense>
