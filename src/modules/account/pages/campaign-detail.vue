@@ -44,20 +44,58 @@
           <v-divider class="my-6"></v-divider>
           <div class="d-flex justify-space-between">
             <div class="text-center" style="flex: 1">
-              <div class="font-size-28 font-weight-bold">{{ vm.referralList | _get('length') }}</div>
-              <div class="neutral10--text font-weight-600 font-size-18">Referrals</div>
+              <div
+                class="font-size-28 font-weight-bold"
+                :class="{
+                  'text-h5': $vuetify.breakpoint.xsOnly,
+                }"
+              >
+                {{ vm.referralList | _get('length') }}
+              </div>
+              <div
+                class="neutral10--text font-weight-600 font-size-18"
+                :class="{
+                  'text-caption': $vuetify.breakpoint.xsOnly,
+                }"
+              >
+                Referrals
+              </div>
             </div>
             <div class="text-center" style="flex: 1">
-              <div class="font-size-28 font-weight-bold">
+              <div
+                class="font-size-28 font-weight-bold"
+                :class="{
+                  'text-h5': $vuetify.breakpoint.xsOnly,
+                }"
+              >
                 {{ vm.totalCommissionObj | _get('pastDayCommission') | usdCustom(4, 6) }}
               </div>
-              <div class="neutral10--text font-weight-600 font-size-18">Today commission</div>
+              <div
+                class="neutral10--text font-weight-600 font-size-18"
+                :class="{
+                  'text-caption': $vuetify.breakpoint.xsOnly,
+                }"
+              >
+                Today commission
+              </div>
             </div>
             <div class="text-center" style="flex: 1">
-              <div class="font-size-28 font-weight-bold">
+              <div
+                class="font-size-28 font-weight-bold"
+                :class="{
+                  'text-h5': $vuetify.breakpoint.xsOnly,
+                }"
+              >
                 {{ vm.totalCommissionObj | _get('totalCommission') | usdCustom(4, 6) }}
               </div>
-              <div class="neutral10--text font-weight-600 font-size-18">Total commission</div>
+              <div
+                class="neutral10--text font-weight-600 font-size-18"
+                :class="{
+                  'text-caption': $vuetify.breakpoint.xsOnly,
+                }"
+              >
+                Total commission
+              </div>
             </div>
           </div>
         </v-sheet>
@@ -166,9 +204,9 @@ export default class CampaignDetail extends Vue {
 
 <style scoped lang="scss">
 .font-size-28 {
-  font-size: 28px !important;
+  font-size: 28px;
 }
 .font-size-18 {
-  font-size: 18px !important;
+  font-size: 18px;
 }
 </style>
