@@ -1,37 +1,31 @@
 <template>
-  <v-sheet class="fill-width neutral100--bg d-flex flex-column flex-md-row align-md-center rounded-lg pa-4" outlined>
+  <v-sheet
+    class="fill-width neutral100--bg d-flex flex-column flex-sm-row align-sm-center rounded-lg pa-4 pr-sm-10"
+    outlined
+  >
     <div class="d-flex overflow-hidden">
       <v-img class="rounded-circle mx-auto" :src="avatar" max-width="64" max-height="64"></v-img>
     </div>
-    <div class="d-flex flex-md-column pa-3 py-0" style="width: 150px">
-      <div class="neutral10--text">Reffered</div>
-      <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">@{{ name }}</div>
+    <div class="d-flex flex-sm-column pa-3 py-0">
+      <div class="neutral10--text small-caption-text">Reffered</div>
+      <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">@{{ name }}</div>
     </div>
-    <div class="d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
-      <div class="neutral10--text">Join at</div>
-      <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
+    <div class="d-flex flex-sm-column pa-3 py-0 ml-0 ml-sm-auto">
+      <div class="neutral10--text small-caption-text">Join at</div>
+      <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
         {{ joinTime | datetime }}
       </div>
     </div>
-    <div class="d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
-      <div class="neutral10--text">Social</div>
-      <div class="d-flex align-center font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
-        <v-sheet class="bluePrimary d-flex justify-center align-center rounded-circle mr-1" width="20" height="20">
-          <v-icon color="white" size="12">mdi-twitter</v-icon>
-        </v-sheet>
-        Twitter
+    <div class="d-flex flex-sm-column pa-3 py-0 ml-md-10 pl-md-10">
+      <div class="neutral10--text small-caption-text">Total commission</div>
+      <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
+        {{ commission | usdCustom(4, 6) }}
       </div>
     </div>
-    <div class="d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
-      <div class="neutral10--text">Total commission</div>
-      <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
-        {{ commission | usdCustom(2, 2) }}
-      </div>
-    </div>
-    <div class="d-flex flex-md-column pa-3 pr-md-10 py-0 ml-0 ml-md-auto">
-      <div class="neutral10--text">Today commission</div>
-      <div class="font-weight-bold primary--text pl-3 pl-md-0 ml-auto ml-md-0">
-        {{ commissionToday | usdCustom(2, 2) }}
+    <div class="d-flex flex-sm-column pa-3 py-0 ml-md-10">
+      <div class="neutral10--text small-caption-text">Today commission</div>
+      <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
+        {{ commissionToday | usdCustom(4, 6) }}
       </div>
     </div>
   </v-sheet>
@@ -54,4 +48,13 @@ export default class ReferralCard extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.small-caption-text {
+  font-size: 12px;
+  line-height: 18px;
+}
+.medium-caption-text {
+  font-size: 14px;
+  line-height: 20px;
+}
+</style>

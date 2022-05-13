@@ -104,6 +104,7 @@ export default new Vuetify({
           base: '#00E5FF',
           lighten1: '#143973',
           lighten2: '#55ACE3',
+          lighten3: '#F0F7FF',
         },
         neutral20: {
           base: '#30415C',
@@ -132,6 +133,7 @@ export default new Vuetify({
           base: '#0276F0',
           lighten1: '#E6F1FE',
           lighten2: '#55ACE3',
+          lighten3: '#143973',
         },
         mint: {
           base: '#00E5FF',
