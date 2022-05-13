@@ -33,6 +33,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/account/pages/company-profile.vue'),
   },
   {
+    path: '/my-referral',
+    name: 'MyReferral',
+    component: () => import('@/modules/account/pages/my-referral.vue'),
+  },
+  {
     path: '/campaign-detail/:id',
     name: 'CampaignDetail',
     component: () => import('@/modules/account/pages/campaign-detail.vue'),
