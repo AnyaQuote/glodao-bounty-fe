@@ -163,7 +163,6 @@ export default class CompanyProfile extends Vue {
   @Provide() vm = new CompanyProfileViewModel()
   walletStore = walletStore
   authStore = authStore
-  items = ['Foo', 'Bar', 'Fizz', 'Buzz']
   status = ['Processing', 'Awarded', 'Completed', 'Rejected']
   statusModel = []
   socials = ['Twitter', 'Discord', 'Telegram']
