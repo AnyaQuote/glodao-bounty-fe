@@ -1,11 +1,17 @@
 <template>
   <v-row>
-    <v-col cols="12" class="hunter-info-container">
+    <v-col
+      cols="12"
+      class="hunter-info-container"
+      :class="{
+        'theme--dark': $vuetify.theme.dark,
+      }"
+    >
       <v-container class="d-flex justify-center mt-10">
         <v-sheet class="transparent overflow-hidden" width="100%">
           <v-row dense>
             <v-col cols="12" md="6" lg="5">
-              <mini-info-container />
+              <mini-info-container :totalTaskOnly="true" />
             </v-col>
             <v-col cols="12" md="6" lg="7">
               <v-row dense>
@@ -115,11 +121,11 @@
           </v-tab-item>
           <v-tab-item>
             <v-row class="pt-6">
-              <v-col cols="12" sm="6" md="4" v-for="campaign in vm.campaignList" :key="campaign.code">
-                <campaign-list-item :campaign="campaign"></campaign-list-item>
-              </v-col>
               <v-col cols="12" sm="6" md="4">
                 <campaign-list-item :campaign="false" type="referral"></campaign-list-item>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" v-for="campaign in vm.campaignList" :key="campaign.code">
+                <campaign-list-item :campaign="campaign"></campaign-list-item>
               </v-col>
             </v-row>
           </v-tab-item>

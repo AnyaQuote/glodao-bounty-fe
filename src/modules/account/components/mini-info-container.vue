@@ -60,11 +60,11 @@
       </v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
-      <v-sheet class="transparent font-weight-600">Total earning:</v-sheet>
+      <v-sheet class="transparent font-weight-600">Total {{ totalTaskOnly ? 'task' : '' }} earning:</v-sheet>
       <v-sheet class="transparent font-weight-bold number-count-text">{{ vm.totalEarning | usdCustom(2, 2) }}</v-sheet>
     </v-sheet>
     <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-5">
-      <v-sheet class="transparent font-weight-600">Today earning:</v-sheet>
+      <v-sheet class="transparent font-weight-600">Today {{ totalTaskOnly ? 'task' : '' }} earning:</v-sheet>
       <v-sheet class="transparent font-weight-bold number-count-text">{{
         vm.totalEarningToday | usdCustom(2, 2)
       }}</v-sheet>
@@ -72,16 +72,18 @@
   </v-sheet>
 </template>
 <script lang="ts">
-import { Component, Vue, Inject } from 'vue-property-decorator'
+import { Component, Vue, Inject, Prop } from 'vue-property-decorator'
 import { Observer } from 'mobx-vue'
 import { HuntingHistoryViewModel } from '../viewmodels/hunting-history-viewmodel'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
+import { CompanyProfileViewModel } from '../viewmodels/company-profile-viewmodel'
 
 @Observer
 @Component
 export default class extends Vue {
-  @Inject() vm!: HuntingHistoryViewModel
+  @Inject() vm!: HuntingHistoryViewModel | CompanyProfileViewModel
+  @Prop({ default: false }) totalTaskOnly!: boolean
   authStore = authStore
   walletStore = walletStore
 }

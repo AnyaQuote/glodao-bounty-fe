@@ -15,7 +15,7 @@
         <v-sheet class="rounded mt-2">
           <v-text-field
             dense
-            placeholder="Your wallet address"
+            placeholder="Your campaign's name"
             flat
             solo
             class="neutral100--bg link-submit-custom-input rounded"
