@@ -162,6 +162,14 @@ export class AuthStore {
   @computed get registeredWallet() {
     return get(this.user, 'hunter.address', '')
   }
+
+  @computed get userRole() {
+    return get(this.user, 'role.type', 'public')
+  }
+
+  @computed get hunterId() {
+    return get(this.user, 'hunter.id', '')
+  }
 }
 
 export const authStore = new AuthStore()
