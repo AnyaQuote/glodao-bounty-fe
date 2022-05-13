@@ -2,14 +2,15 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import { get, keys } from 'lodash-es'
+import * as _ from 'lodash-es'
+
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
 
 const PAGE_LIMIT = 6
 export class BountyHunterViewModel {
-  @observable liveBountyList: any[] = []
-  @observable upcomingBountyList: any[] = []
+  @observable activeBountyList: any[] = []
 
   @observable bountyList: any[] = []
   @observable bountyCount = 0
@@ -38,9 +39,8 @@ export class BountyHunterViewModel {
 
   constructor() {
     //
+    this.getAllActiveBounty()
     this.getBountyListByPage()
-    this.getAllLiveBounty()
-    this.getTopUpcomingBounty()
     this.getTotalBountyCount()
     this.getCurrentTask()
   }
@@ -73,36 +73,28 @@ export class BountyHunterViewModel {
     this._disposers.forEach((d) => d())
   }
 
-  @asyncAction *getAllLiveBounty() {
+  @asyncAction *getAllActiveBounty() {
     try {
-      const res = yield apiService.tasks.find(
-        { status: 'live' },
-        {
-          _start: 0,
-        }
-      )
-      this.liveBountyList = res
+      this.activeBountyList = yield apiService.tasks.find({ endTime_gt: moment().toISOString() })
     } catch (error) {
-      this.liveBountyList = []
+      this.activeBountyList = []
       snackController.error(error as string)
     }
   }
 
-  @asyncAction *getTopUpcomingBounty(limit = 5) {
-    try {
-      const res = yield apiService.tasks.find(
-        { status: 'upcoming' },
-        {
-          _start: 0,
-          _limit: limit,
-          _sort: 'startTime:ASC',
-        }
-      )
-      this.upcomingBountyList = res
-    } catch (error) {
-      this.upcomingBountyList = []
-      snackController.error(error as string)
-    }
+  @computed get liveBountyList() {
+    return _.filter(
+      this.activeBountyList,
+      (bounty) => moment().isBefore(moment(bounty.endTime)) && moment().isAfter(moment(bounty.startTime))
+    )
+  }
+
+  @computed get upcomingBountyList() {
+    return _.orderBy(
+      _.filter(this.activeBountyList, (bounty) => moment().isBefore(moment(bounty.startTime))),
+      ['startTime'],
+      ['asc']
+    ).slice(0, 5)
   }
 
   @asyncAction *getBountyListByPage(page?: number) {
