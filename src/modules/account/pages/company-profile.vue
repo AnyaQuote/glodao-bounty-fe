@@ -16,11 +16,11 @@
                   <v-sheet class="neutral100--bg d-flex justify-space-between rounded-lg pa-6 mt-6">
                     <div>
                       <div class="neutral10--text font-weight-600">Total campaign</div>
-                      <div class="text-h6 font-weight-bold">100</div>
+                      <div class="text-h6 font-weight-bold">{{ vm.totalCampaignCount }}</div>
                     </div>
                     <div>
                       <div class="neutral10--text font-weight-600">Today referral</div>
-                      <div class="text-h6 font-weight-bold">1000</div>
+                      <div class="text-h6 font-weight-bold">{{ todayReferralCount }}</div>
                     </div>
                     <div class="d-flex align-center">
                       <v-btn
@@ -149,6 +149,9 @@ import { Component, Vue, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { CompanyProfileViewModel } from '@/modules/account/viewmodels/company-profile-viewmodel'
+import { get } from 'lodash-es'
+import { apiService } from '@/services/api-service'
+import moment from 'moment'
 
 @Observer
 @Component({
@@ -166,15 +169,20 @@ export default class CompanyProfile extends Vue {
   @Provide() vm = new CompanyProfileViewModel()
   walletStore = walletStore
   authStore = authStore
+  hunter = get(this.authStore, 'user.hunter')
   status = ['Processing', 'Awarded', 'Completed', 'Rejected']
   statusModel = []
   socials = ['Twitter', 'Discord', 'Telegram']
   socialsModel = []
   dates = []
   tab = null
+  todayReferralCount: any = 'TBA'
 
   mounted() {
     this.vm.initReaction()
+    apiService.hunters
+      .count({ root: this.hunter.referralCode, createdAt_gte: moment().subtract(1, 'day').toISOString() })
+      .then((res) => (this.todayReferralCount = res))
   }
 
   closeDialog() {

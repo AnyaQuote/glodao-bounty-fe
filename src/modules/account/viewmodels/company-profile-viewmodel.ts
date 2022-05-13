@@ -27,6 +27,9 @@ export class CompanyProfileViewModel {
   @observable completedTaskCount = 0
   @observable processingTaskCount = 0
 
+  @observable stakeAmount = 0
+  @observable tokenBasePrice = 2
+
   @observable stakeStatus = false
 
   _disposers: IDisposer[] = []
@@ -193,9 +196,6 @@ export class CompanyProfileViewModel {
     }
   }
 
-  @observable stakeAmount = 0
-  @observable tokenBasePrice = 2;
-
   @asyncAction *getStakeStatus() {
     try {
       if (isEmpty(walletStore.account) || isEmpty(authStore.jwt)) {
@@ -245,6 +245,7 @@ export class CompanyProfileViewModel {
         code: this.randomCampaignCode,
         owner: authStore.hunterId,
       })
+      this.campaignList = [...this.campaignList, res]
       this.changeNewCampaignDialog(false)
       snackController.success('Create new campaign successfully')
     } catch (error) {
@@ -359,5 +360,9 @@ export class CompanyProfileViewModel {
 
   @computed get totalEarningToday() {
     return FixedNumber.from('0').addUnsafe(FixedNumber.from(this.todayHuntingListBounty))._value
+  }
+
+  @computed get totalCampaignCount() {
+    return this.campaignList.length || 'TBA'
   }
 }
