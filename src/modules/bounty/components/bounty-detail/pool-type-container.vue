@@ -61,7 +61,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                     </template>
-                    <span>GLD stakers who have staked more than 1000$ can participate in priority pool</span>
+                    <span>For the first {{ vm.maxPriorityParticipants }} participants</span>
                   </v-tooltip>
                 </v-chip>
               </v-sheet>
