@@ -61,7 +61,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                     </template>
-                    <span>For the first {{ vm.maxPriorityParticipants }} participants</span>
+                    <span>For participants participating the soonest</span>
                   </v-tooltip>
                 </v-chip>
               </v-sheet>
