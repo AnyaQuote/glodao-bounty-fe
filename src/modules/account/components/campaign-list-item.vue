@@ -1,7 +1,7 @@
 <template>
-  <router-link :to="`/campaign-detail/${id}`">
+  <router-link :to="routerLink">
     <v-sheet class="text-h6 pa-6 border-radius-8 neutral100--bg" outlined>
-      <div class="font-weight-bold text-truncate">{{ campaign | _get('name') }}</div>
+      <div class="font-weight-bold text-truncate">{{ campaign | _get('name', 'My referrals') }}</div>
       <div class="mt-6 font-weight-bold d-flex align-center">
         {{ hunterCount }} <span class="text-body-1 font-weight-600 neutral10--text ml-2">referrals</span>
       </div>
@@ -30,6 +30,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { get } from 'lodash-es'
 import { apiService } from '@/services/api-service'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -37,10 +38,13 @@ import { apiService } from '@/services/api-service'
 })
 export default class CampaignListItem extends Vue {
   @Prop({ required: true }) campaign!: any
-  code = get(this.campaign, 'code', '')
+  @Prop({ default: 'campaign' }) type!: any
+  code = get(this.campaign, 'code', '') || get(authStore.user, 'hunter.referralCode')
   id = get(this.campaign, 'id', '')
   hunterCount: any = 'TBA'
   referralLink = `https://app.glodao.io/bounty?ref=${this.code}`
+
+  routerLink = `/${this.type === 'referral' ? 'my-referral' : 'campaign-detail/' + this.id}`
 
   isCopied = false
   mouseoverEvent = new Event('mouseleave')
@@ -56,7 +60,9 @@ export default class CampaignListItem extends Vue {
 
   mounted() {
     //
-    apiService.hunters.count({ _campaignCode: this.code }).then((res) => (this.hunterCount = res))
+    if (this.type === 'referral')
+      apiService.hunters.count({ referrerCode: this.code }).then((res) => (this.hunterCount = res))
+    else apiService.hunters.count({ _campaignCode: this.code }).then((res) => (this.hunterCount = res))
   }
 }
 </script>

@@ -118,6 +118,9 @@
               <v-col cols="12" sm="6" md="4" v-for="campaign in vm.campaignList" :key="campaign.code">
                 <campaign-list-item :campaign="campaign"></campaign-list-item>
               </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <campaign-list-item :campaign="false" type="referral"></campaign-list-item>
+              </v-col>
             </v-row>
           </v-tab-item>
         </v-tabs-items>
