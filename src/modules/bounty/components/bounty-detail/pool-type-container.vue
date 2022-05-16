@@ -61,7 +61,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                     </template>
-                    <span>For participants participating the soonest</span>
+                    <span>For the fastest participants completing the task</span>
                   </v-tooltip>
                 </v-chip>
               </v-sheet>
