@@ -297,7 +297,6 @@ export class BountyDetailViewModel {
 
   @action.bound submitLink(type: string, link: string, stepIndex: number) {
     this.changeTaskUpdating(true)
-    loadingController.increaseRequest()
     const temp = JSON.parse(JSON.stringify(this.applyStepData))
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
@@ -325,7 +324,6 @@ export class BountyDetailViewModel {
         })
         .finally(() => {
           this.changeTaskUpdating(false)
-          loadingController.decreaseRequest()
         })
     })
   }
