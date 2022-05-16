@@ -246,6 +246,16 @@
                       }"
                     >
                       <div class="custom-dash-divider"></div>
+                      <learn-task title="Join Discord group" icon="fab fa-discord" :task="{}" :step="0" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
                       <coming-soon-task title="Join Discord group" icon="fab fa-discord" />
                     </v-col>
                     <v-col
@@ -335,6 +345,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
+    'learn-task': () => import('@/modules/bounty/components/bounty-detail/learn-task/learn.vue'),
     VueHcaptcha,
   },
 })

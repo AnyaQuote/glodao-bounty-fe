@@ -48,6 +48,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/bounty/pages/bounty-detail.vue'),
   },
   {
+    path: '/learn/:id',
+    name: 'Learn',
+    component: () => import('@/modules/bounty/pages/bounty-learn.vue'),
+  },
+  {
     path: '/bounty-history',
     name: 'BountyHistory',
     component: () => import('@/modules/bounty-history/pages/bounty-history.vue'),
