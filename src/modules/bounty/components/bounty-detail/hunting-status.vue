@@ -26,7 +26,7 @@
           <v-sheet class="text-caption text-start background-transparent white--text">
             <v-sheet class="background-transparent white--text">Your pool</v-sheet>
             <v-sheet class="font-weight-bold background-transparent text-uppercase white--text">
-              {{ vm.currentPoolType }} pool
+              {{ vm.isInPriorityPool ? 'Priority' : 'Community' }} pool
             </v-sheet>
           </v-sheet>
           <v-sheet class="text-caption text-start background-transparent">

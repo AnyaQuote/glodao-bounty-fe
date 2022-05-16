@@ -7,8 +7,8 @@
       <div class="custom-blue-divider fill-width"></div>
       <div class="mt-7 px-8">
         <div class="text-body-2 text-center font-weight-bold">
-          Congratulations, You have done successfully the Twitter task in
-          <span class="text-capitalize">{{ vm.currentPoolType }}</span> pool!
+          Congratulations, You have done successfully the Twitter task!
+          <!-- <span class="text-capitalize">{{ vm.currentPoolType }}</span> pool! -->
         </div>
         <div class="text-body-2 text-center font-weight-bold" v-if="vm.isInPriorityPool">
           Your total reward: {{ vm.singlePriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
