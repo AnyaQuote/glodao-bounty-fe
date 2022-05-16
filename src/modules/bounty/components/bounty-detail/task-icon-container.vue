@@ -1,7 +1,7 @@
 <template>
   <v-sheet class="rounded flex-center-box elevation-2 white pa-1" width="48" height="48">
     <v-sheet :class="`flex-center-box rounded ${color} fill-width fill-height position-relative`">
-      <v-icon size="22" color="white"> mdi-{{ type }} </v-icon>
+      <v-icon size="22" color="white"> {{ iconType }}-{{ type }} </v-icon>
       <v-sheet
         width="12"
         height="12"
@@ -21,9 +21,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
   components: {},
 })
 export default class BountyDetail extends Vue {
+  @Prop({ required: false, default: 'mdi' }) iconType
   @Prop({ required: true }) type!: string
   @Prop({ required: true }) isActive!: boolean
-  @Prop({ default: 'blue' }) color = 'blue'
+  @Prop({ default: 'blue', required: false }) color
 }
 </script>
 <style scoped>
