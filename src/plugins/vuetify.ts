@@ -46,6 +46,7 @@ export default new Vuetify({
           base: '#0276F0',
           lighten1: '#E6F1FE',
           lighten2: '#55ACE3',
+          lighten3: '#F0F7FF',
         },
         neutral10: {
           base: '#5F6267',
