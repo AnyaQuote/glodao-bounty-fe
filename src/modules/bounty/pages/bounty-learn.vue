@@ -33,7 +33,7 @@
               ></v-sheet>
               <span class="text-none">
                 Mission No.
-                {{ vm.task | _get('missionIndex', 0) }}
+                <!-- {{ vm.task | _get('missionIndex', 0) }} -->
               </span>
             </div>
           </div>
