@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row dense no-gutters>
     <v-col cols="12">
       <bounty-banner></bounty-banner>
     </v-col>
