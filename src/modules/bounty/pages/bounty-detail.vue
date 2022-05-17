@@ -271,7 +271,7 @@
                   </v-sheet>
                   <v-divider></v-divider>
                   <v-row class="pa-6">
-                    <v-col cols="12" sm="6" class="text-center" v-if="!vm.isInPriorityPool">
+                    <v-col cols="12" sm="6" class="text-center" v-if="false">
                       <v-btn
                         elevation="0"
                         color="bluePrimary"
@@ -283,7 +283,7 @@
                         Apply for priority pool
                       </v-btn>
                     </v-col>
-                    <v-col cols="12" :sm="!vm.isInPriorityPool ? 6 : 12" class="text-center">
+                    <v-col cols="12" class="text-center">
                       <v-btn
                         elevation="0"
                         color="bluePrimary"

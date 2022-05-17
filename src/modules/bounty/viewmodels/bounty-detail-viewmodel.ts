@@ -85,7 +85,7 @@ export class BountyDetailViewModel {
 
   @observable currentType = 'twitter'
 
-  @observable currentPriorityParticipants = 0
+  @observable topCompletedApplies: any[] = []
 
   @observable hCaptchaToken = ''
 
@@ -234,7 +234,6 @@ export class BountyDetailViewModel {
     loadingController.increaseRequest()
     yield this.getTaskData()
     this.initEmptyStepData()
-    yield this.getRelatedApplies()
     yield this.getApplyData()
     yield this.getParticipantCount()
     yield this.getStakeStatus()
@@ -252,22 +251,13 @@ export class BountyDetailViewModel {
 
   @asyncAction *getParticipantCount() {
     try {
-      this.currentPriorityParticipants = yield apiService.applies.count({ task: this.taskId, poolType: 'priority' })
+      if (this.maxPriorityParticipants === 0) return
+      this.topCompletedApplies = yield apiService.applies.find(
+        { task: this.taskId, status_ne: 'processing' },
+        { _limit: this.maxPriorityParticipants, _sort: 'completeTime:ASC' }
+      )
     } catch (error) {
       snackController.error('Can not get pool statistics! Please try again later')
-    }
-  }
-
-  @asyncAction *getRelatedApplies() {
-    return
-    try {
-      if (isEmpty(this.task)) return
-      const res = yield apiService.applies.find({
-        'task.id': this.taskId,
-      })
-      this.relatedApplies = res
-    } catch (error) {
-      snackController.error(get(error, 'response.data.message', '') || (error as string))
     }
   }
 
@@ -347,6 +337,7 @@ export class BountyDetailViewModel {
         this.status = HUNTING.finish
         this.changeEarnDialog(false)
         snackController.success('Submit successfully')
+        this.fetchData()
       })
       .catch((error) => {
         snackController.error(get(error, 'response.data.message', '') || (error as string))
@@ -412,7 +403,8 @@ export class BountyDetailViewModel {
           0
         )
         this.apply = res
-        this.currentPriorityParticipants += 1
+        // this.currentPriorityParticipants += 1
+        // this.topCompletedApplies.push(this.apply)
         snackController.success('Apply for priority pool successfully')
         // authStore.getUserData()
       }
@@ -628,6 +620,10 @@ export class BountyDetailViewModel {
     return subtract(this.totalParticipants, this.currentPriorityParticipants) ?? 0
   }
 
+  @computed get currentPriorityParticipants() {
+    return get(this.topCompletedApplies, 'length', 0)
+  }
+
   @computed get totalParticipants() {
     return get(this.task, 'totalParticipants', 0)
   }
@@ -646,11 +642,18 @@ export class BountyDetailViewModel {
   }
 
   @computed get currentPoolType() {
-    return get(this.apply, 'poolType', POOL_TYPES.COMMUNITY)
+    return get(this.apply, 'poolType', '')
+  }
+
+  @computed get completeTime() {
+    return get(this.task, 'completeTime', '')
   }
 
   @computed get isInPriorityPool() {
-    return isEqual(this.currentPoolType, POOL_TYPES.PRIORITY)
+    return (
+      isEqual(this.currentPoolType, POOL_TYPES.PRIORITY) ||
+      this.topCompletedApplies.findIndex((apply) => apply.id === get(this.apply, 'id', '')) > -1
+    )
   }
 
   @computed get isStaker() {
