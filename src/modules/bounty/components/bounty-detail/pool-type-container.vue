@@ -61,7 +61,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <v-icon right color="blue" size="12" v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
                     </template>
-                    <span>For participants participating the soonest</span>
+                    <span>For the fastest participants completing the task</span>
                   </v-tooltip>
                 </v-chip>
               </v-sheet>
@@ -77,7 +77,9 @@
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Participants:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg">
-                    {{ vm.currentPriorityParticipants }}/{{ vm.maxPriorityParticipants }}
+                    {{ vm.isPriorityPoolFull ? vm.maxPriorityParticipants : vm.currentPriorityParticipants }}/{{
+                      vm.maxPriorityParticipants
+                    }}
                   </v-sheet>
                 </v-sheet>
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
