@@ -92,8 +92,6 @@ import { Observer } from 'mobx-vue'
 import { Component, Vue, Provide, Watch } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
-import { CampaignDetailViewModel } from '@/modules/account/viewmodels/campaign-detail-viewmodel'
-import { promiseHelper } from '@/helpers/promise-helper'
 import * as _ from 'lodash-es'
 
 @Observer
@@ -102,8 +100,7 @@ import * as _ from 'lodash-es'
     'markdown-component': () => import('@/components/markdown-component.vue'),
   },
 })
-export default class CampaignDetail extends Vue {
-  @Provide() vm = new CampaignDetailViewModel()
+export default class BountyLearnPage extends Vue {
   walletStore = walletStore
   authStore = authStore
   mouseoverEvent = new Event('mouseleave')
@@ -122,11 +119,11 @@ export default class CampaignDetail extends Vue {
   }
 
   mounted() {
-    this.vm.initReaction()
+    // this.vm.initReaction()
   }
 
   beforeDestroy() {
-    this.vm.destroyReaction()
+    // this.vm.destroyReaction()
   }
 
   markdownData = `
