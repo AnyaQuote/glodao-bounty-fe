@@ -16,11 +16,7 @@
           }"
         >
           <div class="font-weight-bold d-flex align-center">
-            <project-logo
-              :src="vm.projectLogo"
-              :size="$vuetify.breakpoint.xsOnly ? 24 : 48"
-              class="mr-3"
-            ></project-logo>
+            <!-- <project-logo :size="$vuetify.breakpoint.xsOnly ? 24 : 48" class="mr-3"></project-logo> -->
             <div
               class="align-center"
               :class="{
