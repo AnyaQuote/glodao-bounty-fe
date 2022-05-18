@@ -15,14 +15,14 @@
       >
         <v-row>
           <v-col cols="12" md="6" class="position-relative">
-            <div class="text-md-h4 text-h5 font-weight-bold">Peaky Blinder LEARN</div>
-            <div class="text-md-h4 text-h5 font-weight-bold">What Is Peaky Blinder (PBB)?</div>
+            <div class="text-md-h4 text-h5 font-weight-bold">{{ vm.task.name }}</div>
+            <div class="text-md-h4 text-h5 font-weight-bold">{{ vm.quizName }}</div>
             <div class="text-md-h5 text-h6 neutral10--text mt-4">
-              Please take the "What Is Peaky Blinder (PBB)" document before complete the Quiz!
+              {{ vm.quizDescription }}
             </div>
             <div class="mt-8 d-flex align-center">
               <v-icon color="bluePrimary"> mdi-school </v-icon>
-              <div class="font-weight-600 ml-2">{{ questionList.length }} questions</div>
+              <div class="font-weight-600 ml-2">{{ vm.questionList.length }} questions</div>
             </div>
             <v-btn
               class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width"
@@ -54,14 +54,14 @@
         }"
       >
         <div class="font-weight-bold d-flex align-center">
-          <!-- <project-logo :size="$vuetify.breakpoint.xsOnly ? 24 : 48" class="mr-3"></project-logo> -->
+          <project-logo :src="vm.projectLogo" :size="$vuetify.breakpoint.xsOnly ? 24 : 48" class="mr-3"></project-logo>
           <div
             class="align-center"
             :class="{
               'd-flex': $vuetify.breakpoint.smAndUp,
             }"
           >
-            <div>abc</div>
+            <div>{{ vm.task | _get('name', 'TBA') }}</div>
           </div>
         </div>
         <v-sheet
@@ -70,10 +70,10 @@
           height="56"
         >
           <v-icon :size="$vuetify.breakpoint.xsOnly ? 20 : 24" color="bluePrimary">mdi-school</v-icon>
-          <div class="ml-3">{{ answerCount }}/{{ questionList.length }} answers</div>
+          <div class="ml-3">{{ vm.answerCount }}/{{ vm.questionList.length }} answers</div>
         </v-sheet>
       </v-sheet>
-      <div v-for="(questionDataObj, index) in questionList" :key="index" v-show="currentStep === index">
+      <div v-for="(questionDataObj, index) in vm.questionList" :key="index" v-show="currentStep === index">
         <v-sheet
           class="py-10 neutral100--bg d-flex justify-center"
           style="padding-left: 5%; padding-right: 5%"
@@ -101,7 +101,7 @@
       </div>
       <v-sheet
         class="neutral100--bg flex-center-box pa-5 flex-column"
-        v-if="currentStep === questionList.length"
+        v-if="currentStep === vm.questionList.length"
         min-height="340"
       >
         <div class="text-h5 font-weight-bold">Please check your answer carefully before submiting!</div>
@@ -126,14 +126,14 @@
           height="36"
           width="36"
           v-if="$vuetify.breakpoint.smAndUp"
-          >1</v-sheet
+          >{{ currentStep + 1 }}</v-sheet
         >
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
           :disabled="
-            currentStep === questionList.length ||
-            (currentStep === questionList.length - 1 && answerCount < questionList.length)
+            currentStep === vm.questionList.length ||
+            (currentStep === vm.questionList.length - 1 && vm.answerCount < vm.questionList.length)
           "
           @click="changeStep(1)"
         >
@@ -147,70 +147,25 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Provide, Watch, Inject } from 'vue-property-decorator'
-import { authStore } from '@/stores/auth-store'
+import { Component, Vue, Inject } from 'vue-property-decorator'
 import * as _ from 'lodash-es'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
 
 @Observer
 @Component({
-  components: {},
+  components: {
+    'project-logo': () => import('@/components/project-logo.vue'),
+  },
 })
 export default class QuizDialog extends Vue {
   @Inject() vm!: BountyLearnViewModel
-  questionList: any[] = [
-    {
-      type: 'MC',
-      question: 'How old are you bro?',
-      answer: null,
-      data: [
-        {
-          text: '15 bro',
-          value: 15,
-        },
-        {
-          text: '16 bro',
-          value: 16,
-        },
-        {
-          text: '17 bro',
-          value: 17,
-        },
-        {
-          text: '18 bro',
-          value: 18,
-        },
-      ],
-    },
-    {
-      type: 'MC',
-      question: 'How old are you bro2?',
-      answer: null,
-      data: [
-        {
-          text: '15 bro2',
-          value: 15,
-        },
-        {
-          text: '16 bro2',
-          value: 16,
-        },
-        {
-          text: '17 bro2',
-          value: 17,
-        },
-        {
-          text: '18 bro2',
-          value: 18,
-        },
-      ],
-    },
-  ]
+
   isAnswerProcessStarted = false
   currentStep = 0
+  _disposers: any[] = []
 
-  get answerCount() {
-    return _.size(_.filter(this.questionList, (question) => !_.isNil(question.answer)))
+  mounted() {
+    console.log('ohshit')
   }
 
   changeStep(increment: number) {
@@ -219,6 +174,10 @@ export default class QuizDialog extends Vue {
 
   startQuizAnswerProcess() {
     this.isAnswerProcessStarted = true
+  }
+
+  beforeDestroy() {
+    this._disposers.forEach((d) => d())
   }
 }
 </script>
