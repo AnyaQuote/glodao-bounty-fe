@@ -46,6 +46,7 @@ export default new Vuetify({
           base: '#0276F0',
           lighten1: '#E6F1FE',
           lighten2: '#55ACE3',
+          lighten3: '#F0F7FF',
         },
         neutral10: {
           base: '#5F6267',
@@ -75,6 +76,7 @@ export default new Vuetify({
           base: '#0276F0',
           lighten1: '#E6F1FE',
           lighten2: '#55ACE3',
+          lighten3: '#F0F7FF',
         },
         grey: {
           base: '#F9F9F9',
@@ -104,7 +106,7 @@ export default new Vuetify({
           base: '#00E5FF',
           lighten1: '#143973',
           lighten2: '#55ACE3',
-          lighten3: '#F0F7FF',
+          lighten3: '#143973',
         },
         neutral20: {
           base: '#30415C',
