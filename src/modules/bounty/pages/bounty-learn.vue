@@ -60,7 +60,10 @@
                 <v-chip class="text-caption mr-2"> FINANCE </v-chip>
                 <div class="ml-4 text-body-1 font-weight-600">10 min read</div>
               </div>
-              <v-btn class="linear-background-blue-main font-weight-bold text-none rounded white--text mt-8" depressed
+              <v-btn
+                class="linear-background-blue-main font-weight-bold text-none rounded white--text mt-8"
+                depressed
+                @click="vm.changeQuizAnswerDialog(true)"
                 >Start the quest!</v-btn
               >
             </v-col>
@@ -80,6 +83,7 @@
         </v-sheet>
       </v-col>
     </v-row>
+    <quiz-dialog />
   </v-container>
 </template>
 
@@ -88,15 +92,18 @@ import { Observer } from 'mobx-vue'
 import { Component, Vue, Provide, Watch } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
+import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
 import * as _ from 'lodash-es'
 
 @Observer
 @Component({
   components: {
     'markdown-component': () => import('@/components/markdown-component.vue'),
+    'quiz-dialog': () => import('@/modules/bounty/components/bounty-detail/learn-task/quiz-dialog.vue'),
   },
 })
 export default class BountyLearnPage extends Vue {
+  @Provide() vm = new BountyLearnViewModel()
   walletStore = walletStore
   authStore = authStore
   mouseoverEvent = new Event('mouseleave')
