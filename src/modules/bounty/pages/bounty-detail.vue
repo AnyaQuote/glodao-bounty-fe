@@ -241,12 +241,14 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(quizTask, index) in vm.displayedQuizTaskData"
+                      :key="'quiz' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <learn-task title="Join Discord group" icon="fab fa-discord" :task="{}" :step="0" />
+                      <learn-task :task="quizTask" :step="index" />
                     </v-col>
                     <v-col
                       cols="12"
