@@ -2,7 +2,16 @@ import { authStore } from '@/stores/auth-store'
 import Axios from 'axios'
 import qs from 'qs'
 
-export type ApiRouteType = 'applies' | 'hunters' | 'logs' | 'pool-regists' | 'pools' | 'tasks' | 'users' | 'campaigns'
+export type ApiRouteType =
+  | 'applies'
+  | 'hunters'
+  | 'logs'
+  | 'pool-regists'
+  | 'pools'
+  | 'tasks'
+  | 'users'
+  | 'campaigns'
+  | 'quizzes'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
 axios.interceptors.request.use((config) => {
@@ -192,6 +201,7 @@ export class ApiService {
   // fixedPool = new ApiHandler<FixedPoolModel>(axios, 'pool')
   applies = new ApiHandlerJWT<any>(axios, 'applies', { find: false, count: false })
   users = new ApiHandlerJWT<any>(axios, 'users')
+  quizzes = new ApiHandlerJWT<any>(axios, 'quizzes')
   hunters = new ApiHandlerJWT<any>(axios, 'hunters', { count: false })
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
   campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')
