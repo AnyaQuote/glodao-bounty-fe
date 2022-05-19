@@ -327,6 +327,22 @@ export class ApiService {
     )
     return res.data
   }
+
+  async verifyQuizAnswer(id: string, answerList) {
+    const res = await axios.post(
+      'quizzes/verify',
+      {
+        id,
+        answer: answerList,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
