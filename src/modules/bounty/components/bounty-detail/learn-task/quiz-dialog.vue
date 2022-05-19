@@ -1,8 +1,15 @@
 <template>
-  <v-dialog v-model="vm.quizAnswerDialog" max-width="1090" class="overflow-hidden position-relative">
+  <v-dialog
+    v-model="vm.quizAnswerDialog"
+    max-width="1090"
+    class="overflow-hidden position-relative"
+    :persistent="vm.submitAnswerLoading"
+  >
     <div class="d-flex close-icon justify-end col-auto">
       <v-sheet class="white">
-        <v-icon @click="vm.changeQuizAnswerDialog(false)" color="black">mdi-window-close</v-icon>
+        <v-icon @click="vm.changeQuizAnswerDialog(false)" color="black" :disabled="vm.submitAnswerLoading"
+          >mdi-window-close</v-icon
+        >
       </v-sheet>
     </div>
     <div v-show="!isAnswerProcessStarted">
@@ -30,6 +37,7 @@
               height="40"
               block
               @click="startQuizAnswerProcess"
+              :loading="startProcessLoading"
             >
               start
             </v-btn>
@@ -73,7 +81,7 @@
           <div class="ml-3">{{ vm.answerCount }}/{{ vm.questionList.length }} answers</div>
         </v-sheet>
       </v-sheet>
-      <div v-for="(questionDataObj, index) in vm.questionList" :key="index" v-show="currentStep === index">
+      <div v-for="(questionDataObj, index) in vm.questionList" :key="index" v-show="vm.currentStep === index">
         <v-sheet
           class="py-10 neutral100--bg d-flex justify-center"
           style="padding-left: 5%; padding-right: 5%"
@@ -81,7 +89,7 @@
         >
           <v-sheet :max-width="$vuetify.breakpoint.mdAndUp ? '90%' : '95%'" class="neutral100--bg" min-width="90%">
             <div class="text-md-h5 text-h6 font-weight-bold">
-              {{ questionDataObj.question }} {{ currentStep === index }}
+              {{ questionDataObj.question }} {{ vm.currentStep === index }}
             </div>
 
             <v-radio-group v-model="questionDataObj.answer" class="mt-0">
@@ -101,22 +109,24 @@
       </div>
       <v-sheet
         class="neutral100--bg flex-center-box pa-5 flex-column"
-        v-if="currentStep === vm.questionList.length"
+        v-if="vm.currentStep === vm.questionList.length"
         min-height="340"
       >
         <div class="text-h5 font-weight-bold">Please check your answer carefully before submiting!</div>
         <div class="text-body-2 font-italic text-decoration-underline">
           You will be forbidden to do the task for the next few minute if you submit wrong answer multiple times!
         </div>
-        <v-btn class="linear-background-blue-main mt-8">Submit my answer</v-btn>
+        <v-btn class="linear-background-blue-main mt-8" @click="vm.submitQuizAnswer()" :loading="vm.submitAnswerLoading"
+          >Submit my answer</v-btn
+        >
       </v-sheet>
 
       <v-sheet class="blue lighten-3 d-flex justify-space-between align-center bluePrimary--text pa-7">
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
-          :disabled="currentStep === 0"
-          @click="changeStep(-1)"
+          :disabled="vm.currentStep === 0"
+          @click="vm.changeStep(-1)"
         >
           <v-icon left>mdi-arrow-left</v-icon>
           PREVIOUS
@@ -126,16 +136,16 @@
           height="36"
           width="36"
           v-if="$vuetify.breakpoint.smAndUp"
-          >{{ currentStep + 1 }}</v-sheet
+          >{{ vm.currentStep + 1 }}</v-sheet
         >
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
           :disabled="
-            currentStep === vm.questionList.length ||
-            (currentStep === vm.questionList.length - 1 && vm.answerCount < vm.questionList.length)
+            vm.currentStep === vm.questionList.length ||
+            (vm.currentStep === vm.questionList.length - 1 && vm.answerCount < vm.questionList.length)
           "
-          @click="changeStep(1)"
+          @click="vm.changeStep(1)"
         >
           next
           <v-icon right>mdi-arrow-right</v-icon>
@@ -150,6 +160,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import * as _ from 'lodash-es'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
+import { promiseHelper } from '@/helpers/promise-helper'
 
 @Observer
 @Component({
@@ -161,19 +172,20 @@ export default class QuizDialog extends Vue {
   @Inject() vm!: BountyLearnViewModel
 
   isAnswerProcessStarted = false
-  currentStep = 0
+  startProcessLoading = false
+
   _disposers: any[] = []
 
   mounted() {
     console.log('ohshit')
   }
 
-  changeStep(increment: number) {
-    this.currentStep += increment
-  }
-
   startQuizAnswerProcess() {
-    this.isAnswerProcessStarted = true
+    this.startProcessLoading = true
+    promiseHelper.delay(1000).finally(() => {
+      this.isAnswerProcessStarted = true
+      this.startProcessLoading = false
+    })
   }
 
   beforeDestroy() {
