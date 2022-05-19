@@ -133,13 +133,13 @@ export class BountyDetailViewModel {
         this.isValidStakeAmount = false
       } else {
         const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
-        if (
-          bigNumberHelper.gte(
-            FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
-            MIN_STAKE_VALUE
-          )
-        )
-          this.isValidStakeAmount = true
+        // if (
+        //   bigNumberHelper.gte(
+        //     FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
+        //     MIN_STAKE_VALUE
+        //   )
+        // )
+        //   this.isValidStakeAmount = true
         if (bigNumberHelper.gt(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
       }
     } catch (error: any) {
