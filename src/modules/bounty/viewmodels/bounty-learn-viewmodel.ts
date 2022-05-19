@@ -25,7 +25,7 @@ export class BountyLearnViewModel {
       reaction(
         () => this.quizData,
         () => {
-          this.questionList = _.sampleSize(this.quizData, 1)
+          this.questionList = _.sampleSize(this.quizData, 10)
         }
       ),
       reaction(
