@@ -23,7 +23,7 @@
                 transition="scale-transition"
                 width="75"
               />
-              <div class="neutral10--text text-caption">
+              <div class="neutral10--text text-caption text-capitalize">
                 Global Decentralized <br />
                 autonomous organization
               </div>
