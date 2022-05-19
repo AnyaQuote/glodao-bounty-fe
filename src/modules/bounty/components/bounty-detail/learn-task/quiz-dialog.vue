@@ -176,10 +176,6 @@ export default class QuizDialog extends Vue {
 
   _disposers: any[] = []
 
-  mounted() {
-    console.log('ohshit')
-  }
-
   startQuizAnswerProcess() {
     this.startProcessLoading = true
     promiseHelper.delay(1000).finally(() => {
