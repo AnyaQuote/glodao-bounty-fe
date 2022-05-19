@@ -25,6 +25,7 @@ export class BountyHistoryDetailViewModel {
 
   @observable relatedApplies: any[] = []
   @observable totalCompletedTaskCount = 0
+  @observable totalPriorityParticipants = 0
 
   @observable nameInputModel = null
 
@@ -138,6 +139,10 @@ export class BountyHistoryDetailViewModel {
           },
         ],
       })
+      this.totalPriorityParticipants = yield apiService.applies.count({
+        task: this.taskId,
+        poolType: 'priority',
+      })
     } catch (error) {
       snackController.error(_.get(error, 'response.data.message', '') || (error as string))
     }
@@ -215,10 +220,6 @@ export class BountyHistoryDetailViewModel {
 
   @computed get totalParticipants(): number {
     return _.get(this.task, 'totalParticipants', 0)
-  }
-
-  @computed get totalPriorityParticipants(): number {
-    return _.get(_.countBy(this.relatedApplies, 'poolType'), 'priority', 0)
   }
 
   @computed get totalCommunityParticipants(): number {
