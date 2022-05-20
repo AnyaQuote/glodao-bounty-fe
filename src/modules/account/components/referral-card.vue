@@ -19,7 +19,7 @@
         @{{ name }}
       </div>
     </div>
-    <div class="d-flex flex-sm-column pa-3 py-0 ml-0 ml-sm-auto" style="min-width: 165px">
+    <div class="d-flex flex-sm-column pa-3 pa-sm-2 py-0 ml-0 ml-sm-auto" style="min-width: 165px">
       <div class="neutral10--text small-caption-text">Join at</div>
       <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
         {{ joinTime | datetime }}
