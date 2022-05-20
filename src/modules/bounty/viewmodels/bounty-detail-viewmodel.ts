@@ -303,7 +303,7 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].shareTime = Date.now()
     promiseHelper.delay(2000).then(() => {
       apiService
-        .updateTaskProcess(this.apply.id, type, temp)
+        .updateTaskProcess(this.apply.id, type, temp, { walletAddress: walletStore.account })
         .then((res) => {
           this.applyStepData = res.data
           this.apply = res
