@@ -241,6 +241,18 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(quizTask, index) in vm.displayedQuizTaskData"
+                      :key="'quiz' + index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <learn-task :task="quizTask" :step="index" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
@@ -335,6 +347,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
+    'learn-task': () => import('@/modules/bounty/components/bounty-detail/learn-task/learn.vue'),
     VueHcaptcha,
   },
 })

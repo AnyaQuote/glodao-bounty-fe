@@ -9,7 +9,7 @@
     >
       <v-container class="px-6 py-4">
         <v-row>
-          <v-col cols="12" sm="6" class="d-flex flex-column">
+          <v-col cols="12" sm="6" class="d-flex justify-center justify-sm-start">
             <div class="d-flex align-center cursor-pointer" @click="openLink('https://glodao.io/')">
               <v-img
                 alt="Vuetify Logo"
@@ -23,7 +23,7 @@
                 transition="scale-transition"
                 width="75"
               />
-              <div class="neutral10--text text-caption">
+              <div class="neutral10--text text-caption text-capitalize">
                 Global Decentralized <br />
                 autonomous organization
               </div>
@@ -35,7 +35,7 @@
             class="d-flex align-center"
             :class="{
               'justify-end': $vuetify.breakpoint.smAndUp,
-              'justify-start': $vuetify.breakpoint.xs,
+              'justify-center': $vuetify.breakpoint.xs,
             }"
           >
             <a href="https://medium.com/@glodao-official">

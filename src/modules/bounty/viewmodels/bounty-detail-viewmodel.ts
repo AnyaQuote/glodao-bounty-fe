@@ -133,13 +133,13 @@ export class BountyDetailViewModel {
         this.isValidStakeAmount = false
       } else {
         const res = yield apiService.checkStakeStatus(walletStore.account, get(authStore, 'user.hunter.id', ''))
-        if (
-          bigNumberHelper.gte(
-            FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
-            MIN_STAKE_VALUE
-          )
-        )
-          this.isValidStakeAmount = true
+        // if (
+        //   bigNumberHelper.gte(
+        //     FixedNumber.from(`${(res as any)._value}`).mulUnsafe(this.tokenBasePrice),
+        //     MIN_STAKE_VALUE
+        //   )
+        // )
+        //   this.isValidStakeAmount = true
         if (bigNumberHelper.gt(FixedNumber.from(`${(res as any)._value}`), Zero)) this.stakeStatus = true
       }
     } catch (error: any) {
@@ -303,7 +303,7 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].shareTime = Date.now()
     promiseHelper.delay(2000).then(() => {
       apiService
-        .updateTaskProcess(this.apply.id, type, temp)
+        .updateTaskProcess(this.apply.id, type, temp, { walletAddress: walletStore.account })
         .then((res) => {
           this.applyStepData = res.data
           this.apply = res
@@ -450,6 +450,23 @@ export class BountyDetailViewModel {
 
   @computed get displayedTelegramData() {
     const result = get(this.displayedData, 'telegram', []).map((task) => {
+      return { ...task, activeStep: false }
+    })
+    if (isEmpty(result)) return []
+
+    result[0].activeStep = true
+    for (let index = 1; index < result.length; index++) {
+      if (result[index - 1].finished) {
+        result[index].activeStep = true
+        result[index - 1].activeStep = false
+      }
+    }
+
+    return result
+  }
+
+  @computed get displayedQuizTaskData() {
+    const result = get(this.displayedData, 'quiz', []).map((task) => {
       return { ...task, activeStep: false }
     })
     if (isEmpty(result)) return []
