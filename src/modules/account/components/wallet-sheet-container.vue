@@ -54,7 +54,10 @@
                   <span>Standard</span>
                 </div>
               </template>
-              <span> Earn 3% commission for every task done by any referred account </span>
+              <span>
+                Earn {{ authStore.userRole === 'company' ? 2 : 3 }}% commission for every task done by any referred
+                account
+              </span>
             </v-tooltip>
           </v-sheet>
         </v-sheet>

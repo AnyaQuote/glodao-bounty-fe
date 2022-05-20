@@ -42,8 +42,8 @@
             </div>
           </div>
           <v-divider class="my-6"></v-divider>
-          <div class="d-flex justify-space-between">
-            <div class="text-center" style="flex: 1">
+          <div class="d-flex justify-space-around">
+            <div class="text-center">
               <div
                 class="font-size-28 font-weight-bold"
                 :class="{
@@ -61,7 +61,7 @@
                 Referrals
               </div>
             </div>
-            <div class="text-center" style="flex: 1">
+            <div class="text-center">
               <div
                 class="font-size-28 font-weight-bold"
                 :class="{
@@ -79,11 +79,11 @@
                 Today commission
               </div>
             </div>
-            <div class="text-center" style="flex: 1">
+            <div class="text-center">
               <div
                 class="font-size-28 font-weight-bold"
                 :class="{
-                  'text-h5': $vuetify.breakpoint.xsOnly,
+                  'text-h6': $vuetify.breakpoint.xsOnly,
                 }"
               >
                 {{ vm.totalCommissionObj | _get('totalCommission') | usdCustom(4, 6) }}

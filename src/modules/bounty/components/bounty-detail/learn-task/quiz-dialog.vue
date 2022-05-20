@@ -112,7 +112,10 @@
         v-if="vm.currentStep === vm.questionList.length"
         min-height="340"
       >
-        <div class="text-h5 font-weight-bold">Please check your answer carefully before submiting!</div>
+        <!-- <div class="text-h5 font-weight-bold">Please check your answer carefully before submiting!</div> -->
+        <div class="text-h5 font-weight-bold">
+          You have completed {{ vm.answerCount }}/{{ vm.questionList.length }} questions
+        </div>
         <div class="text-body-2 font-italic text-decoration-underline">
           You will be forbidden to do the task for the next few minute if you submit wrong answer multiple times!
         </div>
