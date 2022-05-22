@@ -62,6 +62,7 @@
                 class="linear-background-blue-main font-weight-bold text-none rounded white--text mt-8"
                 depressed
                 @click="vm.changeQuizAnswerDialog(true)"
+                :disabled="vm.isQuizCompleted"
                 >Start the quest!</v-btn
               >
             </v-col>
@@ -82,6 +83,7 @@
       </v-col>
     </v-row>
     <quiz-dialog />
+    <quiz-review-dialog />
   </v-container>
 </template>
 
@@ -98,6 +100,7 @@ import * as _ from 'lodash-es'
   components: {
     'markdown-component': () => import('@/components/markdown-component.vue'),
     'quiz-dialog': () => import('@/modules/bounty/components/bounty-detail/learn-task/quiz-dialog.vue'),
+    'quiz-review-dialog': () => import('@/modules/bounty/components/bounty-detail/learn-task/quiz-review-dialog.vue'),
     'project-logo': () => import('@/components/project-logo.vue'),
   },
 })
@@ -137,5 +140,8 @@ export default class BountyLearnPage extends Vue {
 }
 .font-size-18 {
   font-size: 18px;
+}
+.v-btn--disabled {
+  background-image: none !important;
 }
 </style>
