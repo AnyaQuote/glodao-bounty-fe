@@ -1,4 +1,5 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { QUIZ_MIN_ANSWER_COUNT } from '@/constants'
 import { promiseHelper } from '@/helpers/promise-helper'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
@@ -149,7 +150,7 @@ export class BountyLearnViewModel {
   }
 
   @action getRandomQuestion() {
-    this.questionList = JSON.parse(JSON.stringify(_.sampleSize(this.quizData, 4)))
+    this.questionList = JSON.parse(JSON.stringify(_.sampleSize(this.quizData, QUIZ_MIN_ANSWER_COUNT)))
   }
 
   @action.bound startQuizAnswerProcess() {
