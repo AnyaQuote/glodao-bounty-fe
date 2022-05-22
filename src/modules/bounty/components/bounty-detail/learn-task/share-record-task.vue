@@ -178,8 +178,6 @@ export default class ShareRecordTask extends Vue {
   _disposers: IReactionDisposer[] = []
 
   shareOnTwitter() {
-    console.log(this.quizRecord)
-
     window.open(
       `https://twitter.com/intent/tweet?text=Learn and Earn on Glodao&hashtags=glodao&url=https://app.glodao.io/quiz-record/${this.quizRecord.id}`,
       '_blank'
@@ -206,8 +204,6 @@ export default class ShareRecordTask extends Vue {
       })
 
     apiService.quizAnswerRecords.find({ ID: `${this.task.quizId}_${authStore.hunterId}` }).then((res) => {
-      console.log(res)
-
       if (res.length > 0) this.quizRecord = res[0]
     })
     this._disposers = [
@@ -215,8 +211,6 @@ export default class ShareRecordTask extends Vue {
         () => this.vm.apply,
         () => {
           apiService.quizAnswerRecords.find({ ID: `${this.task.quizId}_${authStore.hunterId}` }).then((res) => {
-            console.log(res)
-
             if (res.length > 0) this.quizRecord = res[0]
           })
         }

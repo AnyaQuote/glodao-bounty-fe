@@ -165,10 +165,6 @@ export default class QuizReviewDialog extends Vue {
       reaction(
         () => this.vm.quizReviewList,
         () => {
-          console.log(this.vm.quizReviewList)
-
-          console.log(this.vm.quizReviewList.filter((x) => !x.isCorrect))
-
           this.inCorrectAnswerCount = this.vm.quizReviewList.filter((x) => !x.isCorrect).length
         }
       ),
@@ -195,7 +191,6 @@ export default class QuizReviewDialog extends Vue {
   }
 
   restartQuizProcess() {
-    console.log('oh shit')
     this.restartQuizLoading = true
     promiseHelper
       .delay(1000)

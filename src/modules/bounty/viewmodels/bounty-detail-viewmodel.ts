@@ -328,8 +328,6 @@ export class BountyDetailViewModel {
   @action.bound submitLink(type: string, link: string, stepIndex: number, optional = {}) {
     this.changeTaskUpdating(true)
     const temp = JSON.parse(JSON.stringify(this.applyStepData))
-    console.log(temp)
-
     temp[type][stepIndex].link = link
     temp[type][stepIndex].finished = true
     temp[type][stepIndex].shareTime = Date.now()
@@ -845,8 +843,6 @@ export class BountyDetailViewModel {
   @computed get isTaskLimitAvailable() {
     const limit = get(this.task, 'maxParticipants', 0)
     if (limit < 1) return true
-    console.log(this.totalParticipants)
-
     return this.completedParticipants < limit
   }
 }

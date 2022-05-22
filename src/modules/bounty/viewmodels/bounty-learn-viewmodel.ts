@@ -107,7 +107,6 @@ export class BountyLearnViewModel {
     try {
       this.submitAnswerLoading = true
       const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList)
-      console.log(isAnswerCorrect)
       const tempAnswerList = this.answerList
 
       if (!isAnswerCorrect.status) {
@@ -121,7 +120,6 @@ export class BountyLearnViewModel {
       tempData['quiz'][stepIndex].finished = true
       tempData['quiz'][stepIndex].link = this.quizRecord.id
       tempData['quiz'][stepIndex].recordId = this.quizRecord.id
-      console.log('oh shit')
 
       const res = yield apiService.updateTaskProcess(this.apply.id, 'quiz', tempData, {
         quizId: this.quiz.id,
