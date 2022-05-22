@@ -315,7 +315,7 @@
     <recaptcha-dialog />
     <confirm-and-earn-dialog />
     <vue-hcaptcha
-      sitekey="10000000-ffff-ffff-ffff-000000000001"
+      sitekey="e5651f89-7669-4385-89da-90571faf78c0"
       size="invisible"
       ref="vueHcaptcha"
       @opened="hcaptchaOnOpen"
