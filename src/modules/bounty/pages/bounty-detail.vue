@@ -77,9 +77,13 @@
           </v-sheet>
 
           <!-- subtitle -->
-          <v-sheet class="mb-4 card-subtitle-1 neutral15" v-html="$options.filters._get(vm.task, 'metadata.caption')">
+          <v-sheet
+            class="mb-4 card-subtitle-1 neutral15"
+            v-html="$options.filters._get(vm.task, 'metadata.caption')"
+            v-if="vm.missionType !== 'learn'"
+          >
           </v-sheet>
-          <v-sheet class="neutral15">
+          <v-sheet class="neutral15" v-if="vm.missionType !== 'learn'">
             <v-sheet class="d-flex transparent mb-3">
               <v-sheet class="transparent title-2">Website:</v-sheet>
               <a class="bluePrimary--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">

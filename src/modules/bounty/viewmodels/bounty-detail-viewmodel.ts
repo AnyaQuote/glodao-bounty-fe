@@ -756,4 +756,8 @@ export class BountyDetailViewModel {
   @computed get registeredWalletAdress() {
     return authStore.registeredWallet
   }
+
+  @computed get missionType() {
+    return get(this.task, 'type')
+  }
 }
