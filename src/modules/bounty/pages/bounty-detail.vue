@@ -23,7 +23,7 @@
       </v-col>
 
       <!-- BOUNTY NAME -->
-      <v-col cols="12">
+      <v-col cols="12" class="d-flex justify-space-between">
         <v-sheet class="d-flex align-center mb-4 neutral15">
           <project-logo :src="vm.projectLogo" size="48"></project-logo>
           <div
@@ -47,6 +47,21 @@
             </span>
           </div>
         </v-sheet>
+        <div class="d-flex flex-column" v-if="vm.missionType === 'learn'">
+          <v-sheet
+            class="bluePrimary"
+            style="padding: 1px; clip-path: polygon(7% 0, 100% 0%, 100% 100%, 7% 100%, 0% 50%)"
+          >
+            <v-sheet
+              class="d-flex align-center bluePrimary--text text-body-1 pa-4 font-weight-600 neutral100--bg"
+              style="clip-path: polygon(7% 0, 100% 0%, 100% 100%, 7% 100%, 0% 50%)"
+              height="44"
+            >
+              <v-icon :size="$vuetify.breakpoint.xsOnly ? 20 : 24" color="bluePrimary">mdi-school</v-icon>
+              <div class="ml-3">Learn to earn mission</div>
+            </v-sheet>
+          </v-sheet>
+        </div>
       </v-col>
 
       <!-- LEFT -->
