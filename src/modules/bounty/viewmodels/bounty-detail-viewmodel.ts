@@ -760,4 +760,17 @@ export class BountyDetailViewModel {
   @computed get missionType() {
     return get(this.task, 'type')
   }
+
+  @computed get completedParticipants() {
+    return get(this.task, 'completedParticipants', 0)
+  }
+
+  @computed get maxParticipants() {
+    return get(this.task, 'maxParticipants', 0)
+  }
+
+  @computed get completedPercentage() {
+    if (this.maxParticipants <= 0) return 0
+    return (this.completedParticipants / this.maxParticipants) * 100
+  }
 }

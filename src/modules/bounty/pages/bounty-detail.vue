@@ -114,7 +114,7 @@
       <v-col cols="12" md="8" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)">
         <v-sheet class="ml-md-5" style="background-color: var(--v-neutral-15-base)">
           <!-- LIST -->
-          <v-sheet class="mb-4 neutral15">
+          <v-sheet class="mb-4 neutral15" v-if="vm.missionType !== 'learn'">
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
