@@ -53,6 +53,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/bounty/pages/bounty-learn.vue'),
   },
   {
+    path: '/quiz-record/:id',
+    name: 'QuizRecord',
+    component: () => import('@/modules/bounty/pages/quiz-record.vue'),
+  },
+  {
     path: '/bounty-history',
     name: 'BountyHistory',
     component: () => import('@/modules/bounty-history/pages/bounty-history.vue'),
