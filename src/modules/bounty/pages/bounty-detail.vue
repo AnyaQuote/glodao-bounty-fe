@@ -21,6 +21,7 @@
           </v-breadcrumbs>
         </v-sheet>
       </v-col>
+      {{ vm.isTaskLimitAvailable }}
 
       <!-- BOUNTY NAME -->
       <v-col cols="12" class="d-flex justify-space-between">
@@ -196,7 +197,8 @@
                           vm.isTaskEnded ||
                           !vm.isAccountAgeQualify ||
                           !vm.currentWallet ||
-                          !vm.isCurrentWalletMatchRegistered
+                          !vm.isCurrentWalletMatchRegistered ||
+                          !vm.isTaskLimitAvailable
                         "
                         :loading="vm.isStartingProcess"
                         height="40"
@@ -244,7 +246,7 @@
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <learn-task :task="quizTask" :step="index" />
+                      <quiz-mini-task :task="quizTask" :step="index" />
                     </v-col>
                     <v-col
                       cols="12"
@@ -313,7 +315,7 @@
     <recaptcha-dialog />
     <confirm-and-earn-dialog />
     <vue-hcaptcha
-      sitekey="e5651f89-7669-4385-89da-90571faf78c0"
+      sitekey="10000000-ffff-ffff-ffff-000000000001"
       size="invisible"
       ref="vueHcaptcha"
       @opened="hcaptchaOnOpen"
@@ -342,8 +344,8 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
+    'quiz-mini-task': () => import('@/modules/bounty/components/bounty-detail/quiz-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
-    'learn-task': () => import('@/modules/bounty/components/bounty-detail/learn-task/learn.vue'),
     VueHcaptcha,
   },
 })
