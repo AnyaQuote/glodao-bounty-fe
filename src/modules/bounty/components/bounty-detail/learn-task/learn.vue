@@ -2,7 +2,7 @@
   <div>
     <v-row dense no-gutters>
       <v-col class="pa-2 pa-sm-3 pa-md-4 col-auto">
-        <task-icon-container type="school" :isActive="vm.isHuntingProcessStarted && state === 0" color="purple" />
+        <task-icon-container type="school" :isActive="vm.isHuntingProcessStarted && task.activeStep" color="purple" />
       </v-col>
       <v-col class="col">
         <div class="pa-2 pa-sm-4">
@@ -21,14 +21,25 @@
             <div class="text-body-2 mt-2">
               {{ quiz.description }}
             </div>
-            <v-btn
-              @click="goToQuizDetailScreen"
-              class="text-none linear-background-blue-main mt-4 white--text"
-              depressed
-              :disabled="vm.shouldDisableTaskProcessing"
-            >
-              Learn more</v-btn
-            >
+            <div class="d-flex align-center justify-space-between">
+              <v-btn
+                @click="goToQuizDetailScreen"
+                class="text-none linear-background-blue-main mt-4 white--text"
+                depressed
+                :disabled="vm.shouldDisableTaskProcessing"
+              >
+                Learn more</v-btn
+              >
+              <v-btn
+                @click="revalidateQuizTask"
+                class="text-none linear-background-blue-main mt-4 white--text"
+                depressed
+                :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
+                :disabled="vm.shouldDisableTaskProcessing"
+              >
+                continue</v-btn
+              >
+            </div>
           </div>
         </div>
       </v-col>
@@ -50,19 +61,14 @@
             width="24"
             class="rounded-circle neutral20--bg"
             style="padding: 1px"
-            v-else-if="!vm.isHuntingProcessStarted"
+            v-else-if="!vm.isHuntingProcessStarted && !vm.activeStep"
           >
             <v-sheet class="fill-height fill-width neutral100--bg rounded-circle flex-center-box"> </v-sheet>
           </v-sheet>
           <v-sheet
             height="24"
             width="24"
-            class="rounded-circle"
-            :class="{
-              'linear-background-blue-main': state === 0,
-              'greenSenamatic--bg': state === 1,
-              'neutral20--bg': state === -1,
-            }"
+            class="rounded-circle linear-background-blue-main"
             style="padding: 1px"
             v-else
           >
@@ -107,6 +113,7 @@ import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail
 import { get } from 'lodash-es'
 import { apiService } from '@/services/api-service'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -122,6 +129,7 @@ export default class LearnTask extends Vue {
   type = get(this.task, 'type', '')
   page = get(this.task, 'page', '')
   title = ''
+  revalidateLoading = false
 
   mounted() {
     apiService.quizzes
@@ -131,6 +139,23 @@ export default class LearnTask extends Vue {
       })
       .catch((err) => {
         snackController.error(err)
+      })
+  }
+  revalidateQuizTask() {
+    //
+    this.revalidateLoading = true
+    apiService.quizAnswerRecords
+      .count({ ID: `${this.quiz.id}_${authStore.hunterId}` })
+      .then((res) => {
+        if (res > 0) {
+          //
+          this.vm.submitQuizRevalidation(this.quiz.id)
+        } else {
+          snackController.error('You have not finished this task yet!')
+        }
+      })
+      .finally(() => {
+        this.revalidateLoading = false
       })
   }
 

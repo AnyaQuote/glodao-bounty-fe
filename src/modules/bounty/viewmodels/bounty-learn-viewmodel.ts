@@ -1,4 +1,5 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { promiseHelper } from '@/helpers/promise-helper'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
@@ -8,10 +9,16 @@ import { asyncAction } from 'mobx-utils'
 
 export class BountyLearnViewModel {
   @observable quizAnswerDialog = false
+  @observable isAnswerProcessStarted = false
+  @observable startProcessLoading = false
+
+  @observable quizReviewDialog = false
+  @observable quizReviewList: any = []
   @observable currentStep = 0
   @observable task: any = {}
   @observable apply: any = {}
   @observable quiz: any = {}
+  @observable quizRecord: any = {}
   @observable questionList: any[] = []
   @observable submitAnswerLoading = false
   _disposers: any[] = []
@@ -25,7 +32,7 @@ export class BountyLearnViewModel {
       reaction(
         () => this.quizData,
         () => {
-          this.questionList = _.sampleSize(this.quizData, 10)
+          this.getRandomQuestion()
         }
       ),
       reaction(
@@ -72,10 +79,27 @@ export class BountyLearnViewModel {
   @action fetchQuizData(quizId: string) {
     apiService.quizzes
       .findOne(quizId)
-      .then((res) => (this.quiz = res))
+      .then((res) => {
+        this.quiz = res
+        this.fetchQuizRecordData(quizId)
+      })
       .catch((err) => {
         snackController.error(err)
         router.back()
+      })
+  }
+
+  @action fetchQuizRecordData(quizId) {
+    apiService.quizAnswerRecords
+      .find({
+        ID: `${quizId}_${authStore.hunterId}`,
+      })
+      .then((res) => {
+        if (res.length > 0) {
+          this.quizRecord = res[0]
+        } else {
+          this.quizRecord = {}
+        }
       })
   }
 
@@ -83,21 +107,27 @@ export class BountyLearnViewModel {
     try {
       this.submitAnswerLoading = true
       const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList)
-      if (!isAnswerCorrect) {
-        snackController.error('Wrong answer! Please try again')
-        this.reset()
+      const tempAnswerList = this.answerList
+
+      if (!isAnswerCorrect.status) {
+        this.openQuizReviewDialog(isAnswerCorrect.wrongAnswerList)
+
         return
       }
+      this.quizRecord = isAnswerCorrect.data
       const tempData = JSON.parse(JSON.stringify(this.apply.data))
       const stepIndex = this.task.data.quiz.findIndex((quizItem) => _.isEqual(quizItem.quizId, this.quiz.id))
       tempData['quiz'][stepIndex].finished = true
+      tempData['quiz'][stepIndex].link = this.quizRecord.id
+      tempData['quiz'][stepIndex].recordId = this.quizRecord.id
+
       const res = yield apiService.updateTaskProcess(this.apply.id, 'quiz', tempData, {
         quizId: this.quiz.id,
-        answerList: this.answerList,
+        answerList: tempAnswerList,
       })
       if (res) {
         snackController.success('Task completed successfully')
-        router.push(`/bounty/${this.task.id}`)
+        this.openQuizReviewDialog(isAnswerCorrect.wrongAnswerList)
       }
     } catch (error: any) {
       const statusCode = _.get(error, 'response.status', '')
@@ -105,20 +135,61 @@ export class BountyLearnViewModel {
       else if (_.isEqual(statusCode, 400)) snackController.error(_.get(error, 'response.data.message'))
       else snackController.error('Unknown error! Please try again later')
     } finally {
+      this.changeQuizAnswerDialog(false)
+      this.reset()
       this.submitAnswerLoading = false
     }
   }
 
   @action reset() {
     this.currentStep = 0
+    this.isAnswerProcessStarted = false
+    this.questionList = []
+    this.getRandomQuestion()
+  }
+
+  @action getRandomQuestion() {
+    this.questionList = JSON.parse(JSON.stringify(_.sampleSize(this.quizData, 4)))
+  }
+
+  @action.bound startQuizAnswerProcess() {
+    this.startProcessLoading = true
+    promiseHelper.delay(1000).finally(() => {
+      this.isAnswerProcessStarted = true
+      this.startProcessLoading = false
+    })
+  }
+
+  @action openQuizReviewDialog(data) {
+    this.quizReviewList = _.values(
+      _.merge(
+        _.keyBy(
+          this.questionList.map((x) => ({ ...x, isCorrect: true })),
+          'id'
+        ),
+        _.keyBy(
+          data.map((x) => ({ ...x, isCorrect: false })),
+          'id'
+        )
+      )
+    )
+    this.changeQuizReviewDialog(true)
   }
 
   @action.bound changeQuizAnswerDialog(value: boolean) {
     this.quizAnswerDialog = value
   }
 
+  @action.bound changeQuizReviewDialog(value: boolean) {
+    this.quizReviewDialog = value
+  }
+
   @action.bound changeStep(increment: number) {
     this.currentStep += increment
+  }
+
+  @computed get taskId() {
+    return _.get(this.task, 'id', '')
   }
 
   @computed get projectLogo() {
@@ -154,5 +225,9 @@ export class BountyLearnViewModel {
       if (_.isNil(question.answer)) return { id: question.id, answer: null }
       else return { id: question.id, answer: question.answer }
     })
+  }
+
+  @computed get isQuizCompleted() {
+    return !_.isEmpty(this.quizRecord)
   }
 }

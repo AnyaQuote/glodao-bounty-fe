@@ -12,7 +12,7 @@
         >
       </v-sheet>
     </div>
-    <div v-show="!isAnswerProcessStarted">
+    <div v-show="!vm.isAnswerProcessStarted">
       <v-sheet
         class="neutral100--bg"
         :class="{
@@ -32,12 +32,12 @@
               <div class="font-weight-600 ml-2">{{ vm.questionList.length }} questions</div>
             </div>
             <v-btn
-              class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width"
+              class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width white--text"
               depressed
               height="40"
               block
-              @click="startQuizAnswerProcess"
-              :loading="startProcessLoading"
+              @click="vm.startQuizAnswerProcess"
+              :loading="vm.startProcessLoading"
             >
               start
             </v-btn>
@@ -53,7 +53,7 @@
         </v-row>
       </v-sheet>
     </div>
-    <div v-show="isAnswerProcessStarted">
+    <div v-show="vm.isAnswerProcessStarted">
       <v-sheet
         class="neutral100--bg blue lighten-3 pa-6 pr-0 d-flex justify-space-between bluePrimary--text border-radius-8 rounded-b-0"
         :class="{
@@ -89,7 +89,7 @@
         >
           <v-sheet :max-width="$vuetify.breakpoint.mdAndUp ? '90%' : '95%'" class="neutral100--bg" min-width="90%">
             <div class="text-md-h5 text-h6 font-weight-bold">
-              {{ questionDataObj.question }} {{ vm.currentStep === index }}
+              {{ questionDataObj.question }}
             </div>
 
             <v-radio-group v-model="questionDataObj.answer" class="mt-0">
@@ -119,7 +119,11 @@
         <div class="text-body-2 font-italic text-decoration-underline">
           You will be forbidden to do the task for the next few minute if you submit wrong answer multiple times!
         </div>
-        <v-btn class="linear-background-blue-main mt-8" @click="vm.submitQuizAnswer()" :loading="vm.submitAnswerLoading"
+        <v-btn
+          class="linear-background-blue-main mt-8 white--text"
+          depressed
+          @click="vm.submitQuizAnswer()"
+          :loading="vm.submitAnswerLoading"
           >Submit my answer</v-btn
         >
       </v-sheet>
@@ -161,9 +165,7 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
-import * as _ from 'lodash-es'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
-import { promiseHelper } from '@/helpers/promise-helper'
 
 @Observer
 @Component({
@@ -173,23 +175,6 @@ import { promiseHelper } from '@/helpers/promise-helper'
 })
 export default class QuizDialog extends Vue {
   @Inject() vm!: BountyLearnViewModel
-
-  isAnswerProcessStarted = false
-  startProcessLoading = false
-
-  _disposers: any[] = []
-
-  startQuizAnswerProcess() {
-    this.startProcessLoading = true
-    promiseHelper.delay(1000).finally(() => {
-      this.isAnswerProcessStarted = true
-      this.startProcessLoading = false
-    })
-  }
-
-  beforeDestroy() {
-    this._disposers.forEach((d) => d())
-  }
 }
 </script>
 

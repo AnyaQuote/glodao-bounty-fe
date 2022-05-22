@@ -12,6 +12,7 @@ export type ApiRouteType =
   | 'users'
   | 'campaigns'
   | 'quizzes'
+  | 'quiz-answer-records'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
 axios.interceptors.request.use((config) => {
@@ -202,6 +203,7 @@ export class ApiService {
   applies = new ApiHandlerJWT<any>(axios, 'applies', { find: false, count: false })
   users = new ApiHandlerJWT<any>(axios, 'users')
   quizzes = new ApiHandlerJWT<any>(axios, 'quizzes')
+  quizAnswerRecords = new ApiHandlerJWT<any>(axios, 'quiz-answer-records')
   hunters = new ApiHandlerJWT<any>(axios, 'hunters', { count: false })
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
   campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')

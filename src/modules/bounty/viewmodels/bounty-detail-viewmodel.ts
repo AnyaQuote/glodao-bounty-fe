@@ -295,7 +295,37 @@ export class BountyDetailViewModel {
     }
   }
 
-  @action.bound submitLink(type: string, link: string, stepIndex: number) {
+  @action.bound submitQuizRevalidation(quizId) {
+    //
+    this.changeTaskUpdating(true)
+    promiseHelper.delay(2000).then(() => {
+      apiService
+        .updateTaskProcess(this.apply.id, 'quizRevalidate', {}, { walletAddress: walletStore.account, quizId })
+        .then((res) => {
+          this.applyStepData = res.data
+          this.apply = res
+          this.getTaskData()
+          const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+          this.relatedApplies[foundIndex] = this.apply
+          snackController.updateSuccess()
+        })
+        .catch((error) => {
+          const updatedApply = get(error, 'response.data.data', {})
+          if (!isEmpty(updatedApply)) {
+            this.apply = updatedApply
+            this.applyStepData = updatedApply.data
+            const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+            this.relatedApplies[foundIndex] = this.apply
+          }
+          snackController.error(get(error, 'response.data.message', '') || (error as string))
+        })
+        .finally(() => {
+          this.changeTaskUpdating(false)
+        })
+    })
+  }
+
+  @action.bound submitLink(type: string, link: string, stepIndex: number, optional = {}) {
     this.changeTaskUpdating(true)
     const temp = JSON.parse(JSON.stringify(this.applyStepData))
     temp[type][stepIndex].link = link
@@ -303,7 +333,41 @@ export class BountyDetailViewModel {
     temp[type][stepIndex].shareTime = Date.now()
     promiseHelper.delay(2000).then(() => {
       apiService
-        .updateTaskProcess(this.apply.id, type, temp, { walletAddress: walletStore.account })
+        .updateTaskProcess(this.apply.id, type, temp, { walletAddress: walletStore.account, ...optional })
+        .then((res) => {
+          this.applyStepData = res.data
+          this.apply = res
+          this.getTaskData()
+          const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+          this.relatedApplies[foundIndex] = this.apply
+          snackController.updateSuccess()
+        })
+        .catch((error) => {
+          const updatedApply = get(error, 'response.data.data', {})
+          if (!isEmpty(updatedApply)) {
+            this.apply = updatedApply
+            this.applyStepData = updatedApply.data
+            const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
+            this.relatedApplies[foundIndex] = this.apply
+          }
+          snackController.error(get(error, 'response.data.message', '') || (error as string))
+        })
+        .finally(() => {
+          this.changeTaskUpdating(false)
+        })
+    })
+  }
+
+  @action.bound submitQuizRecordShareLink(type: string, link: string, stepIndex: number, optional = {}) {
+    this.changeTaskUpdating(true)
+    const temp = JSON.parse(JSON.stringify(this.applyStepData))
+
+    temp['quiz'][stepIndex].link = link
+    temp['quiz'][stepIndex].finished = true
+    temp['quiz'][stepIndex].shareTime = Date.now()
+    promiseHelper.delay(2000).then(() => {
+      apiService
+        .updateTaskProcess(this.apply.id, type, temp, { walletAddress: walletStore.account, ...optional })
         .then((res) => {
           this.applyStepData = res.data
           this.apply = res
@@ -718,14 +782,16 @@ export class BountyDetailViewModel {
       !this.isTaskStarted ||
       !this.isCurrentWalletMatchRegistered ||
       this.isHuntingProcessEnded ||
-      !this.isHuntingProcessStarted
+      !this.isHuntingProcessStarted ||
+      !this.isTaskLimitAvailable
     )
   }
 
   @computed get isTaskProcessFinish(): boolean {
     return (
       get(this.apply, ['data', 'twitter'], []).filter((step) => !step.finished).length === 0 &&
-      get(this.apply, ['data', 'telegram'], []).filter((step) => !step.finished).length === 0
+      get(this.apply, ['data', 'telegram'], []).filter((step) => !step.finished).length === 0 &&
+      get(this.apply, ['data', 'quiz'], []).filter((step) => !step.finished).length === 0
     )
   }
 
@@ -755,5 +821,28 @@ export class BountyDetailViewModel {
 
   @computed get registeredWalletAdress() {
     return authStore.registeredWallet
+  }
+
+  @computed get missionType() {
+    return get(this.task, 'type')
+  }
+
+  @computed get completedParticipants() {
+    return get(this.task, 'completedParticipants', 0)
+  }
+
+  @computed get maxParticipants() {
+    return get(this.task, 'maxParticipants', 0)
+  }
+
+  @computed get completedPercentage() {
+    if (this.maxParticipants <= 0) return 0
+    return (this.completedParticipants / this.maxParticipants) * 100
+  }
+
+  @computed get isTaskLimitAvailable() {
+    const limit = get(this.task, 'maxParticipants', 0)
+    if (limit < 1) return true
+    return this.completedParticipants < limit
   }
 }
