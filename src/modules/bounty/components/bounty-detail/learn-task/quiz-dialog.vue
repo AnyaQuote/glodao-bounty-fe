@@ -88,7 +88,7 @@
           min-height="340"
         >
           <v-sheet :max-width="$vuetify.breakpoint.mdAndUp ? '90%' : '95%'" class="neutral100--bg" min-width="90%">
-            <div class="text-md-h5 text-h6 font-weight-bold">
+            <div class="font-size-28 font-weight-bold">
               {{ questionDataObj.question }}
             </div>
 
@@ -100,7 +100,7 @@
                 :key="option.value + option.text"
               >
                 <template v-slot:label>
-                  <div class="neutral10--text">{{ option.text }}</div>
+                  <div class="neutral10--text font-size-18">{{ option.text }}</div>
                 </template>
               </v-radio>
             </v-radio-group>
@@ -186,5 +186,11 @@ export default class QuizDialog extends Vue {
 }
 .all-aspect-padding-lg {
   padding: 90px 60px;
+}
+.font-size-28 {
+  font-size: 28px;
+}
+.font-size-18 {
+  font-size: 18px;
 }
 </style>
