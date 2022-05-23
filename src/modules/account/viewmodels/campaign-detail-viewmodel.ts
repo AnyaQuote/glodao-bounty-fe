@@ -9,6 +9,9 @@ import { authStore } from '@/stores/auth-store'
 const PAGE_LIMIT = 10
 export class CampaignDetailViewModel {
   @observable campaignDetail: any = {}
+  @observable campaignReferralDialog = false
+  @observable subReferrerName = ''
+  @observable subReferralCode = ''
   @observable referralSortParams = ['joinTime', 'asc']
   @observable referralSortList = [
     {
@@ -67,6 +70,17 @@ export class CampaignDetailViewModel {
 
   @action.bound onReferralSortConditionChange(value: string[]) {
     this.referralSortParams = value
+  }
+
+  @action.bound changeCampaignReferralDialog(value: boolean) {
+    this.campaignReferralDialog = value
+  }
+
+  @action changeSubReferralCode(code: string) {
+    this.subReferralCode = code
+  }
+  @action changeSubReferrerName(name: string) {
+    this.subReferrerName = name
   }
 
   @computed get campaignCode() {
@@ -129,9 +143,29 @@ export class CampaignDetailViewModel {
     })
   }
 
+  @computed get referrerFilteredList() {
+    return this.rewardCalculatedArr.filter((hunter) => hunter.referrerCode === authStore.hunterReferralCode)
+  }
+
+  @computed get referralMap() {
+    const groupByReferralCode = _.groupBy(this.rewardCalculatedArr, 'referrerCode')
+    const result = new Map()
+    for (const key in groupByReferralCode) {
+      if (Object.prototype.hasOwnProperty.call(groupByReferralCode, key)) {
+        const element = groupByReferralCode[key]
+        result.set(key, element)
+      }
+    }
+    return result
+  }
+
+  @computed get subReferralList() {
+    return this.referralMap.get(this.subReferralCode)
+  }
+
   @computed get displayedReferralList() {
     return _.orderBy(
-      this.rewardCalculatedArr,
+      this.referrerFilteredList,
       [this.referralSortParams[0]],
       [this.referralSortParams[1] as 'asc' | 'desc']
     ).slice((this.referralPage - 1) * PAGE_LIMIT, this.referralPage * PAGE_LIMIT)

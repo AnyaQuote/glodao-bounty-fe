@@ -124,18 +124,20 @@
         <loading-component :loading="vm.loading"></loading-component>
         <v-scale-transition v-if="!vm.loading">
           <div v-if="vm.displayedReferralList.length > 0">
-            <referral-card
-              v-for="item in vm.displayedReferralList"
-              :key="item.id"
-              :name="item.name"
-              :joinTime="item.createdAt"
-              :avatar="item.metadata.avatar"
-              :commission="item.commission"
-              :totalEarn="item.totalEarn"
-              :commissionToday="item.commissionToday"
-              :id="item.id"
-              class="mb-2"
-            ></referral-card>
+            <div v-for="item in vm.displayedReferralList" :key="item.id">
+              <referral-card
+                :name="item.name"
+                :joinTime="item.createdAt"
+                :avatar="item.metadata.avatar"
+                :commission="item.commission"
+                :totalEarn="item.totalEarn"
+                :commissionToday="item.commissionToday"
+                :id="item.id"
+                :totalReferral="getReferralCount(item.referralCode)"
+                @openReferralList="openReferralList(item.referralCode, item.name)"
+                class="mb-2"
+              ></referral-card>
+            </div>
           </div>
           <no-referrals v-else />
         </v-scale-transition>
@@ -150,6 +152,7 @@
         ></v-pagination>
       </v-col>
     </v-row>
+    <referral-dialog />
   </v-container>
 </template>
 
@@ -166,7 +169,8 @@ import { promiseHelper } from '@/helpers/promise-helper'
   components: {
     'no-referrals': () => import('@/modules/account/components/no-referrals.vue'),
     'loading-component': () => import('@/modules/account/components/loading-component.vue'),
-    'referral-card': () => import('@/modules/account/components/referral-card.vue'),
+    'referral-card': () => import('@/modules/account/components/campaign-referral-card.vue'),
+    'referral-dialog': () => import('@/modules/account/components/campaign-referral-list-dialog.vue'),
   },
 })
 export default class CampaignDetail extends Vue {
@@ -188,8 +192,20 @@ export default class CampaignDetail extends Vue {
     await promiseHelper.delay(3000)
     this.isCopied = false
   }
+
+  getReferralCount(code) {
+    if (!this.vm.referralMap.get(code)) return 0
+    return this.vm.referralMap.get(code).length
+  }
   onMouseLeave() {
     this.isCopied = false
+  }
+
+  openReferralList(code, referrer) {
+    if (!this.vm.referralMap.get(code)) return
+    this.vm.changeSubReferrerName(referrer)
+    this.vm.changeSubReferralCode(code)
+    this.vm.changeCampaignReferralDialog(true)
   }
 
   mounted() {
