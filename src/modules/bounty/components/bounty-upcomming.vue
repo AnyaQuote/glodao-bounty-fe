@@ -26,11 +26,16 @@
                   </video>
                   <div class="position-absolute" style="top: 20px; left: 20px">
                     <v-sheet
-                      class="rounded-circle flex-center-box text-center black--text"
-                      width="25"
+                      class="rounded-pill flex-center-box text-center px-2"
+                      :class="{
+                        'black--text': pool.type !== 'learn',
+                        'white--text': pool.type === 'learn',
+                      }"
                       height="25"
-                      color="white"
-                      >{{ pool | _get('missionIndex', 0) }}</v-sheet
+                      :color="pool.type === 'learn' ? 'purple' : 'white'"
+                      >{{ pool.type === 'learn' ? 'Learn mission' : 'Social mission' }} #{{
+                        pool | _get('missionIndex', 0)
+                      }}</v-sheet
                     >
                   </div>
                 </div>
