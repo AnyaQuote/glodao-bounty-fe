@@ -108,10 +108,11 @@ export class BountyLearnViewModel {
     try {
       this.submitAnswerLoading = true
       const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList)
-      const tempAnswerList = this.answerList
+      const tempAnswerList = JSON.parse(JSON.stringify(this.answerList))
+      const tempQuestionList = JSON.parse(JSON.stringify(this.questionList))
 
       if (!isAnswerCorrect.status) {
-        this.openQuizReviewDialog(isAnswerCorrect.wrongAnswerList)
+        this.openQuizReviewDialog(tempQuestionList, isAnswerCorrect.wrongAnswerList)
 
         return
       }
@@ -128,7 +129,7 @@ export class BountyLearnViewModel {
       })
       if (res) {
         snackController.success('Task completed successfully')
-        this.openQuizReviewDialog(isAnswerCorrect.wrongAnswerList)
+        this.openQuizReviewDialog(tempQuestionList, isAnswerCorrect.wrongAnswerList)
       }
     } catch (error: any) {
       const statusCode = _.get(error, 'response.status', '')
@@ -161,19 +162,18 @@ export class BountyLearnViewModel {
     })
   }
 
-  @action openQuizReviewDialog(data) {
-    this.quizReviewList = _.values(
-      _.merge(
-        _.keyBy(
-          this.questionList.map((x) => ({ ...x, isCorrect: true })),
-          'id'
-        ),
-        _.keyBy(
-          data.map((x) => ({ ...x, isCorrect: false })),
-          'id'
-        )
-      )
-    )
+  @action openQuizReviewDialog(questionList, data) {
+    const wrongAnswerMap = new Map()
+    data.forEach((x) => {
+      wrongAnswerMap.set(x.id, x)
+    })
+    this.quizReviewList = questionList.map((x) => {
+      return {
+        ...x,
+        isCorrect: _.isEmpty(wrongAnswerMap.get(x.id)),
+      }
+    })
+
     this.changeQuizReviewDialog(true)
   }
 
