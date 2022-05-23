@@ -21,7 +21,6 @@
           </v-breadcrumbs>
         </v-sheet>
       </v-col>
-      {{ vm.isTaskLimitAvailable }}
 
       <!-- BOUNTY NAME -->
       <v-col cols="12" class="d-flex justify-space-between">
