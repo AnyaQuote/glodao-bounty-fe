@@ -64,6 +64,9 @@ export default class App extends Vue {
 }
 </script>
 <style lang="scss">
+.events-disabled {
+  pointer-events: none;
+}
 .router-link-exact-active {
   .filter-neutral10 {
     filter: none !important;
