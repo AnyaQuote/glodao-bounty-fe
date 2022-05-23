@@ -170,6 +170,10 @@ export class AuthStore {
   @computed get hunterId() {
     return get(this.user, 'hunter.id', '')
   }
+
+  @computed get hunterReferralCode() {
+    return get(this.user, 'hunter.referralCode', '')
+  }
 }
 
 export const authStore = new AuthStore()
