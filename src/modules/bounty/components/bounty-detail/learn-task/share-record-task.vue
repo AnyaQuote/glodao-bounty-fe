@@ -178,6 +178,7 @@ export default class ShareRecordTask extends Vue {
   _disposers: IReactionDisposer[] = []
 
   shareOnTwitter() {
+    if (!this.quizRecord.id) return
     window.open(
       `https://twitter.com/intent/tweet?text=Learn and Earn on Glodao&hashtags=glodao&url=https://app.glodao.io/quiz-record/${this.quizRecord.id}`,
       '_blank'
