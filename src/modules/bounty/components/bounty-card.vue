@@ -11,11 +11,14 @@
           <v-img height="236" :src="coverImage" :aspect-ratio="1.5"></v-img>
           <div class="position-absolute" style="top: 10px; left: 10px">
             <v-sheet
-              class="rounded-circle flex-center-box text-center black--text"
-              width="25"
+              class="rounded-pill flex-center-box text-center px-2"
+              :class="{
+                'black--text': missionType !== 'learn',
+                'white--text': missionType === 'learn',
+              }"
               height="25"
-              color="white"
-              >{{ task | _get('missionIndex', 0) }}</v-sheet
+              :color="missionType === 'learn' ? 'purple' : 'white'"
+              >{{ missionTypeText }} #{{ task | _get('missionIndex', 0) }}</v-sheet
             >
           </div>
           <div class="start-date-container" v-if="isEnded"></div>
@@ -48,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
 import moment from 'moment'
 import { Component, Vue, Prop } from 'vue-property-decorator'
@@ -73,6 +77,8 @@ export default class BountyCard extends Vue {
   rewardTokenName = this.metadata?.rewardToken ?? ''
   isEnded = moment(this.endTime).isBefore(moment())
   projectLogo = this.metadata?.projectLogo ?? ''
+  missionType = get(this.task, 'type', '')
+  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
 
   openLink() {
     this.$router.push(`/bounty/${this.id}`)

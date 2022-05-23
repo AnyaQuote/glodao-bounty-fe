@@ -92,7 +92,7 @@
             <v-radio-group v-model="questionDataObj.answer" class="mt-0">
               <v-radio
                 v-for="option in questionDataObj.data"
-                class="mt-5"
+                class="mt-5 events-disabled"
                 :value="option.value"
                 :key="option.value + option.text"
                 :color="questionDataObj.isCorrect ? 'success' : 'error'"
