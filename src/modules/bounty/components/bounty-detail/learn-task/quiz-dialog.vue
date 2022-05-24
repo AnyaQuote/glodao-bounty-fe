@@ -29,7 +29,7 @@
             </div>
             <div class="mt-8 d-flex align-center">
               <v-icon color="bluePrimary"> mdi-school </v-icon>
-              <div class="font-weight-600 ml-2">{{ vm.questionList.length }} questions</div>
+              <div class="font-weight-600 ml-2 font-size-18">{{ vm.questionList.length }} questions</div>
             </div>
             <v-btn
               class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width white--text"
@@ -69,13 +69,13 @@
               'd-flex': $vuetify.breakpoint.smAndUp,
             }"
           >
-            <div>{{ vm.task | _get('name', 'TBA') }}</div>
+            <div class="text-h6 text-sm-h5 font-weight-bold">{{ vm.task | _get('name', 'TBA') }}</div>
           </div>
         </div>
         <v-sheet
           class="d-flex align-center bluePrimary--text text-body-1 pa-4 font-weight-600 neutral100--bg"
           style="clip-path: polygon(7% 0, 100% 0%, 100% 100%, 7% 100%, 0% 50%)"
-          height="56"
+          :height="$vuetify.breakpoint.smAndUp ? 56 : 40"
         >
           <v-icon :size="$vuetify.breakpoint.xsOnly ? 20 : 24" color="bluePrimary">mdi-school</v-icon>
           <div class="ml-3">{{ vm.answerCount }}/{{ vm.questionList.length }} answers</div>
@@ -113,22 +113,24 @@
         min-height="340"
       >
         <!-- <div class="text-h5 font-weight-bold">Please check your answer carefully before submiting!</div> -->
-        <div class="text-h5 font-weight-bold">
+        <div class="text-h5 text-sm-h4 font-weight-bold">
           You have completed {{ vm.answerCount }}/{{ vm.questionList.length }} questions
         </div>
-        <div class="text-body-2 font-italic text-decoration-underline">
-          You will be forbidden to do the task for the next few minute if you submit wrong answer multiple times!
+        <div class="text-h6 text-center mt-4" style="max-width: 540px">
+          Please check your all answers once again and summit to complete this mission. Thank you!
         </div>
         <v-btn
-          class="linear-background-blue-main mt-8 white--text"
+          class="linear-background-blue-main mt-6 white--text"
           depressed
           @click="vm.submitQuizAnswer()"
           :loading="vm.submitAnswerLoading"
-          >Submit my answer</v-btn
+          >Submit</v-btn
         >
       </v-sheet>
 
-      <v-sheet class="blue lighten-3 d-flex justify-space-between align-center bluePrimary--text pa-7">
+      <v-sheet
+        class="blue lighten-3 d-flex justify-space-between align-center bluePrimary--text pa-7 position-relative"
+      >
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
@@ -138,13 +140,12 @@
           <v-icon left>mdi-arrow-left</v-icon>
           PREVIOUS
         </v-btn>
-        <v-sheet
-          class="rounded-circle bluePrimary flex-center-box white--text"
-          height="36"
-          width="36"
-          v-if="$vuetify.breakpoint.smAndUp"
-          >{{ vm.currentStep + 1 }}</v-sheet
-        >
+        <div class="position-absolute fill-width fill-height flex-center-box" style="left: 0">
+          <div class="primary--text" v-if="$vuetify.breakpoint.smAndUp">
+            Question <span class="bluePrimary--text"> {{ vm.currentStep + 1 > 10 ? 10 : vm.currentStep + 1 }} </span> of
+            10
+          </div>
+        </div>
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
