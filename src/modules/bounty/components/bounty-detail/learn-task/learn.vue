@@ -141,8 +141,8 @@ export default class LearnTask extends Vue {
   revalidateLoading = false
 
   mounted() {
-    apiService.quizzes
-      .findOne(this.task.quizId)
+    apiService
+      .getQuiz(this.task.quizId)
       .then((res) => {
         this.quiz = res
       })

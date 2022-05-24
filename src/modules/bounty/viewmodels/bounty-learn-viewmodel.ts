@@ -23,6 +23,7 @@ export class BountyLearnViewModel {
   @observable quizReviewDialog = false
   @observable quizReviewList: any = []
   @observable currentStep = 0
+  @observable clickedMap = new Map()
   @observable task: any = {}
   @observable apply: any = {}
   @observable quiz: any = {}
@@ -85,8 +86,8 @@ export class BountyLearnViewModel {
   }
 
   @action fetchQuizData(quizId: string) {
-    apiService.quizzes
-      .findOne(quizId)
+    apiService
+      .getQuiz(quizId)
       .then((res) => {
         this.quiz = res
         this.fetchQuizRecordData(quizId)
@@ -117,6 +118,8 @@ export class BountyLearnViewModel {
       const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList)
       const tempAnswerList = JSON.parse(JSON.stringify(this.answerList))
       const tempQuestionList = JSON.parse(JSON.stringify(this.questionList))
+
+      this.quiz.data = isAnswerCorrect.newQuestion
 
       if (!isAnswerCorrect.status) {
         this.openQuizReviewDialog(tempQuestionList, isAnswerCorrect.wrongAnswerList)
@@ -152,6 +155,7 @@ export class BountyLearnViewModel {
 
   @action reset() {
     this.currentStep = 0
+    this.clickedMap.clear()
     this.isAnswerProcessStarted = false
     this.questionList = []
     this.getRandomQuestion()
@@ -194,6 +198,14 @@ export class BountyLearnViewModel {
 
   @action.bound changeStep(increment: number) {
     this.currentStep += increment
+  }
+
+  moveToNext(id) {
+    if (!this.clickedMap.get(id)) {
+      this.clickedMap.set(id, id)
+      if (this.currentStep === 9 && this.clickedMap.size === 10) this.changeStep(1)
+      else if (this.currentStep < 9) this.changeStep(1)
+    }
   }
 
   @computed get taskId() {

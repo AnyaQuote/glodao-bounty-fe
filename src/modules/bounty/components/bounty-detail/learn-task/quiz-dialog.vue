@@ -98,7 +98,7 @@
                 class="mt-5"
                 :value="option.value"
                 :key="option.value + option.text"
-                @click="moveToNext(questionDataObj.id)"
+                @click="vm.moveToNext(questionDataObj.id)"
               >
                 <template v-slot:label>
                   <div class="neutral10--text font-size-18">{{ option.text }}</div>
@@ -168,7 +168,6 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
-import { promiseHelper } from '@/helpers/promise-helper'
 
 @Observer
 @Component({
@@ -178,15 +177,6 @@ import { promiseHelper } from '@/helpers/promise-helper'
 })
 export default class QuizDialog extends Vue {
   @Inject() vm!: BountyLearnViewModel
-  clickedMap = new Map()
-
-  moveToNext(id) {
-    if (!this.clickedMap.get(id))
-      promiseHelper.delay(500).then(() => {
-        this.clickedMap.set(id, id)
-        this.vm.changeStep(1)
-      })
-  }
 }
 </script>
 
