@@ -26,7 +26,6 @@
                 @click="goToQuizDetailScreen"
                 class="text-none linear-background-blue-main mt-4 white--text"
                 depressed
-                :disabled="vm.shouldDisableTaskProcessing"
               >
                 Learn more</v-btn
               >
@@ -96,7 +95,6 @@
                 @click="goToQuizDetailScreen"
                 class="text-none linear-background-blue-main mt-4 white--text"
                 depressed
-                :disabled="vm.shouldDisableTaskProcessing"
               >
                 Learn more</v-btn
               >

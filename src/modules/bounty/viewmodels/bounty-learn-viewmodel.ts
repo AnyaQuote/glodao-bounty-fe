@@ -7,6 +7,13 @@ import { authStore } from '@/stores/auth-store'
 import * as _ from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
+import moment from 'moment'
+import { appProvider } from '@/app-providers'
+
+const APPLY_STATUS = {
+  PROCESSING: 'processing',
+  COMPLETED: 'completed',
+}
 
 export class BountyLearnViewModel {
   @observable quizAnswerDialog = false
@@ -195,6 +202,50 @@ export class BountyLearnViewModel {
 
   @computed get projectLogo() {
     return _.get(this.task, 'metadata.projectLogo', '')
+  }
+
+  @computed get completedParticipants() {
+    return _.get(this.task, 'completedParticipants', 0)
+  }
+
+  @computed get isTaskLimitAvailable() {
+    const limit = _.get(this.task, 'maxParticipants', 0)
+    if (limit < 1) return true
+    return this.completedParticipants < limit
+  }
+
+  @computed get isHuntingProcessStarted() {
+    const status = _.get(this.apply, 'status', 'processing')
+    return (
+      !_.isEmpty(_.get(this.apply, 'id', '')) &&
+      (_.isEqual(status, APPLY_STATUS.PROCESSING) || _.isEqual(status, APPLY_STATUS.COMPLETED))
+    )
+  }
+
+  @computed get isTaskStarted() {
+    return moment(appProvider.currentTime).isAfter(this.task.startTime)
+  }
+
+  @computed get isTaskEnded() {
+    return moment(appProvider.currentTime).isAfter(this.task.endTime)
+  }
+
+  @computed get isUserTaskCompleted() {
+    return !_.isEqual(_.get(this.apply, 'status', 'processing'), APPLY_STATUS.PROCESSING)
+  }
+
+  @computed get isHuntingProcessEnded() {
+    return this.isTaskEnded || this.isUserTaskCompleted
+  }
+
+  @computed get shouldDisableTaskProcessing() {
+    return (
+      this.isTaskEnded ||
+      !this.isTaskStarted ||
+      this.isHuntingProcessEnded ||
+      !this.isHuntingProcessStarted ||
+      !this.isTaskLimitAvailable
+    )
   }
 
   @computed get quizName() {

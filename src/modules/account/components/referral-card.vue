@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    class="fill-width neutral100--bg d-flex flex-column flex-sm-row align-sm-center rounded-lg pa-4 pr-sm-4 pr-md-10"
+    class="fill-width neutral100--bg d-flex flex-column flex-sm-row align-sm-center rounded-lg pa-4 pr-sm-4"
     outlined
   >
     <div class="d-flex">
@@ -25,7 +25,7 @@
         {{ joinTime | datetime }}
       </div>
     </div>
-    <div class="d-flex flex-sm-column pa-3 py-0 ml-md-10 pl-md-10">
+    <div class="d-flex flex-sm-column pa-3 py-0 ml-md-8">
       <v-sheet class="background-transparent d-flex flex-sm-column fill-width" min-width="92">
         <div class="neutral10--text small-caption-text">Total commission</div>
         <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
@@ -33,7 +33,7 @@
         </div>
       </v-sheet>
     </div>
-    <div class="d-flex flex-sm-column pa-3 py-0 ml-md-10">
+    <div class="d-flex flex-sm-column pa-3 py-0 ml-md-8">
       <v-sheet class="background-transparent d-flex flex-sm-column fill-width" min-width="99">
         <div class="neutral10--text small-caption-text">Today commission</div>
         <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">

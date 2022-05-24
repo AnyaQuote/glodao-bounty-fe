@@ -67,7 +67,7 @@
                 class="linear-background-blue-main font-weight-bold text-none rounded white--text mt-8"
                 depressed
                 @click="vm.changeQuizAnswerDialog(true)"
-                :disabled="vm.isQuizCompleted"
+                :disabled="vm.isQuizCompleted || vm.shouldDisableTaskProcessing"
                 >Start the quest!</v-btn
               >
             </v-col>
