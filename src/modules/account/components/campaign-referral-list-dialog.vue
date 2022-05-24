@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="vm.campaignReferralDialog">
+  <v-dialog v-model="vm.campaignReferralDialog" max-width="750">
     <v-sheet class="neutral100--bg rounded pa-6">
       <div class="d-flex align-center justify-space-between">
         <div class="font-weight-bold text-h5">
