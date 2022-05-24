@@ -35,8 +35,11 @@
                 depressed
                 :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
                 :disabled="vm.shouldDisableTaskProcessing"
+                :style="vm.shouldDisableTaskProcessing ? 'background-color:#E5E5E5 !important' : ''"
+                :light="true"
+                :dark="false"
               >
-                continue</v-btn
+                Continue</v-btn
               >
             </div>
           </div>
@@ -104,8 +107,11 @@
                 depressed
                 :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
                 :disabled="vm.shouldDisableTaskProcessing"
+                :style="vm.shouldDisableTaskProcessing ? 'background-color:#E5E5E5 !important' : ''"
+                :light="true"
+                :dark="false"
               >
-                continue</v-btn
+                Continue</v-btn
               >
             </div>
           </div>
