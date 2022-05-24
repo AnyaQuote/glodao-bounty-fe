@@ -169,11 +169,12 @@ export default {
 }
 .custom-link-item .markdown-is-active {
   color: var(--v-bluePrimary-base) !important;
+  font-weight: 700 !important;
 }
 .custom-link-item a:not(.markdown-is-active) {
   color: var(--v-neutral10--base) !important;
   font-size: 16px;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
 }
 
 //
