@@ -98,6 +98,7 @@
                 class="mt-5"
                 :value="option.value"
                 :key="option.value + option.text"
+                @click="moveToNext(questionDataObj.id)"
               >
                 <template v-slot:label>
                   <div class="neutral10--text font-size-18">{{ option.text }}</div>
@@ -131,6 +132,12 @@
       <v-sheet
         class="blue lighten-3 d-flex justify-space-between align-center bluePrimary--text pa-7 position-relative"
       >
+        <div class="position-absolute fill-width fill-height flex-center-box" style="left: 0">
+          <div class="primary--text" v-if="$vuetify.breakpoint.smAndUp">
+            Question <span class="bluePrimary--text"> {{ vm.currentStep + 1 > 10 ? 10 : vm.currentStep + 1 }} </span> of
+            10
+          </div>
+        </div>
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
@@ -140,12 +147,6 @@
           <v-icon left>mdi-arrow-left</v-icon>
           PREVIOUS
         </v-btn>
-        <div class="position-absolute fill-width fill-height flex-center-box" style="left: 0">
-          <div class="primary--text" v-if="$vuetify.breakpoint.smAndUp">
-            Question <span class="bluePrimary--text"> {{ vm.currentStep + 1 > 10 ? 10 : vm.currentStep + 1 }} </span> of
-            10
-          </div>
-        </div>
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
@@ -167,6 +168,7 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
+import { promiseHelper } from '@/helpers/promise-helper'
 
 @Observer
 @Component({
@@ -176,6 +178,15 @@ import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-v
 })
 export default class QuizDialog extends Vue {
   @Inject() vm!: BountyLearnViewModel
+  clickedMap = new Map()
+
+  moveToNext(id) {
+    if (!this.clickedMap.get(id))
+      promiseHelper.delay(500).then(() => {
+        this.clickedMap.set(id, id)
+        this.vm.changeStep(1)
+      })
+  }
 }
 </script>
 
