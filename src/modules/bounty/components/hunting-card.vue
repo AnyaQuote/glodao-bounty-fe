@@ -50,8 +50,14 @@
 
     <div class="d-flex flex-column pa-6 mt-2">
       <div class="d-flex align-center">
-        <project-logo :src="projectLogo"></project-logo>
-        <div class="title bluePrimary--text ml-6 text-truncate flex-grow-1">
+        <project-logo :src="projectLogo" size="48"></project-logo>
+        <div
+          class="bluePrimary--text ml-6 text-truncate flex-grow-1 font-weight-bold"
+          :class="{
+            'text-h5': $vuetify.breakpoint.smAndDown,
+            title: !$vuetify.breakpoint.smAndDown,
+          }"
+        >
           {{ name }}
         </div>
       </div>
@@ -62,26 +68,76 @@
 
       <v-row dense no-gutters class="mt-5">
         <v-col cols="6">
-          <div class="neutral10--text font-size-20">Total reward</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Total reward
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             {{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}
           </div>
         </v-col>
         <v-col cols="6">
-          <div class="neutral10--text font-size-20">Value</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Value
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             {{ value | usdCustom(2, 5) }}
           </div>
         </v-col>
         <v-col cols="6" class="mt-6">
-          <div class="neutral10--text font-size-20">Participants</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Participants
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             {{ participant | formatNumber(0, 0) }}
           </div>
         </v-col>
         <v-col cols="6" class="mt-6">
-          <div class="neutral10--text font-size-20">Mission success</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">{{ missionCompleteCount }}</div>
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Mission success
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            {{ missionCompleteCount }}
+          </div>
         </v-col>
       </v-row>
 
