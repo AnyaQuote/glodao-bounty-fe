@@ -345,6 +345,11 @@ export class ApiService {
     )
     return res.data
   }
+
+  async getQuiz(id: any) {
+    const res = await axios.get(`quizzes/getQuiz/${id}`)
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
