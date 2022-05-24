@@ -91,14 +91,25 @@
             <div class="text-body-2 mt-2">
               {{ quiz.description }}
             </div>
-            <v-btn
-              @click="goToQuizDetailScreen"
-              class="text-none linear-background-blue-main mt-4 white--text"
-              depressed
-              :disabled="vm.shouldDisableTaskProcessing"
-            >
-              Learn more</v-btn
-            >
+            <div class="d-flex align-center justify-space-between">
+              <v-btn
+                @click="goToQuizDetailScreen"
+                class="text-none linear-background-blue-main mt-4 white--text"
+                depressed
+                :disabled="vm.shouldDisableTaskProcessing"
+              >
+                Learn more</v-btn
+              >
+              <v-btn
+                @click="revalidateQuizTask"
+                class="text-none linear-background-blue-main mt-4 white--text"
+                depressed
+                :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
+                :disabled="vm.shouldDisableTaskProcessing"
+              >
+                continue</v-btn
+              >
+            </div>
           </div>
         </div>
       </v-col>
