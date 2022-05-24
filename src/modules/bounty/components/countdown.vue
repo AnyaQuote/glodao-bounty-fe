@@ -1,18 +1,18 @@
 <template>
-  <v-sheet class="d-flex justify-space-between align-center rounded-lg px-3 py-1 neutral100--bg">
+  <v-sheet :class="`d-flex justify-space-between align-center rounded-lg py-1 neutral100--bg ${padding}`">
     <slot name="prepend"></slot>
     <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold">{{ days | twoDigits }}</div>
     </div>
-    <div class="flex-center-box mx-3">:</div>
+    <div :class="`flex-center-box ${textMargin}`">:</div>
     <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold">{{ hours | twoDigits }}</div>
     </div>
-    <div class="flex-center-box mx-3">:</div>
+    <div :class="`flex-center-box ${textMargin}`">:</div>
     <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold">{{ minutes | twoDigits }}</div>
     </div>
-    <div class="flex-center-box mx-3">:</div>
+    <div :class="`flex-center-box ${textMargin}`">:</div>
     <div class="flex-center-box h-36-w-36">
       <div class="font-weight-bold">{{ seconds | twoDigits }}</div>
     </div>
@@ -24,6 +24,14 @@
 export default {
   props: {
     targetDate: String,
+    textMargin: {
+      type: String,
+      default: 'mx-3',
+    },
+    padding: {
+      type: String,
+      default: 'px-3',
+    },
   },
   mounted() {
     this.countdownInterval = setInterval(() => {

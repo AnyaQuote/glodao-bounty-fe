@@ -32,9 +32,11 @@
         <div class="d-flex justify-center">
           <div class="rounded-pill mb-3 linear-border-blue-main">
             <countdown
-              class="countdown text-h6 white black--text border-radius-16"
+              class="countdown text-h6 text-sm-body-2 text-md-h6 text-md-h6 white black--text border-radius-16"
               style="border-radius: 16px !important"
               :targetDate="endTime"
+              :textMargin="$vuetify.breakpoint.smOnly ? 'mx-2' : 'mx-3'"
+              :padding="$vuetify.breakpoint.smOnly ? 'px-2' : 'px-3'"
             >
               <template slot="append">
                 <div class="font-weight-bold neutral10--text text-truncate mx-2">left</div>
