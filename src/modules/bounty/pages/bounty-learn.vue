@@ -15,7 +15,12 @@
             'text-body-1': $vuetify.breakpoint.xsOnly,
           }"
         >
-          <div class="font-weight-bold d-flex align-center">
+          <div
+            class="font-weight-bold d-flex align-center"
+            :class="{
+              'font-size-28': $vuetify.breakpoint.smAndUp,
+            }"
+          >
             <project-logo
               :src="vm.projectLogo"
               :size="$vuetify.breakpoint.xsOnly ? 24 : 48"
@@ -55,7 +60,7 @@
                 {{ vm.quizDescription }}
               </div>
               <div class="d-flex mt-4 align-center">
-                <v-chip class="text-caption mr-2" v-for="tag in vm.quizTags" :key="tag"> {{ tag }} </v-chip>
+                <v-chip class="text-uppercase mr-2" v-for="tag in vm.quizTags" :key="tag"> {{ tag }} </v-chip>
                 <div class="ml-4 text-body-1 font-weight-600">10 min read</div>
               </div>
               <v-btn
