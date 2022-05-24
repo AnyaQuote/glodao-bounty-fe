@@ -835,7 +835,7 @@ export class BountyDetailViewModel {
     return get(this.task, 'maxParticipants', 0)
   }
 
-  @computed get completedPercentage() {
+  @computed get completedPercentage(): number {
     if (this.maxParticipants <= 0) return 0
     return (this.completedParticipants / this.maxParticipants) * 100
   }

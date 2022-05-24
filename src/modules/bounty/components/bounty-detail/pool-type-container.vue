@@ -91,7 +91,9 @@
           <v-progress-linear :value="vm.completedPercentage" color="bluePrimary" height="28" class="rounded-pill">
             <template v-slot:default>
               <strong class="white--text"
-                >{{ vm.completedParticipants }}/{{ vm.maxParticipants }} ({{ vm.completedPercentage }}%)</strong
+                >{{ vm.completedParticipants }}/{{ vm.maxParticipants }} ({{
+                  vm.completedPercentage | formatNumber(2, 0)
+                }}%)</strong
               >
             </template>
           </v-progress-linear>
