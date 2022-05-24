@@ -29,18 +29,17 @@
               >
                 Learn more</v-btn
               >
-              <v-btn
-                @click="revalidateQuizTask"
-                class="text-none linear-background-blue-main mt-4 white--text"
-                depressed
-                :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
-                :disabled="vm.shouldDisableTaskProcessing"
-                :style="vm.shouldDisableTaskProcessing ? 'background-color:#E5E5E5 !important' : ''"
-                :light="true"
-                :dark="false"
-              >
-                Continue</v-btn
-              >
+              <div class="neutral100--bg mt-4 rounded">
+                <v-btn
+                  @click="revalidateQuizTask"
+                  class="text-none linear-background-blue-main white--text"
+                  depressed
+                  :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
+                  :disabled="vm.shouldDisableTaskProcessing"
+                >
+                  Continue</v-btn
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -101,18 +100,17 @@
               >
                 Learn more</v-btn
               >
-              <v-btn
-                @click="revalidateQuizTask"
-                class="text-none linear-background-blue-main mt-4 white--text"
-                depressed
-                :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
-                :disabled="vm.shouldDisableTaskProcessing"
-                :style="vm.shouldDisableTaskProcessing ? 'background-color:#E5E5E5 !important' : ''"
-                :light="true"
-                :dark="false"
-              >
-                Continue</v-btn
-              >
+              <div class="neutral100--bg mt-4 rounded">
+                <v-btn
+                  @click="revalidateQuizTask"
+                  class="text-none linear-background-blue-main white--text"
+                  depressed
+                  :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
+                  :disabled="vm.shouldDisableTaskProcessing"
+                >
+                  Continue</v-btn
+                >
+              </div>
             </div>
           </div>
         </div>
