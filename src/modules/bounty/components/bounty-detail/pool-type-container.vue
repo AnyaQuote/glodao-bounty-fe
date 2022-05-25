@@ -80,9 +80,7 @@
           >
             <div class="text-body-2">Personal reward</div>
             <div class="text-body-1 font-weight-bold">
-              {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
-                vm.singlePriorityRewardExchanged | usdCustom
-              }})
+              {{ vm.singlePriorityReward | formatNumber(2, 0) }} {{ vm.rewardToken }}
             </div>
           </div>
         </v-sheet>
