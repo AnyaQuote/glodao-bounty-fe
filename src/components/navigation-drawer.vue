@@ -187,13 +187,13 @@
         </v-list-group>
       </v-list>
     </div>
-    <div class="d-flex align-center justify-space-between px-10">
+    <div class="d-flex align-center justify-center px-10">
       <connect-wallet btnClass="rounded fill-width"></connect-wallet>
-      <v-btn icon @click="changeTheme" class="rounded-circle change-theme-btn" width="40" height="40" outlined>
+      <!-- <v-btn icon @click="changeTheme" class="rounded-circle change-theme-btn" width="40" height="40" outlined>
         <v-icon color="bluePrimary">
           {{ !$vuetify.theme.dark ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}
         </v-icon>
-      </v-btn>
+      </v-btn> -->
     </div>
   </v-navigation-drawer>
 </template>
