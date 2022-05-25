@@ -21,16 +21,35 @@
             !telegramTask.finished
           "
         >
-          <v-btn
-            class="white--text text-none linear-background-blue-main text-caption"
-            elevation="0"
-            @click="openJoinTelegramLink"
-            :loading="!telegramTask.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing"
-          >
-            <v-icon left size="14">mdi-telegram</v-icon>
-            Join {{ page }}
-          </v-btn>
+          <v-row dense no-gutters>
+            <v-col cols="9" sm="10">
+              <v-sheet outlined class="rounded rounded-r-0">
+                <v-text-field
+                  hide-details
+                  dense
+                  flat
+                  solo
+                  class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
+                  :placeholder="telegramTask.stepLink || 'Enter your telegram handler'"
+                  :value="value"
+                  @input="onValueChange"
+                ></v-text-field>
+              </v-sheet>
+            </v-col>
+            <v-col cols="3" sm="2">
+              <v-btn
+                elevation="0"
+                tile
+                class="fill-width white--text text-none linear-background-blue-main text-caption rounded rounded-l-0"
+                height="100%"
+                @click="submitLink"
+                :loading="!telegramTask.finished && vm.isTaskUpdating"
+                :disabled="vm.shouldDisableTaskProcessing"
+              >
+                Submit
+              </v-btn>
+            </v-col>
+          </v-row>
         </div>
       </v-col>
       <v-col cols="auto" class="ml-auto">
@@ -74,22 +93,44 @@
         </div>
       </v-col>
       <v-col cols="12" class="mb-3">
-        <v-btn
-          class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
-          elevation="0"
-          @click="openJoinTelegramLink"
+        <v-row
+          dense
+          no-gutters
           v-if="
             $vuetify.breakpoint.xsOnly &&
             vm.isHuntingProcessStarted &&
             telegramTask.activeStep &&
             !telegramTask.finished
           "
-          :loading="!telegramTask.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing"
         >
-          <v-icon left size="14">mdi-telegram</v-icon>
-          Join {{ page }}
-        </v-btn>
+          <v-col cols="9" sm="10">
+            <v-sheet outlined class="rounded rounded-r-0">
+              <v-text-field
+                hide-details
+                dense
+                flat
+                solo
+                class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
+                :placeholder="telegramTask.stepLink || 'Enter your telegram handler'"
+                :value="value"
+                @input="onValueChange"
+              ></v-text-field>
+            </v-sheet>
+          </v-col>
+          <v-col cols="3" sm="2">
+            <v-btn
+              elevation="0"
+              tile
+              class="fill-width white--text text-none linear-background-blue-main text-caption rounded rounded-l-0"
+              height="100%"
+              @click="submitLink"
+              :loading="!telegramTask.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              Submit
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </div>
@@ -100,6 +141,8 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { localdata } from '@/helpers/local-data'
 
 @Observer
 @Component({
@@ -114,11 +157,22 @@ export default class TelegramFollowTask extends Vue {
   @Prop({ required: true }) step!: number
   type = get(this.telegramTask, 'type', '')
   page = get(this.telegramTask, 'page', '')
+  value = localdata.telegramHandler
+
   title = ''
+
+  onValueChange(value: string) {
+    this.value = value
+  }
 
   openJoinTelegramLink() {
     this.openLink(get(this.telegramTask, 'link', ''))
     this.vm.submitLink('telegram', '', this.step)
+  }
+
+  submitLink() {
+    if (!this.value.trim()) snackController.error('Link cannot be empty')
+    else this.vm.submitLink('telegram', this.value, this.step)
   }
   openLink(link: string) {
     const url = link.trim()
