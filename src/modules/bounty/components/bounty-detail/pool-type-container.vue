@@ -39,7 +39,67 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" v-if="vm.missionType === 'learn'">
+        <v-sheet
+          class="pa-6 row ma-0 dense no-gutters rounded bluePrimary--border neutral100--bg"
+          elevation="3"
+          style="border: 1px solid"
+        >
+          <div
+            class="col"
+            :class="{
+              'col-6': $vuetify.breakpoint.xsOnly,
+            }"
+          >
+            <div class="text-body-2">Total mission reward</div>
+            <div class="text-body-1 font-weight-bold">{{ vm.rewardAmount | formatNumber }} {{ vm.rewardToken }}</div>
+          </div>
+          <div
+            class="col"
+            :class="{
+              'col-6': $vuetify.breakpoint.xsOnly,
+            }"
+          >
+            <div class="text-body-2">Reward value</div>
+            <div class="text-body-1 font-weight-bold">{{ vm.rewardAmountExchanged | usdCustom(2, 2) }}</div>
+          </div>
+          <div
+            class="col"
+            :class="{
+              'col-6': $vuetify.breakpoint.xsOnly,
+            }"
+          >
+            <div class="text-body-2">Max participants</div>
+            <div class="text-body-1 font-weight-bold">{{ vm.maxParticipants }}</div>
+          </div>
+          <div
+            class="col"
+            :class="{
+              'col-6': $vuetify.breakpoint.xsOnly,
+            }"
+          >
+            <div class="text-body-2">Personal reward</div>
+            <div class="text-body-1 font-weight-bold">
+              {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                vm.singlePriorityRewardExchanged | usdCustom
+              }})
+            </div>
+          </div>
+        </v-sheet>
+
+        <v-sheet class="mt-6 rounded-pill">
+          <v-progress-linear :value="vm.completedPercentage" color="bluePrimary" height="28" class="rounded-pill">
+            <template v-slot:default>
+              <strong class="white--text"
+                >{{ vm.completedParticipants }}/{{ vm.maxParticipants }} ({{
+                  vm.completedPercentage | formatNumber(2, 0)
+                }}%)</strong
+              >
+            </template>
+          </v-progress-linear>
+        </v-sheet>
+      </v-col>
+      <v-col v-if="vm.missionType !== 'learn'">
         <div
           :class="{
             'active-pool': vm.shouldGlowPriorityPool,
@@ -95,7 +155,7 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col v-if="vm.missionType !== 'learn'">
         <div
           :class="{
             'active-pool': vm.shouldGlowCommunityPool,
@@ -366,5 +426,9 @@ export default class PoolTypeContainer extends Vue {
   100% {
     background-position: 200% 50%;
   }
+}
+
+.bluePrimary--border {
+  border-color: var(--v-bluePrimary-base);
 }
 </style>

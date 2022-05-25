@@ -42,7 +42,7 @@ export default {
       const htmlMarkup = parsedHeadings.map(
         (h) =>
           `
-          <li class="${h.depth > 1 ? 'pl-4 custom-link-item' : 'custom-link-item'}">
+          <li class="${h.depth > 1 ? 'pl-2 custom-link-item' : 'custom-link-item'}">
           	<a headingTag="#${h.id}">${h.title}</a>
           </li>
           `
@@ -154,6 +154,10 @@ export default {
 }
 #markdown-content h1 {
   padding-bottom: 15px;
+  color: var(--v-bluePrimary-base); //TODO: check real md
+}
+#markdown-content h2 {
+  color: var(--v-bluePrimary-base);
 }
 #markdown-content h1:not(:first-child) {
   padding-top: 15px;
@@ -163,25 +167,14 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.theme--dark {
-  .custom-link-item .markdown-is-active {
-    color: white !important;
-  }
-  .custom-link-item a:not(.markdown-is-active) {
-    color: gray !important;
-    font-size: 16px;
-    font-weight: 400 !important;
-  }
+.custom-link-item .markdown-is-active {
+  color: var(--v-bluePrimary-base) !important;
+  font-weight: 700 !important;
 }
-.them--light {
-  .custom-link-item .markdown-is-active {
-    color: #f47a60 !important;
-  }
-  .custom-link-item a:not(.markdown-is-active) {
-    color: gray !important;
-    font-size: 16px;
-    font-weight: 400 !important;
-  }
+.custom-link-item a:not(.markdown-is-active) {
+  color: var(--v-neutral10--base) !important;
+  font-size: 16px;
+  font-weight: 600 !important;
 }
 
 //

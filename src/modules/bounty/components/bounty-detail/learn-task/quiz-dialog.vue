@@ -12,7 +12,7 @@
         >
       </v-sheet>
     </div>
-    <div v-show="!isAnswerProcessStarted">
+    <div v-show="!vm.isAnswerProcessStarted">
       <v-sheet
         class="neutral100--bg"
         :class="{
@@ -29,15 +29,15 @@
             </div>
             <div class="mt-8 d-flex align-center">
               <v-icon color="bluePrimary"> mdi-school </v-icon>
-              <div class="font-weight-600 ml-2">{{ vm.questionList.length }} questions</div>
+              <div class="font-weight-600 ml-2 font-size-18">{{ vm.questionList.length }} questions</div>
             </div>
             <v-btn
-              class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width"
+              class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width white--text"
               depressed
               height="40"
               block
-              @click="startQuizAnswerProcess"
-              :loading="startProcessLoading"
+              @click="vm.startQuizAnswerProcess"
+              :loading="vm.startProcessLoading"
             >
               start
             </v-btn>
@@ -53,7 +53,7 @@
         </v-row>
       </v-sheet>
     </div>
-    <div v-show="isAnswerProcessStarted">
+    <div v-show="vm.isAnswerProcessStarted">
       <v-sheet
         class="neutral100--bg blue lighten-3 pa-6 pr-0 d-flex justify-space-between bluePrimary--text border-radius-8 rounded-b-0"
         :class="{
@@ -69,13 +69,13 @@
               'd-flex': $vuetify.breakpoint.smAndUp,
             }"
           >
-            <div>{{ vm.task | _get('name', 'TBA') }}</div>
+            <div class="text-h6 text-sm-h5 font-weight-bold">{{ vm.task | _get('name', 'TBA') }}</div>
           </div>
         </div>
         <v-sheet
           class="d-flex align-center bluePrimary--text text-body-1 pa-4 font-weight-600 neutral100--bg"
           style="clip-path: polygon(7% 0, 100% 0%, 100% 100%, 7% 100%, 0% 50%)"
-          height="56"
+          :height="$vuetify.breakpoint.smAndUp ? 56 : 40"
         >
           <v-icon :size="$vuetify.breakpoint.xsOnly ? 20 : 24" color="bluePrimary">mdi-school</v-icon>
           <div class="ml-3">{{ vm.answerCount }}/{{ vm.questionList.length }} answers</div>
@@ -88,8 +88,8 @@
           min-height="340"
         >
           <v-sheet :max-width="$vuetify.breakpoint.mdAndUp ? '90%' : '95%'" class="neutral100--bg" min-width="90%">
-            <div class="text-md-h5 text-h6 font-weight-bold">
-              {{ questionDataObj.question }} {{ vm.currentStep === index }}
+            <div class="font-size-28 font-weight-bold">
+              {{ questionDataObj.question }}
             </div>
 
             <v-radio-group v-model="questionDataObj.answer" class="mt-0">
@@ -98,9 +98,10 @@
                 class="mt-5"
                 :value="option.value"
                 :key="option.value + option.text"
+                @click="vm.moveToNext(questionDataObj.id)"
               >
                 <template v-slot:label>
-                  <div class="neutral10--text">{{ option.text }}</div>
+                  <div class="neutral10--text font-size-18">{{ option.text }}</div>
                 </template>
               </v-radio>
             </v-radio-group>
@@ -113,18 +114,30 @@
         min-height="340"
       >
         <!-- <div class="text-h5 font-weight-bold">Please check your answer carefully before submiting!</div> -->
-        <div class="text-h5 font-weight-bold">
+        <div class="text-h5 text-sm-h4 font-weight-bold">
           You have completed {{ vm.answerCount }}/{{ vm.questionList.length }} questions
         </div>
-        <div class="text-body-2 font-italic text-decoration-underline">
-          You will be forbidden to do the task for the next few minute if you submit wrong answer multiple times!
+        <div class="text-h6 text-center mt-4" style="max-width: 540px">
+          Please check your all answers once again and summit to complete this mission. Thank you!
         </div>
-        <v-btn class="linear-background-blue-main mt-8" @click="vm.submitQuizAnswer()" :loading="vm.submitAnswerLoading"
-          >Submit my answer</v-btn
+        <v-btn
+          class="linear-background-blue-main mt-6 white--text"
+          depressed
+          @click="vm.submitQuizAnswer()"
+          :loading="vm.submitAnswerLoading"
+          >Submit</v-btn
         >
       </v-sheet>
 
-      <v-sheet class="blue lighten-3 d-flex justify-space-between align-center bluePrimary--text pa-7">
+      <v-sheet
+        class="blue lighten-3 d-flex justify-space-between align-center bluePrimary--text pa-7 position-relative"
+      >
+        <div class="position-absolute fill-width fill-height flex-center-box" style="left: 0">
+          <div class="primary--text" v-if="$vuetify.breakpoint.smAndUp">
+            Question <span class="bluePrimary--text"> {{ vm.currentStep + 1 > 10 ? 10 : vm.currentStep + 1 }} </span> of
+            10
+          </div>
+        </div>
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
@@ -134,13 +147,6 @@
           <v-icon left>mdi-arrow-left</v-icon>
           PREVIOUS
         </v-btn>
-        <v-sheet
-          class="rounded-circle bluePrimary flex-center-box white--text"
-          height="36"
-          width="36"
-          v-if="$vuetify.breakpoint.smAndUp"
-          >{{ vm.currentStep + 1 }}</v-sheet
-        >
         <v-btn
           class="text-uppercase d-flex align-center background-transparent bluePrimary--text"
           depressed
@@ -161,9 +167,7 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
-import * as _ from 'lodash-es'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
-import { promiseHelper } from '@/helpers/promise-helper'
 
 @Observer
 @Component({
@@ -173,23 +177,6 @@ import { promiseHelper } from '@/helpers/promise-helper'
 })
 export default class QuizDialog extends Vue {
   @Inject() vm!: BountyLearnViewModel
-
-  isAnswerProcessStarted = false
-  startProcessLoading = false
-
-  _disposers: any[] = []
-
-  startQuizAnswerProcess() {
-    this.startProcessLoading = true
-    promiseHelper.delay(1000).finally(() => {
-      this.isAnswerProcessStarted = true
-      this.startProcessLoading = false
-    })
-  }
-
-  beforeDestroy() {
-    this._disposers.forEach((d) => d())
-  }
 }
 </script>
 
@@ -201,5 +188,11 @@ export default class QuizDialog extends Vue {
 }
 .all-aspect-padding-lg {
   padding: 90px 60px;
+}
+.font-size-28 {
+  font-size: 28px;
+}
+.font-size-18 {
+  font-size: 18px;
 }
 </style>

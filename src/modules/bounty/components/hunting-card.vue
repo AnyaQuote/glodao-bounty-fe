@@ -17,18 +17,27 @@
         </video> -->
         <div class="position-absolute" style="top: 10px; left: 10px">
           <v-sheet
-            class="rounded-circle flex-center-box text-center primary--text"
-            width="25"
+            class="rounded-pill flex-center-box text-center px-2"
+            :class="{
+              'black--text': missionType !== 'learn',
+              'white--text': missionType === 'learn',
+            }"
             height="25"
-            color="neutral100"
-            >{{ task | _get('missionIndex', 0) }}</v-sheet
+            :color="missionType === 'learn' ? 'purple' : 'white'"
+            >{{ missionTypeText }} #{{ task | _get('missionIndex', 0) }}</v-sheet
           >
         </div>
       </div>
       <div class="fill-width" style="position: absolute; bottom: 0">
         <div class="d-flex justify-center">
-          <div class="border-radius-8 mb-3 linear-border-blue-main">
-            <countdown class="countdown text-h6 white black--text" :targetDate="endTime">
+          <div class="rounded-pill mb-3 linear-border-blue-main">
+            <countdown
+              class="countdown text-h6 text-sm-body-2 text-md-h6 text-md-h6 white black--text border-radius-16"
+              style="border-radius: 16px !important"
+              :targetDate="endTime"
+              :textMargin="$vuetify.breakpoint.smOnly ? 'mx-2' : 'mx-3'"
+              :padding="$vuetify.breakpoint.smOnly ? 'px-2' : 'px-3'"
+            >
               <template slot="append">
                 <div class="font-weight-bold neutral10--text text-truncate mx-2">left</div>
                 <div class="flame-emoji">🔥</div>
@@ -41,8 +50,14 @@
 
     <div class="d-flex flex-column pa-6 mt-2">
       <div class="d-flex align-center">
-        <project-logo :src="projectLogo"></project-logo>
-        <div class="title bluePrimary--text ml-6 text-truncate flex-grow-1">
+        <project-logo :src="projectLogo" size="48"></project-logo>
+        <div
+          class="bluePrimary--text ml-6 text-truncate flex-grow-1 font-weight-bold"
+          :class="{
+            'text-h5': $vuetify.breakpoint.smAndDown,
+            title: !$vuetify.breakpoint.smAndDown,
+          }"
+        >
           {{ name }}
         </div>
       </div>
@@ -53,26 +68,76 @@
 
       <v-row dense no-gutters class="mt-5">
         <v-col cols="6">
-          <div class="neutral10--text font-size-20">Total reward</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Total reward
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             {{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}
           </div>
         </v-col>
         <v-col cols="6">
-          <div class="neutral10--text font-size-20">Value</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Value
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             {{ value | usdCustom(2, 5) }}
           </div>
         </v-col>
         <v-col cols="6" class="mt-6">
-          <div class="neutral10--text font-size-20">Participants</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Participants
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             {{ participant | formatNumber(0, 0) }}
           </div>
         </v-col>
         <v-col cols="6" class="mt-6">
-          <div class="neutral10--text font-size-20">Mission success</div>
-          <div class="font-weight-bold mt-1 font-size-20 text-truncate">{{ missionCompleteCount }}</div>
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Mission success
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            {{ missionCompleteCount }}
+          </div>
         </v-col>
       </v-row>
 
@@ -120,6 +185,8 @@ export default class HuntingTimeCard extends Vue {
   value = `${this.rewardAmount}`
   coverVideo = get(this.task, 'metadata.coverVideo', '')
   missionCompleteCount: any = 'TBA'
+  missionType = get(this.task, 'type', '')
+  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
 
   mounted() {
     this.value = FixedNumber.from(`${this.rewardAmount}`).mulUnsafe(
@@ -186,6 +253,9 @@ export default class HuntingTimeCard extends Vue {
 .linear-border-blue-main {
   position: relative;
 }
+.border-radius-16 {
+  border-radius: 16px !important;
+}
 
 .linear-border-blue-main::before {
   content: '';
@@ -194,7 +264,7 @@ export default class HuntingTimeCard extends Vue {
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 2px;
   background: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);

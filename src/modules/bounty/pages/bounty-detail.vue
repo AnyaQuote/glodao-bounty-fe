@@ -23,7 +23,7 @@
       </v-col>
 
       <!-- BOUNTY NAME -->
-      <v-col cols="12">
+      <v-col cols="12" class="d-flex justify-space-between">
         <v-sheet class="d-flex align-center mb-4 neutral15">
           <project-logo :src="vm.projectLogo" size="48"></project-logo>
           <div
@@ -47,6 +47,21 @@
             </span>
           </div>
         </v-sheet>
+        <div class="d-flex flex-column" v-if="vm.missionType === 'learn'">
+          <v-sheet
+            class="bluePrimary"
+            style="padding: 1px; clip-path: polygon(7% 0, 100% 0%, 100% 100%, 7% 100%, 0% 50%)"
+          >
+            <v-sheet
+              class="d-flex align-center bluePrimary--text text-body-1 pa-4 font-weight-600 neutral100--bg"
+              style="clip-path: polygon(7% 0, 100% 0%, 100% 100%, 7% 100%, 0% 50%)"
+              height="44"
+            >
+              <v-icon :size="$vuetify.breakpoint.xsOnly ? 20 : 24" color="bluePrimary">mdi-school</v-icon>
+              <div class="ml-3">Learn to earn mission</div>
+            </v-sheet>
+          </v-sheet>
+        </div>
       </v-col>
 
       <!-- LEFT -->
@@ -59,35 +74,16 @@
               <source :src="vm.coverVideo" type="video/mp4" />
               Your browser does not support HTML video.
             </video>
-
-            <!-- status -->
-            <!-- <div class="position-absolute card-status rounded-pill flex-center-box px-2 py-1 white">
-              <v-sheet
-                class="rounded-circle flex-center-box background-transparent"
-                :class="vm.task | _get('status') | statusBorder"
-              >
-                <v-sheet
-                  width="6"
-                  height="6"
-                  class="rounded-circle"
-                  :class="vm.task | _get('status') | statusBackground"
-                  style="margin: 2px"
-                >
-                </v-sheet>
-              </v-sheet>
-              <div
-                :class="vm.task | _get('status') | statusColor"
-                class="text-uppercase ml-1 mr-1 green--text font-weight-bold text-caption"
-              >
-                {{ vm.task | _get('status') }}
-              </div>
-            </div> -->
           </v-sheet>
 
           <!-- subtitle -->
-          <v-sheet class="mb-4 card-subtitle-1 neutral15" v-html="$options.filters._get(vm.task, 'metadata.caption')">
+          <v-sheet
+            class="mb-4 card-subtitle-1 neutral15"
+            v-html="$options.filters._get(vm.task, 'metadata.caption')"
+            v-if="vm.missionType !== 'learn'"
+          >
           </v-sheet>
-          <v-sheet class="neutral15">
+          <v-sheet class="neutral15" v-if="vm.missionType !== 'learn'">
             <v-sheet class="d-flex transparent mb-3">
               <v-sheet class="transparent title-2">Website:</v-sheet>
               <a class="bluePrimary--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
@@ -118,7 +114,7 @@
       <v-col cols="12" md="8" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)">
         <v-sheet class="ml-md-5" style="background-color: var(--v-neutral-15-base)">
           <!-- LIST -->
-          <v-sheet class="mb-4 neutral15">
+          <v-sheet class="mb-4 neutral15" v-if="vm.missionType !== 'learn'">
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
@@ -200,7 +196,8 @@
                           vm.isTaskEnded ||
                           !vm.isAccountAgeQualify ||
                           !vm.currentWallet ||
-                          !vm.isCurrentWalletMatchRegistered
+                          !vm.isCurrentWalletMatchRegistered ||
+                          !vm.isTaskLimitAvailable
                         "
                         :loading="vm.isStartingProcess"
                         height="40"
@@ -248,7 +245,7 @@
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <learn-task :task="quizTask" :step="index" />
+                      <quiz-mini-task :task="quizTask" :step="index" />
                     </v-col>
                     <v-col
                       cols="12"
@@ -346,8 +343,8 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'pool-type-container': () => import('@/modules/bounty/components/bounty-detail/pool-type-container.vue'),
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
+    'quiz-mini-task': () => import('@/modules/bounty/components/bounty-detail/quiz-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
-    'learn-task': () => import('@/modules/bounty/components/bounty-detail/learn-task/learn.vue'),
     VueHcaptcha,
   },
 })
