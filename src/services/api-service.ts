@@ -347,7 +347,11 @@ export class ApiService {
   }
 
   async getQuiz(id: any) {
-    const res = await axios.get(`quizzes/getQuiz/${id}`)
+    const res = await axios.get(`quizzes/getQuiz/${id}`, {
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
     return res.data
   }
 }
