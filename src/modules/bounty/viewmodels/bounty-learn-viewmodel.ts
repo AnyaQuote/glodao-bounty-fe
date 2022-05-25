@@ -213,7 +213,7 @@ export class BountyLearnViewModel {
   }
 
   @computed get quizCoverImage() {
-    return _.get(this.quiz, 'metadata', 'coverImage')
+    return _.get(this.quiz, 'metadata.coverImage', '')
   }
 
   @computed get projectLogo() {
