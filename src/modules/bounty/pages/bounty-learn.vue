@@ -72,12 +72,7 @@
               >
             </v-col>
             <v-col cols="12" md="4" class="px-0 ml-md-auto">
-              <v-img
-                src="https://api.glodao.io/uploads/BANNER_HUNTING_v1_1_1f3ca51e43.png"
-                aspect-ratio="1.5"
-                height="100%"
-                class="rounded"
-              />
+              <v-img :src="vm.quizCoverImage" aspect-ratio="1.5" height="100%" class="rounded" />
             </v-col>
           </v-row>
         </v-sheet>
