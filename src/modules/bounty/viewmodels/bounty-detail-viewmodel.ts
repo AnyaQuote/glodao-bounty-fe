@@ -2,6 +2,7 @@ import { loadingController } from '@/components/global-loading/global-loading-co
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { Zero } from '@/constants'
 import { bigNumberHelper } from '@/helpers/bignumber-helper'
+import { localdata } from '@/helpers/local-data'
 import { promiseHelper } from '@/helpers/promise-helper'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
@@ -341,6 +342,9 @@ export class BountyDetailViewModel {
           const foundIndex = this.relatedApplies.findIndex((apply) => isEqual(apply.id, get(this.apply, 'id', '')))
           this.relatedApplies[foundIndex] = this.apply
           snackController.updateSuccess()
+          if (type === 'telegram') {
+            localdata.telegramHandler = link
+          }
         })
         .catch((error) => {
           const updatedApply = get(error, 'response.data.data', {})
