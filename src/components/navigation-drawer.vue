@@ -27,7 +27,7 @@
       </v-sheet>
       <v-divider></v-divider>
       <v-sheet class="neutral100">
-        <v-btn
+        <!-- <v-btn
           plain
           block
           class="menu-btn neutral10--text"
@@ -36,7 +36,7 @@
           @click="authStore.changeAttachWalletDialog(true)"
         >
           <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
-        </v-btn>
+        </v-btn> -->
         <v-btn plain block class="menu-btn neutral10--text" height="40" depressed @click="goToHuntingHistoryScreen()">
           <v-img
             :src="require('@/assets/icons/crown-mini.svg')"
