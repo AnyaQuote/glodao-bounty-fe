@@ -15,6 +15,15 @@ class LocalData {
     localStorage.setItem('gloDaoJwt', JSON.stringify(value))
   }
 
+  get telegramHandler(): string {
+    if (localStorage.getItem('gloDaoTelegramHandler'))
+      return JSON.parse(localStorage.getItem('gloDaoTelegramHandler') || '')
+    return ''
+  }
+  set telegramHandler(value: string) {
+    localStorage.setItem('gloDaoTelegramHandler', JSON.stringify(value))
+  }
+
   get lastChain(): ChainType | null {
     return localStorage.getItem('lastChain') as ChainType
   }

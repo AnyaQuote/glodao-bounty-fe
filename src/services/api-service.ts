@@ -203,7 +203,7 @@ export class ApiService {
   applies = new ApiHandlerJWT<any>(axios, 'applies', { find: false, count: false })
   users = new ApiHandlerJWT<any>(axios, 'users')
   quizzes = new ApiHandlerJWT<any>(axios, 'quizzes')
-  quizAnswerRecords = new ApiHandlerJWT<any>(axios, 'quiz-answer-records')
+  quizAnswerRecords = new ApiHandlerJWT<any>(axios, 'quiz-answer-records', { findOne: false })
   hunters = new ApiHandlerJWT<any>(axios, 'hunters', { count: false })
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
   campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')
@@ -347,7 +347,11 @@ export class ApiService {
   }
 
   async getQuiz(id: any) {
-    const res = await axios.get(`quizzes/getQuiz/${id}`)
+    const res = await axios.get(`quizzes/getQuiz/${id}`, {
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
     return res.data
   }
 }

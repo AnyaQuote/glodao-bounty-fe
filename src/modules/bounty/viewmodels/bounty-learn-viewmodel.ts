@@ -212,6 +212,10 @@ export class BountyLearnViewModel {
     return _.get(this.task, 'id', '')
   }
 
+  @computed get quizCoverImage() {
+    return _.get(this.quiz, 'metadata.coverImage', '')
+  }
+
   @computed get projectLogo() {
     return _.get(this.task, 'metadata.projectLogo', '')
   }
