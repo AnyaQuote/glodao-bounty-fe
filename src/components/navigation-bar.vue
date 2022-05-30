@@ -180,7 +180,7 @@
                 </v-sheet>
                 <v-divider></v-divider>
                 <v-sheet class="neutral100--bg">
-                  <v-btn
+                  <!-- <v-btn
                     plain
                     block
                     class="menu-btn"
@@ -189,7 +189,7 @@
                     @click="authStore.changeAttachWalletDialog(true)"
                   >
                     <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
-                  </v-btn>
+                  </v-btn> -->
                   <v-btn plain block class="menu-btn" height="40" depressed @click="goToHuntingHistoryScreen()">
                     <!-- <v-icon class="mr-2">mdi-wallet-outline</v-icon> -->
                     <v-img
