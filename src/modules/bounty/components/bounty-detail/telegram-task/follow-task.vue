@@ -8,7 +8,7 @@
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">Join {{ page }} on Telegram</div>
           <div class="text-caption mt-1">
-            Please join <a :href="telegramTask.link" target="_blank" class="blue--text">{{ page }}</a> on Telegram to
+            Please <a :href="telegramTask.link" target="_blank" class="blue--text">join {{ page }}</a> on Telegram to
             complete this task.
           </div>
         </div>
@@ -24,20 +24,11 @@
             <v-btn
               class="white--text text-none linear-background-blue-main text-caption"
               elevation="0"
-              @click="openJoinTelegramLink"
-            >
-              <v-icon left size="14">mdi-telegram</v-icon>
-              Join {{ page }}
-            </v-btn>
-            <v-btn
-              class="white--text text-none linear-background-blue-main text-caption"
-              elevation="0"
               @click="submitLink"
               :loading="!telegramTask.finished && vm.isTaskUpdating"
               :disabled="vm.shouldDisableTaskProcessing"
             >
-              <v-icon left size="14">mdi-telegram</v-icon>
-              Continue
+              I had finished this task
             </v-btn>
           </div>
           <div
@@ -101,20 +92,11 @@
             <v-btn
               class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
               elevation="0"
-              @click="openJoinTelegramLink"
-            >
-              <v-icon left size="14">mdi-telegram</v-icon>
-              Join {{ page }}
-            </v-btn>
-            <v-btn
-              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
-              elevation="0"
               @click="submitLink"
               :loading="!telegramTask.finished && vm.isTaskUpdating"
               :disabled="vm.shouldDisableTaskProcessing"
             >
-              <v-icon left size="14">mdi-telegram</v-icon>
-              Continue
+              I had finished this task
             </v-btn>
           </div>
           <div
@@ -131,7 +113,7 @@
         <div>
           Follow these steps and you will be able to finish the task:
           <ol>
-            <li>Get <router-link to="/hunting-history" class="blue--text">your referral link</router-link></li>
+            <li>Get <span @click="openHuntingHistory" class="blue--text">your referral link</span></li>
             <li>
               Chat @help with the
               <a href="https://t.me/glodao_mission_bot" target="_blank" class="blue--text">GloDAO Mission Bot</a> for
@@ -166,6 +148,10 @@ export default class TelegramFollowTask extends Vue {
   page = get(this.telegramTask, 'page', '')
   title = ''
   dialog = false
+
+  openHuntingHistory() {
+    this.$router.push('/hunting-history')
+  }
 
   showDialog() {
     this.dialog = true
