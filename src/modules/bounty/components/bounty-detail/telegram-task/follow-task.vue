@@ -133,9 +133,10 @@
           <ol>
             <li>Get <router-link to="/hunting-history" class="blue--text">your referral link</router-link></li>
             <li>
-              Join <a href="https://t.me/GloDAO_Group" target="_blank" class="blue--text">GloDAO's Telegram group</a>
+              Chat @help with the
+              <a href="https://t.me/glodao_mission_bot" target="_blank" class="blue--text">GloDAO Mission Bot</a> for
+              instruction
             </li>
-            <li>Chat @help with the GloDAO Mission Bot for instruction</li>
             <li>Link your Telegram account by using your referral link</li>
           </ol>
         </div>
