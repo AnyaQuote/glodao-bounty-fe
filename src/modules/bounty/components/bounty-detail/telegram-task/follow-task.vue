@@ -13,7 +13,6 @@
           </div>
         </div>
         <div
-          class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4"
           v-if="
             $vuetify.breakpoint.smAndUp &&
             vm.isHuntingProcessStarted &&
@@ -21,16 +20,32 @@
             !telegramTask.finished
           "
         >
-          <v-btn
-            class="white--text text-none linear-background-blue-main text-caption"
-            elevation="0"
-            @click="openJoinTelegramLink"
-            :loading="!telegramTask.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing"
+          <div class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4 d-flex justify-space-between align-center">
+            <v-btn
+              class="white--text text-none linear-background-blue-main text-caption"
+              elevation="0"
+              @click="openJoinTelegramLink"
+            >
+              <v-icon left size="14">mdi-telegram</v-icon>
+              Join {{ page }}
+            </v-btn>
+            <v-btn
+              class="white--text text-none linear-background-blue-main text-caption"
+              elevation="0"
+              @click="submitLink"
+              :loading="!telegramTask.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              <v-icon left size="14">mdi-telegram</v-icon>
+              Continue
+            </v-btn>
+          </div>
+          <div
+            class="text-center text-decoration-underline font-italic text-caption cursor-pointer"
+            @click="showDialog"
           >
-            <v-icon left size="14">mdi-telegram</v-icon>
-            Join {{ page }}
-          </v-btn>
+            I have join {{ page }} on Telegram but can't finish the task?
+          </div>
         </div>
       </v-col>
       <v-col cols="auto" class="ml-auto">
@@ -74,24 +89,58 @@
         </div>
       </v-col>
       <v-col cols="12" class="mb-3">
-        <v-btn
-          class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
-          elevation="0"
-          @click="openJoinTelegramLink"
+        <div
           v-if="
             $vuetify.breakpoint.xsOnly &&
             vm.isHuntingProcessStarted &&
             telegramTask.activeStep &&
             !telegramTask.finished
           "
-          :loading="!telegramTask.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing"
         >
-          <v-icon left size="14">mdi-telegram</v-icon>
-          Join {{ page }}
-        </v-btn>
+          <div class="d-flex justify-center align-center">
+            <v-btn
+              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
+              elevation="0"
+              @click="openJoinTelegramLink"
+            >
+              <v-icon left size="14">mdi-telegram</v-icon>
+              Join {{ page }}
+            </v-btn>
+            <v-btn
+              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
+              elevation="0"
+              @click="submitLink"
+              :loading="!telegramTask.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              <v-icon left size="14">mdi-telegram</v-icon>
+              Continue
+            </v-btn>
+          </div>
+          <div
+            class="text-center text-decoration-underline font-italic text-caption cursor-pointer"
+            @click="showDialog"
+          >
+            I have join {{ page }} on Telegram but can't finish the task?
+          </div>
+        </div>
       </v-col>
     </v-row>
+    <v-dialog v-model="dialog" max-width="420">
+      <v-sheet class="neutral100 pa-4 text-body-2">
+        <div>
+          Follow these steps and you will be able to finish the task:
+          <ol>
+            <li>Get <router-link to="/hunting-history" class="blue--text">your referral link</router-link></li>
+            <li>
+              Join <a href="https://t.me/GloDAO_Group" target="_blank" class="blue--text">GloDAO's Telegram group</a>
+            </li>
+            <li>Chat @help with the GloDAO Mission Bot for instruction</li>
+            <li>Link your Telegram account by using your referral link</li>
+          </ol>
+        </div>
+      </v-sheet>
+    </v-dialog>
   </div>
 </template>
 
@@ -115,15 +164,22 @@ export default class TelegramFollowTask extends Vue {
   type = get(this.telegramTask, 'type', '')
   page = get(this.telegramTask, 'page', '')
   title = ''
+  dialog = false
+
+  showDialog() {
+    this.dialog = true
+  }
 
   openJoinTelegramLink() {
     this.openLink(get(this.telegramTask, 'link', ''))
-    this.vm.submitLink('telegram', '', this.step)
   }
   openLink(link: string) {
     const url = link.trim()
     if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
     else window.open('https://' + url, '_blank')
+  }
+  submitLink() {
+    this.vm.submitLink('telegram', '', this.step)
   }
 
   get state() {
