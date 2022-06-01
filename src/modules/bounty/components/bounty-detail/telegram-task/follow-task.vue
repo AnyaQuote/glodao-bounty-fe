@@ -33,7 +33,7 @@
           </div>
           <div
             class="text-center text-decoration-underline font-italic text-caption cursor-pointer"
-            @click="showDialog"
+            @click="openBotLink"
           >
             I have join {{ page }} on Telegram but can't finish the task?
           </div>
@@ -101,7 +101,7 @@
           </div>
           <div
             class="text-center text-decoration-underline font-italic text-caption cursor-pointer"
-            @click="showDialog"
+            @click="openBotLink"
           >
             I have join {{ page }} on Telegram but can't finish the task?
           </div>
@@ -116,8 +116,10 @@
             <li>Get <span @click="openHuntingHistory" class="blue--text cursor-pointer">your referral link</span></li>
             <li>
               Chat with the
-              <a href="https://t.me/glodao_mission_bot" target="_blank" class="blue--text">GloDAO Mission Bot</a> for
-              instruction
+              <a :href="`https://t.me/glodao_mission_bot?start=${referralCode}`" target="_blank" class="blue--text"
+                >GloDAO Mission Bot</a
+              >
+              for instruction
             </li>
             <li>Link your Telegram account by using your referral link</li>
           </ol>
@@ -132,6 +134,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -148,6 +151,13 @@ export default class TelegramFollowTask extends Vue {
   page = get(this.telegramTask, 'page', '')
   title = ''
   dialog = false
+
+  referralLink = `https://app.glodao.io/bounty?ref=${authStore.hunterReferralCode}`
+  referralCode = authStore.hunterReferralCode
+
+  openBotLink() {
+    window.open(`https://t.me/glodao_mission_bot?start=${this.referralCode}`, '_blank')
+  }
 
   openHuntingHistory() {
     let routeData = this.$router.resolve({ name: 'HuntingHistory' })
