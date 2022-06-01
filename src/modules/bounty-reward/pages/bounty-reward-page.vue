@@ -4,7 +4,7 @@
       <v-card class="neutral100 border-radius-16 pa-8" elevation="3" style="max-width: 555px" outlined>
         <v-container>
           <div class="d-flex align-center justify-center">
-            <img :src="require('@/assets/images/reward.svg')" alt="" />
+            <img :src="require('@/assets/images/reward.png')" alt="" />
             <div class="page-title ml-4">Bounty reward dashboard</div>
           </div>
           <div class="mt-4 py-4 text-center">
