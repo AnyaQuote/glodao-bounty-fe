@@ -113,7 +113,7 @@
         <div>
           Follow these steps and you will be able to finish the task:
           <ol>
-            <li>Get <span @click="openHuntingHistory" class="blue--text">your referral link</span></li>
+            <li>Get <span @click="openHuntingHistory" class="blue--text cursor-pointer">your referral link</span></li>
             <li>
               Chat with the
               <a href="https://t.me/glodao_mission_bot" target="_blank" class="blue--text">GloDAO Mission Bot</a> for
@@ -150,7 +150,8 @@ export default class TelegramFollowTask extends Vue {
   dialog = false
 
   openHuntingHistory() {
-    this.$router.push('/hunting-history')
+    let routeData = this.$router.resolve({ name: 'HuntingHistory' })
+    window.open(routeData.href, '_blank')
   }
 
   showDialog() {
