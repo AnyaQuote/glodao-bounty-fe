@@ -115,7 +115,7 @@
           <ol>
             <li>Get <span @click="openHuntingHistory" class="blue--text">your referral link</span></li>
             <li>
-              Chat @help with the
+              Chat with the
               <a href="https://t.me/glodao_mission_bot" target="_blank" class="blue--text">GloDAO Mission Bot</a> for
               instruction
             </li>
