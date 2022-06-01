@@ -152,11 +152,13 @@ export default class TelegramFollowTask extends Vue {
   title = ''
   dialog = false
 
+  telegramBot = process.env.VUE_APP_TELEGRAM_BOT
+
   referralLink = `https://app.glodao.io/bounty?ref=${authStore.hunterReferralCode}`
   referralCode = authStore.hunterReferralCode
 
   openBotLink() {
-    window.open(`https://t.me/glodao_mission_bot?start=${this.referralCode}`, '_blank')
+    window.open(`https://t.me/${this.telegramBot}?start=${this.referralCode}`, '_blank')
   }
 
   openHuntingHistory() {
