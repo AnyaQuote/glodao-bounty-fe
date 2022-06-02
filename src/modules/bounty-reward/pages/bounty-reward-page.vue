@@ -8,10 +8,19 @@
             <div class="page-title ml-4">Bounty reward dashboard</div>
           </div>
           <div class="mt-4 py-4 text-center">
-            <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
-            <span class="address">
-              {{ walletStore.account }}
-            </span>
+            <div v-if="walletStore.account">
+              <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
+              <span class="address">
+                {{ walletStore.account }}
+              </span>
+            </div>
+            <div v-else class="d-flex align-center justify-space-between">
+              <div>
+                <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
+                <span class="address"> Connect wallet to check your reward </span>
+              </div>
+              <div class="connect-text" @click="walletStore.changeShowConnectDialog(true)">Connect now</div>
+            </div>
           </div>
           <v-card class="mt-4 border-radius-8 py-6 text-center sub-card" outlined>
             <div class="d-flex align-center justify-space-around">
@@ -94,5 +103,13 @@ export default class BountyRewardPage extends Vue {
 }
 .sub-card {
   background: transparent !important;
+}
+.connect-text {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 150%;
+  cursor: pointer;
+  color: var(--v-bluePrimary-base);
 }
 </style>
