@@ -17,11 +17,11 @@
             <div class="d-flex align-center justify-space-around">
               <div class="d-flex flex-column">
                 Current bounty
-                <span class="sub-title"> 0.00 BUSD </span>
+                <span class="sub-title"> {{ vm.currentBounty | formatNumber }} BUSD </span>
               </div>
               <div class="d-flex flex-column">
                 Bounty rewarded
-                <span class="sub-title"> 0.00 BUSD </span>
+                <span class="sub-title"> {{ vm.bountyRewarded | formatNumber }} BUSD </span>
               </div>
             </div>
             <div class="font-italic success--text font-weight-bold mt-4">
@@ -29,19 +29,19 @@
             </div>
           </v-card>
 
-          <div v-if="showHistory">
+          <div v-if="$_get(vm.slicedRewardHistories, 'length')">
             <div class="sub-title mt-6">Rewarded History</div>
             <v-card
               class="sub-card border-radius-8 d-flex align-center justify-space-between my-2 pa-4"
               outlined
-              v-for="index in 5"
+              v-for="(rewardHistory, index) in vm.slicedRewardHistories"
               :key="index"
             >
               <div>
                 <span> Bounty rewarded: </span>
-                <span class="font-weight-bold"> $0.5 BUSD </span>
+                <span class="font-weight-bold"> {{ rewardHistory.rewardAmount | usd }} BUSD </span>
               </div>
-              <div>18/8/2022</div>
+              <div>{{ moment(rewardHistory.datetime) | datetime }}</div>
             </v-card>
           </div>
         </v-container>
@@ -55,15 +55,18 @@ import { Observer } from 'mobx-vue'
 import { Component, Vue, Provide } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
+import { BountyRewardViewModel } from '@/modules/bounty-reward/viewmodels/bounty-reward-viewmodel'
+import moment from 'moment'
 
 @Observer
 @Component({
   components: {},
 })
-export default class BountyHistoryPage extends Vue {
+export default class BountyRewardPage extends Vue {
+  @Provide() vm = new BountyRewardViewModel()
   walletStore = walletStore
   authStore = authStore
-  showHistory = true
+  moment = moment
 }
 </script>
 

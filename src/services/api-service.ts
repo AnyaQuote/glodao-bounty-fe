@@ -13,6 +13,7 @@ export type ApiRouteType =
   | 'campaigns'
   | 'quizzes'
   | 'quiz-answer-records'
+  | 'bounty-rewards'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
 axios.interceptors.request.use((config) => {
@@ -207,6 +208,7 @@ export class ApiService {
   hunters = new ApiHandlerJWT<any>(axios, 'hunters', { count: false })
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
   campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')
+  bountyRewards = new ApiHandler<any>(axios, 'bounty-rewards')
 
   async getFile(id: any) {
     const res = await axios.get(`upload/files/${id}`)
