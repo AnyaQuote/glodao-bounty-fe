@@ -10,11 +10,14 @@
           <div class="mt-4 py-4 text-center">
             <div v-if="walletStore.account">
               <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
-              <span class="address">
+              <span class="address" v-if="$vuetify.breakpoint.smAndUp">
                 {{ walletStore.account }}
               </span>
+              <span class="address" v-else>
+                {{ walletStore.account | shortAddress(6, 6) }}
+              </span>
             </div>
-            <div v-else class="d-flex align-center justify-space-between">
+            <div v-else :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div>
                 <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
                 <span class="address"> Connect wallet to check your reward </span>
@@ -23,7 +26,7 @@
             </div>
           </div>
           <v-card class="mt-4 border-radius-8 py-6 text-center sub-card" outlined>
-            <div class="d-flex align-center justify-space-around">
+            <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div class="d-flex flex-column">
                 Current bounty
                 <span class="sub-title"> {{ vm.currentBounty | formatNumber }} BUSD </span>
@@ -33,7 +36,7 @@
                 <span class="sub-title"> {{ vm.bountyRewarded | formatNumber }} BUSD </span>
               </div>
             </div>
-            <div class="font-italic success--text font-weight-bold mt-4">
+            <div class="font-italic success--text font-weight-bold mt-4 px-2">
               We will pay you when your reward reaches 0.5$. Participate and complete your mission to earn more!
             </div>
           </v-card>
@@ -41,10 +44,11 @@
           <div v-if="$_get(vm.slicedRewardHistories, 'length')">
             <div class="sub-title mt-6">Rewarded History</div>
             <v-card
-              class="sub-card border-radius-8 d-flex align-center justify-space-between my-2 pa-4"
+              class="sub-card border-radius-8 my-2 pa-4"
               outlined
               v-for="(rewardHistory, index) in vm.slicedRewardHistories"
               :key="index"
+              :class="{ 'd-flex align-center justify-space-between': $vuetify.breakpoint.mdAndUp }"
             >
               <div>
                 <span> Bounty rewarded: </span>
