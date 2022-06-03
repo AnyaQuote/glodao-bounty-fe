@@ -42,7 +42,7 @@
           </v-card>
 
           <div v-if="$_get(vm.slicedRewardHistories, 'length')">
-            <div class="sub-title mt-6">Rewarded History</div>
+            <div class="sub-title mt-6">Recently rewarded</div>
             <v-card
               class="sub-card border-radius-8 my-2 pa-4"
               outlined
