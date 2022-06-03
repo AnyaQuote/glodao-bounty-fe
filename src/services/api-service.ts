@@ -356,6 +356,23 @@ export class ApiService {
     })
     return res.data
   }
+
+  async startHunting(model) {
+    const res = await axios.post('applies/startHunting', model, {
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
+    return res.data
+  }
+  async finishHuntingProcess(model) {
+    const res = await axios.post('applies/finishHuntingProcess', model, {
+      headers: {
+        Authorization: `Bearer ${authStore.jwt}`,
+      },
+    })
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()

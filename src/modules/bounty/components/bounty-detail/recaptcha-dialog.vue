@@ -52,7 +52,7 @@ export default class RecaptchaDialog extends Vue {
   }
   onCaptchaVerify(response) {
     if (response) {
-      this.vm.changeRecaptchaConfirm(true)
+      this.vm.changeRecaptchaConfirm(true, response)
       setTimeout(() => {
         ;(this.$refs.recaptcha as any).reset()
       }, 1000)
