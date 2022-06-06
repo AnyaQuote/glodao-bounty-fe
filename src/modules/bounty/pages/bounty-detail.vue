@@ -366,7 +366,7 @@ export default class BountyDetail extends Vue {
   }
 
   async hcaptchaOnVerify(token) {
-    this.vm.changeEarnDialog(true)
+    this.vm.changeEarnDialog(true, token)
   }
 
   @Watch('$route.params.taskId', { immediate: true }) onIdChanged(val: string) {

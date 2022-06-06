@@ -50,6 +50,7 @@ export interface SharePerson {
 
 export class BountyDetailViewModel {
   @observable breadcrumbsItems = DEFAULT_BREADCRUMBS
+  @observable hcaptchaSubmitToken = ''
   @observable taskId = ''
   @observable status: HUNTING = HUNTING.start
   @observable hunters: any = []
@@ -159,8 +160,9 @@ export class BountyDetailViewModel {
     ]
   }
 
-  @action.bound changeEarnDialog(value: boolean) {
+  @action.bound changeEarnDialog(value: boolean, token?: string) {
     this.earnDialog = value
+    if (token) this.hcaptchaSubmitToken = token
   }
 
   @action.bound changeEarnDialogWalletInput(value: string) {
@@ -207,15 +209,16 @@ export class BountyDetailViewModel {
     }
   }
 
-  @asyncAction *createApply() {
+  @asyncAction *createApply(captchaToken) {
     try {
       this.changeIsStartingProcess(true)
-      const res = yield apiService.applies.create({
+      const res = yield apiService.startHunting({
         data: this.applyStepData,
         ID: `${this.taskId}_${authStore.user.hunter.id}`,
         hunter: authStore.user.hunter.id,
         task: this.taskId,
         status: APPLY_STATUS.PROCESSING,
+        captchaToken,
       })
 
       if (res) {
@@ -399,7 +402,11 @@ export class BountyDetailViewModel {
   @action.bound submitTaskConfirmation(type: string) {
     this.changeTaskSubmiting(true)
     apiService
-      .updateTaskProcess(this.apply.id, 'finish', null, { walletAddress: walletStore.account })
+      .finishHuntingProcess({
+        id: this.apply.id,
+        walletAddress: walletStore.account,
+        captchaToken: this.hcaptchaSubmitToken,
+      })
       .then((res) => {
         this.apply = res
         this.status = HUNTING.finish
@@ -412,6 +419,8 @@ export class BountyDetailViewModel {
       })
       .finally(() => {
         this.changeTaskSubmiting(false)
+        this.hcaptchaSubmitToken = ''
+        this.changeEarnDialog(false)
       })
   }
 
@@ -419,12 +428,12 @@ export class BountyDetailViewModel {
     this.reCaptchaDialog = value
   }
 
-  @action.bound changeRecaptchaConfirm(value: boolean) {
+  @action.bound changeRecaptchaConfirm(value: boolean, captchaToken?: string) {
     this.confirmCaptcha = value
     if (value) {
       setTimeout(() => {
         this.changeRecaptchaDialog(false)
-        this.createApply()
+        this.createApply(captchaToken)
       }, 500)
     }
   }

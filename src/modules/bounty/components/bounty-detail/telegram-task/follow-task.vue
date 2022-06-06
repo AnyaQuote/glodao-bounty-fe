@@ -8,12 +8,11 @@
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">Join {{ page }} on Telegram</div>
           <div class="text-caption mt-1">
-            Please join <a :href="telegramTask.link" target="_blank" class="blue--text">{{ page }}</a> on Telegram to
+            Please <a :href="telegramTask.link" target="_blank" class="blue--text">join {{ page }}</a> on Telegram to
             complete this task.
           </div>
         </div>
         <div
-          class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4"
           v-if="
             $vuetify.breakpoint.smAndUp &&
             vm.isHuntingProcessStarted &&
@@ -21,16 +20,23 @@
             !telegramTask.finished
           "
         >
-          <v-btn
-            class="white--text text-none linear-background-blue-main text-caption"
-            elevation="0"
-            @click="openJoinTelegramLink"
-            :loading="!telegramTask.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing"
+          <div class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4 d-flex justify-space-between align-center">
+            <v-btn
+              class="white--text text-none linear-background-blue-main text-caption"
+              elevation="0"
+              @click="submitLink"
+              :loading="!telegramTask.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              I had finished this task
+            </v-btn>
+          </div>
+          <div
+            class="text-center text-decoration-underline font-italic text-caption cursor-pointer"
+            @click="openBotLink"
           >
-            <v-icon left size="14">mdi-telegram</v-icon>
-            Join {{ page }}
-          </v-btn>
+            I have join {{ page }} on Telegram but can't finish the task?
+          </div>
         </div>
       </v-col>
       <v-col cols="auto" class="ml-auto">
@@ -74,24 +80,52 @@
         </div>
       </v-col>
       <v-col cols="12" class="mb-3">
-        <v-btn
-          class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
-          elevation="0"
-          @click="openJoinTelegramLink"
+        <div
           v-if="
             $vuetify.breakpoint.xsOnly &&
             vm.isHuntingProcessStarted &&
             telegramTask.activeStep &&
             !telegramTask.finished
           "
-          :loading="!telegramTask.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing"
         >
-          <v-icon left size="14">mdi-telegram</v-icon>
-          Join {{ page }}
-        </v-btn>
+          <div class="d-flex justify-center align-center">
+            <v-btn
+              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
+              elevation="0"
+              @click="submitLink"
+              :loading="!telegramTask.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              I had finished this task
+            </v-btn>
+          </div>
+          <div
+            class="text-center text-decoration-underline font-italic text-caption cursor-pointer"
+            @click="openBotLink"
+          >
+            I have join {{ page }} on Telegram but can't finish the task?
+          </div>
+        </div>
       </v-col>
     </v-row>
+    <v-dialog v-model="dialog" max-width="420">
+      <v-sheet class="neutral100 pa-4 text-body-2">
+        <div>
+          Follow these steps and you will be able to finish the task:
+          <ol>
+            <li>Get <span @click="openHuntingHistory" class="blue--text cursor-pointer">your referral link</span></li>
+            <li>
+              Chat with the
+              <a :href="`https://t.me/glodao_mission_bot?start=${referralCode}`" target="_blank" class="blue--text"
+                >GloDAO Mission Bot</a
+              >
+              for instruction
+            </li>
+            <li>Link your Telegram account by using your referral link</li>
+          </ol>
+        </div>
+      </v-sheet>
+    </v-dialog>
   </div>
 </template>
 
@@ -100,6 +134,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -115,15 +150,36 @@ export default class TelegramFollowTask extends Vue {
   type = get(this.telegramTask, 'type', '')
   page = get(this.telegramTask, 'page', '')
   title = ''
+  dialog = false
+
+  telegramBot = process.env.VUE_APP_TELEGRAM_BOT
+
+  referralLink = `https://app.glodao.io/bounty?ref=${authStore.hunterReferralCode}`
+  referralCode = authStore.hunterReferralCode
+
+  openBotLink() {
+    window.open(`https://t.me/${this.telegramBot}?start=${this.referralCode}`, '_blank')
+  }
+
+  openHuntingHistory() {
+    let routeData = this.$router.resolve({ name: 'HuntingHistory' })
+    window.open(routeData.href, '_blank')
+  }
+
+  showDialog() {
+    this.dialog = true
+  }
 
   openJoinTelegramLink() {
     this.openLink(get(this.telegramTask, 'link', ''))
-    this.vm.submitLink('telegram', '', this.step)
   }
   openLink(link: string) {
     const url = link.trim()
     if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
     else window.open('https://' + url, '_blank')
+  }
+  submitLink() {
+    this.vm.submitLink('telegram', '', this.step)
   }
 
   get state() {
