@@ -5,20 +5,18 @@
         <v-col cols="12" sm="6" class="text-center flex-center-box">
           <v-sheet
             elevation="0"
-            rounded
-            class="text-none text-caption pa-2 background-transparent redSenamatic--border white--text"
+            class="rounded-lg text-none text-caption pa-2 background--white redSenamatic--text font-weight-600 redSenamatic--border white--text"
             v-if="vm.isHuntingProcessEnded"
           >
-            <v-icon left color="redSenamatic">mdi-alert-circle-outline</v-icon>
+            <v-icon left color="redSenamatic">mdi-motion-play-outline</v-icon>
             Your hunting process has finished!
           </v-sheet>
           <v-sheet
             elevation="0"
-            rounded
-            class="text-none text-caption pa-2 background-transparent white--border white--text"
+            class="rounded-lg text-none text-caption pa-2 background--white white--border font-weight-600 black--text"
             v-else
           >
-            <v-icon left color="white">mdi-timelapse</v-icon>
+            <v-icon left color="black">mdi-timelapse</v-icon>
             Your hunting process has begun!
           </v-sheet>
         </v-col>
@@ -67,5 +65,8 @@ export default class HuntingStatusSheet extends Vue {
 }
 .linear-background-blue-light {
   background: linear-gradient(90deg, rgba(2, 118, 240, 0.2) 0%, rgba(0, 229, 255, 0.2) 113.65%);
+}
+.background--white {
+  background: white;
 }
 </style>
