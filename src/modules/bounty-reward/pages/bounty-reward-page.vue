@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="d-flex align-center justify-center">
+    <div class="d-flex align-center justify-center mt-6">
       <v-card class="neutral100 border-radius-16 pa-8" elevation="3" style="max-width: 555px" outlined>
         <v-container>
           <div class="d-flex align-center justify-center">
@@ -25,7 +25,7 @@
               <div class="connect-text" @click="walletStore.changeShowConnectDialog(true)">Connect now</div>
             </div>
           </div>
-          <v-card class="mt-4 border-radius-8 py-6 text-center sub-card" outlined>
+          <v-card class="mt-4 border-radius-8 py-6 px-2 text-center sub-card" outlined>
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div class="d-flex flex-column">
                 Current bounty
@@ -36,7 +36,7 @@
                 <span class="sub-title"> {{ vm.bountyRewarded | formatNumber }} BUSD </span>
               </div>
             </div>
-            <div class="font-italic success--text font-weight-bold mt-4 px-2">
+            <div class="font-italic success--text font-weight-600 mt-6 px-2">
               We will pay you when your reward reaches 0.5$. Participate and complete your mission to earn more!
             </div>
           </v-card>
