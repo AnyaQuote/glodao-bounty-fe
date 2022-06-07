@@ -102,7 +102,7 @@ export class BountyHunterViewModel {
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
       const res = yield apiService.tasks.find(
-        { status: 'ended', ...this.dateRangeFilterParams },
+        { endTime_lt: moment().toISOString(), ...this.dateRangeFilterParams },
         {
           _limit: PAGE_LIMIT,
           _start: _start,
@@ -119,7 +119,10 @@ export class BountyHunterViewModel {
   }
 
   @asyncAction *getTotalBountyCount() {
-    this.bountyCount = yield apiService.tasks.count({ status: 'ended', ...this.dateRangeFilterParams })
+    this.bountyCount = yield apiService.tasks.count({
+      endTime_lt: moment().toISOString(),
+      ...this.dateRangeFilterParams,
+    })
   }
 
   @asyncAction *getCurrentTask() {
