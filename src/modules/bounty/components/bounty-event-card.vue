@@ -1,5 +1,5 @@
 <template>
-  <router-link tag="div" :to="`/bounty/${id}`">
+  <router-link tag="div" :to="`/bounty/${id}`" class="cursor-pointer">
     <v-card
       class="mx-auto overflow-hidden border-radius-16 neutral100 fill-height cursor-pointer"
       elevation="3"
