@@ -174,7 +174,7 @@
       <!-- RIGHT -->
       <v-col cols="12" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)" v-if="vm.isEventMission">
         <div class="row d-flex justify-center">
-          <v-sheet class="mb-4 neutral15 col-12" v-if="vm.missionType !== 'lucky'">
+          <v-sheet class="mb-4 neutral15 col-12">
             <v-row dense>
               <v-col cols="12" sm="3" md="3">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
@@ -217,40 +217,17 @@
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Your completed missions</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
-                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-shield-check</v-icon>
+                    <v-icon size="20" class="mr-2" color="purple">mdi-shield-check</v-icon>
                     <span>{{ vm.totalCompleteMissionCount }}</span>
                   </div>
                 </v-sheet>
               </v-col>
-            </v-row>
-          </v-sheet>
-          <v-sheet class="mb-4 neutral15 col-12" v-else>
-            <v-row dense>
-              <v-col cols="12" sm="4" md="4">
+              <v-col cols="12" sm="3" md="3" v-else-if="vm.missionType === 'lucky'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Total reward: ({{ vm.rewardToken }})</div>
-                  <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ vm.rewardAmount | formatNumber }}</span>
-                  </div>
-                </v-sheet>
-              </v-col>
-
-              <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Participants</div>
+                  <div class="card-subtitle-1">Highest reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
-                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
-                    <span>{{ vm.totalParticipants }}</span>
-                  </div>
-                </v-sheet>
-              </v-col>
-              <v-col cols="12" sm="4" md="4">
-                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Total prizes</div>
-                  <div class="card-big-title-text font-weight-bold d-flex">
-                    <v-icon size="20" class="mr-2" color="orange">mdi-star-circle</v-icon>
-                    <span>{{ vm.maxPriorityParticipants }}</span>
+                    <v-icon size="20" class="mr-2" color="deep-orange">mdi-assistant</v-icon>
+                    <span>$250</span>
                   </div>
                 </v-sheet>
               </v-col>
