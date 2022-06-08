@@ -277,11 +277,15 @@
                 <v-sheet class="neutral100--bg fill-width pa-7">
                   <v-row dense no-gutters>
                     <v-col cols="12">
-                      <div class="text-uppercase bluePrimary--text font-weight-bold text-body-1">event task</div>
+                      <div class="text-uppercase bluePrimary--text font-weight-bold text-body-1">
+                        event task
+                        <span class="primary--text text-none font-weight-regular ml-3"
+                          >Do all task to join this event!</span
+                        >
+                      </div>
                     </v-col>
                     <v-col cols="12">
                       <div v-if="!vm.isHuntingProcessStarted && !vm.isUserTaskCompleted">
-                        <div class="text-body-2">Are you ready? Please click “Start hunting” button to start.</div>
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
                             <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify" v-bind="attrs" v-on="on">
