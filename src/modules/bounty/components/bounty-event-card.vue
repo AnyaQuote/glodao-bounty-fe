@@ -1,6 +1,10 @@
 <template>
   <router-link tag="div" :to="`/bounty/${id}`">
-    <v-card class="mx-auto overflow-hidden border-radius-16 neutral100 fill-height" elevation="3" outlined>
+    <v-card
+      class="mx-auto overflow-hidden border-radius-16 neutral100 fill-height cursor-pointer"
+      elevation="3"
+      outlined
+    >
       <div class="position-relative">
         <v-img :src="coverImage" :aspect-ratio="1.5"></v-img>
         <div class="position-absolute" style="top: 10px; left: 10px">
