@@ -215,9 +215,9 @@
               </v-col>
               <v-col cols="12" sm="3" md="3" v-else-if="vm.missionType === 'active'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Participants</div>
+                  <div class="card-subtitle-1">Your completed missions</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
-                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-file-document</v-icon>
+                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-shield-check</v-icon>
                     <span>{{ vm.totalCompleteMissionCount }}</span>
                   </div>
                 </v-sheet>
