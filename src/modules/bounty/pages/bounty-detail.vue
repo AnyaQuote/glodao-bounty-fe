@@ -386,7 +386,7 @@
                             color="bluePrimary"
                             class="white--text text-none linear-background-blue-main text-caption"
                             :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
-                            @click="vm.submitTaskConfirmation"
+                            @click="requestChallenge"
                             :loading="vm.isTaskSubmiting"
                           >
                             Confirm to complete
