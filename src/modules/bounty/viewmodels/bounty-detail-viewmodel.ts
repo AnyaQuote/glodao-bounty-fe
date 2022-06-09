@@ -892,4 +892,8 @@ export class BountyDetailViewModel {
       this.missionType === 'event'
     )
   }
+
+  @computed get learnMoreLink() {
+    return get(this.task, 'metadata.learnMoreLink', '')
+  }
 }

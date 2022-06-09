@@ -76,8 +76,8 @@
 
       <!-- LEFT -->
       <v-col cols="12" v-if="vm.isEventMission">
-        <div class="d-md-flex mb-8 neutral100--bg">
-          <v-sheet class="position-relative rounded-lg overflow-hidden transparent">
+        <v-sheet class="d-md-flex mb-8 neutral100--bg row border-radius-8 overflow-hidden dense no-gutters" outlined>
+          <v-sheet class="position-relative rounded-lg overflow-hidden transparent col-6">
             <!-- image -->
             <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg" v-if="!vm.coverVideo"></v-img>
             <video width="100%" loop autoplay muted v-if="vm.coverVideo" style="border-radius: 8px">
@@ -87,7 +87,7 @@
           </v-sheet>
 
           <!-- subtitle -->
-          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height">
+          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height col-6">
             <v-sheet
               class="mb-4 card-subtitle-1 neutral100"
               v-html="$options.filters._get(vm.task, 'metadata.caption')"
@@ -99,12 +99,14 @@
                 >Event time: {{ vm.task.startTime | MMMddYYYYhhmm }} -
                 {{ vm.task.endTime | MMMddYYYYhhmm }}
               </v-sheet>
-              <v-sheet class="d-flex transparent mb-3">
-                <v-sheet class="transparent title-2">Website:</v-sheet>
-                <a class="bluePrimary--text title-2 ml-3" :href="vm.task | _get('metadata.website')" target="_blank">
-                  {{ vm.task | _get('metadata.website') }}
-                </a>
-              </v-sheet>
+              <div class="mb-4" v-if="vm.learnMoreLink">
+                <a
+                  :href="vm.learnMoreLink"
+                  target="_blank"
+                  class="bluePrimary--text text-none font-weight-600 text-body-2"
+                  >Learn more<v-icon color="bluePrimary">mdi-chevron-right</v-icon></a
+                >
+              </div>
               <v-sheet class="d-flex align-center transparent">
                 <v-sheet class="transparent title-2">Social link:</v-sheet>
                 <v-btn
@@ -123,7 +125,7 @@
               </v-sheet>
             </v-sheet>
           </v-sheet>
-        </div>
+        </v-sheet>
       </v-col>
       <!-- LEFT -->
       <v-col cols="12" md="4" v-else>
@@ -346,7 +348,7 @@
                             Apply for priority pool
                           </v-btn>
                         </v-col>
-                        <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.completeTime">
+                        <v-col cols="12" class="text-center ma-0 pa-0">
                           <v-sheet class="neutral15 fill-width pa-6 text-center">
                             <span class="blue--text font-weight-bold" v-html="vm.finishMessage"></span>
                             <div class="d-flex justify-center mt-4">

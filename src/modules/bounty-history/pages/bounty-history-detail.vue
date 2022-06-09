@@ -199,7 +199,7 @@
               </v-col>
               <v-col cols="12" md="8">
                 <v-sheet class="fill-width neutral15 pa-6 border-radius-8">
-                  <div class="text-h6 font-weight-bold">Task done history</div>
+                  <div class="text-h6 font-weight-bold">Task history</div>
                   <div class="mt-6">
                     <task-complete-list :applyList="vm.relatedApplies" />
                   </div>
