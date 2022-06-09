@@ -102,7 +102,7 @@ export class BountyHunterViewModel {
       if (page) this.page = page
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
       const res = yield apiService.tasks.find(
-        { status: 'ended', ...this.dateRangeFilterParams },
+        { endTime_lt: moment().toISOString(), ...this.dateRangeFilterParams },
         {
           _limit: PAGE_LIMIT,
           _start: _start,
@@ -119,7 +119,10 @@ export class BountyHunterViewModel {
   }
 
   @asyncAction *getTotalBountyCount() {
-    this.bountyCount = yield apiService.tasks.count({ status: 'ended', ...this.dateRangeFilterParams })
+    this.bountyCount = yield apiService.tasks.count({
+      endTime_lt: moment().toISOString(),
+      ...this.dateRangeFilterParams,
+    })
   }
 
   @asyncAction *getCurrentTask() {
@@ -149,6 +152,15 @@ export class BountyHunterViewModel {
     return this.bountyCount - this.bountyList.length
   }
 
+  @computed get isAnyBounty() {
+    return this.convertedLiveBountyList.length > 0 || this.eventMissionList.length > 0
+  }
+
+  @computed get eventMissionList() {
+    return this.liveBountyList.filter(
+      (bounty) => bounty.type !== 'bounty' && bounty.type !== 'learn' && !_.isEmpty(bounty.type)
+    )
+  }
   @computed get convertedBountyList() {
     return this.bountyList.map((bounty) => {
       return {
@@ -168,31 +180,33 @@ export class BountyHunterViewModel {
     })
   }
   @computed get convertedLiveBountyList() {
-    return this.liveBountyList.map((bounty) => {
-      return {
-        name: bounty.name,
-        id: bounty.id,
-        startTime: bounty.startTime,
-        endTime: bounty.endTime,
-        rewardAmount: bounty.rewardAmount,
-        tokenName: get(bounty, 'metadata.rewardToken', ''),
-        chainId: bounty.chainId,
-        metadata: get(bounty, 'metadata', {}),
-        coverImage: get(
-          bounty,
-          'metadata.coverImage',
-          'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
-        ),
-        projectLogo: bounty.metadata.projectLogo,
-        types: keys(bounty.data),
-        maxParticipant: bounty.maxParticipant,
-        participant: bounty.totalParticipants,
-        tokenBasePrice: bounty.tokenBasePrice,
-        shortDescription: get(bounty, 'metadata.shortDescription', 'TBA'),
-        missionIndex: get(bounty, 'missionIndex', 0),
-        type: get(bounty, 'type', ''),
-      }
-    })
+    return this.liveBountyList
+      .filter((bounty) => bounty.type === 'bounty' || bounty.type === 'learn' || _.isEmpty(bounty.type))
+      .map((bounty) => {
+        return {
+          name: bounty.name,
+          id: bounty.id,
+          startTime: bounty.startTime,
+          endTime: bounty.endTime,
+          rewardAmount: bounty.rewardAmount,
+          tokenName: get(bounty, 'metadata.rewardToken', ''),
+          chainId: bounty.chainId,
+          metadata: get(bounty, 'metadata', {}),
+          coverImage: get(
+            bounty,
+            'metadata.coverImage',
+            'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
+          ),
+          projectLogo: bounty.metadata.projectLogo,
+          types: keys(bounty.data),
+          maxParticipant: bounty.maxParticipant,
+          participant: bounty.totalParticipants,
+          tokenBasePrice: bounty.tokenBasePrice,
+          shortDescription: get(bounty, 'metadata.shortDescription', 'TBA'),
+          missionIndex: get(bounty, 'missionIndex', 0),
+          type: get(bounty, 'type', ''),
+        }
+      })
   }
   @computed get convertedUpcomingBountyList() {
     return this.upcomingBountyList.map((bounty) => {

@@ -42,8 +42,18 @@
               v-if="vm.task.missionIndex"
             ></v-sheet>
             <span class="text-none" v-if="vm.task.missionIndex">
-              Mission No.
-              {{ vm.task | _get('missionIndex') }}
+              <div v-if="vm.missionType === 'bounty'">
+                Mission No.
+                {{ vm.task | _get('missionIndex') }}
+              </div>
+              <div v-else-if="vm.missionType === 'learn'">
+                Learning Mission No.
+                {{ vm.task | _get('missionIndex') }}
+              </div>
+              <div v-else-if="vm.isEventMission">
+                Event Mission No.
+                {{ vm.task | _get('missionIndex') }}
+              </div>
             </span>
           </div>
         </v-sheet>
@@ -65,7 +75,60 @@
       </v-col>
 
       <!-- LEFT -->
-      <v-col cols="12" md="4">
+      <v-col cols="12" v-if="vm.isEventMission">
+        <v-sheet class="d-md-flex mb-8 neutral100--bg row border-radius-8 overflow-hidden dense no-gutters" outlined>
+          <v-sheet class="position-relative rounded-lg overflow-hidden transparent col-6">
+            <!-- image -->
+            <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg" v-if="!vm.coverVideo"></v-img>
+            <video width="100%" loop autoplay muted v-if="vm.coverVideo" style="border-radius: 8px">
+              <source :src="vm.coverVideo" type="video/mp4" />
+              Your browser does not support HTML video.
+            </video>
+          </v-sheet>
+
+          <!-- subtitle -->
+          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height col-6">
+            <v-sheet
+              class="mb-4 card-subtitle-1 neutral100"
+              v-html="$options.filters._get(vm.task, 'metadata.caption')"
+              v-if="vm.missionType !== 'learn'"
+            >
+            </v-sheet>
+            <v-sheet class="neutral100" v-if="vm.missionType !== 'learn'">
+              <v-sheet class="bluePrimary lighten-3 pa-3 title-2 mb-3"
+                >Event time: {{ vm.task.startTime | MMMddYYYYhhmm }} -
+                {{ vm.task.endTime | MMMddYYYYhhmm }}
+              </v-sheet>
+              <div class="mb-4" v-if="vm.learnMoreLink">
+                <a
+                  :href="vm.learnMoreLink"
+                  target="_blank"
+                  class="bluePrimary--text text-none font-weight-600 text-body-2"
+                  >Learn more<v-icon color="bluePrimary">mdi-chevron-right</v-icon></a
+                >
+              </div>
+              <v-sheet class="d-flex align-center transparent">
+                <v-sheet class="transparent title-2">Social link:</v-sheet>
+                <v-btn
+                  v-for="(value, key) in vm.taskSocialLinks"
+                  :key="key"
+                  class="bluePrimary ml-3"
+                  fab
+                  width="24"
+                  height="24"
+                  :href="value"
+                  target="_blank"
+                  depressed
+                >
+                  <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                </v-btn>
+              </v-sheet>
+            </v-sheet>
+          </v-sheet>
+        </v-sheet>
+      </v-col>
+      <!-- LEFT -->
+      <v-col cols="12" md="4" v-else>
         <div>
           <v-sheet class="mb-4 position-relative rounded-lg overflow-hidden transparent">
             <!-- image -->
@@ -111,7 +174,227 @@
       </v-col>
 
       <!-- RIGHT -->
-      <v-col cols="12" md="8" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)">
+      <v-col cols="12" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)" v-if="vm.isEventMission">
+        <div class="row d-flex justify-center">
+          <v-sheet class="mb-4 neutral15 col-12">
+            <v-row dense>
+              <v-col cols="12" sm="3" md="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Total reward: ({{ vm.rewardToken }})</div>
+                  <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
+                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
+                    <span>{{ vm.rewardAmount | formatNumber }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+
+              <v-col cols="12" sm="3" md="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Participants</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
+                    <span>{{ vm.totalParticipants }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="12" sm="3" md="3">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Total prizes</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="orange">mdi-star-circle</v-icon>
+                    <span>{{ vm.maxPriorityParticipants }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="12" sm="3" md="3" v-if="vm.missionType === 'referral'">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Your total referrals</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-supervisor-circle</v-icon>
+                    <span>{{ vm.totalReferralCount }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="12" sm="3" md="3" v-else-if="vm.missionType === 'active'">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Your completed missions</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="purple">mdi-shield-check</v-icon>
+                    <span>{{ vm.totalCompleteMissionCount }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="12" sm="3" md="3" v-else-if="vm.missionType === 'lucky'">
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Highest reward</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="deep-orange">mdi-assistant</v-icon>
+                    <span>$250</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+            </v-row>
+          </v-sheet>
+          <v-col cols="12" md="8">
+            <v-sheet style="background-color: var(--v-neutral-15-base)">
+              <!-- LIST -->
+
+              <v-row dense no-gutters>
+                <v-col cols="12">
+                  <wallet-sheet v-if="vm.currentWallet"></wallet-sheet>
+                  <v-sheet
+                    class="pa-4 mb-6 rounded-lg neutral100--bg redSenamatic--text font-italic text-body-2"
+                    elevation="3"
+                    v-else
+                  >
+                    You need to connect your wallet to do task
+                  </v-sheet>
+                </v-col>
+              </v-row>
+              <!-- TASK -->
+              <v-sheet class="rounded-lg overflow-hidden neutral100" elevation="3">
+                <v-sheet class="neutral100--bg fill-width pa-7">
+                  <v-row dense no-gutters>
+                    <v-col cols="12">
+                      <div class="text-uppercase bluePrimary--text font-weight-bold text-body-1">
+                        event task
+                        <span class="primary--text text-none font-weight-regular ml-3"
+                          >Do all task to join this event!</span
+                        >
+                      </div>
+                    </v-col>
+                    <v-col cols="12">
+                      <div v-if="!vm.isHuntingProcessStarted && !vm.isUserTaskCompleted">
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <div class="unqualify-msg" v-if="!vm.isAccountAgeQualify" v-bind="attrs" v-on="on">
+                              Your account does not qualify for task hunting
+                            </div>
+                          </template>
+                          <span>Your twitter account must be older than 3 months</span>
+                        </v-tooltip>
+                        <div class="d-flex mt-5">
+                          <v-btn
+                            elevation
+                            class="white--text text-none linear-background-blue-main"
+                            @click="vm.startHunting"
+                            :disabled="
+                              !vm.isTaskStarted ||
+                              vm.isTaskEnded ||
+                              !vm.isAccountAgeQualify ||
+                              !vm.currentWallet ||
+                              !vm.isCurrentWalletMatchRegistered ||
+                              !vm.isTaskLimitAvailable
+                            "
+                            :loading="vm.isStartingProcess"
+                            height="40"
+                          >
+                            <v-icon left>mdi-power</v-icon>
+                            Start hunting
+                          </v-btn>
+                        </div>
+                      </div>
+                    </v-col>
+                    <v-sheet class="ba-dotted neutral100--bg fill-width mt-5 border-radius-8 overflow-hidden">
+                      <v-sheet class="pa-4 pa-md-6 neutral100--bg">
+                        <v-col
+                          cols="12"
+                          class="py-0"
+                          v-for="(twitterTask, index) in vm.displayedTwitterData"
+                          :key="'twitter' + index"
+                          :class="{
+                            'px-0': $vuetify.breakpoint.xsOnly,
+                          }"
+                        >
+                          <div class="custom-dash-divider" v-if="index !== 0"></div>
+                          <twitter-mini-task :twitterTask="twitterTask" :step="index" />
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          class="py-0"
+                          v-for="(telegramTask, index) in vm.displayedTelegramData"
+                          :key="'telegram' + index"
+                          :class="{
+                            'px-0': $vuetify.breakpoint.xsOnly,
+                          }"
+                        >
+                          <div class="custom-dash-divider"></div>
+                          <telegram-mini-task :telegramTask="telegramTask" :step="index" />
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          class="py-0"
+                          v-for="(quizTask, index) in vm.displayedQuizTaskData"
+                          :key="'quiz' + index"
+                          :class="{
+                            'px-0': $vuetify.breakpoint.xsOnly,
+                          }"
+                        >
+                          <div class="custom-dash-divider"></div>
+                          <quiz-mini-task :task="quizTask" :step="index" />
+                        </v-col>
+                      </v-sheet>
+                      <v-divider></v-divider>
+                      <v-row class="pa-6">
+                        <v-col cols="12" sm="6" class="text-center" v-if="false">
+                          <v-btn
+                            elevation="0"
+                            color="bluePrimary"
+                            class="white--text text-none linear-background-blue-main text-caption"
+                            :disabled="!vm.isPriorityPoolAvailable || !vm.isValidStakeAmount"
+                            @click="vm.applyForPriorityPool()"
+                            :loading="vm.isApplyPrioritying"
+                          >
+                            Apply for priority pool
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="12" class="text-center ma-0 pa-0">
+                          <v-sheet class="neutral15 fill-width pa-6 text-center">
+                            <span class="blue--text font-weight-bold" v-html="vm.finishMessage"></span>
+                            <div class="d-flex justify-center mt-4">
+                              <v-sheet
+                                class="text-body-2 pa-4 cursor-pointer"
+                                outlined
+                                rounded
+                                style="background: transparent"
+                              >
+                                <a :href="vm.finishLink" class="neutral10--text font-weight-600">{{ vm.finishLink }}</a>
+                              </v-sheet>
+                            </div>
+                          </v-sheet>
+                        </v-col>
+                        <v-col cols="12" class="text-center" v-if="!vm.completeTime">
+                          <v-btn
+                            elevation="0"
+                            color="bluePrimary"
+                            class="white--text text-none linear-background-blue-main text-caption"
+                            :disabled="vm.shouldDisableTaskProcessing || !vm.isTaskProcessFinish"
+                            @click="requestChallenge"
+                            :loading="vm.isTaskSubmiting"
+                          >
+                            Confirm to complete
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-sheet>
+                    <v-col cols="12"> </v-col>
+                  </v-row>
+                </v-sheet>
+                <!-- </v-tab-item>
+              <v-tab-item></v-tab-item>
+            </v-tabs-items> -->
+              </v-sheet>
+
+              <!-- divider -->
+              <!-- <v-divider class="my-10"></v-divider> -->
+
+              <!-- <twitter-share-table /> -->
+            </v-sheet>
+          </v-col>
+        </div>
+      </v-col>
+      <!-- RIGHT -->
+      <v-col cols="12" md="8" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)" v-else>
         <v-sheet class="ml-md-5" style="background-color: var(--v-neutral-15-base)">
           <!-- LIST -->
           <v-sheet class="mb-4 neutral15" v-if="vm.missionType !== 'learn'">
@@ -281,6 +564,11 @@
                       >
                         Apply for priority pool
                       </v-btn>
+                    </v-col>
+                    <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.completeTime">
+                      <span
+                        ><a class="blue--text text-caption" :href="vm.finishLink">{{ vm.finishMessage }}</a></span
+                      >
                     </v-col>
                     <v-col cols="12" class="text-center">
                       <v-btn

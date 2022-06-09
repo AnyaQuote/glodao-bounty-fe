@@ -37,7 +37,7 @@
               </div>
             </div>
             <div class="font-italic success--text font-weight-600 mt-6 px-2">
-              We will pay you when your reward reaches 0.5$. Participate and complete your mission to earn more!
+              We will send you when your reward reaches 0.5$. Participate and complete your mission to earn more!
             </div>
           </v-card>
 

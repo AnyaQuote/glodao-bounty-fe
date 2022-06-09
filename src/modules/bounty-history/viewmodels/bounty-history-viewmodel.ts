@@ -98,7 +98,7 @@ export class BountyHistoryViewModel {
       this.bountyListLoading = true
       const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
       const res = yield apiService.tasks.find(
-        { status: 'ended', ...this.dateRangeFilterParams },
+        { endTime_lt: moment().toISOString(), ...this.dateRangeFilterParams },
         {
           _limit: PAGE_LIMIT,
           _start: _start,
@@ -116,7 +116,10 @@ export class BountyHistoryViewModel {
   }
 
   @asyncAction *getTotalBountyCount() {
-    this.bountyCount = yield apiService.tasks.count({ status: 'ended', ...this.dateRangeFilterParams })
+    this.bountyCount = yield apiService.tasks.count({
+      endTime_lt: moment().toISOString(),
+      ...this.dateRangeFilterParams,
+    })
     this.totalPageCount = ceil(this.bountyCount / PAGE_LIMIT)
   }
 
@@ -124,8 +127,8 @@ export class BountyHistoryViewModel {
     try {
       const responses = yield Promise.allSettled([
         apiService.tasks.count(),
-        apiService.tasks.count({ status: 'ended' }),
-        apiService.tasks.count({ status: 'live' }),
+        apiService.tasks.count({ endTime_lt: moment().toISOString() }),
+        apiService.tasks.count({ endTime_gt: moment().toISOString(), startTime_lt: moment().toISOString() }),
         apiService.hunters.count(),
         apiService.hunters.count({
           participationStatus_ne: 'guest',
@@ -169,7 +172,7 @@ export class BountyHistoryViewModel {
       .find(
         {
           name_contains: search,
-          status: 'ended',
+          endTime_lt: moment().toISOString(),
         },
         { _limit: 5 }
       )

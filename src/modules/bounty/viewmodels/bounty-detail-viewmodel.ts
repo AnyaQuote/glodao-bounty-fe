@@ -91,6 +91,10 @@ export class BountyDetailViewModel {
 
   @observable hCaptchaToken = ''
 
+  @observable totalReferralCount = 0
+
+  @observable totalCompleteMissionCount = 0
+
   disposes: IReactionDisposer[] = []
 
   constructor() {
@@ -105,6 +109,7 @@ export class BountyDetailViewModel {
         () => this.task,
         () => {
           this.generateBreadcrumbsItems()
+          if (this.task.type !== 'bounty') this.fetchEventMissionStatistic()
         }
       ),
       reaction(
@@ -146,6 +151,18 @@ export class BountyDetailViewModel {
       }
     } catch (error: any) {
       snackController.error('Error: Cant get stake status - ' + error)
+    }
+  }
+
+  @asyncAction *fetchEventMissionStatistic() {
+    try {
+      this.totalReferralCount = yield apiService.hunters.count({ referrerCode: authStore.hunterReferralCode })
+      this.totalCompleteMissionCount = yield apiService.applies.count({
+        completeTime_null: false,
+        hunter: authStore.hunterId,
+      })
+    } catch (error) {
+      snackController.error(error as string)
     }
   }
 
@@ -740,7 +757,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get completeTime() {
-    return get(this.task, 'completeTime', '')
+    return get(this.apply, 'completeTime', '')
   }
 
   @computed get isInPriorityPool() {
@@ -857,5 +874,26 @@ export class BountyDetailViewModel {
     const limit = get(this.task, 'maxParticipants', 0)
     if (limit < 1) return true
     return this.completedParticipants < limit
+  }
+
+  @computed get finishMessage() {
+    return get(this.task, 'finishMessage', '')
+  }
+
+  @computed get finishLink() {
+    return get(this.task, 'finishLink', '')
+  }
+
+  @computed get isEventMission() {
+    return (
+      this.missionType === 'referral' ||
+      this.missionType === 'lucky' ||
+      this.missionType === 'active' ||
+      this.missionType === 'event'
+    )
+  }
+
+  @computed get learnMoreLink() {
+    return get(this.task, 'metadata.learnMoreLink', '')
   }
 }

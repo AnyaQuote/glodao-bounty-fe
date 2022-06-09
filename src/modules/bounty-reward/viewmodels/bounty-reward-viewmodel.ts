@@ -47,10 +47,18 @@ export class BountyRewardViewModel {
 
       const withdrawHistory = get(bountyReward, 'withdrawHistory', [])
       const bountyRewarded = withdrawHistory.reduce((prev, cur) => {
-        return (prev as FixedNumber).addUnsafe(FixedNumber.from(cur.rewardAmount))
+        return (prev as FixedNumber).addUnsafe(
+          FixedNumber.from(cur.rewardAmount).mulUnsafe(FixedNumber.from(cur.tokenBasePrice))
+        )
       }, Zero)
       this.bountyRewarded = bountyRewarded
-      this.slicedRewardHistories = withdrawHistory.reverse().slice(0, 5)
+      this.slicedRewardHistories = withdrawHistory
+        .reverse()
+        .slice(0, 5)
+        .map((reward) => ({
+          ...reward,
+          rewardAmount: FixedNumber.from(reward.rewardAmount).mulUnsafe(FixedNumber.from(reward.tokenBasePrice)),
+        }))
     }
   }
 }
