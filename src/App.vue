@@ -14,6 +14,7 @@
     </v-main>
     <v-divider></v-divider>
     <company-footer />
+    <customer-support-btn />
   </v-app>
 </template>
 
@@ -38,6 +39,7 @@ import { get } from 'lodash'
     'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
     'overlay-banner-dialog': () => import('@/components/overlay-banner-dialog.vue'),
     'attach-wallet-dialog': () => import('@/components/attach-wallet-dialog.vue'),
+    'customer-support-btn': () => import('@/components/customer-support-btn.vue'),
   },
 })
 export default class App extends Vue {
