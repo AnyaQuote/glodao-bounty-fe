@@ -99,8 +99,11 @@
                 >Event time: {{ vm.task.startTime | MMMddYYYYhhmm }} -
                 {{ vm.task.endTime | MMMddYYYYhhmm }}
               </v-sheet>
-              <div class="mb-4">
-                <a href="" class="bluePrimary--text text-none font-weight-600 text-body-2"
+              <div class="mb-4" v-if="vm.learnMoreLink">
+                <a
+                  :href="vm.learnMoreLink"
+                  target="_blank"
+                  class="bluePrimary--text text-none font-weight-600 text-body-2"
                   >Learn more<v-icon color="bluePrimary">mdi-chevron-right</v-icon></a
                 >
               </div>
