@@ -94,6 +94,8 @@ export class BountyDetailViewModel {
   @observable totalReferralCount = 0
 
   @observable totalCompleteMissionCount = 0
+  @observable totalUniqueParticipantCount = 0
+  @observable totalActiveReferral = 0
 
   disposes: IReactionDisposer[] = []
 
@@ -156,11 +158,29 @@ export class BountyDetailViewModel {
 
   @asyncAction *fetchEventMissionStatistic() {
     try {
-      this.totalReferralCount = yield apiService.hunters.count({ referrerCode: authStore.hunterReferralCode })
-      this.totalCompleteMissionCount = yield apiService.applies.count({
-        completeTime_null: false,
-        hunter: authStore.hunterId,
+      yield Promise.allSettled([
+        apiService.hunters.count({ referrerCode: authStore.hunterReferralCode }),
+        apiService.applies.count({
+          completeTime_null: false,
+          hunter: authStore.hunterId,
+        }),
+        apiService.hunters.count({
+          participationStatus_ne: 'guest',
+        }),
+      ]).then((responses) => {
+        if (responses[0].status === 'fulfilled') {
+          this.totalReferralCount = responses[0].value
+        }
+        if (responses[1].status === 'fulfilled') {
+          this.totalCompleteMissionCount = responses[1].value
+        }
+        if (responses[2].status === 'fulfilled') {
+          this.totalUniqueParticipantCount = responses[2].value
+        }
       })
+      if (this.missionType === 'referral') {
+        this.totalActiveReferral = yield apiService.getActiveReferralCount()
+      }
     } catch (error) {
       snackController.error(error as string)
     }

@@ -182,18 +182,26 @@
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Total reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>{{ vm.rewardAmountExchanged | usdCustom(2, 2) }}</span>
                   </div>
                 </v-sheet>
               </v-col>
 
-              <v-col cols="12" sm="3" md="3">
+              <v-col cols="12" sm="3" md="3" v-if="vm.missionType === 'referral'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
                     <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
-                    <span>{{ vm.totalParticipants }}</span>
+                    <span>{{ vm.totalActiveReferral || 'TBA' }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="12" sm="3" md="3" v-else>
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Participants</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
+                    <span>{{ vm.totalUniqueParticipantCount }}</span>
                   </div>
                 </v-sheet>
               </v-col>

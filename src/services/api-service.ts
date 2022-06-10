@@ -373,6 +373,11 @@ export class ApiService {
     })
     return res.data
   }
+
+  async getActiveReferralCount() {
+    const res = await axios.get('getActiveReferral')
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
