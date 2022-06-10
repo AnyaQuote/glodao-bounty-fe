@@ -180,10 +180,10 @@
             <v-row dense>
               <v-col cols="12" sm="3" md="3">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Total reward: ({{ vm.rewardToken }})</div>
+                  <div class="card-subtitle-1">Total reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ vm.rewardAmount | formatNumber }}</span>
+                    <span>{{ vm.rewardAmountExchanged | usdCustom(2, 2) }}</span>
                   </div>
                 </v-sheet>
               </v-col>

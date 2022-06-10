@@ -16,15 +16,27 @@
           >
         </div>
       </div>
-      <div class="pa-4">
+      <div class="pa-4 pb-6">
         <div class="d-flex align-center">
-          <v-sheet class="rounded-circle neutral100--bg flex-center-box pa-3" outlined>
+          <v-sheet class="rounded-circle white--bg flex-center-box pa-3" outlined>
             <v-icon :color="spareIconColor" size="40">{{ spareIcon }}</v-icon>
           </v-sheet>
-          <div class="text-h5 bluePrimary--text font-weight-bold ml-3">
+          <div class="text-h4 bluePrimary--text font-weight-bold ml-3">
             {{ task | _get('name') }}
           </div>
         </div>
+        <v-sheet class="bluePrimary lighten-3 mt-4 px-4 py-3 rounded">
+          <v-row dense no-gutters>
+            <v-col cols="6" class="text-center">
+              <div class="font-weight-bold text-h5">${{ totalReward }}</div>
+              <div class="text-h6 neutral10--text font-weight-600">reward</div>
+            </v-col>
+            <v-col cols="6" class="text-center">
+              <div class="font-weight-bold text-h5">{{ totalPrize }}</div>
+              <div class="text-h6 neutral10--text font-weight-600">prizes</div>
+            </v-col>
+          </v-row>
+        </v-sheet>
       </div>
     </v-card>
   </router-link>
@@ -48,6 +60,8 @@ export default class BountyCard extends Vue {
   coverImage = get(this.task, 'metadata.coverImage', '')
   spareIcon = get(this.task, 'metadata.spareIcon', '')
   spareIconColor = get(this.task, 'metadata.spareIconColor', '')
+  totalReward = get(this.task, 'rewardAmount', '')
+  totalPrize = get(this.task, 'maxPriorityParticipants', 0)
 
   openLink() {
     this.$router.push(`/bounty/${this.id}`)
@@ -58,5 +72,8 @@ export default class BountyCard extends Vue {
 <style scoped lang="scss">
 .border-radius-16 {
   border-radius: 16px;
+}
+.white--bg {
+  background: white;
 }
 </style>
