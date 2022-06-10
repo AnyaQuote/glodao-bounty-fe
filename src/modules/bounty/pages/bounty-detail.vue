@@ -77,7 +77,7 @@
       <!-- LEFT -->
       <v-col cols="12" v-if="vm.isEventMission">
         <v-sheet class="d-md-flex mb-8 neutral100--bg row border-radius-8 overflow-hidden dense no-gutters" outlined>
-          <v-sheet class="position-relative rounded-lg overflow-hidden transparent col-6">
+          <v-sheet class="position-relative rounded-lg overflow-hidden transparent col-12 col-md-6">
             <!-- image -->
             <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg" v-if="!vm.coverVideo"></v-img>
             <video width="100%" loop autoplay muted v-if="vm.coverVideo" style="border-radius: 8px">
@@ -87,7 +87,7 @@
           </v-sheet>
 
           <!-- subtitle -->
-          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height col-6">
+          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height col-12 col-md-6">
             <v-sheet
               class="mb-4 card-subtitle-1 neutral100"
               v-html="$options.filters._get(vm.task, 'metadata.caption')"
