@@ -160,10 +160,6 @@ export class BountyDetailViewModel {
     try {
       yield Promise.allSettled([
         apiService.hunters.count({ referrerCode: authStore.hunterReferralCode }),
-        apiService.applies.count({
-          completeTime_null: false,
-          hunter: authStore.hunterId,
-        }),
         apiService.hunters.count({
           participationStatus_ne: 'guest',
         }),
@@ -172,14 +168,17 @@ export class BountyDetailViewModel {
           this.totalReferralCount = responses[0].value
         }
         if (responses[1].status === 'fulfilled') {
-          this.totalCompleteMissionCount = responses[1].value
-        }
-        if (responses[2].status === 'fulfilled') {
-          this.totalUniqueParticipantCount = responses[2].value
+          this.totalUniqueParticipantCount = responses[1].value
         }
       })
       if (this.missionType === 'referral') {
         this.totalActiveReferral = yield apiService.getActiveReferralCount()
+      }
+      if (this.missionType === 'active') {
+        this.totalCompleteMissionCount = yield apiService.applies.count({
+          completeTime_null: false,
+          hunter: authStore.hunterId,
+        })
       }
     } catch (error) {
       snackController.error(error as string)
