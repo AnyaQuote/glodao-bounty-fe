@@ -117,7 +117,7 @@
             <li>Get <span @click="openHuntingHistory" class="blue--text cursor-pointer">your referral link</span></li>
             <li>
               Chat with the
-              <a :href="`https://discordapp.com/users/978869775163883520`" target="_blank" class="blue--text"
+              <a :href="`https://discordapp.com/users/${discordBot}`" target="_blank" class="blue--text"
                 >GloDAO Mission Bot</a
               >
               your referral link
@@ -153,6 +153,7 @@ export default class DiscordJoinServerTask extends Vue {
   dialog = false
 
   telegramBot = process.env.VUE_APP_TELEGRAM_BOT
+  discordBot = process.env.VUE_APP_DISCORD_BOT
 
   referralLink = `https://app.glodao.io/bounty?ref=${authStore.hunterReferralCode}`
   referralCode = authStore.hunterReferralCode
