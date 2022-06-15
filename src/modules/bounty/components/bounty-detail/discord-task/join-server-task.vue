@@ -122,6 +122,7 @@
               >
               your referral link
             </li>
+            <li>Chat something in GloDAO Discord Server</li>
           </ol>
         </div>
       </v-sheet>
