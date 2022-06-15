@@ -324,6 +324,18 @@
                         <v-col
                           cols="12"
                           class="py-0"
+                          v-for="(discordTask, index) in vm.displayedDiscordData"
+                          :key="'discord' + index"
+                          :class="{
+                            'px-0': $vuetify.breakpoint.xsOnly,
+                          }"
+                        >
+                          <div class="custom-dash-divider"></div>
+                          <discord-mini-task :discordTask="discordTask" :step="index" />
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          class="py-0"
                           v-for="(quizTask, index) in vm.displayedQuizTaskData"
                           :key="'quiz' + index"
                           :class="{
@@ -521,6 +533,18 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(discordTask, index) in vm.displayedDiscordData"
+                      :key="'discord' + index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <discord-mini-task :discordTask="discordTask" :step="index" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
                       v-for="(quizTask, index) in vm.displayedQuizTaskData"
                       :key="'quiz' + index"
                       :class="{
@@ -632,6 +656,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'twitter-mini-task': () => import('@/modules/bounty/components/bounty-detail/twitter-mini-task.vue'),
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'quiz-mini-task': () => import('@/modules/bounty/components/bounty-detail/quiz-mini-task.vue'),
+    'discord-mini-task': () => import('@/modules/bounty/components/bounty-detail/discord-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     VueHcaptcha,
   },

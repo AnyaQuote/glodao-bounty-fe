@@ -576,6 +576,23 @@ export class BountyDetailViewModel {
     return result
   }
 
+  @computed get displayedDiscordData() {
+    const result = get(this.displayedData, 'discord', []).map((task) => {
+      return { ...task, activeStep: false }
+    })
+    if (isEmpty(result)) return []
+
+    result[0].activeStep = true
+    for (let index = 1; index < result.length; index++) {
+      if (result[index - 1].finished) {
+        result[index].activeStep = true
+        result[index - 1].activeStep = false
+      }
+    }
+
+    return result
+  }
+
   @computed get remainingSlot() {
     if (this.task?.maxParticipant) return this.task.maxParticipant - this.relatedApplies.length
     return 'Unlimited'
@@ -821,7 +838,8 @@ export class BountyDetailViewModel {
     return (
       get(this.apply, ['data', 'twitter'], []).filter((step) => !step.finished).length === 0 &&
       get(this.apply, ['data', 'telegram'], []).filter((step) => !step.finished).length === 0 &&
-      get(this.apply, ['data', 'quiz'], []).filter((step) => !step.finished).length === 0
+      get(this.apply, ['data', 'quiz'], []).filter((step) => !step.finished).length === 0 &&
+      get(this.apply, ['data', 'discord'], []).filter((step) => !step.finished).length === 0
     )
   }
 
