@@ -26,18 +26,18 @@
             <v-btn
               class="white--text text-none linear-background-blue-main text-caption"
               elevation="0"
+              @click="showDialog"
+            >
+              Link my account
+            </v-btn>
+            <v-btn
+              class="white--text text-none linear-background-blue-main text-caption"
+              elevation="0"
               @click="submitLink"
               :loading="!discordTask.finished && vm.isTaskUpdating"
               :disabled="vm.shouldDisableTaskProcessing"
             >
               I had finished this task
-            </v-btn>
-            <v-btn
-              class="white--text text-none linear-background-blue-main text-caption"
-              elevation="0"
-              @click="showDialog"
-            >
-              Link my account
             </v-btn>
           </div>
         </div>
@@ -92,18 +92,18 @@
             <v-btn
               class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
               elevation="0"
+              @click="showDialog"
+            >
+              Link my account
+            </v-btn>
+            <v-btn
+              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
+              elevation="0"
               @click="submitLink"
               :loading="!discordTask.finished && vm.isTaskUpdating"
               :disabled="vm.shouldDisableTaskProcessing"
             >
               I had finished this task
-            </v-btn>
-            <v-btn
-              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
-              elevation="0"
-              @click="showDialog"
-            >
-              Link my account
             </v-btn>
           </div>
         </div>
