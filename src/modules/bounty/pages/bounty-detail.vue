@@ -96,8 +96,7 @@
             </v-sheet>
             <v-sheet class="neutral100" v-if="vm.missionType !== 'learn'">
               <v-sheet class="bluePrimary lighten-3 pa-3 title-2 mb-3"
-                >Event time: {{ vm.task.startTime | MMMddYYYYhhmm }} -
-                {{ vm.task.endTime | MMMddYYYYhhmm }}
+                >Event time: {{ vm.task.startTime | datetime }} - {{ vm.task.endTime | datetime }} (local time)
               </v-sheet>
               <div class="mb-4" v-if="vm.learnMoreLink">
                 <a
