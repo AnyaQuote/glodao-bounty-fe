@@ -727,7 +727,15 @@ export class BountyDetailViewModel {
   }
 
   @computed get rewardAmountExchanged() {
-    return FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
+    const optionalTokenReward: FixedNumber = this.optionalTokens.reduce((prev, current) => {
+      return prev.addUnsafe(
+        FixedNumber.from(current.rewardAmount.toString()).mulUnsafe(FixedNumber.from(current.tokenBasePrice.toString()))
+      )
+    }, Zero)
+    return (
+      optionalTokenReward.addUnsafe(FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice))
+        ._value || 'TBA'
+    )
   }
 
   @computed get maxPriorityParticipants() {
@@ -932,5 +940,29 @@ export class BountyDetailViewModel {
 
   @computed get learnMoreLink() {
     return get(this.task, 'metadata.learnMoreLink', '')
+  }
+
+  @computed get optionalTokens() {
+    return get(this.task, 'optionalTokens', [])
+  }
+
+  @computed get optionalTokensPriorityReward() {
+    return this.optionalTokens.map((token) => ({
+      priorityRewardAmount: token.priorityRewardAmount,
+      priorityRewardExchanged: FixedNumber.from(`${token.priorityRewardAmount}`).mulUnsafe(
+        FixedNumber.from(`${token.tokenBasePrice}`)
+      ),
+      rewardToken: token.rewardToken,
+    }))
+  }
+
+  @computed get optionalTokensCommunityReward() {
+    return this.optionalTokens.map((token) => ({
+      communityRewardAmount: token.rewardAmount - token.priorityRewardAmount,
+      communityRewardExchanged: FixedNumber.from(`${token.rewardAmount - token.priorityRewardAmount}`).mulUnsafe(
+        FixedNumber.from(`${token.tokenBasePrice}`)
+      ),
+      rewardToken: token.rewardToken,
+    }))
   }
 }

@@ -420,10 +420,18 @@
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
+                  <div class="card-subtitle-1">Total reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ vm.rewardAmount | formatNumber }}</span>
+                    <span>{{ vm.rewardAmount | formatNumber }} {{ vm.rewardToken }}</span>
+                  </div>
+                  <div
+                    class="card-big-title-text font-weight-bold d-flex align-start align-lg-center"
+                    v-for="token in vm.optionalTokens"
+                    :key="token.rewardToken"
+                  >
+                    <v-img :src="token.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
+                    <span>{{ token.rewardAmount | formatNumber }} {{ token.rewardToken }}</span>
                   </div>
                 </v-sheet>
               </v-col>

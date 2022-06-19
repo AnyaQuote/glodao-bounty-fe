@@ -126,10 +126,17 @@
               <v-sheet class="d-flex flex-column neutral100--bg" width="100%">
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
-                  <v-sheet class="primary--text number-font neutral100--bg">
-                    {{ vm.totalPriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
-                      vm.totalPriorityRewardExchanged | usdCustom
-                    }})
+                  <v-sheet class="primary--text number-font neutral100--bg text-end">
+                    <div>
+                      {{ vm.totalPriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                        vm.totalPriorityRewardExchanged | usdCustom
+                      }})
+                    </div>
+                    <div v-for="optionalToken in vm.optionalTokensPriorityReward" :key="optionalToken.rewardToken">
+                      {{ optionalToken.priorityRewardAmount | formatNumber }} {{ optionalToken.rewardToken }} ({{
+                        optionalToken.priorityRewardExchanged | usdCustom
+                      }})
+                    </div>
                   </v-sheet>
                 </v-sheet>
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
@@ -175,9 +182,16 @@
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg">
-                    {{ vm.totalCommunityReward | formatNumber }} {{ vm.rewardToken }} ({{
-                      vm.totalCommunityRewardExchanged | usdCustom
-                    }})
+                    <div>
+                      {{ vm.totalCommunityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                        vm.totalCommunityRewardExchanged | usdCustom
+                      }})
+                    </div>
+                    <div v-for="optionalToken in vm.optionalTokensCommunityReward" :key="optionalToken.rewardToken">
+                      {{ optionalToken.communityRewardAmount | formatNumber }} {{ optionalToken.rewardToken }} ({{
+                        optionalToken.communityRewardExchanged | usdCustom
+                      }})
+                    </div>
                   </v-sheet>
                 </v-sheet>
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
