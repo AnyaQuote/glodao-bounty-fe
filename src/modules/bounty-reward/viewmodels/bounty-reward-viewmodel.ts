@@ -13,6 +13,7 @@ export class BountyRewardViewModel {
   @observable slicedRewardHistories = []
 
   constructor() {
+    if (walletStore.account) this.loadData()
     this._disposers.push(
       reaction(
         () => walletStore.account,
