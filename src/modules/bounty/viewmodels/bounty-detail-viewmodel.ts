@@ -94,6 +94,8 @@ export class BountyDetailViewModel {
   @observable totalReferralCount = 0
 
   @observable totalCompleteMissionCount = 0
+  @observable totalUniqueParticipantCount = 0
+  @observable totalActiveReferral = 0
 
   disposes: IReactionDisposer[] = []
 
@@ -156,11 +158,28 @@ export class BountyDetailViewModel {
 
   @asyncAction *fetchEventMissionStatistic() {
     try {
-      this.totalReferralCount = yield apiService.hunters.count({ referrerCode: authStore.hunterReferralCode })
-      this.totalCompleteMissionCount = yield apiService.applies.count({
-        completeTime_null: false,
-        hunter: authStore.hunterId,
+      yield Promise.allSettled([
+        apiService.hunters.count({ referrerCode: authStore.hunterReferralCode }),
+        apiService.hunters.count({
+          participationStatus_ne: 'guest',
+        }),
+      ]).then((responses) => {
+        if (responses[0].status === 'fulfilled') {
+          this.totalReferralCount = responses[0].value
+        }
+        if (responses[1].status === 'fulfilled') {
+          this.totalUniqueParticipantCount = responses[1].value
+        }
       })
+      if (this.missionType === 'referral') {
+        this.totalActiveReferral = yield apiService.getActiveReferralCount()
+      }
+      if (this.missionType === 'active') {
+        this.totalCompleteMissionCount = yield apiService.applies.count({
+          completeTime_null: false,
+          hunter: authStore.hunterId,
+        })
+      }
     } catch (error) {
       snackController.error(error as string)
     }
@@ -708,7 +727,15 @@ export class BountyDetailViewModel {
   }
 
   @computed get rewardAmountExchanged() {
-    return FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
+    const optionalTokenReward: FixedNumber = this.optionalTokens.reduce((prev, current) => {
+      return prev.addUnsafe(
+        FixedNumber.from(current.rewardAmount.toString()).mulUnsafe(FixedNumber.from(current.tokenBasePrice.toString()))
+      )
+    }, Zero)
+    return (
+      optionalTokenReward.addUnsafe(FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice))
+        ._value || 'TBA'
+    )
   }
 
   @computed get maxPriorityParticipants() {
@@ -913,5 +940,29 @@ export class BountyDetailViewModel {
 
   @computed get learnMoreLink() {
     return get(this.task, 'metadata.learnMoreLink', '')
+  }
+
+  @computed get optionalTokens() {
+    return get(this.task, 'optionalTokens', [])
+  }
+
+  @computed get optionalTokensPriorityReward() {
+    return this.optionalTokens.map((token) => ({
+      priorityRewardAmount: token.priorityRewardAmount,
+      priorityRewardExchanged: FixedNumber.from(`${token.priorityRewardAmount}`).mulUnsafe(
+        FixedNumber.from(`${token.tokenBasePrice}`)
+      ),
+      rewardToken: token.rewardToken,
+    }))
+  }
+
+  @computed get optionalTokensCommunityReward() {
+    return this.optionalTokens.map((token) => ({
+      communityRewardAmount: token.rewardAmount - token.priorityRewardAmount,
+      communityRewardExchanged: FixedNumber.from(`${token.rewardAmount - token.priorityRewardAmount}`).mulUnsafe(
+        FixedNumber.from(`${token.tokenBasePrice}`)
+      ),
+      rewardToken: token.rewardToken,
+    }))
   }
 }

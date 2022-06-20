@@ -77,7 +77,7 @@
       <!-- LEFT -->
       <v-col cols="12" v-if="vm.isEventMission">
         <v-sheet class="d-md-flex mb-8 neutral100--bg row border-radius-8 overflow-hidden dense no-gutters" outlined>
-          <v-sheet class="position-relative rounded-lg overflow-hidden transparent col-6">
+          <v-sheet class="position-relative rounded-lg overflow-hidden transparent col-12 col-md-6">
             <!-- image -->
             <v-img :src="vm.task | _get('metadata.coverImage')" class="rounded-lg" v-if="!vm.coverVideo"></v-img>
             <video width="100%" loop autoplay muted v-if="vm.coverVideo" style="border-radius: 8px">
@@ -87,7 +87,7 @@
           </v-sheet>
 
           <!-- subtitle -->
-          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height col-6">
+          <v-sheet class="neutral100 pa-6 pb-4 pt-4 pb-md-1 fill-height col-12 col-md-6">
             <v-sheet
               class="mb-4 card-subtitle-1 neutral100"
               v-html="$options.filters._get(vm.task, 'metadata.caption')"
@@ -96,8 +96,7 @@
             </v-sheet>
             <v-sheet class="neutral100" v-if="vm.missionType !== 'learn'">
               <v-sheet class="bluePrimary lighten-3 pa-3 title-2 mb-3"
-                >Event time: {{ vm.task.startTime | MMMddYYYYhhmm }} -
-                {{ vm.task.endTime | MMMddYYYYhhmm }}
+                >Event time: {{ vm.task.startTime | datetime }} - {{ vm.task.endTime | datetime }} (local time)
               </v-sheet>
               <div class="mb-4" v-if="vm.learnMoreLink">
                 <a
@@ -182,18 +181,26 @@
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Total reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
-                    <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
                     <span>{{ vm.rewardAmountExchanged | usdCustom(2, 2) }}</span>
                   </div>
                 </v-sheet>
               </v-col>
 
-              <v-col cols="12" sm="3" md="3">
+              <v-col cols="12" sm="3" md="3" v-if="vm.missionType === 'referral'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
                     <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
-                    <span>{{ vm.totalParticipants }}</span>
+                    <span>{{ vm.totalActiveReferral || 'TBA' }}</span>
+                  </div>
+                </v-sheet>
+              </v-col>
+              <v-col cols="12" sm="3" md="3" v-else>
+                <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
+                  <div class="card-subtitle-1">Participants</div>
+                  <div class="card-big-title-text font-weight-bold d-flex">
+                    <v-icon size="20" class="mr-2" color="bluePrimary">mdi-account-circle</v-icon>
+                    <span>{{ vm.totalUniqueParticipantCount }}</span>
                   </div>
                 </v-sheet>
               </v-col>
@@ -413,10 +420,18 @@
             <v-row dense>
               <v-col cols="12" sm="4" md="4">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
-                  <div class="card-subtitle-1">Total reward ({{ vm.rewardToken }})</div>
+                  <div class="card-subtitle-1">Total reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ vm.rewardAmount | formatNumber }}</span>
+                    <span>{{ vm.rewardAmount | formatNumber }} {{ vm.rewardToken }}</span>
+                  </div>
+                  <div
+                    class="card-big-title-text font-weight-bold d-flex align-start align-lg-center"
+                    v-for="token in vm.optionalTokens"
+                    :key="token.rewardToken"
+                  >
+                    <v-img :src="token.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
+                    <span>{{ token.rewardAmount | formatNumber }} {{ token.rewardToken }}</span>
                   </div>
                 </v-sheet>
               </v-col>

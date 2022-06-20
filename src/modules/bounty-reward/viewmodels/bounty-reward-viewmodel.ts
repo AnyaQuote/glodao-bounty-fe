@@ -3,16 +3,19 @@ import { apiService } from '@/services/api-service'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get } from 'lodash-es'
-import { IReactionDisposer, observable, reaction } from 'mobx'
+import { computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
+import { bigNumberHelper } from '@/helpers/bignumber-helper'
 
 export class BountyRewardViewModel {
   _disposers: IReactionDisposer[] = []
   @observable currentBounty = Zero
   @observable bountyRewarded = Zero
   @observable slicedRewardHistories = []
+  @observable rewards: any = []
 
   constructor() {
+    if (walletStore.account) this.loadData()
     this._disposers.push(
       reaction(
         () => walletStore.account,
@@ -36,9 +39,9 @@ export class BountyRewardViewModel {
     )
     if (res && res.length) {
       const bountyReward = res[0]
-      const rewards = get(bountyReward, 'rewards', [])
+      this.rewards = get(bountyReward, 'rewards', [])
       let currentBounty = Zero
-      for (const reward of rewards) {
+      for (const reward of this.rewards) {
         const rewardAmount = FixedNumber.from(get(reward, 'rewardAmount', '0'))
         const tokenBasePrice = FixedNumber.from(get(reward, 'tokenBasePrice', '1'))
         currentBounty = currentBounty.addUnsafe(rewardAmount.mulUnsafe(tokenBasePrice))
@@ -60,5 +63,9 @@ export class BountyRewardViewModel {
           rewardAmount: FixedNumber.from(reward.rewardAmount).mulUnsafe(FixedNumber.from(reward.tokenBasePrice)),
         }))
     }
+  }
+
+  @computed get balances() {
+    return this.rewards.filter((reward) => bigNumberHelper.gt(FixedNumber.from(`${reward.rewardAmount}`), Zero))
   }
 }

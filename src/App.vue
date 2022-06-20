@@ -5,7 +5,7 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
-    <overlay-banner-dialog />
+    <!-- <overlay-banner-dialog /> -->
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
