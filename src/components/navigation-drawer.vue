@@ -44,7 +44,7 @@
             max-width="22"
             class="mr-2 ml-0"
           ></v-img> -->
-          <v-icon max-width="22" max-height="22" class="mr-2 ml-0" color="neutral10" left> mdi-star-circle </v-icon>
+          <v-icon width="28" height="28" class="mr-2 ml-0" color="neutral10"> mdi-star-circle </v-icon>
           My reward
         </v-btn>
         <v-btn plain block class="menu-btn neutral10--text" height="40" depressed @click="goToHuntingHistoryScreen()">
