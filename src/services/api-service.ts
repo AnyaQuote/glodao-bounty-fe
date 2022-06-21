@@ -378,6 +378,32 @@ export class ApiService {
     const res = await axios.get('getActiveReferral')
     return res.data
   }
+
+  async createSessionId(jwt) {
+    const res = await axios.post(
+      'kycs/create-session-id',
+      { jwt },
+      {
+        baseURL: 'https://diversity-kyc-api.contracts.dev/',
+      }
+    )
+    return res.data
+  }
+
+  async updateUserSessionId(kycSessionId) {
+    const res = await axios.post(
+      'hunter/updateUserSessionId',
+      {
+        kycSessionId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()

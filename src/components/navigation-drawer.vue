@@ -57,6 +57,10 @@
 
           My account
         </v-btn>
+        <v-btn plain block class="menu-btn neutral10--text" height="40" depressed @click="openKYCPage()">
+          <v-icon width="28" height="28" class="mr-2 ml-0" color="neutral10"> mdi-fingerprint </v-icon>
+          My KYC
+        </v-btn>
         <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()"> Log out </v-btn>
       </v-sheet>
     </v-sheet>
@@ -214,6 +218,9 @@ import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { Observer } from 'mobx-vue'
 import { AppProvider } from '@/app-providers'
+import { apiService } from '@/services/api-service'
+import { loadingController } from './global-loading/global-loading-controller'
+import { snackController } from './snack-bar/snack-bar-controller'
 
 @Observer
 @Component({
@@ -245,6 +252,24 @@ export default class NavigationDrawer extends Vue {
     this.$router.push('/bounty-reward').catch(() => {
       //
     })
+  }
+
+  async openKYCPage() {
+    if (!authStore.kycSessionId) {
+      loadingController.increaseRequest()
+      try {
+        const { sessionId } = await apiService.createSessionId(authStore.jwt)
+        const updatedUser = await apiService.updateUserSessionId(sessionId)
+        authStore.changeUser(updatedUser.data)
+        window.open(`https://diversity-kyc-api.contracts.dev/$${sessionId}`, '_blank')
+      } catch (error) {
+        snackController.error(error as string)
+      } finally {
+        loadingController.decreaseRequest()
+      }
+    } else {
+      window.open(`https://diversity-kyc-api.contracts.dev/$${authStore.kycSessionId}`, '_blank')
+    }
   }
 }
 </script>
