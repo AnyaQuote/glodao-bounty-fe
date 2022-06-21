@@ -190,6 +190,20 @@
                   >
                     <v-icon class="mr-3 ml-0" left size="24">mdi-wallet-outline</v-icon> Attached wallet
                   </v-btn> -->
+                  <v-btn plain block class="menu-btn" height="40" depressed @click="goToBountyRewardScreen()">
+                    <!-- <v-icon class="mr-2">mdi-wallet-outline</v-icon> -->
+                    <!-- <v-img
+                      :src="require('@/assets/icons/crown-mini.svg')"
+                      max-height="22"
+                      max-width="22"
+                      class="mr-2 ml-0"
+                    ></v-img> -->
+                    <v-icon max-width="22" max-height="22" class="mr-2 ml-0" color="neutral10" left>
+                      mdi-star-circle
+                    </v-icon>
+
+                    My reward
+                  </v-btn>
                   <v-btn plain block class="menu-btn" height="40" depressed @click="goToHuntingHistoryScreen()">
                     <!-- <v-icon class="mr-2">mdi-wallet-outline</v-icon> -->
                     <v-img
@@ -248,6 +262,12 @@ export default class NavigationBar extends Vue {
 
   goToHuntingHistoryScreen() {
     this.$router.push('/hunting-history').catch(() => {
+      //
+    })
+  }
+
+  goToBountyRewardScreen() {
+    this.$router.push('/bounty-reward').catch(() => {
       //
     })
   }

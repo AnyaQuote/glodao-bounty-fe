@@ -27,12 +27,12 @@
               {{ vm.isInPriorityPool ? 'Priority' : 'Community' }} pool
             </v-sheet>
           </v-sheet>
-          <v-sheet class="text-caption text-start background-transparent">
+          <!-- <v-sheet class="text-caption text-start background-transparent">
             <v-sheet class="background-transparent white--text">Reward earned</v-sheet>
             <v-sheet class="font-weight-bold background-transparent white--text">
               {{ vm.earnedReward }} {{ vm.rewardToken }}
             </v-sheet>
-          </v-sheet>
+          </v-sheet> -->
         </v-col>
       </v-row>
     </v-sheet>

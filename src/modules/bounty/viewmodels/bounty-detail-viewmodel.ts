@@ -595,6 +595,23 @@ export class BountyDetailViewModel {
     return result
   }
 
+  @computed get displayedDiscordData() {
+    const result = get(this.displayedData, 'discord', []).map((task) => {
+      return { ...task, activeStep: false }
+    })
+    if (isEmpty(result)) return []
+
+    result[0].activeStep = true
+    for (let index = 1; index < result.length; index++) {
+      if (result[index - 1].finished) {
+        result[index].activeStep = true
+        result[index - 1].activeStep = false
+      }
+    }
+
+    return result
+  }
+
   @computed get remainingSlot() {
     if (this.task?.maxParticipant) return this.task.maxParticipant - this.relatedApplies.length
     return 'Unlimited'
@@ -710,7 +727,15 @@ export class BountyDetailViewModel {
   }
 
   @computed get rewardAmountExchanged() {
-    return FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice)._value || 'TBA'
+    const optionalTokenReward: FixedNumber = this.optionalTokens.reduce((prev, current) => {
+      return prev.addUnsafe(
+        FixedNumber.from(current.rewardAmount.toString()).mulUnsafe(FixedNumber.from(current.tokenBasePrice.toString()))
+      )
+    }, Zero)
+    return (
+      optionalTokenReward.addUnsafe(FixedNumber.from(this.rewardAmount.toString()).mulUnsafe(this.tokenBasePrice))
+        ._value || 'TBA'
+    )
   }
 
   @computed get maxPriorityParticipants() {
@@ -840,7 +865,8 @@ export class BountyDetailViewModel {
     return (
       get(this.apply, ['data', 'twitter'], []).filter((step) => !step.finished).length === 0 &&
       get(this.apply, ['data', 'telegram'], []).filter((step) => !step.finished).length === 0 &&
-      get(this.apply, ['data', 'quiz'], []).filter((step) => !step.finished).length === 0
+      get(this.apply, ['data', 'quiz'], []).filter((step) => !step.finished).length === 0 &&
+      get(this.apply, ['data', 'discord'], []).filter((step) => !step.finished).length === 0
     )
   }
 
@@ -914,5 +940,29 @@ export class BountyDetailViewModel {
 
   @computed get learnMoreLink() {
     return get(this.task, 'metadata.learnMoreLink', '')
+  }
+
+  @computed get optionalTokens() {
+    return get(this.task, 'optionalTokens', [])
+  }
+
+  @computed get optionalTokensPriorityReward() {
+    return this.optionalTokens.map((token) => ({
+      priorityRewardAmount: token.priorityRewardAmount,
+      priorityRewardExchanged: FixedNumber.from(`${token.priorityRewardAmount}`).mulUnsafe(
+        FixedNumber.from(`${token.tokenBasePrice}`)
+      ),
+      rewardToken: token.rewardToken,
+    }))
+  }
+
+  @computed get optionalTokensCommunityReward() {
+    return this.optionalTokens.map((token) => ({
+      communityRewardAmount: token.rewardAmount - token.priorityRewardAmount,
+      communityRewardExchanged: FixedNumber.from(`${token.rewardAmount - token.priorityRewardAmount}`).mulUnsafe(
+        FixedNumber.from(`${token.tokenBasePrice}`)
+      ),
+      rewardToken: token.rewardToken,
+    }))
   }
 }

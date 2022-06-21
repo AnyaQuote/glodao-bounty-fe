@@ -29,17 +29,37 @@
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div class="d-flex flex-column">
                 Current bounty
-                <span class="sub-title"> {{ vm.currentBounty | formatNumber }} BUSD </span>
+                <span class="sub-title"> {{ vm.currentBounty | usd }} </span>
               </div>
               <div class="d-flex flex-column">
                 Bounty rewarded
-                <span class="sub-title"> {{ vm.bountyRewarded | formatNumber }} BUSD </span>
+                <span class="sub-title"> {{ vm.bountyRewarded | usd }} </span>
               </div>
             </div>
             <div class="font-italic success--text font-weight-600 mt-6 px-2">
               We will send you when your reward reaches 0.5$. Participate and complete your mission to earn more!
             </div>
           </v-card>
+
+          <div v-if="vm.balances.length > 0">
+            <div class="sub-title mt-6">Balance details</div>
+            <v-card
+              class="sub-card border-radius-8 my-2 pa-4"
+              outlined
+              v-for="balance in vm.balances"
+              :key="balance.address"
+              :class="{ 'd-flex align-center justify-space-between': $vuetify.breakpoint.mdAndUp }"
+            >
+              <div>
+                <span> Token: </span>
+                <span class="font-weight-bold"> {{ balance.token }} </span>
+              </div>
+              <div>
+                <span>Token amount:</span>
+                <span class="font-weight-bold"> {{ balance.rewardAmount }} </span>
+              </div>
+            </v-card>
+          </div>
 
           <div v-if="$_get(vm.slicedRewardHistories, 'length')">
             <div class="sub-title mt-6">Recently rewarded</div>
@@ -52,7 +72,7 @@
             >
               <div>
                 <span> Bounty rewarded: </span>
-                <span class="font-weight-bold"> {{ rewardHistory.rewardAmount | usd }} BUSD </span>
+                <span class="font-weight-bold"> {{ rewardHistory.rewardAmount | usd }} {{ rewardHistory.token }} </span>
               </div>
               <div>{{ moment(rewardHistory.datetime) | datetime }}</div>
             </v-card>
