@@ -176,6 +176,8 @@ export class BountyHunterViewModel {
         totalParticipants: bounty.totalParticipants,
         missionIndex: get(bounty, 'missionIndex', 0),
         type: get(bounty, 'type', ''),
+        tokenBasePrice: get(bounty, 'tokenBasePrice', '1'),
+        optionalTokens: get(bounty, 'optionalTokens', []),
       }
     })
   }
@@ -205,6 +207,7 @@ export class BountyHunterViewModel {
           shortDescription: get(bounty, 'metadata.shortDescription', 'TBA'),
           missionIndex: get(bounty, 'missionIndex', 0),
           type: get(bounty, 'type', ''),
+          optionalTokens: get(bounty, 'optionalTokens', []),
         }
       })
   }
@@ -222,6 +225,8 @@ export class BountyHunterViewModel {
         maxParticipant: bounty.maxParticipant,
         missionIndex: get(bounty, 'missionIndex', 0),
         type: get(bounty, 'type', ''),
+        tokenBasePrice: get(bounty, 'tokenBasePrice', '1'),
+        optionalTokens: get(bounty, 'optionalTokens', []),
       }
     })
   }
