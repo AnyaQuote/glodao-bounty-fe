@@ -3,7 +3,7 @@
     <v-col cols="12">
       <bounty-banner></bounty-banner>
     </v-col>
-    <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
+    <!-- <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
       <v-container>
         <v-row>
           <v-col cols="12">
@@ -34,7 +34,7 @@
         </v-row>
       </v-container>
       <v-divider class="mt-8" />
-    </v-col>
+    </v-col> -->
     <v-col cols="12" v-if="vm.convertedUpcomingBountyList.length > 0">
       <v-container>
         <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
