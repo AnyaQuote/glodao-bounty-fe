@@ -59,6 +59,7 @@
                     :maxParticipant="pool.maxParticipant"
                     :metadata="pool.metadata"
                     :retract="showSide"
+                    :task="pool"
                   ></bounty-upcoming-card>
                 </v-tab-item>
               </v-tabs-items>
@@ -113,6 +114,7 @@
           :types="pool.types"
           :name="pool.name"
           :id="pool.id"
+          :task="pool"
         >
         </BountyCarouselItem>
       </v-col>

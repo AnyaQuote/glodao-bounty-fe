@@ -13,9 +13,7 @@
           <div class="blue--text font-size-18 text-truncate">{{ name }}</div>
           <div class="d-flex">
             <div class="flex-shrink-0">Reward</div>
-            <div class="font-size-18 flex-1 text-end">
-              {{ rewardAmount | formatNumber(2, 0) }} {{ rewardTokenName }}
-            </div>
+            <div class="font-size-18 flex-1 text-end">${{ value }}</div>
           </div>
         </div>
       </div>
@@ -36,6 +34,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { get } from 'lodash-es'
+import { FixedNumber } from '@ethersproject/bignumber'
 
 @Component({
   components: {
@@ -52,9 +52,25 @@ export default class BountyCarouselItem extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) maxParticipant!: number
+  @Prop({ required: true }) task!: any
+  value = 'TBA'
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
   projectLogo = this.metadata?.projectLogo ?? ''
+  optionalTokens = get(this.task, 'optionalTokens', [])
+
+  mounted() {
+    const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(
+      FixedNumber.from(`${this.task.tokenBasePrice}`)
+    )
+    let optionalTokenTotalValue = FixedNumber.from('0')
+    this.optionalTokens.forEach((token) => {
+      optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
+        FixedNumber.from(`${token.rewardAmount}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+      )
+    })
+    this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
 }
 </script>
 
@@ -70,7 +86,7 @@ export default class BountyCarouselItem extends Vue {
 }
 
 .w-32 {
-  weight: 32px;
+  width: 32px;
 }
 
 .h-32 {
