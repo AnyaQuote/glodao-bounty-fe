@@ -286,14 +286,14 @@ export default class NavigationBar extends Vue {
         const { sessionId } = await apiService.createSessionId(authStore.jwt)
         const updatedUser = await apiService.updateUserSessionId(sessionId)
         authStore.changeUser(updatedUser.data)
-        window.open(`https://diversity-kyc-api.contracts.dev/$${sessionId}`, '_blank')
+        window.open(`https://dev-glodao-kyc.netlify.app/kyc/${sessionId}`, '_blank')
       } catch (error) {
         snackController.error(error as string)
       } finally {
         loadingController.decreaseRequest()
       }
     } else {
-      window.open(`https://diversity-kyc-api.contracts.dev/$${authStore.kycSessionId}`, '_blank')
+      window.open(`https://dev-glodao-kyc.netlify.app/kyc/${authStore.kycSessionId}`, '_blank')
     }
   }
 }

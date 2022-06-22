@@ -382,7 +382,7 @@ export class ApiService {
   async createSessionId(jwt) {
     const res = await axios.post(
       'kycs/create-session-id',
-      { jwt },
+      { jwt, appId: '62b187dc62e8de0b750c998f' },
       {
         baseURL: 'https://diversity-kyc-api.contracts.dev/',
       }
