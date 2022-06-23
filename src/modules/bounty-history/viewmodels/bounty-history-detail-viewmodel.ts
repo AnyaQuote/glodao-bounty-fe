@@ -1,5 +1,6 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
+import { FixedNumber } from '@ethersproject/bignumber'
 import * as _ from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
@@ -314,5 +315,19 @@ export class BountyHistoryDetailViewModel {
 
   @computed get projectLogo() {
     return _.get(this.task, 'metadata.projectLogo', '')
+  }
+
+  @computed get totalRewardValue() {
+    const rewardAmount = _.get(this.task, 'rewardAmount', '0')
+    const tokenBasePrice = _.get(this.task, 'tokenBasePrice', '0')
+    const optionalTokens = _.get(this.task, 'optionalTokens', [])
+    const tempBaseTokenValue = FixedNumber.from(`${rewardAmount}`).mulUnsafe(FixedNumber.from(`${tokenBasePrice}`))
+    let optionalTokenTotalValue = FixedNumber.from('0')
+    optionalTokens.forEach((token) => {
+      optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
+        FixedNumber.from(`${token.rewardAmount}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+      )
+    })
+    return tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
   }
 }

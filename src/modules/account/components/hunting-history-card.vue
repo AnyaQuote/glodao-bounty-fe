@@ -82,7 +82,7 @@
         <div>
           <div class="small-caption-text">Bounty earned</div>
           <div class="medium-caption-text font-weight-bold mt-2">
-            {{ bountyEarn | formatNumber(2, 0) }} {{ rewardToken }}
+            {{ value | usdCustom(0, 6) }}
           </div>
         </div>
       </v-col>
@@ -136,9 +136,10 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Ref, Provide, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { walletStore } from '@/stores/wallet-store'
-import { lowerCase } from 'lodash'
+import { lowerCase, get } from 'lodash'
+import { FixedNumber } from '@ethersproject/bignumber'
 
 @Observer
 @Component({
@@ -165,6 +166,10 @@ export default class HuntingHistoryCard extends Vue {
 
   statusIcon = ''
   buttonColor = ''
+
+  value = 'TBA'
+  optionalTokens = get(this.task, 'optionalTokenReward', [])
+
   mounted() {
     const lowercaseStatus = lowerCase(this.status)
     switch (lowercaseStatus) {
@@ -184,6 +189,16 @@ export default class HuntingHistoryCard extends Vue {
         this.buttonColor = 'orangeSenamatic'
         break
     }
+    const tempBaseTokenValue = FixedNumber.from(`${this.task.bounty}`).mulUnsafe(
+      FixedNumber.from(`${this.task.task.tokenBasePrice}`)
+    )
+    let optionalTokenTotalValue = FixedNumber.from('0')
+    this.optionalTokens.forEach((token) => {
+      optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
+        FixedNumber.from(`${token.bounty}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+      )
+    })
+    this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
   }
 }
 </script>
