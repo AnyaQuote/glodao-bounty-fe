@@ -289,6 +289,7 @@ export class CompanyProfileViewModel {
       const types = keys(task.data)
       const firstTask = apply.data[types[0]]
       return {
+        ...apply,
         id: apply.id,
         status: apply.status,
         name: task.name,
