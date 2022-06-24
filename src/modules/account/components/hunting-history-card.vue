@@ -189,13 +189,15 @@ export default class HuntingHistoryCard extends Vue {
         this.buttonColor = 'orangeSenamatic'
         break
     }
-    const tempBaseTokenValue = FixedNumber.from(`${this.task.bounty}`).mulUnsafe(
-      FixedNumber.from(`${this.task.task.tokenBasePrice}`)
-    )
+    const bounty = get(this.task, 'bounty', '0')
+    const tokenBasePrice = get(this.task, 'task.tokenBasePrice', '0')
+    const tempBaseTokenValue = FixedNumber.from(`${bounty}`).mulUnsafe(FixedNumber.from(`${tokenBasePrice}`))
     let optionalTokenTotalValue = FixedNumber.from('0')
     this.optionalTokens.forEach((token) => {
+      const tokenBounty = get(token, 'bounty', '0')
+      const optionalTokenBasePrice = get(token, 'tokenBasePrice', '0')
       optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
-        FixedNumber.from(`${token.bounty}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+        FixedNumber.from(`${tokenBounty}`).mulUnsafe(FixedNumber.from(`${optionalTokenBasePrice}`))
       )
     })
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
