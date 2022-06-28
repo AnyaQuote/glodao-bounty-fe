@@ -6,10 +6,10 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">Join {{ page }} on Telegram</div>
+          <div class="text-body-1 font-weight-600">Chat in {{ page }}</div>
           <div class="text-caption mt-1">
-            Please <a :href="telegramTask.link" target="_blank" class="blue--text">join {{ page }}</a> on Telegram to
-            complete this task.
+            Please
+            <a :href="telegramTask.link" target="_blank" class="blue--text">chat in {{ page }}</a> to complete this task
           </div>
         </div>
         <div

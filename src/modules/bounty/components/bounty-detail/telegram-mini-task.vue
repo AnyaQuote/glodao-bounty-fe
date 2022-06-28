@@ -1,7 +1,7 @@
 <template>
   <div>
     <follow-task v-if="type === 'follow'" :telegramTask="telegramTask" :step="step" />
-    <follow-task v-else-if="type === 'chat'" :telegramTask="telegramTask" :step="step" />
+    <chat-task v-else-if="type === 'chat'" :telegramTask="telegramTask" :step="step" />
   </div>
 </template>
 
