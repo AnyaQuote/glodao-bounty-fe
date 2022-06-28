@@ -13,6 +13,11 @@
             }}"
             <span v-if="twitterTask.hashtag">
               using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span> </span
+            ><span v-if="mentions.length > 0"
+              >, tag
+              <span v-for="(user, index) in mentions" :key="user" class="blue--text">
+                <span v-if="index !== 0" class="primary--text"> and </span>@{{ user }}</span
+              ></span
             >, share why you want to have this project’s primary market exposure. (At least
             {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
@@ -163,6 +168,7 @@ export default class QuoteTask extends Vue {
   type = get(this.twitterTask, 'type', '')
   value = get(this.twitterTask, 'stepLink', '')
   hashtag = get(this.twitterTask, 'hashtag', '')
+  mentions = get(this.twitterTask, 'mentions', [])
 
   title = ''
 
