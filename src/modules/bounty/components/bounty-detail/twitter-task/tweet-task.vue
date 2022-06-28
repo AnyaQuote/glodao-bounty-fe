@@ -9,6 +9,11 @@
           <div class="text-body-1 font-weight-600">Tweet a Twitter post</div>
           <div class="text-caption mt-1">
             Post a Tweet using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
+            ><span v-if="mentions.length > 0"
+              >, tag
+              <span v-for="(user, index) in mentions" :key="user" class="blue--text">
+                <span v-if="index !== 0" class="primary--text"> and </span>@{{ user }}</span
+              ></span
             >, share why you want to have this project’s primary market exposure. (At least
             {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
@@ -159,6 +164,7 @@ export default class TweetTask extends Vue {
   type = get(this.twitterTask, 'type', '')
   value = get(this.twitterTask, 'stepLink', '')
   hashtag = get(this.twitterTask, 'hashtag', '')
+  mentions = get(this.twitterTask, 'mentions', [])
 
   title = ''
 
