@@ -10,12 +10,18 @@
           <div class="text-caption mt-1" style="word-break: break-word">
             Quote <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
-            }}"
-            <span v-if="hashtags.length > 0"
-              >using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text">&nbsp;#{{ tag }}</span>
-            </span>
-            <span v-if="mentions.length > 0"
-              >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
+            }}"<span v-if="content">
+              with content: <span class="blue--text">"{{ content }}"</span></span
+            >
+            <span v-else
+              ><span v-if="hashtags.length > 0">
+                using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text"
+                  >&nbsp;#{{ tag }}</span
+                ></span
+              >
+              <span v-if="mentions.length > 0"
+                >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
+              ></span
             >, share why you want to have this project’s primary market exposure. (At least
             {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
@@ -166,6 +172,7 @@ export default class QuoteTask extends Vue {
   type = get(this.twitterTask, 'type', '')
   value = get(this.twitterTask, 'stepLink', '')
   hashtags = get(this.twitterTask, 'hashtag', [])
+  content = get(this.twitterTask, 'content', '')
   mentions = get(this.twitterTask, 'mentions', [])
 
   title = ''

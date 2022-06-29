@@ -10,12 +10,18 @@
           <div class="text-caption mt-1" style="word-break: break-word">
             Reply <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
-            }}"
-            <span v-if="hashtags.length > 0">
-              using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text">&nbsp;#{{ tag }}</span></span
+            }}"<span v-if="content">
+              with content: <span class="blue--text">"{{ content }}"</span></span
             >
-            <span v-if="mentions.length > 0"
-              >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
+            <span v-else
+              ><span v-if="hashtags.length > 0">
+                using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text"
+                  >&nbsp;#{{ tag }}</span
+                ></span
+              >
+              <span v-if="mentions.length > 0"
+                >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
+              ></span
             >, then submit the link to your reply tweet here (At least {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
         </div>
@@ -166,6 +172,7 @@ export default class CommentTask extends Vue {
   value = get(this.twitterTask, 'stepLink', '')
   hashtags = get(this.twitterTask, 'hashtag', [])
   mentions = get(this.twitterTask, 'mentions', [])
+  content = get(this.twitterTask, 'content', '')
 
   title = ''
 
