@@ -23,6 +23,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/auth/pages/twitter-auth.vue'),
   },
   {
+    path: '/twitter-login',
+    name: 'TwitterLogin',
+    component: () => import('@/modules/auth/pages/twitter-login.vue'),
+  },
+  {
     path: '/hunting-history',
     name: 'HuntingHistory',
     component: () => import('@/modules/account/pages/hunting-history.vue'),
