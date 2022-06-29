@@ -7,15 +7,15 @@
       <v-col>
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">Quote a Twitter post</div>
-          <div class="text-caption mt-1">
+          <div class="text-caption mt-1" style="word-break: break-word">
             Quote <a @click="openLink(twitterTask.link)" class="font-italic blue--text">tweet</a> from "{{
               twitterTask.page
             }}"
-            <span v-if="hashtags.length > 0">
-              using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text">&nbsp;#{{ tag }}</span>
+            <span v-if="hashtags.length > 0"
+              >using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text">&nbsp;#{{ tag }}</span>
             </span>
             <span v-if="mentions.length > 0"
-              >, tag <span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
+              >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
             >, share why you want to have this project’s primary market exposure. (At least
             {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
