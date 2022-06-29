@@ -13,11 +13,9 @@
             }}"
             <span v-if="hashtags.length > 0">
               using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text">&nbsp;#{{ tag }}</span></span
-            ><span v-if="mentions.length > 0"
-              >, tag
-              <span v-for="(user, index) in mentions" :key="user" class="blue--text">
-                <span v-if="index !== 0" class="primary--text"> and </span>@{{ user }}</span
-              ></span
+            >
+            <span v-if="mentions.length > 0"
+              >, tag <span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
             >, then submit the link to your reply tweet here (At least {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
         </div>
