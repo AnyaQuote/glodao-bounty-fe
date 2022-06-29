@@ -25,19 +25,21 @@ import { localdata } from '@/helpers/local-data'
 export default class TwitterAuthenticationPage extends Vue {
   authStore = authStore
 
+  apiEndPoint = process.env.VUE_APP_API_STRAPI_ENDPOINT
+
   mounted() {
-    const access_token = this.$route.query.access_token as string
-    const access_secret = this.$route.query.access_secret as string
-    const callback_url = localdata.callback_url
-    if (access_token && access_secret) {
-      if (callback_url) {
-        localdata.resetCallbackUrl()
-        window.open(`${callback_url}?access_token=${access_token}&access_secret=${access_secret}`, '_self')
-      } else {
-        this.authStore.fetchUser(access_token, access_secret)
-        localdata.resetCallbackUrl()
-      }
-    }
+    // const access_token = this.$route.query.access_token as string
+    // const access_secret = this.$route.query.access_secret as string
+    // if (access_token && access_secret) {
+    //   this.authStore.fetchUser(access_token, access_secret)
+    // }
+    const callback_url = this.$route.query.callback_url as string
+    if (callback_url) {
+      localdata.callback_url = callback_url
+    } else localdata.resetCallbackUrl()
+
+    console.log(`${this.apiEndPoint}connect/twitter`)
+    window.open(`${this.apiEndPoint}connect/twitter`, '_self')
   }
 }
 </script>
