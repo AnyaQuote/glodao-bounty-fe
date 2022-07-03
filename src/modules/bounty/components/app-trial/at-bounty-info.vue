@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-wrap neutral100 rounded pa-6">
+  <div class="d-flex flex-wrap neutral100 rounded-xl pa-6">
     <!-- =================== BOUNTY INFORMATION START =================== -->
     <v-sheet
       width="160"
