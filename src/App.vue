@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
+import { localdata } from '@/helpers/local-data'
+import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
 import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 import { AppProvider, appProvider } from './app-providers'
 import { walletStore } from './stores/wallet-store'
-import { localdata } from '@/helpers/local-data'
-import { get } from 'lodash'
 
 @Observer
 @Component({
@@ -431,5 +431,11 @@ tbody {
   src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-ThinIt.ttf) format('truetype');
   font-weight: 100;
   font-style: italic;
+}
+
+.show-prev {
+  .v-slide-group__prev {
+    display: flex !important;
+  }
 }
 </style>
