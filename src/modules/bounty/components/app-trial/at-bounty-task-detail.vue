@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-grow-1">
+  <div class="d-flex flex-column">
     <div
       v-show="vm.hasHunterStartedTask && !vm.hasHunterCompletedTask"
       class="neutral100--bg pa-2 font-weight-medium rounded-lg mt-4 align-self-start"
@@ -19,7 +19,7 @@
       >
       <!-- --------------------- START HUNTING BUTTON END ------------------- -->
 
-      <div class="mt-6">
+      <div class="mt-6 flex-grow-1 fill-height">
         <!-- --------------------- TASK STATUS LIST START --------------------- -->
         <div v-for="(task, index) in vm.displayAppTrialData" :key="index">
           <at-task-status :task="task" />
