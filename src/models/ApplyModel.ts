@@ -27,8 +27,8 @@ export interface Apply {
 }
 
 export interface ApplyData {
-  twitter: ApplyDetail[]
-  iat: ApplyDetail[]
+  twitter?: ApplyDetail[]
+  iat?: ApplyDetail[]
 }
 
 export interface ApplyDetail {
@@ -36,4 +36,11 @@ export interface ApplyDetail {
   link?: string
   finished?: boolean
   shareTime?: string
+}
+
+export interface DisplayAppTrialData extends ApplyDetail {
+  step?: number
+  code?: string
+  context?: string
+  required?: boolean
 }
