@@ -92,6 +92,17 @@ export class AuthStore {
     this.user = {}
   }
 
+  @action.bound updateHunterAnswerBank(answerBank) {
+    const tempUser = this.user
+    const data = get(tempUser, 'hunter.data', {})
+    tempUser.hunter.data = { ...data, answerBank }
+    localdata.user = tempUser
+  }
+
+  @action.bound updateHunter(hunter) {
+    localdata.user = { ...this.user, hunter }
+  }
+
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
       const res = yield apiService.fetchUser(access_token, access_secret, localdata.referralCode)

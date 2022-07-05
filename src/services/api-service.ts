@@ -378,6 +378,19 @@ export class ApiService {
     const res = await axios.get('getActiveReferral')
     return res.data
   }
+
+  async updateHunterAnswerBank(answer) {
+    const res = await axios.post(
+      'hunters/updateHunterAnswerBank',
+      { answer },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
