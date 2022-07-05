@@ -27,20 +27,9 @@
                   <div class="position-absolute" style="top: 20px; left: 20px">
                     <v-sheet
                       class="rounded-pill flex-center-box text-center px-2"
-                      :class="{
-                        'black--text': pool.type !== 'learn',
-                        'white--text': pool.type === 'learn' || pool.type === 'iat',
-                      }"
+                      :class="poolTypeTextStyle(pool.type)"
                       height="25"
-                      :color="pool.type === 'learn' || pool.type === 'iat' ? 'purple' : 'white'"
-                      >{{
-                        pool.type === 'learn'
-                          ? 'Learn mission'
-                          : pool.type === 'iat'
-                          ? 'App Trial mission'
-                          : 'Social mission'
-                      }}
-                      #{{ pool | _get('missionIndex', 0) }}</v-sheet
+                      >{{ poolTypeText(pool.type) }} #{{ pool | _get('missionIndex', 0) }}</v-sheet
                     >
                   </div>
                 </div>
@@ -128,6 +117,7 @@
 </template>
 
 <script lang="ts">
+import { MissionType } from '@/models/TaskModel'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component({
@@ -148,6 +138,36 @@ export default class BountyUpcoming extends Vue {
   showSide = true
   toggleSide() {
     this.showSide = !this.showSide
+  }
+
+  get poolTypeText() {
+    return (type) => {
+      switch (type) {
+        case MissionType.APP_TRIAL:
+          return 'App Trial mission'
+        case MissionType.LEARN:
+          return 'Learn mission'
+        case MissionType.BOUNTY:
+          return 'Social mission'
+        default:
+          return 'Mission'
+      }
+    }
+  }
+
+  get poolTypeTextStyle() {
+    return (type) => {
+      switch (type) {
+        case MissionType.BOUNTY:
+          return 'black--text white'
+        case MissionType.LEARN:
+          return 'white--text purple'
+        case MissionType.APP_TRIAL:
+          return 'white--text blue'
+        default:
+          return 'Mission'
+      }
+    }
   }
 }
 </script>

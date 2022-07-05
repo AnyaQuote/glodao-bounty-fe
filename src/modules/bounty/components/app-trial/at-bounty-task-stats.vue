@@ -10,7 +10,7 @@
         <span class="px-2" />
         <span class="font-weight-bold text-subtitle-1">Do all task to join this event!</span>
       </div>
-      <at-bounty-task-detail />
+      <at-bounty-task-detail class="flex-grow-1" />
     </div>
     <!-- ======================= TASK STATS END ========================= -->
     <div class="mx-0 mx-sm-3 my-2 my-sm-0" />
