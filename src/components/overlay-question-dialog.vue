@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="dialog" max-width="520">
+  <v-dialog :value="dialog" max-width="520" persistent>
     <div class="neutral100 pa-8">
       <div class="text-body-2">To continue to the website, please answer the following question:</div>
       <div class="font-weight-bold pt-4 text-body-1 d-flex">
