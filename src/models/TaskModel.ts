@@ -67,7 +67,7 @@ export interface Data {
 export enum MissionType {
   BOUNTY = 'bounty',
   LEARN = 'learn',
-  IAT = 'iat',
+  APP_TRIAL = 'iat',
   LUCKY = 'lucky',
   ACTIVE = 'active',
 }
