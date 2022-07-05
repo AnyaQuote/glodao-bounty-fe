@@ -56,7 +56,12 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class BountyCard extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) task!: any
-  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
+  missionTypeText =
+    get(this.task, 'type', '') === 'learn'
+      ? 'Learn mission'
+      : get(this.task, 'type', '') === 'iat'
+      ? 'App Trial mission'
+      : 'Social mission'
   coverImage = get(this.task, 'metadata.coverImage', '')
   spareIcon = get(this.task, 'metadata.spareIcon', '')
   spareIconColor = get(this.task, 'metadata.spareIconColor', '')

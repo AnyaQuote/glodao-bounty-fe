@@ -1,8 +1,8 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { get, keys } from 'lodash-es'
 import * as _ from 'lodash-es'
+import { get, keys } from 'lodash-es'
 
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
@@ -158,7 +158,8 @@ export class BountyHunterViewModel {
 
   @computed get eventMissionList() {
     return this.liveBountyList.filter(
-      (bounty) => bounty.type !== 'bounty' && bounty.type !== 'learn' && !_.isEmpty(bounty.type)
+      (bounty) =>
+        bounty.type !== 'bounty' && bounty.type !== 'learn' && bounty.type !== 'iat' && !_.isEmpty(bounty.type)
     )
   }
   @computed get convertedBountyList() {
@@ -183,7 +184,10 @@ export class BountyHunterViewModel {
   }
   @computed get convertedLiveBountyList() {
     return this.liveBountyList
-      .filter((bounty) => bounty.type === 'bounty' || bounty.type === 'learn' || _.isEmpty(bounty.type))
+      .filter(
+        (bounty) =>
+          bounty.type === 'bounty' || bounty.type === 'learn' || bounty.type === 'iat' || _.isEmpty(bounty.type)
+      )
       .map((bounty) => {
         return {
           name: bounty.name,

@@ -80,7 +80,12 @@ export default class BountyCard extends Vue {
   isEnded = moment(this.endTime).isBefore(moment())
   projectLogo = this.metadata?.projectLogo ?? ''
   missionType = get(this.task, 'type', '')
-  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
+  missionTypeText =
+    get(this.task, 'type', '') === 'learn'
+      ? 'Learn mission'
+      : get(this.task, 'type', '') === 'iat'
+      ? 'App Trial mission'
+      : 'Social mission'
   optionalTokens = get(this.task, 'optionalTokens', [])
 
   mounted() {
