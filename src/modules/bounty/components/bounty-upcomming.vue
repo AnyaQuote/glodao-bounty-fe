@@ -159,7 +159,7 @@ export default class BountyUpcoming extends Vue {
     return (type) => {
       switch (type) {
         case MissionType.BOUNTY:
-          return 'white--text blue'
+          return 'black--text white'
         case MissionType.LEARN:
           return 'white--text purple'
         case MissionType.APP_TRIAL:
