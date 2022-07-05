@@ -149,7 +149,12 @@ export default class HuntingTimeCard extends Vue {
   coverVideo = get(this.task, 'metadata.coverVideo', '')
   missionCompleteCount: any = 'TBA'
   missionType = get(this.task, 'type', '')
-  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
+  missionTypeText =
+    get(this.task, 'type', '') === 'learn'
+      ? 'Learn mission'
+      : get(this.task, 'type', '') === 'iat'
+      ? 'App Trial mission'
+      : 'Social mission'
   optionalTokens = get(this.task, 'optionalTokens', [])
 
   mounted() {
