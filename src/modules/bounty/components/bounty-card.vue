@@ -51,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import { MissionType } from '@/models/TaskModel'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
@@ -80,12 +81,6 @@ export default class BountyCard extends Vue {
   isEnded = moment(this.endTime).isBefore(moment())
   projectLogo = this.metadata?.projectLogo ?? ''
   missionType = get(this.task, 'type', '')
-  missionTypeText =
-    get(this.task, 'type', '') === 'learn'
-      ? 'Learn mission'
-      : get(this.task, 'type', '') === 'iat'
-      ? 'App Trial mission'
-      : 'Social mission'
   optionalTokens = get(this.task, 'optionalTokens', [])
 
   mounted() {
@@ -101,7 +96,24 @@ export default class BountyCard extends Vue {
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
   }
   openLink() {
-    this.$router.push(`/bounty/${this.id}`)
+    if (this.missionType === MissionType.APP_TRIAL) {
+      this.$router.push(`/bounty/iat/${this.id}`)
+    } else {
+      this.$router.push(`/bounty/${this.id}`)
+    }
+  }
+
+  get missionTypeText() {
+    switch (this.missionType) {
+      case MissionType.APP_TRIAL:
+        return 'App Trial mission'
+      case MissionType.LEARN:
+        return 'Learn mission'
+      case MissionType.BOUNTY:
+        return 'Social mission'
+      default:
+        return 'Mission'
+    }
   }
 }
 </script>

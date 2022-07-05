@@ -3,6 +3,7 @@ import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
 import * as _ from 'lodash-es'
 import { get, keys } from 'lodash-es'
+import { MissionType } from './../../../models/TaskModel'
 
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
@@ -159,7 +160,10 @@ export class BountyHunterViewModel {
   @computed get eventMissionList() {
     return this.liveBountyList.filter(
       (bounty) =>
-        bounty.type !== 'bounty' && bounty.type !== 'learn' && bounty.type !== 'iat' && !_.isEmpty(bounty.type)
+        bounty.type !== MissionType.BOUNTY &&
+        bounty.type !== MissionType.LEARN &&
+        bounty.type !== MissionType.APP_TRIAL &&
+        !_.isEmpty(bounty.type)
     )
   }
   @computed get convertedBountyList() {
@@ -186,7 +190,10 @@ export class BountyHunterViewModel {
     return this.liveBountyList
       .filter(
         (bounty) =>
-          bounty.type === 'bounty' || bounty.type === 'learn' || bounty.type === 'iat' || _.isEmpty(bounty.type)
+          bounty.type === MissionType.BOUNTY ||
+          bounty.type === MissionType.LEARN ||
+          bounty.type === MissionType.APP_TRIAL ||
+          _.isEmpty(bounty.type)
       )
       .map((bounty) => {
         return {
