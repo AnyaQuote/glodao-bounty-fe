@@ -5,7 +5,7 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
-    <!-- <overlay-banner-dialog /> -->
+    <overlay-question-dialog />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
@@ -37,7 +37,7 @@ import { walletStore } from './stores/wallet-store'
     'company-footer': () => import('@/components/company-footer.vue'),
     'mobile-navigation-bar': () => import('@/components/mobile-navigation-bar.vue'),
     'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
-    'overlay-banner-dialog': () => import('@/components/overlay-banner-dialog.vue'),
+    'overlay-question-dialog': () => import('@/components/overlay-question-dialog.vue'),
     'attach-wallet-dialog': () => import('@/components/attach-wallet-dialog.vue'),
     'customer-support-btn': () => import('@/components/customer-support-btn.vue'),
   },
