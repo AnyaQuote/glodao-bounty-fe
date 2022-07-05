@@ -42,16 +42,16 @@ export default class OverlayQuestionDialog extends Vue {
           answer: 'Blue',
           class: 'blue',
         },
-        {
-          id: 3,
-          answer: 'Green',
-          class: 'green',
-        },
-        {
-          id: 4,
-          answer: 'Yellow',
-          class: 'yellow',
-        },
+        // {
+        //   id: 3,
+        //   answer: 'Green',
+        //   class: 'green',
+        // },
+        // {
+        //   id: 4,
+        //   answer: 'Yellow',
+        //   class: 'yellow',
+        // },
       ],
     },
     {
@@ -68,16 +68,16 @@ export default class OverlayQuestionDialog extends Vue {
           answer: 'Cat',
           class: 'blue',
         },
-        {
-          id: 3,
-          answer: 'Bird',
-          class: 'green',
-        },
-        {
-          id: 4,
-          answer: 'Fish',
-          class: 'yellow',
-        },
+        // {
+        //   id: 3,
+        //   answer: 'Bird',
+        //   class: 'green',
+        // },
+        // {
+        //   id: 4,
+        //   answer: 'Fish',
+        //   class: 'yellow',
+        // },
       ],
     },
     {
@@ -94,16 +94,16 @@ export default class OverlayQuestionDialog extends Vue {
           answer: 'Pasta',
           class: 'blue',
         },
-        {
-          id: 3,
-          answer: 'Sushi',
-          class: 'green',
-        },
-        {
-          id: 4,
-          answer: 'Steak',
-          class: 'yellow',
-        },
+        // {
+        //   id: 3,
+        //   answer: 'Sushi',
+        //   class: 'green',
+        // },
+        // {
+        //   id: 4,
+        //   answer: 'Steak',
+        //   class: 'yellow',
+        // },
       ],
     },
   ]
