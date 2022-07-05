@@ -4,9 +4,21 @@
       <span>Available on App Store and Google Play</span>
       <span>Download to join mission</span>
     </div>
-    <v-img max-width="200" height="60" src="@/assets/images/appstore.png" />
+    <v-img
+      class="cursor-pointer"
+      max-width="200"
+      height="60"
+      src="@/assets/images/appstore.png"
+      @click="openLink(vm.taskAppStoreUrl)"
+    />
     <div class="py-1 py-sm-0 px-sm-3" />
-    <v-img max-width="200" height="60" src="@/assets/images/googleplay.png" />
+    <v-img
+      class="cursor-pointer"
+      max-width="200"
+      height="60"
+      src="@/assets/images/googleplay.png"
+      @click="openLink(vm.taskGooglePlayUrl)"
+    />
   </v-sheet>
 </template>
 
@@ -19,6 +31,10 @@ import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewm
 @Component
 export default class AppTrialAppLink extends Vue {
   @Inject() vm!: BountyAppTrialViewModel
+
+  openLink(url: string) {
+    window.open(url, '_blank')
+  }
 }
 </script>
 

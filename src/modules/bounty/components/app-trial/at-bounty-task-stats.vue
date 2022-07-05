@@ -10,36 +10,7 @@
         <span class="px-2" />
         <span class="font-weight-bold text-subtitle-1">Do all task to join this event!</span>
       </div>
-      <div v-show="hasStarted" class="neutral100--bg pa-2 font-weight-medium rounded-lg mt-4 align-self-start">
-        <v-icon class="mr-1">mdi-timelapse</v-icon>
-        Your hunting process has begun!
-      </div>
-      <div class="rounded-xl mt-5 neutral100--bg flex-grow-1 pa-6">
-        <!-- --------------------- START HUNTING BUTTON START ----------------- -->
-        <v-btn
-          v-show="!hasStarted"
-          class="linear-background-blue-main text-none white--text"
-          depressed
-          @click="startHunting"
-          >Start hunting</v-btn
-        >
-        <!-- --------------------- START HUNTING BUTTON END ------------------- -->
-
-        <div class="mt-6">
-          <!-- --------------------- TASK STATUS LIST START --------------------- -->
-          <div v-for="(task, index) in tasks" :key="index">
-            <at-task-status :task="{ ...task, step: index + 1 }" />
-            <v-divider class="my-4 dashed-border" />
-          </div>
-          <!-- --------------------- TASK STATUS LIST END ----------------------- -->
-
-          <!-- --------------------- CONFIRM COMPLETE BUTTON START -------------- -->
-          <v-btn v-if="hasStarted" class="mt-2 linear-background-blue-main white--text text-none" depressed
-            >Confirm to complete</v-btn
-          >
-          <!-- --------------------- CONFIRM COMPLETE BUTTON END ---------------- -->
-        </div>
-      </div>
+      <at-bounty-task-detail />
     </div>
     <!-- ======================= TASK STATS END ========================= -->
     <div class="mx-0 mx-sm-3 my-2 my-sm-0" />
@@ -49,21 +20,26 @@
         <div class="text-h5 font-weight-bold bluePrimary--text mb-6">Pool update</div>
         <div class="d-flex align-center text-h6 justify-space-between">
           <span class="font-weight-regular">Participants</span>
-          <span class="font-weight-bold">900</span>
+          <span class="font-weight-bold">{{ vm.totalParticipants }}</span>
         </div>
         <div class="d-flex align-center text-h6 justify-space-between mt-3">
           <span class="font-weight-regular">Remaining</span>
-          <span class="font-weight-bold">100</span>
+          <span class="font-weight-bold">{{ vm.remainingParticipants }}</span>
         </div>
         <div class="d-flex align-center text-h6 justify-space-between mt-3">
           <span class="font-weight-regular">Status</span>
-          <span class="font-weight-bold">70%</span>
+          <span class="font-weight-bold">{{ vm.taskProgressPercentage | formatNumber(1) }}%</span>
         </div>
-        <v-progress-linear class="rounded-pill mt-6" color="bluePrimary" value="70" height="30" />
+        <v-progress-linear
+          :value="vm.taskProgressPercentage"
+          class="rounded-pill mt-6"
+          color="bluePrimary"
+          height="30"
+        />
       </div>
       <div class="pa-6 bluePrimary lighten-3 rounded-xl">
         <div class="bluePrimary--text text-uppercase font-weight-bold text-center mb-4">Pool ends in</div>
-        <countdown />
+        <countdown :targetDate="vm.taskEndTime" />
       </div>
     </v-sheet>
     <!-- ======================= POOL STATS END ========================= -->
@@ -79,40 +55,11 @@ import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewm
 @Component({
   components: {
     countdown: () => import('../countdown.vue'),
-    'at-task-status': () => import('./at-task-status.vue'),
+    'at-bounty-task-detail': () => import('./at-bounty-task-detail.vue'),
   },
 })
 export default class AppTrialBountyTask extends Vue {
   @Inject() vm!: BountyAppTrialViewModel
-
-  hasStarted = false
-
-  startHunting() {
-    this.hasStarted = !this.hasStarted
-  }
-
-  tasks = [
-    {
-      name: 'Log in app',
-      isCompleted: true,
-    },
-    {
-      name: 'Start running 3km',
-      isCompleted: true,
-    },
-    {
-      name: 'Share an activity',
-      isCompleted: false,
-    },
-    {
-      name: 'Referral a friend',
-      isCompleted: false,
-    },
-    {
-      name: 'Referral a friend',
-      isCompleted: false,
-    },
-  ]
 }
 </script>
 
