@@ -6,7 +6,11 @@
       <p style="white-space: pre-line">{{ vm.taskDescription }}</p>
     </v-tab-item>
     <v-tab-item class="pa-6">
-      <v-slide-group center-active show-arrows>
+      <v-slide-group
+        center-active
+        :show-arrows="$vuetify.breakpoint.smAndUp"
+        :class="{ 'show-prev': $vuetify.breakpoint.smAndUp }"
+      >
         <v-slide-item v-for="(screenshot, index) in vm.taskAppScreenshots" :key="index" class="ma-2">
           <v-sheet rounded="lg" width="186" height="330">
             <v-img width="100%" height="100%" contain :src="screenshot" />
