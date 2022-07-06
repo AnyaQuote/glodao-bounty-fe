@@ -184,6 +184,7 @@ export class BountyAppTrialViewModel {
     } finally {
       this.changeTaskSubmitting(false)
       this.hcaptchaSubmitToken = ''
+      this.changeEarnDialog(false)
     }
   }
 
