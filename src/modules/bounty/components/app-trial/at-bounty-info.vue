@@ -21,7 +21,7 @@
         <div class="d-flex flex-sm-column align-sm-center justify-space-between">
           <span class="order-sm-last text-subtitle-1">Total mission reward</span>
           <span class="order-sm-first text-h5 font-weight-bold"
-            >{{ vm.taskReward | formatNumber(2) }} {{ vm.tokenName }}</span
+            >{{ vm.taskReward | formatNumber(2, 2) }} {{ vm.tokenName }}</span
           >
         </div>
         <v-divider vertical class="d-none d-sm-block mx-6" />
@@ -33,7 +33,7 @@
         <div class="d-flex flex-sm-column align-sm-center justify-space-between">
           <span class="order-sm-last text-subtitle-1">Personal reward</span>
           <span class="order-sm-first text-h5 font-weight-bold"
-            >{{ vm.personalReward | formatNumber(2) }} {{ vm.tokenName }}</span
+            >{{ vm.personalReward | formatNumber(2, 2) }} {{ vm.tokenName }}</span
           >
         </div>
       </div>

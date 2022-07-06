@@ -423,7 +423,7 @@
                   <div class="card-subtitle-1">Total reward</div>
                   <div class="card-big-title-text font-weight-bold d-flex align-start align-lg-center">
                     <v-img :src="vm.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ vm.rewardAmount | formatNumber(4, 2) }} {{ vm.rewardToken }}</span>
+                    <span>{{ vm.rewardAmount | formatNumber(2, 2) }} {{ vm.rewardToken }}</span>
                   </div>
                   <div
                     class="card-big-title-text font-weight-bold d-flex align-start align-lg-center"
@@ -431,7 +431,7 @@
                     :key="token.rewardToken"
                   >
                     <v-img :src="token.tokenLogo" max-height="19" max-width="19" class="mr-2"></v-img>
-                    <span>{{ token.rewardAmount | formatNumber(4, 2) }} {{ token.rewardToken }}</span>
+                    <span>{{ token.rewardAmount | formatNumber(2, 2) }} {{ token.rewardToken }}</span>
                   </div>
                 </v-sheet>
               </v-col>
