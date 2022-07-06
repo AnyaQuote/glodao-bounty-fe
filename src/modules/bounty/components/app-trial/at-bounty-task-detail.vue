@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column">
     <div
-      v-show="vm.hasHunterStartedTask && !vm.hasHunterCompletedTask"
+      v-if="vm.hasHunterStartedTask && !vm.hasHunterCompletedTask"
       class="neutral100--bg pa-2 font-weight-medium rounded-lg mt-4 align-self-start"
     >
       <v-icon class="mr-1">mdi-timelapse</v-icon>
@@ -17,6 +17,13 @@
         depressed
         >Start hunting</v-btn
       >
+      <span
+        v-if="vm.hasHunterCompletedTask"
+        class="neutral100--bg py-2 font-weight-medium rounded-lg d-block d-sm-flex align-sm-end"
+      >
+        <v-icon class="mr-sm-1">mdi-check-circle-outline</v-icon>
+        You have completed all your tasks!
+      </span>
       <!-- --------------------- START HUNTING BUTTON END ------------------- -->
 
       <div class="mt-6 flex-grow-1 fill-height">
@@ -62,4 +69,8 @@ export default class AppTrialBountyTaskDetail extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.debug {
+  border: 1px solid red;
+}
+</style>
