@@ -131,12 +131,12 @@
                   <v-sheet class="primary--text number-font neutral100--bg text-end">
                     <div>
                       {{ vm.totalPriorityReward | formatNumber(4, 2) }} {{ vm.rewardToken }} ({{
-                        vm.totalPriorityRewardExchanged | usdCustom
+                        vm.totalPriorityRewardExchanged | usdCustom(2, 4)
                       }})
                     </div>
                     <div v-for="optionalToken in vm.optionalTokensPriorityReward" :key="optionalToken.rewardToken">
                       {{ optionalToken.priorityRewardAmount | formatNumber(4, 2) }} {{ optionalToken.rewardToken }} ({{
-                        optionalToken.priorityRewardExchanged | usdCustom
+                        optionalToken.priorityRewardExchanged | usdCustom(2, 4)
                       }})
                     </div>
                   </v-sheet>
@@ -153,7 +153,7 @@
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg">
                     {{ vm.singlePriorityReward | formatNumber(4, 2) }} {{ vm.rewardToken }} ({{
-                      vm.singlePriorityRewardExchanged | usdCustom
+                      vm.singlePriorityRewardExchanged | usdCustom(2, 4)
                     }})
                   </v-sheet>
                 </v-sheet>
@@ -186,12 +186,12 @@
                   <v-sheet class="primary--text number-font neutral100--bg">
                     <div>
                       {{ vm.totalCommunityReward | formatNumber(4, 2) }} {{ vm.rewardToken }} ({{
-                        vm.totalCommunityRewardExchanged | usdCustom
+                        vm.totalCommunityRewardExchanged | usdCustom(2, 4)
                       }})
                     </div>
                     <div v-for="optionalToken in vm.optionalTokensCommunityReward" :key="optionalToken.rewardToken">
                       {{ optionalToken.communityRewardAmount | formatNumber(4, 2) }} {{ optionalToken.rewardToken }} ({{
-                        optionalToken.communityRewardExchanged | usdCustom
+                        optionalToken.communityRewardExchanged | usdCustom(2, 4)
                       }})
                     </div>
                   </v-sheet>
