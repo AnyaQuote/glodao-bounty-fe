@@ -28,7 +28,7 @@
         <v-sheet class="bluePrimary lighten-3 mt-4 px-4 py-3 rounded">
           <v-row dense no-gutters>
             <v-col cols="6" class="text-center">
-              <div class="font-weight-bold text-h5">${{ totalReward }}</div>
+              <div class="font-weight-bold text-h5">${{ totalReward | formatNumber(4, 2) }}</div>
               <div class="text-h6 neutral10--text font-weight-600">reward</div>
             </v-col>
             <v-col cols="6" class="text-center">
@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+import { MissionType } from '@/models/TaskModel'
 import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
@@ -56,7 +57,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 export default class BountyCard extends Vue {
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) task!: any
-  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
   coverImage = get(this.task, 'metadata.coverImage', '')
   spareIcon = get(this.task, 'metadata.spareIcon', '')
   spareIconColor = get(this.task, 'metadata.spareIconColor', '')
@@ -64,7 +64,26 @@ export default class BountyCard extends Vue {
   totalPrize = get(this.task, 'maxPriorityParticipants', 0)
 
   openLink() {
-    this.$router.push(`/bounty/${this.id}`)
+    const missionType = get(this.task, 'type', '')
+    if (missionType === 'iat') {
+      this.$router.push(`/bounty/iat/${this.id}`)
+    } else {
+      this.$router.push(`/bounty/${this.id}`)
+    }
+  }
+
+  get missionTypeText() {
+    const missionType = get(this.task, 'type', '')
+    switch (missionType) {
+      case MissionType.APP_TRIAL:
+        return 'App Trial mission'
+      case MissionType.LEARN:
+        return 'Learn mission'
+      case MissionType.BOUNTY:
+        return 'Social mission'
+      default:
+        return 'Mission'
+    }
   }
 }
 </script>

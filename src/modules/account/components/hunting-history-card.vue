@@ -82,7 +82,7 @@
         <div>
           <div class="small-caption-text">Bounty earned</div>
           <div class="medium-caption-text font-weight-bold mt-2">
-            {{ value | usdCustom(0, 6) }}
+            {{ value | usdCustom(2, 2) }}
           </div>
         </div>
       </v-col>

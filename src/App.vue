@@ -5,7 +5,7 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
-    <!-- <overlay-banner-dialog /> -->
+    <overlay-question-dialog />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <navigation-drawer />
     <mobile-navigation-bar v-if="$vuetify.breakpoint.smAndDown" />
@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
+import { localdata } from '@/helpers/local-data'
+import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
 import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 import { AppProvider, appProvider } from './app-providers'
 import { walletStore } from './stores/wallet-store'
-import { localdata } from '@/helpers/local-data'
-import { get } from 'lodash'
 
 @Observer
 @Component({
@@ -37,7 +37,7 @@ import { get } from 'lodash'
     'company-footer': () => import('@/components/company-footer.vue'),
     'mobile-navigation-bar': () => import('@/components/mobile-navigation-bar.vue'),
     'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
-    'overlay-banner-dialog': () => import('@/components/overlay-banner-dialog.vue'),
+    'overlay-question-dialog': () => import('@/components/overlay-question-dialog.vue'),
     'attach-wallet-dialog': () => import('@/components/attach-wallet-dialog.vue'),
     'customer-support-btn': () => import('@/components/customer-support-btn.vue'),
   },

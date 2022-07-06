@@ -29,7 +29,7 @@
       <v-sheet class="background-transparent d-flex flex-sm-column fill-width" min-width="92">
         <div class="neutral10--text small-caption-text">Total commission</div>
         <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
-          {{ commission | usdCustom(4, 6) }}
+          {{ commission | usdCustom(2, 2) }}
         </div>
       </v-sheet>
     </div>
@@ -37,7 +37,7 @@
       <v-sheet class="background-transparent d-flex flex-sm-column fill-width" min-width="99">
         <div class="neutral10--text small-caption-text">Today commission</div>
         <div class="font-weight-bold primary--text pl-3 pl-sm-0 ml-auto ml-sm-0 medium-caption-text">
-          {{ commissionToday | usdCustom(4, 6) }}
+          {{ commissionToday | usdCustom(2, 2) }}
         </div>
       </v-sheet>
     </div>

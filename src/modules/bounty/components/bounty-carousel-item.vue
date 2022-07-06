@@ -13,7 +13,7 @@
           <div class="blue--text font-size-18 text-truncate">{{ name }}</div>
           <div class="d-flex">
             <div class="flex-shrink-0">Reward</div>
-            <div class="font-size-18 flex-1 text-end">${{ value }}</div>
+            <div class="font-size-18 flex-1 text-end">${{ value | formatNumber(2, 2) }}</div>
           </div>
         </div>
       </div>

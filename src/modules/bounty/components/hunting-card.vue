@@ -16,14 +16,7 @@
           Your browser does not support HTML video.
         </video> -->
         <div class="position-absolute" style="top: 10px; left: 10px">
-          <v-sheet
-            class="rounded-pill flex-center-box text-center px-2"
-            :class="{
-              'black--text': missionType !== 'learn',
-              'white--text': missionType === 'learn',
-            }"
-            height="25"
-            :color="missionType === 'learn' ? 'purple' : 'white'"
+          <v-sheet class="rounded-pill flex-center-box text-center px-2" :class="missionTypeTextStyle" height="25"
             >{{ missionTypeText }} #{{ task | _get('missionIndex', 0) }}</v-sheet
           >
         </div>
@@ -82,7 +75,7 @@
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
-            {{ value | usdCustom(2, 5) }}
+            {{ value | usdCustom(2, 2) }}
           </div>
         </v-col>
         <v-col cols="6">
@@ -122,6 +115,7 @@
 </template>
 
 <script lang="ts">
+import { MissionType } from '@/models/TaskModel'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
@@ -149,7 +143,6 @@ export default class HuntingTimeCard extends Vue {
   coverVideo = get(this.task, 'metadata.coverVideo', '')
   missionCompleteCount: any = 'TBA'
   missionType = get(this.task, 'type', '')
-  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
   optionalTokens = get(this.task, 'optionalTokens', [])
 
   mounted() {
@@ -166,7 +159,37 @@ export default class HuntingTimeCard extends Vue {
   }
 
   openLink() {
-    this.$router.push(`/bounty/${this.id}`)
+    if (this.missionType === MissionType.APP_TRIAL) {
+      this.$router.push(`/bounty/iat/${this.id}`)
+    } else {
+      this.$router.push(`/bounty/${this.id}`)
+    }
+  }
+
+  get missionTypeText() {
+    switch (this.missionType) {
+      case MissionType.APP_TRIAL:
+        return 'App Trial mission'
+      case MissionType.LEARN:
+        return 'Learn mission'
+      case MissionType.BOUNTY:
+        return 'Social mission'
+      default:
+        return 'Mission'
+    }
+  }
+
+  get missionTypeTextStyle() {
+    switch (this.missionType) {
+      case MissionType.BOUNTY:
+        return 'black--text white'
+      case MissionType.LEARN:
+        return 'white--text purple'
+      case MissionType.APP_TRIAL:
+        return 'white--text blue'
+      default:
+        return 'Mission'
+    }
   }
 }
 </script>
