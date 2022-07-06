@@ -1,12 +1,12 @@
 <template>
   <v-dialog :value="dialog" max-width="520" persistent>
     <div class="neutral100 pa-8">
-      <div class="text-body-2">To continue to the website, please answer the following question:</div>
-      <div class="font-weight-bold pt-4 text-body-1 d-flex">
-        <div>
+      <div :class="question.titleClass">{{ question.title }}</div>
+      <div class="pt-4 text-body-2 d-flex">
+        <!-- <div>
           <v-icon size="40" class="mr-3">mdi-progress-question</v-icon>
-        </div>
-        <div>{{ question.question }}</div>
+        </div> -->
+        <div style="white-space: pre-line">{{ question.question }}</div>
       </div>
       <div class="row d-flex justify-space-between pt-6">
         <v-col cols="12" sm="6" v-for="answer in question.answers" :key="answer.id" @click="submitAnswer(answer)">
@@ -29,81 +29,23 @@ export default class OverlayQuestionDialog extends Vue {
   questionIndex = 0
   questionList: any[] = [
     {
-      id: 1,
-      question: 'What is your favorite color?',
+      id: '01',
+      title: 'Poll of member views',
+      titleClass: 'text-body-1 font-weight-bold',
+      question: `Hello GloDAO members! We are now planning to connect with exchanges and create special missions pools in addition to provide more exciting prizes to the community.
+Members will complete KYC activities for the partner exchange and get a reward of between $2 and $3.
+Please let us know your thoughts on this plan so that we can propose it to GloDAO's partners!`,
       answers: [
         {
-          id: 1,
-          answer: 'Red',
-          class: 'red',
+          id: '0101',
+          answer: 'Yes',
+          class: 'blue white--text',
         },
         {
-          id: 2,
-          answer: 'Blue',
-          class: 'blue',
+          id: '0102',
+          answer: 'No',
+          class: '',
         },
-        // {
-        //   id: 3,
-        //   answer: 'Green',
-        //   class: 'green',
-        // },
-        // {
-        //   id: 4,
-        //   answer: 'Yellow',
-        //   class: 'yellow',
-        // },
-      ],
-    },
-    {
-      id: 2,
-      question: 'What is your favorite animal?',
-      answers: [
-        {
-          id: 1,
-          answer: 'Dog',
-          class: 'red',
-        },
-        {
-          id: 2,
-          answer: 'Cat',
-          class: 'blue',
-        },
-        // {
-        //   id: 3,
-        //   answer: 'Bird',
-        //   class: 'green',
-        // },
-        // {
-        //   id: 4,
-        //   answer: 'Fish',
-        //   class: 'yellow',
-        // },
-      ],
-    },
-    {
-      id: 3,
-      question: 'What is your favorite food?',
-      answers: [
-        {
-          id: 1,
-          answer: 'Pizza',
-          class: 'red',
-        },
-        {
-          id: 2,
-          answer: 'Pasta',
-          class: 'blue',
-        },
-        // {
-        //   id: 3,
-        //   answer: 'Sushi',
-        //   class: 'green',
-        // },
-        // {
-        //   id: 4,
-        //   answer: 'Steak',
-        //   class: 'yellow',
-        // },
       ],
     },
   ]
