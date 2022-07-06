@@ -5,7 +5,7 @@
       class="order-last order-sm-first d-flex flex-column bluePrimary flex-grow-1 pa-7 rounded-xl"
       :class="{ 'lighten-3': $vuetify.theme.dark }"
     >
-      <div class="d-flex flex-column flex-sm-row align-center align-sm-start white--text">
+      <div class="d-flex flex-column flex-sm-row align-center align-sm-end white--text">
         <span class="font-weight-bold text-h5">Pool task</span>
         <span class="px-2" />
         <span class="font-weight-bold text-subtitle-1">Do all task to join this event!</span>
