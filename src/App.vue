@@ -432,4 +432,9 @@ tbody {
   font-weight: 100;
   font-style: italic;
 }
+.show-prev {
+  .v-slide-group__prev {
+    display: flex !important;
+  }
+}
 </style>
