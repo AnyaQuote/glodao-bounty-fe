@@ -52,7 +52,9 @@
             }"
           >
             <div class="text-body-2">Total mission reward</div>
-            <div class="text-body-1 font-weight-bold">{{ vm.rewardAmount | formatNumber }} {{ vm.rewardToken }}</div>
+            <div class="text-body-1 font-weight-bold">
+              {{ vm.rewardAmount | formatNumber(4, 2) }} {{ vm.rewardToken }}
+            </div>
           </div>
           <div
             class="col"
@@ -128,12 +130,12 @@
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg text-end">
                     <div>
-                      {{ vm.totalPriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                      {{ vm.totalPriorityReward | formatNumber(4, 2) }} {{ vm.rewardToken }} ({{
                         vm.totalPriorityRewardExchanged | usdCustom
                       }})
                     </div>
                     <div v-for="optionalToken in vm.optionalTokensPriorityReward" :key="optionalToken.rewardToken">
-                      {{ optionalToken.priorityRewardAmount | formatNumber }} {{ optionalToken.rewardToken }} ({{
+                      {{ optionalToken.priorityRewardAmount | formatNumber(4, 2) }} {{ optionalToken.rewardToken }} ({{
                         optionalToken.priorityRewardExchanged | usdCustom
                       }})
                     </div>
@@ -150,7 +152,7 @@
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg">
-                    {{ vm.singlePriorityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                    {{ vm.singlePriorityReward | formatNumber(4, 2) }} {{ vm.rewardToken }} ({{
                       vm.singlePriorityRewardExchanged | usdCustom
                     }})
                   </v-sheet>
@@ -183,12 +185,12 @@
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Pool reward:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg">
                     <div>
-                      {{ vm.totalCommunityReward | formatNumber }} {{ vm.rewardToken }} ({{
+                      {{ vm.totalCommunityReward | formatNumber(4, 2) }} {{ vm.rewardToken }} ({{
                         vm.totalCommunityRewardExchanged | usdCustom
                       }})
                     </div>
                     <div v-for="optionalToken in vm.optionalTokensCommunityReward" :key="optionalToken.rewardToken">
-                      {{ optionalToken.communityRewardAmount | formatNumber }} {{ optionalToken.rewardToken }} ({{
+                      {{ optionalToken.communityRewardAmount | formatNumber(4, 2) }} {{ optionalToken.rewardToken }} ({{
                         optionalToken.communityRewardExchanged | usdCustom
                       }})
                     </div>

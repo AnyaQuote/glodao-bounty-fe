@@ -28,7 +28,7 @@
         <v-sheet class="bluePrimary lighten-3 mt-4 px-4 py-3 rounded">
           <v-row dense no-gutters>
             <v-col cols="6" class="text-center">
-              <div class="font-weight-bold text-h5">${{ totalReward | formatNumber(2) }}</div>
+              <div class="font-weight-bold text-h5">${{ totalReward | formatNumber(4, 2) }}</div>
               <div class="text-h6 neutral10--text font-weight-600">reward</div>
             </v-col>
             <v-col cols="6" class="text-center">

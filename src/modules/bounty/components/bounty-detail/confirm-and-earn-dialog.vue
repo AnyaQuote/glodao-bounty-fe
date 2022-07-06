@@ -11,7 +11,7 @@
           <!-- <span class="text-capitalize">{{ vm.currentPoolType }}</span> pool! -->
         </div>
         <div class="text-body-2 text-center font-weight-bold" v-if="vm.isInPriorityPool">
-          Your total reward: {{ vm.singlePriorityRewardAsToken | formatNumber }} {{ vm.rewardToken }}
+          Your total reward: {{ vm.singlePriorityRewardAsToken | formatNumber(4, 2) }} {{ vm.rewardToken }}
         </div>
         <div class="text-caption text-center mt-1" v-if="!vm.isInPriorityPool">
           Your reward will be calculated exactly when the hunting pool ends. Please wait until then, we will distribute
