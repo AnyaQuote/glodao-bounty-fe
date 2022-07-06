@@ -2,14 +2,13 @@
   <div class="d-flex flex-wrap neutral100 rounded-xl pa-6">
     <!-- =================== BOUNTY INFORMATION START =================== -->
     <v-sheet
-      width="160"
-      height="160"
+      max-width="160"
       class="d-block d-sm-none pa-4 fill-height neutral100--bg"
       rounded="xl"
       elevation="1"
       outlined
     >
-      <v-img width="100%" height="100%" src="@/assets/images/mock-app-trial-logo.png" />
+      <v-img class="rounded-lg" width="100%" height="100%" :src="vm.taskAppLogo" />
     </v-sheet>
     <div class="flex-grow-1 d-flex flex-column mt-4 mt-sm-0">
       <div class="text-h3 font-weight-bold">{{ vm.taskName }}</div>
@@ -47,8 +46,14 @@
     </div>
     <!-- =================== BOUNTY INFORMATION END =================== -->
     <!-- =================== APP LOGO START =========================== -->
-    <v-sheet class="d-none d-sm-block pa-4 fill-height neutral100--bg" rounded="xl" elevation="1" outlined>
-      <v-img width="100%" height="100%" :src="vm.taskAppLogo" />
+    <v-sheet
+      max-width="360"
+      class="d-none d-sm-block pa-4 fill-height neutral100--bg"
+      rounded="xl"
+      elevation="1"
+      outlined
+    >
+      <v-img class="rounded-lg" width="100%" height="100%" :src="vm.taskAppLogo" />
     </v-sheet>
     <!-- =================== APP LOGO END ============================= -->
   </div>
