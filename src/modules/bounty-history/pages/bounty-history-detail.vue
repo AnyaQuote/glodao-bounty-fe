@@ -101,7 +101,7 @@
                       </tr>
                       <tr>
                         <td class="font-weight-600">Total reward</td>
-                        <td class="text-end font-weight-bold">${{ vm.totalRewardValue }}</td>
+                        <td class="text-end font-weight-bold">${{ vm.totalRewardValue | formatNumber(6, 2) }}</td>
                       </tr>
                       <!-- <tr>
                         <td class="font-weight-600">Total shared</td>
