@@ -34,7 +34,7 @@
           <div>
             <div class="small-caption-text">Total reward</div>
             <div class="d-flex align-center mt-2 font-weight-bold">
-              <div>{{ value | usdCustom(2, 6) }}</div>
+              <div>{{ value | usdCustom(2, 4) }}</div>
             </div>
           </div>
         </v-col>
@@ -90,7 +90,7 @@
         <v-col cols="12">
           <div class="d-flex align-center justify-space-between mt-2">
             <div class="text-body-2">Total reward</div>
-            <div class="font-weight-bold text-body-1">{{ value | usdCustom(2, 6) }}</div>
+            <div class="font-weight-bold text-body-1">{{ value | usdCustom(2, 4) }}</div>
           </div>
         </v-col>
         <v-col cols="12">

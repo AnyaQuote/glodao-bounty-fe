@@ -37,7 +37,7 @@
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
-              <div class="font-weight-bold">${{ value | formatNumber(2) }}</div>
+              <div class="font-weight-bold">${{ value | formatNumber(4, 2) }}</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
               <div>Participants</div>

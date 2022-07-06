@@ -75,7 +75,7 @@
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
-            {{ value | usdCustom(2, 5) }}
+            {{ value | usdCustom(2, 4) }}
           </div>
         </v-col>
         <v-col cols="6">
