@@ -11,7 +11,7 @@
             name
           }}</span>
           <div class="dot mx-2"></div>
-          <span class="font-weight-bold text-truncate" style="font-size: 1.4em">${{ value }}</span>
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em">${{ value | formatNumber(2, 2) }}</span>
         </div>
         <div class="d-flex text-body-1 font-weight-medium">
           <span>{{ startTime | datetime }}</span>
