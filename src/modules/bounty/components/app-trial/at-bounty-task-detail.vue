@@ -69,8 +69,4 @@ export default class AppTrialBountyTaskDetail extends Vue {
 }
 </script>
 
-<style scoped>
-.debug {
-  border: 1px solid red;
-}
-</style>
+<style scoped></style>
