@@ -26,7 +26,7 @@ import { apiService } from '@/services/api-service'
 @Component
 export default class OverlayQuestionDialog extends Vue {
   dialog = false
-  questionIndex = 0
+  questionIndex = 1
   questionList: any[] = [
     {
       id: '01',
