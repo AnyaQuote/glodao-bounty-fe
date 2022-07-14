@@ -130,16 +130,17 @@ export class BountyHistoryDetailViewModel {
 
   @asyncAction *getTotalCompletedMission() {
     try {
-      this.totalCompletedTaskCount = yield apiService.applies.count({
-        _where: [
-          {
-            task: this.taskId,
-          },
-          {
-            _or: [{ status: 'completed' }, { status: 'awarded' }],
-          },
-        ],
-      })
+      // this.totalCompletedTaskCount = yield apiService.applies.count({
+      //   _where: [
+      //     {
+      //       task: this.taskId,
+      //     },
+      //     {
+      //       _or: [{ status: 'completed' }, { status: 'awarded' }],
+      //     },
+      //   ],
+      // })
+      this.totalCompletedTaskCount = this.task.totalParticipants
       this.totalPriorityParticipants = yield apiService.applies.count({
         task: this.taskId,
         poolType: 'priority',
