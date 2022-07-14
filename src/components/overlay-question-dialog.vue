@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="dialog" max-width="520" persistent>
+  <v-dialog :value="dialog" max-width="520" persistent v-if="question">
     <div class="neutral100 pa-8">
       <div :class="question.titleClass">{{ question.title }}</div>
       <div class="pt-4 text-body-2 d-flex">
@@ -49,7 +49,7 @@ Please let us know your thoughts on this plan so that we can propose it to GloDA
       ],
     },
   ]
-  question = this.questionList[this.questionIndex]
+  question = this.questionList[this.questionIndex] || null
   mounted() {
     if (!this.question) return
     const user = get(authStore, 'user', {})
