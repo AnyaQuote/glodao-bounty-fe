@@ -176,7 +176,15 @@
       <v-col cols="12" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)" v-if="vm.isEventMission">
         <div class="row d-flex justify-center">
           <v-sheet class="mb-4 neutral15 col-12">
-            <v-row dense>
+            <v-row
+              dense
+              v-if="vm.missionType !== 'lucky' && vm.missionType !== 'active' && vm.missionType !== 'referral'"
+            >
+              <v-col>
+                <pool-type-container />
+              </v-col>
+            </v-row>
+            <v-row dense v-else>
               <v-col cols="12" sm="3" md="3">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Total reward</div>
@@ -185,7 +193,6 @@
                   </div>
                 </v-sheet>
               </v-col>
-
               <v-col cols="12" sm="3" md="3" v-if="vm.missionType === 'referral'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
@@ -195,7 +202,7 @@
                   </div>
                 </v-sheet>
               </v-col>
-              <v-col cols="12" sm="3" md="3" v-else>
+              <v-col cols="12" sm="3" md="3" v-else-if="vm.missionType === 'active' || vm.missionType === 'lucky'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
@@ -367,7 +374,7 @@
                             Apply for priority pool
                           </v-btn>
                         </v-col>
-                        <v-col cols="12" class="text-center ma-0 pa-0">
+                        <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.finishLink">
                           <v-sheet class="neutral15 fill-width pa-6 text-center">
                             <span class="blue--text font-weight-bold" v-html="vm.finishMessage"></span>
                             <div class="d-flex justify-center mt-4">
