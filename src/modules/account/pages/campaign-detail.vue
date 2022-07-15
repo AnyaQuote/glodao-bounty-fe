@@ -68,7 +68,7 @@
                   'text-h5': $vuetify.breakpoint.xsOnly,
                 }"
               >
-                {{ vm.totalCommissionObj | _get('pastDayCommission') | usdCustom(4, 6) }}
+                {{ vm.totalCommissionObj | _get('pastDayCommission') | usdCustom(2, 2) }}
               </div>
               <div
                 class="neutral10--text font-weight-600 font-size-18"
@@ -86,7 +86,7 @@
                   'text-h6': $vuetify.breakpoint.xsOnly,
                 }"
               >
-                {{ vm.totalCommissionObj | _get('totalCommission') | usdCustom(4, 6) }}
+                {{ vm.totalCommissionObj | _get('totalCommission') | usdCustom(2, 2) }}
               </div>
               <div
                 class="neutral10--text font-weight-600 font-size-18"

@@ -100,8 +100,8 @@
                         <td class="text-end font-weight-bold">{{ vm.totalCommunityParticipants }} user(s)</td>
                       </tr>
                       <tr>
-                        <td class="font-weight-600">Total Awarded</td>
-                        <td class="text-end font-weight-bold">{{ vm.totalAwarded }} {{ vm.rewardToken }}</td>
+                        <td class="font-weight-600">Total reward</td>
+                        <td class="text-end font-weight-bold">${{ vm.totalRewardValue | formatNumber(2, 2) }}</td>
                       </tr>
                       <!-- <tr>
                         <td class="font-weight-600">Total shared</td>

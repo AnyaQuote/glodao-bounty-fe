@@ -315,6 +315,8 @@ export class HuntingHistoryViewModel {
       const types = keys(task.data)
       const firstTask = apply.data[types[0]]
       return {
+        ...apply,
+        task: task,
         id: apply.id,
         status: apply.status,
         name: task.name,

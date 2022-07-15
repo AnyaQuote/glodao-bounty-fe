@@ -198,7 +198,7 @@
                       max-width="22"
                       class="mr-2 ml-0"
                     ></v-img> -->
-                    <v-icon max-width="22" max-height="22" class="mr-2 ml-0" color="neutral10" left>
+                    <v-icon max-width="24" max-height="24" class="mr-2 ml-0" color="neutral10">
                       mdi-star-circle
                     </v-icon>
 

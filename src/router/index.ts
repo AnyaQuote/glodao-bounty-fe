@@ -23,6 +23,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/auth/pages/twitter-auth.vue'),
   },
   {
+    path: '/twitter-login',
+    name: 'TwitterLogin',
+    component: () => import('@/modules/auth/pages/twitter-login.vue'),
+  },
+  {
     path: '/hunting-history',
     name: 'HuntingHistory',
     component: () => import('@/modules/account/pages/hunting-history.vue'),
@@ -71,6 +76,11 @@ const routes: Array<RouteConfig> = [
     path: '/bounty-reward',
     name: 'BountyRewardDashboard',
     component: () => import('@/modules/bounty-reward/pages/bounty-reward-page.vue'),
+  },
+  {
+    path: '/bounty/iat/:taskId',
+    name: 'BountyAppTrialDetail',
+    component: () => import('@/modules/bounty/pages/bounty-app-trial.vue'),
   },
   {
     path: '*',

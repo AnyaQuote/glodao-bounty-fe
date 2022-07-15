@@ -42,6 +42,20 @@ class LocalData {
     else localStorage.removeItem('ref')
   }
 
+  get callback_url(): string {
+    if (localStorage.getItem('callback_url')) return JSON.parse(localStorage.getItem('callback_url') || '')
+    return ''
+  }
+
+  set callback_url(value: string) {
+    if (value) localStorage.setItem('callback_url', JSON.stringify(value))
+    else localStorage.removeItem('callback_url')
+  }
+
+  resetCallbackUrl() {
+    localStorage.removeItem('callback_url')
+  }
+
   resetUser() {
     localStorage.removeItem('gloDaoUser')
     localStorage.removeItem('gloDaoJwt')

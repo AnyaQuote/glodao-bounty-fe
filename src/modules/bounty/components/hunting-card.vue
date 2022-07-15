@@ -16,14 +16,7 @@
           Your browser does not support HTML video.
         </video> -->
         <div class="position-absolute" style="top: 10px; left: 10px">
-          <v-sheet
-            class="rounded-pill flex-center-box text-center px-2"
-            :class="{
-              'black--text': missionType !== 'learn',
-              'white--text': missionType === 'learn',
-            }"
-            height="25"
-            :color="missionType === 'learn' ? 'purple' : 'white'"
+          <v-sheet class="rounded-pill flex-center-box text-center px-2" :class="missionTypeTextStyle" height="25"
             >{{ missionTypeText }} #{{ task | _get('missionIndex', 0) }}</v-sheet
           >
         </div>
@@ -62,7 +55,7 @@
         </div>
       </div>
 
-      <v-sheet class="mt-5 text-body-2 neutral10--text text-truncate webkit-line-clamp-2 neutral100--bg" min-height="40"
+      <v-sheet class="mt-5 text-body-1 neutral10--text text-truncate webkit-line-clamp-2 neutral100--bg" min-height="40"
         >{{ task.shortDescription }}
       </v-sheet>
 
@@ -74,15 +67,15 @@
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
-            Total reward
+            Value
           </div>
           <div
-            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
             :class="{
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
-            {{ rewardAmount | formatNumber(2, 0) }} {{ tokenName }}
+            {{ value | usdCustom(2, 2) }}
           </div>
         </v-col>
         <v-col cols="6">
@@ -92,51 +85,15 @@
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
-            Value
-          </div>
-          <div
-            class="font-weight-bold mt-1 font-size-20 text-truncate"
-            :class="{
-              'text-body-1': $vuetify.breakpoint.smAndDown,
-            }"
-          >
-            {{ value | usdCustom(2, 5) }}
-          </div>
-        </v-col>
-        <v-col cols="6" class="mt-6">
-          <div
-            class="neutral10--text font-size-20"
-            :class="{
-              'text-body-1': $vuetify.breakpoint.smAndDown,
-            }"
-          >
             Participants
           </div>
           <div
-            class="font-weight-bold mt-1 font-size-20 text-truncate"
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
             :class="{
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
             {{ participant | formatNumber(0, 0) }}
-          </div>
-        </v-col>
-        <v-col cols="6" class="mt-6">
-          <div
-            class="neutral10--text font-size-20"
-            :class="{
-              'text-body-1': $vuetify.breakpoint.smAndDown,
-            }"
-          >
-            Mission success
-          </div>
-          <div
-            class="font-weight-bold mt-1 font-size-20 text-truncate"
-            :class="{
-              'text-body-1': $vuetify.breakpoint.smAndDown,
-            }"
-          >
-            {{ missionCompleteCount }}
           </div>
         </v-col>
       </v-row>
@@ -158,7 +115,7 @@
 </template>
 
 <script lang="ts">
-import { apiService } from '@/services/api-service'
+import { MissionType } from '@/models/TaskModel'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get } from 'lodash'
 import { Observer } from 'mobx-vue'
@@ -186,19 +143,53 @@ export default class HuntingTimeCard extends Vue {
   coverVideo = get(this.task, 'metadata.coverVideo', '')
   missionCompleteCount: any = 'TBA'
   missionType = get(this.task, 'type', '')
-  missionTypeText = get(this.task, 'type', '') === 'learn' ? 'Learn mission' : 'Social mission'
+  optionalTokens = get(this.task, 'optionalTokens', [])
 
   mounted() {
-    this.value = FixedNumber.from(`${this.rewardAmount}`).mulUnsafe(
+    const tempBaseTokenValue = FixedNumber.from(`${this.rewardAmount}`).mulUnsafe(
       FixedNumber.from(`${this.task.tokenBasePrice}`)
-    )._value
-    apiService.applies.count({ task: this.id, status: 'completed' }).then((res) => {
-      this.missionCompleteCount = res
+    )
+    let optionalTokenTotalValue = FixedNumber.from('0')
+    this.optionalTokens.forEach((token) => {
+      optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
+        FixedNumber.from(`${token.rewardAmount}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+      )
     })
+    this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
   }
 
   openLink() {
-    this.$router.push(`/bounty/${this.id}`)
+    if (this.missionType === MissionType.APP_TRIAL) {
+      this.$router.push(`/bounty/iat/${this.id}`)
+    } else {
+      this.$router.push(`/bounty/${this.id}`)
+    }
+  }
+
+  get missionTypeText() {
+    switch (this.missionType) {
+      case MissionType.APP_TRIAL:
+        return 'App Trial mission'
+      case MissionType.LEARN:
+        return 'Learn mission'
+      case MissionType.BOUNTY:
+        return 'Social mission'
+      default:
+        return 'Mission'
+    }
+  }
+
+  get missionTypeTextStyle() {
+    switch (this.missionType) {
+      case MissionType.BOUNTY:
+        return 'black--text white'
+      case MissionType.LEARN:
+        return 'white--text purple'
+      case MissionType.APP_TRIAL:
+        return 'white--text blue'
+      default:
+        return 'Mission'
+    }
   }
 }
 </script>
@@ -245,6 +236,9 @@ export default class HuntingTimeCard extends Vue {
 }
 .font-size-20 {
   font-size: 20px;
+}
+.font-size-28 {
+  font-size: 28px;
 }
 .flame-emoji {
   line-height: 42px;

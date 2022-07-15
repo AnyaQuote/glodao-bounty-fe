@@ -384,7 +384,7 @@ export class ApiService {
       'kycs/create-session-id',
       { jwt, appId: '62b187dc62e8de0b750c998f' },
       {
-        baseURL: 'https://diversity-kyc-api.contracts.dev/',
+        baseURL: 'https://dev-kyc-api.glodao.io/',
       }
     )
     return res.data
@@ -396,6 +396,18 @@ export class ApiService {
       {
         kycSessionId,
       },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
+  async updateHunterAnswerBank(answer) {
+    const res = await axios.post(
+      'hunters/updateHunterAnswerBank',
+      { answer },
       {
         headers: {
           Authorization: `Bearer ${authStore.jwt}`,

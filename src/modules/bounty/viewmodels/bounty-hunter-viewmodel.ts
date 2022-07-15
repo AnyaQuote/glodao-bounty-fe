@@ -1,8 +1,9 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { get, keys } from 'lodash-es'
 import * as _ from 'lodash-es'
+import { get, keys } from 'lodash-es'
+import { MissionType } from './../../../models/TaskModel'
 
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
@@ -158,7 +159,11 @@ export class BountyHunterViewModel {
 
   @computed get eventMissionList() {
     return this.liveBountyList.filter(
-      (bounty) => bounty.type !== 'bounty' && bounty.type !== 'learn' && !_.isEmpty(bounty.type)
+      (bounty) =>
+        bounty.type !== MissionType.BOUNTY &&
+        bounty.type !== MissionType.LEARN &&
+        bounty.type !== MissionType.APP_TRIAL &&
+        !_.isEmpty(bounty.type)
     )
   }
   @computed get convertedBountyList() {
@@ -176,12 +181,20 @@ export class BountyHunterViewModel {
         totalParticipants: bounty.totalParticipants,
         missionIndex: get(bounty, 'missionIndex', 0),
         type: get(bounty, 'type', ''),
+        tokenBasePrice: get(bounty, 'tokenBasePrice', '1'),
+        optionalTokens: get(bounty, 'optionalTokens', []),
       }
     })
   }
   @computed get convertedLiveBountyList() {
     return this.liveBountyList
-      .filter((bounty) => bounty.type === 'bounty' || bounty.type === 'learn' || _.isEmpty(bounty.type))
+      .filter(
+        (bounty) =>
+          bounty.type === MissionType.BOUNTY ||
+          bounty.type === MissionType.LEARN ||
+          bounty.type === MissionType.APP_TRIAL ||
+          _.isEmpty(bounty.type)
+      )
       .map((bounty) => {
         return {
           name: bounty.name,
@@ -205,6 +218,7 @@ export class BountyHunterViewModel {
           shortDescription: get(bounty, 'metadata.shortDescription', 'TBA'),
           missionIndex: get(bounty, 'missionIndex', 0),
           type: get(bounty, 'type', ''),
+          optionalTokens: get(bounty, 'optionalTokens', []),
         }
       })
   }
@@ -222,6 +236,8 @@ export class BountyHunterViewModel {
         maxParticipant: bounty.maxParticipant,
         missionIndex: get(bounty, 'missionIndex', 0),
         type: get(bounty, 'type', ''),
+        tokenBasePrice: get(bounty, 'tokenBasePrice', '1'),
+        optionalTokens: get(bounty, 'optionalTokens', []),
       }
     })
   }

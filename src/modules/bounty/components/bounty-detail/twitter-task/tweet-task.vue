@@ -8,7 +8,18 @@
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">Tweet a Twitter post</div>
           <div class="text-caption mt-1">
-            Post a Tweet using <span class="blue--text">#{{ twitterTask | _get('hashtag') }}</span
+            Post a Tweet using<span v-if="content">
+              with content: <span class="blue--text">"{{ content }}"</span></span
+            >
+            <span v-else
+              ><span v-if="hashtags.length > 0">
+                using<span v-for="(tag, index) in hashtags" :key="index" class="blue--text"
+                  >&nbsp;#{{ tag }}</span
+                ></span
+              >
+              <span v-if="mentions.length > 0"
+                >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
+              ></span
             >, share why you want to have this project’s primary market exposure. (At least
             {{ TWEET_MIN_WORDS_COUNT }} words)
           </div>
@@ -138,11 +149,11 @@
 
 <script lang="ts">
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
-import { Observer } from 'mobx-vue'
-import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
+import { TWEET_MIN_WORDS_COUNT } from '@/constants'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
-import { TWEET_MIN_WORDS_COUNT } from '@/constants'
+import { Observer } from 'mobx-vue'
+import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 
 @Observer
 @Component({
@@ -158,7 +169,9 @@ export default class TweetTask extends Vue {
   @Prop({ required: true }) step!: number
   type = get(this.twitterTask, 'type', '')
   value = get(this.twitterTask, 'stepLink', '')
-  hashtag = get(this.twitterTask, 'hashtag', '')
+  hashtags = get(this.twitterTask, 'hashtag', [])
+  mentions = get(this.twitterTask, 'mentions', [])
+  content = get(this.twitterTask, 'content', '')
 
   title = ''
 

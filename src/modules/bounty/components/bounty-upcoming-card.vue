@@ -11,9 +11,7 @@
             name
           }}</span>
           <div class="dot mx-2"></div>
-          <span class="font-weight-bold text-truncate" style="font-size: 1.4em"
-            >{{ rewardAmount | formatNumber(2, 0) }} {{ metadata.rewardToken }}</span
-          >
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em">${{ value | formatNumber(2, 2) }}</span>
         </div>
         <div class="d-flex text-body-1 font-weight-medium">
           <span>{{ startTime | datetime }}</span>
@@ -36,7 +34,8 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-
+import { get } from 'lodash-es'
+import { FixedNumber } from '@ethersproject/bignumber'
 @Component({
   components: { ProjectLogo: () => import('@/components/project-logo.vue') },
 })
@@ -49,9 +48,25 @@ export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) metadata!: any
   @Prop({ required: true }) maxParticipant!: number
   @Prop({ required: true }) retract!: boolean
+  @Prop({ required: true }) task!: any
+  value = 'TBA'
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
   projectLogo = this.metadata?.projectLogo ?? ''
+  optionalTokens = get(this.task, 'optionalTokens', [])
+
+  mounted() {
+    const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(
+      FixedNumber.from(`${this.task.tokenBasePrice}`)
+    )
+    let optionalTokenTotalValue = FixedNumber.from('0')
+    this.optionalTokens.forEach((token) => {
+      optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
+        FixedNumber.from(`${token.rewardAmount}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+      )
+    })
+    this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
 }
 </script>
 

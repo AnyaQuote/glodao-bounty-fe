@@ -34,7 +34,7 @@
           <div>
             <div class="small-caption-text">Total reward</div>
             <div class="d-flex align-center mt-2 font-weight-bold">
-              <div>{{ totalReward }} {{ rewardToken }}</div>
+              <div>{{ value | usdCustom(2, 2) }}</div>
             </div>
           </div>
         </v-col>
@@ -90,7 +90,7 @@
         <v-col cols="12">
           <div class="d-flex align-center justify-space-between mt-2">
             <div class="text-body-2">Total reward</div>
-            <div class="font-weight-bold text-body-1">{{ totalReward }} {{ rewardToken }}</div>
+            <div class="font-weight-bold text-body-1">{{ value | usdCustom(2, 2) }}</div>
           </div>
         </v-col>
         <v-col cols="12">
@@ -113,6 +113,8 @@
 <script lang="ts">
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { get } from 'lodash'
+import { FixedNumber } from '@ethersproject/bignumber'
 
 @Observer
 @Component({
@@ -131,6 +133,22 @@ export default class HuntingHistoryCard extends Vue {
   @Prop({ required: true }) totalParticipants!: string
   @Prop({ required: true }) projectLogo!: string
   @Prop({ required: true }) task!: any
+
+  value = 'TBA'
+  optionalTokens = get(this.task, 'optionalTokens', [])
+
+  mounted() {
+    const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(
+      FixedNumber.from(`${this.task.tokenBasePrice}`)
+    )
+    let optionalTokenTotalValue = FixedNumber.from('0')
+    this.optionalTokens.forEach((token) => {
+      optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
+        FixedNumber.from(`${token.rewardAmount}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
+      )
+    })
+    this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
 }
 </script>
 

@@ -215,6 +215,7 @@ export class BountyHistoryViewModel {
   @computed get convertedBountyList() {
     return orderBy(this.bountyList, 'missionIndex', ['desc']).map((bounty) => {
       return {
+        ...bounty,
         name: bounty.name,
         id: bounty.id,
         endTime: bounty.endTime,

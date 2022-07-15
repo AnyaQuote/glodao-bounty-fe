@@ -92,6 +92,17 @@ export class AuthStore {
     this.user = {}
   }
 
+  @action.bound updateHunterAnswerBank(answerBank) {
+    const tempUser = this.user
+    const data = get(tempUser, 'hunter.data', {})
+    tempUser.hunter.data = { ...data, answerBank }
+    localdata.user = tempUser
+  }
+
+  @action.bound updateHunter(hunter) {
+    localdata.user = { ...this.user, hunter }
+  }
+
   @asyncAction *fetchUser(access_token: string, access_secret: string) {
     try {
       const res = yield apiService.fetchUser(access_token, access_secret, localdata.referralCode)
@@ -128,7 +139,7 @@ export class AuthStore {
 
   @asyncAction *signMessage(wallet, chainType, nonce, selectedAdapter: any = null) {
     if (!wallet) return ''
-    const message = `https://glodao.io/bounty wants to: \n Sign message with account \n ${wallet} - One time nonce: ${nonce}`
+    const message = `https://glodao.io wants to: \n Sign message with account \n ${wallet} - One time nonce: ${nonce}`
     // const data = new TextEncoder().encode(message)
     if (chainType === 'sol') {
       //solana sign message

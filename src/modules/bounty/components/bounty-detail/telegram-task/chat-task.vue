@@ -6,14 +6,13 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">Join {{ page }} on Telegram</div>
+          <div class="text-body-1 font-weight-600">Chat in {{ page }}</div>
           <div class="text-caption mt-1">
-            Please join <a :href="telegramTask.link" target="_blank" class="blue--text">{{ page }}</a> on Telegram to
-            complete this task.
+            Please
+            <a :href="telegramTask.link" target="_blank" class="blue--text">chat in {{ page }}</a> to complete this task
           </div>
         </div>
         <div
-          class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4"
           v-if="
             $vuetify.breakpoint.smAndUp &&
             vm.isHuntingProcessStarted &&
@@ -21,35 +20,17 @@
             !telegramTask.finished
           "
         >
-          <v-row dense no-gutters>
-            <v-col cols="9" sm="10">
-              <v-sheet outlined class="rounded rounded-r-0">
-                <v-text-field
-                  hide-details
-                  dense
-                  flat
-                  solo
-                  class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                  :placeholder="telegramTask.stepLink || 'Enter your telegram handler'"
-                  :value="value"
-                  @input="onValueChange"
-                ></v-text-field>
-              </v-sheet>
-            </v-col>
-            <v-col cols="3" sm="2">
-              <v-btn
-                elevation="0"
-                tile
-                class="fill-width white--text text-none linear-background-blue-main text-caption rounded rounded-l-0"
-                height="100%"
-                @click="submitLink"
-                :loading="!telegramTask.finished && vm.isTaskUpdating"
-                :disabled="vm.shouldDisableTaskProcessing"
-              >
-                Submit
-              </v-btn>
-            </v-col>
-          </v-row>
+          <div class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4 d-flex justify-space-between align-center">
+            <v-btn
+              class="white--text text-none linear-background-blue-main text-caption"
+              elevation="0"
+              @click="submitLink"
+              :loading="!telegramTask.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              I had finished this task
+            </v-btn>
+          </div>
         </div>
       </v-col>
       <v-col cols="auto" class="ml-auto">
@@ -93,9 +74,7 @@
         </div>
       </v-col>
       <v-col cols="12" class="mb-3">
-        <v-row
-          dense
-          no-gutters
+        <div
           v-if="
             $vuetify.breakpoint.xsOnly &&
             vm.isHuntingProcessStarted &&
@@ -103,34 +82,18 @@
             !telegramTask.finished
           "
         >
-          <v-col cols="9" sm="10">
-            <v-sheet outlined class="rounded rounded-r-0">
-              <v-text-field
-                hide-details
-                dense
-                flat
-                solo
-                class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                :placeholder="telegramTask.stepLink || 'Enter your telegram handler'"
-                :value="value"
-                @input="onValueChange"
-              ></v-text-field>
-            </v-sheet>
-          </v-col>
-          <v-col cols="3" sm="2">
+          <div class="d-flex justify-center align-center">
             <v-btn
+              class="white--text text-none mx-2 mx-sm-4 linear-background-blue-main text-caption mt-2"
               elevation="0"
-              tile
-              class="fill-width white--text text-none linear-background-blue-main text-caption rounded rounded-l-0"
-              height="100%"
               @click="submitLink"
               :loading="!telegramTask.finished && vm.isTaskUpdating"
               :disabled="vm.shouldDisableTaskProcessing"
             >
-              Submit
+              I had finished this task
             </v-btn>
-          </v-col>
-        </v-row>
+          </div>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -141,8 +104,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
-import { snackController } from '@/components/snack-bar/snack-bar-controller'
-import { localdata } from '@/helpers/local-data'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -157,27 +119,37 @@ export default class TelegramFollowTask extends Vue {
   @Prop({ required: true }) step!: number
   type = get(this.telegramTask, 'type', '')
   page = get(this.telegramTask, 'page', '')
-  value = localdata.telegramHandler
-
   title = ''
+  dialog = false
 
-  onValueChange(value: string) {
-    this.value = value
+  telegramBot = process.env.VUE_APP_TELEGRAM_BOT
+
+  referralLink = `https://app.glodao.io/bounty?ref=${authStore.hunterReferralCode}`
+  referralCode = authStore.hunterReferralCode
+
+  openBotLink() {
+    window.open(`https://t.me/${this.telegramBot}?start=${this.referralCode}`, '_blank')
+  }
+
+  openHuntingHistory() {
+    let routeData = this.$router.resolve({ name: 'HuntingHistory' })
+    window.open(routeData.href, '_blank')
+  }
+
+  showDialog() {
+    this.dialog = true
   }
 
   openJoinTelegramLink() {
     this.openLink(get(this.telegramTask, 'link', ''))
-    this.vm.submitLink('telegram', '', this.step)
-  }
-
-  submitLink() {
-    if (!this.value.trim()) snackController.error('Link cannot be empty')
-    else this.vm.submitLink('telegram', this.value, this.step)
   }
   openLink(link: string) {
     const url = link.trim()
     if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
     else window.open('https://' + url, '_blank')
+  }
+  submitLink() {
+    this.vm.submitLink('telegram', '', this.step)
   }
 
   get state() {
