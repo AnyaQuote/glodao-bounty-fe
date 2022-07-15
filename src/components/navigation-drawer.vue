@@ -233,6 +233,7 @@ export default class NavigationDrawer extends Vue {
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
+  KYC_WEB_HOST = process.env.VUE_APP_KYC_WEB_HOST
 
   openLink(url) {
     window.open(url, '_blank')
@@ -261,14 +262,14 @@ export default class NavigationDrawer extends Vue {
         const { sessionId } = await apiService.createSessionId(authStore.jwt)
         const updatedUser = await apiService.updateUserSessionId(sessionId)
         authStore.changeUser(updatedUser.data)
-        window.open(`https://dev-glodao-kyc.netlify.app/kyc/${sessionId}`, '_blank')
+        window.open(`${this.KYC_WEB_HOST}/kyc/${sessionId}`, '_blank')
       } catch (error) {
         snackController.error(error as string)
       } finally {
         loadingController.decreaseRequest()
       }
     } else {
-      window.open(`https://dev-glodao-kyc.netlify.app/kyc/${authStore.kycSessionId}`, '_blank')
+      window.open(`${this.KYC_WEB_HOST}/kyc/${authStore.kycSessionId}`, '_blank')
     }
   }
 }

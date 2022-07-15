@@ -209,6 +209,7 @@ export class ApiService {
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
   campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')
   bountyRewards = new ApiHandler<any>(axios, 'bounty-rewards')
+  KYC_API_URL = process.env.VUE_APP_KYC_API_URL
 
   async getFile(id: any) {
     const res = await axios.get(`upload/files/${id}`)
@@ -384,7 +385,7 @@ export class ApiService {
       'kycs/create-session-id',
       { jwt, appId: '62b187dc62e8de0b750c998f' },
       {
-        baseURL: 'https://dev-kyc-api.glodao.io/',
+        baseURL: this.KYC_API_URL,
       }
     )
     return res.data
@@ -404,6 +405,7 @@ export class ApiService {
     )
     return res.data
   }
+
   async updateHunterAnswerBank(answer) {
     const res = await axios.post(
       'hunters/updateHunterAnswerBank',
