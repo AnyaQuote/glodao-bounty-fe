@@ -307,6 +307,10 @@
                             Start hunting
                           </v-btn>
                         </div>
+                        <div class="red--text text-caption font-italic">
+                          You can only participate in <span class="text-uppercase">{{ vm.subEventType }}</span> mission
+                          once
+                        </div>
                       </div>
                     </v-col>
                     <v-sheet class="ba-dotted neutral100--bg fill-width mt-5 border-radius-8 overflow-hidden">
@@ -358,6 +362,18 @@
                         >
                           <div class="custom-dash-divider"></div>
                           <quiz-mini-task :task="quizTask" :step="index" />
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          class="py-0"
+                          v-for="(optionalTask, index) in vm.displayedOptionalTaskData"
+                          :key="'optional' + index"
+                          :class="{
+                            'px-0': $vuetify.breakpoint.xsOnly,
+                          }"
+                        >
+                          <div class="custom-dash-divider"></div>
+                          <optional-mini-task :task="optionalTask" :step="index" />
                         </v-col>
                       </v-sheet>
                       <v-divider></v-divider>
@@ -679,6 +695,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'quiz-mini-task': () => import('@/modules/bounty/components/bounty-detail/quiz-mini-task.vue'),
     'discord-mini-task': () => import('@/modules/bounty/components/bounty-detail/discord-mini-task.vue'),
+    'optional-mini-task': () => import('@/modules/bounty/components/bounty-detail/optional-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     VueHcaptcha,
   },
