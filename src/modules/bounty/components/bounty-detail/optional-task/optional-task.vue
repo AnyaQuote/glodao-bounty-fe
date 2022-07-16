@@ -8,8 +8,9 @@
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">KYC</div>
           <div class="text-caption mt-1" style="word-break: break-word">
-            Complete KYC on <a href="https://remitano.net/home/vn" class="blue--text cursor-pointer">Remitano</a> then
-            paste your Reminato's referral link here
+            Complete Level 2 KYC on
+            <a href="https://remitano.net/home/vn" class="blue--text cursor-pointer">Remitano</a> then paste your
+            Reminato's referral link here
           </div>
         </div>
         <div
