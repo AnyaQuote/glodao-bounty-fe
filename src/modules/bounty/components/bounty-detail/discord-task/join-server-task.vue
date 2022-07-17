@@ -122,7 +122,7 @@
               >
               your referral link
             </li>
-            <li>Chat something in the {{ page }} Server</li>
+            <!-- <li>Chat something in the {{ page }} Server</li> -->
           </ol>
         </div>
       </v-sheet>
