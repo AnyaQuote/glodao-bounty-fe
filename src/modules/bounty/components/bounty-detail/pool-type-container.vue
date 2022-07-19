@@ -38,8 +38,8 @@
         </v-sheet>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="12" v-if="vm.missionType === 'learn'">
+    <v-row v-if="vm.missionType === 'learn' || vm.maxParticipants > 0">
+      <v-col cols="12">
         <v-sheet
           class="pa-6 row ma-0 dense no-gutters rounded bluePrimary--border neutral100--bg"
           elevation="3"
@@ -99,7 +99,9 @@
           </v-progress-linear>
         </v-sheet>
       </v-col>
-      <v-col v-if="vm.missionType !== 'learn'">
+    </v-row>
+    <v-row v-else>
+      <v-col>
         <div
           :class="{
             'active-pool': vm.shouldGlowPriorityPool,
@@ -135,9 +137,8 @@
                       }})
                     </div>
                     <div v-for="optionalToken in vm.optionalTokensPriorityReward" :key="optionalToken.rewardToken">
-                      {{ optionalToken.priorityRewardAmount | formatNumber(2, 2) }} {{ optionalToken.rewardToken }} ({{
-                        optionalToken.priorityRewardExchanged | usdCustom(2, 2)
-                      }})
+                      {{ optionalToken.priorityRewardAmount | formatNumber(2, 2) }}
+                      {{ optionalToken.rewardToken }} ({{ optionalToken.priorityRewardExchanged | usdCustom(2, 2) }})
                     </div>
                   </v-sheet>
                 </v-sheet>
@@ -162,7 +163,7 @@
           </div>
         </div>
       </v-col>
-      <v-col v-if="vm.missionType !== 'learn'">
+      <v-col>
         <div
           :class="{
             'active-pool': vm.shouldGlowCommunityPool,
@@ -190,9 +191,8 @@
                       }})
                     </div>
                     <div v-for="optionalToken in vm.optionalTokensCommunityReward" :key="optionalToken.rewardToken">
-                      {{ optionalToken.communityRewardAmount | formatNumber(2, 2) }} {{ optionalToken.rewardToken }} ({{
-                        optionalToken.communityRewardExchanged | usdCustom(2, 2)
-                      }})
+                      {{ optionalToken.communityRewardAmount | formatNumber(2, 2) }}
+                      {{ optionalToken.rewardToken }} ({{ optionalToken.communityRewardExchanged | usdCustom(2, 2) }})
                     </div>
                   </v-sheet>
                 </v-sheet>
