@@ -140,8 +140,40 @@
             </v-list-item-title>
           </v-list-item>
         </v-list-group>
-        <v-list-item class="my-2">
-          <v-list-item-title
+
+        <v-list-group no-action>
+          <template v-slot:activator>
+            <v-list-item class="ml-0 pl-0">
+              <v-list-item-title class="nav-btn-text text-none neutral10--text">DAO Voting</v-list-item-title>
+            </v-list-item>
+          </template>
+          <template v-slot:appendIcon>
+            <v-icon color="neutral10">mdi-chevron-down</v-icon>
+          </template>
+          <v-list-item active-class="black--text" href="https://dev-dao-voting.netlify.app/voting">
+            <!-- <v-list-item-icon class="mr-2">
+                <v-img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 fill-height"></v-img>
+              </v-list-item-icon> -->
+            <v-list-item-title class="text-none">Voting</v-list-item-title>
+          </v-list-item>
+          <v-list-item active-class="black--text" href="https://dev-dao-voting.netlify.app/projects">
+            <!-- <v-list-item-icon class="mr-2"> -->
+            <!-- <v-img
+                  :src="require('@/assets/icons/nav-bar/launchpad.svg')"
+                  class="filter-neutral10 fill-height"
+                ></v-img> -->
+            <!-- </v-list-item-icon> -->
+            <v-list-item-title class="text-none">Your projects</v-list-item-title>
+          </v-list-item>
+          <!-- <v-list-item> -->
+          <!-- <v-list-item-icon class="mr-2"> -->
+          <!-- <v-icon color="neutral10">mdi-check</v-icon> -->
+          <!-- </v-list-item-icon> -->
+          <!-- </v-list-item> -->
+        </v-list-group>
+
+        <!-- <v-list-item class="my-2"> -->
+        <!-- <v-list-item-title
             class="nav-btn-text neutral10--text"
             block
             depressed
@@ -151,8 +183,8 @@
             outlined
           >
             DAO voting (Coming soon)
-          </v-list-item-title>
-        </v-list-item>
+          </v-list-item-title> -->
+        <!-- </v-list-item> -->
         <v-list-group no-action>
           <template v-slot:activator>
             <v-list-item class="ml-0 pl-0">
