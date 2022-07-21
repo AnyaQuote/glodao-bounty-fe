@@ -56,6 +56,22 @@
             <div
               class="d-flex align-center"
               v-else-if="
+                walletStore.solidityConnected &&
+                walletStore.chainType === 'kai' &&
+                (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')
+              "
+            >
+              <img class="mr-4" width="24" :src="require(`@/assets/icons/${walletStore.chainIcon}`)" />
+              <address-copy-board
+                :index="1"
+                :address="walletStore.account || 'TBA'"
+                class="success--text caption font-weight-medium"
+                :iconColor="'green'"
+              />
+            </div>
+            <div
+              class="d-flex align-center"
+              v-else-if="
                 walletStore.solidityConnected && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')
               "
             >
@@ -85,9 +101,34 @@
             <div class="d-flex align-center ma-4">
               <img width="24" :src="require('@/assets/icons/metamask-fox.svg')" />
             </div>
-            <span>MetaMask </span>
+            <span>MetaMask</span>
             <v-spacer></v-spacer>
-            <span v-if="walletStore.solidityConnected" class="success--text caption font-weight-medium caption">
+            <span
+              v-if="walletStore.solidityConnected && walletStore.ethereumConnectedWallet === WalletName.MetaMask"
+              class="success--text caption font-weight-medium caption"
+            >
+              Connected
+            </span>
+            <v-icon class="mr-2">mdi-chevron-right</v-icon>
+          </div>
+        </v-card>
+        <v-card
+          @click="walletStore.connectKardiaChainExtension()"
+          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
+          elevation="0"
+          outlined
+          class="my-1 wallet-card neutra100--bg"
+        >
+          <div class="d-flex align-center neutral100--bg">
+            <div class="d-flex align-center ma-4">
+              <img width="24" :src="require('@/assets/icons/kardia-logo.svg')" />
+            </div>
+            <span>KardiaChain extension</span>
+            <v-spacer></v-spacer>
+            <span
+              v-if="walletStore.solidityConnected && walletStore.ethereumConnectedWallet === WalletName.KardiaChain"
+              class="success--text caption font-weight-medium caption"
+            >
               Connected
             </span>
             <v-icon class="mr-2">mdi-chevron-right</v-icon>
@@ -129,6 +170,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Prop, Provide, Vue } from 'vue-property-decorator'
 import { AppProvider, appProvider } from '../app-providers'
 import { alertController } from './alert/alert-controller'
+import { WalletName } from '../models/EthereumWalletModel'
 
 @Observer
 @Component({
@@ -141,6 +183,7 @@ export default class extends Vue {
   @Provide() walletStore = walletStore
   private readonly SOLLET_WALLET_NAME = 'Sollet'
   @Prop({ default: '' }) btnClass?: string
+  WalletName = WalletName
 
   copyAddress() {
     navigator.clipboard.writeText(this.walletStore?.account || '')
