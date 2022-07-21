@@ -177,4 +177,4 @@ export const blockchainHandler = {
   getSolanaMainNetRpc,
   fixAnchorAccounts,
 }
-export type ChainType = 'eth' | 'bsc' | 'sol'
+export type ChainType = 'eth' | 'bsc' | 'sol' | 'kai'
