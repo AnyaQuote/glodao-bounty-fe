@@ -1,4 +1,5 @@
 import { ChainType } from '@/blockchainHandlers'
+import { WalletName } from '@/models/EthereumWalletModel'
 class LocalData {
   get user(): any {
     return JSON.parse(localStorage.getItem('gloDaoUser') || '{}')
@@ -30,6 +31,14 @@ class LocalData {
   set lastChain(value: ChainType | null) {
     if (value) localStorage.setItem('lastChain', value)
     else localStorage.removeItem('lastChain')
+  }
+
+  get lastWallet(): WalletName | null {
+    return localStorage.getItem('lastWallet') as WalletName
+  }
+  set lastWallet(value: WalletName | null) {
+    if (value) localStorage.setItem('lastWallet', value)
+    else localStorage.removeItem('lastWallet')
   }
 
   get referralCode(): string {
