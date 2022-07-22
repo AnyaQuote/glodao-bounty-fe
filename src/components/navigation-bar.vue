@@ -117,7 +117,7 @@
                     <v-list-item-title>
                       <div
                         class="text-decoration-none px-4 text-none text-body-2 d-flex align-center"
-                        @click="openLink('https://dev-dao-voting.netlify.app/voting')"
+                        @click="openLink('https://app-voting.glodao.io/voting')"
                       >
                         <img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 mr-1" />
                         Voting
@@ -128,7 +128,7 @@
                     <v-list-item-title>
                       <div
                         class="text-decoration-none px-4 text-none text-body-2 d-flex align-center"
-                        @click="openLink('https://dev-dao-voting.netlify.app/projects')"
+                        @click="openLink('https://app-voting.glodao.io/projects')"
                       >
                         <img :src="require('@/assets/icons/nav-bar/launchpad.svg')" class="filter-neutral10 mr-1" />
                         Your projects
