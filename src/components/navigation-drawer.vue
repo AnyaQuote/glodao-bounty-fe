@@ -150,13 +150,13 @@
           <template v-slot:appendIcon>
             <v-icon color="neutral10">mdi-chevron-down</v-icon>
           </template>
-          <v-list-item active-class="black--text" href="https://app-voting.glodao.io/voting">
+          <v-list-item active-class="black--text" href="`${daoVotingUrl}/voting`">
             <!-- <v-list-item-icon class="mr-2">
                 <v-img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 fill-height"></v-img>
               </v-list-item-icon> -->
             <v-list-item-title class="text-none">Voting</v-list-item-title>
           </v-list-item>
-          <v-list-item active-class="black--text" href="https://app-voting.glodao.io/projects">
+          <v-list-item active-class="black--text" href="`${daoVotingUrl}/projects`">
             <!-- <v-list-item-icon class="mr-2"> -->
             <!-- <v-img
                   :src="require('@/assets/icons/nav-bar/launchpad.svg')"
@@ -258,6 +258,7 @@ export default class NavigationDrawer extends Vue {
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
+  daoVotingUrl = process.env.VUE_APP_VOTING_HOST
 
   openLink(url) {
     window.open(url, '_blank')
