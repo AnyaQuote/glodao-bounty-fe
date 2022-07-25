@@ -123,7 +123,7 @@
             <div class="d-flex align-center ma-4">
               <img width="24" :src="require('@/assets/icons/kardia-logo.svg')" />
             </div>
-            <span>KardiaChain extension</span>
+            <span>KardiaChain (Extension)</span>
             <v-spacer></v-spacer>
             <span
               v-if="walletStore.solidityConnected && walletStore.ethereumConnectedWallet === WalletName.KardiaChain"
