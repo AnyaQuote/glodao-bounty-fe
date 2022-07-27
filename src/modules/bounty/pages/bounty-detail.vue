@@ -607,6 +607,18 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(optionalTask, index) in vm.displayedOptionalTaskData"
+                      :key="'optional' + index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <optional-mini-task :task="optionalTask" :step="index" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
