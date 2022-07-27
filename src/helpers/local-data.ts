@@ -73,6 +73,22 @@ class LocalData {
   reset() {
     localStorage.clear()
   }
+
+  get walletConnect() {
+    return localStorage.getItem('walletconnect')
+  }
+
+  set web3Provider(value: any) {
+    localStorage.setItem('web3Provider', value)
+  }
+
+  get web3Provider() {
+    return localStorage.getItem('web3Provider')
+  }
+
+  removeWalletConnect() {
+    localStorage.removeItem('walletconnect')
+  }
 }
 
 export const localdata = new LocalData()
