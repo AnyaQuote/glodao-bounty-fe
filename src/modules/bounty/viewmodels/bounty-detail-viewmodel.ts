@@ -12,6 +12,7 @@ import { divide, get, gte, isEmpty, isEqual, keys, merge, subtract, sumBy, uniqB
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
+import web3 from 'web3'
 
 export enum HUNTING {
   start,
@@ -819,7 +820,11 @@ export class BountyDetailViewModel {
 
   @computed get isCurrentWalletMatchRegistered() {
     if (!walletStore.account || !authStore.registeredWallet) return false
-    return isEqual(walletStore.account, authStore.registeredWallet)
+
+    return isEqual(
+      web3.utils.toChecksumAddress(walletStore.account),
+      web3.utils.toChecksumAddress(authStore.registeredWallet)
+    )
   }
 
   @computed get currentWallet() {
