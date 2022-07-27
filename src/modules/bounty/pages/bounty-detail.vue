@@ -119,7 +119,7 @@
                   target="_blank"
                   depressed
                 >
-                  <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                  <v-icon color="white" dark size="14"> {{ displayIcon(key) }}</v-icon>
                 </v-btn>
               </v-sheet>
             </v-sheet>
@@ -165,7 +165,7 @@
                 target="_blank"
                 depressed
               >
-                <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                <v-icon color="white" dark size="14"> {{ displayIcon(key) }}</v-icon>
               </v-btn>
             </v-sheet>
           </v-sheet>
@@ -761,6 +761,22 @@ export default class BountyDetail extends Vue {
   }
   beforeDestroy() {
     this.vm.destroyReaction()
+  }
+
+  get displayIcon() {
+    return (iconKey) => {
+      const key = iconKey.split('-')[0]
+      switch (key) {
+        case 'whitepaper':
+          return 'fas fa-file-alt'
+        case 'others':
+          return 'fas fa-link'
+        case 'website':
+          return 'fas fa-globe'
+        default:
+          return `fab fa-${key}`
+      }
+    }
   }
 }
 </script>
