@@ -98,9 +98,9 @@ export class WalletStore {
     if (localdata.walletConnect) {
       const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
       const walletConnectParsed = JSON.parse(walletConnect)
+      this.web3 = new Web3(this.walletConnectProvider)
       this.account = walletConnectParsed.accounts[0]
       this.chainId = walletConnectParsed.chainId
-      this.web3 = new Web3(this.walletConnectProvider)
     }
   }
 
@@ -152,9 +152,9 @@ export class WalletStore {
       const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
       const walletConnectParsed = JSON.parse(walletConnect)
 
+      this.web3 = new Web3(this.walletConnectProvider)
       this.account = walletConnectParsed.accounts[0]
       this.chainId = walletConnectParsed.chainId
-      this.web3 = new Web3(this.walletConnectProvider)
 
       this.changeShowConnectDialog(false)
       this.walletConnectProvider.on('accountsChanged', (accounts: string[]) => {
