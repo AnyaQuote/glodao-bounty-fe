@@ -92,7 +92,7 @@
         </div>
         <v-card
           @click="walletStore.connectViaWalletConnect()"
-          v-if="isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
+          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
@@ -111,7 +111,7 @@
         </v-card>
         <v-card
           @click="walletStore.connectSolidity()"
-          v-else-if="!isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
+          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
