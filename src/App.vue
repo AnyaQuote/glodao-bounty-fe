@@ -54,8 +54,18 @@ export default class App extends Vue {
   }
 
   mounted() {
+    const userAgent = this.checkMobile()
+    console.log('userAgent: ', userAgent)
     this.providers.router = this.$router
     walletStore.start()
+  }
+
+  checkMobile() {
+    const toMatch = [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i]
+
+    return toMatch.some((toMatchItem) => {
+      return navigator.userAgent.match(toMatchItem)
+    })
   }
 
   drawer = false
