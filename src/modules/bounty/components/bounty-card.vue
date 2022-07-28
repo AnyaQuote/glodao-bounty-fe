@@ -37,7 +37,8 @@
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
-              <div class="font-weight-bold">${{ value | formatNumber(2, 2) }}</div>
+              <div class="font-weight-bold" v-if="!isRewardTBD">${{ value | formatNumber(2, 2) }}</div>
+              <div class="font-weight-bold" v-else>TBD</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
               <div>Participants</div>
@@ -75,7 +76,7 @@ export default class BountyCard extends Vue {
   @Prop({ required: true }) types!: string[]
   @Prop({ required: true }) totalParticipants!: number
   @Prop({ required: true }) task!: any
-  value = 'TBA'
+  value = 'TBD'
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
   rewardTokenName = this.metadata?.rewardToken ?? ''
   isEnded = moment(this.endTime).isBefore(moment())
@@ -113,6 +114,14 @@ export default class BountyCard extends Vue {
         return 'Social mission'
       default:
         return 'Mission'
+    }
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
     }
   }
 }
