@@ -92,7 +92,7 @@
         </div>
         <v-card
           @click="walletStore.connectViaWalletConnect()"
-          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
+          v-if="isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
@@ -111,7 +111,7 @@
         </v-card>
         <v-card
           @click="walletStore.connectSolidity()"
-          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
+          v-else-if="!isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
@@ -131,7 +131,7 @@
             <v-icon class="mr-2">mdi-chevron-right</v-icon>
           </div>
         </v-card>
-        <v-card
+        <!-- <v-card
           @click="walletStore.connectKardiaChainExtension()"
           v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
           elevation="0"
@@ -152,7 +152,7 @@
             </span>
             <v-icon class="mr-2">mdi-chevron-right</v-icon>
           </div>
-        </v-card>
+        </v-card> -->
 
         <div class="text-h6 mt-4" v-if="!walletStore.requestingChain || walletStore.requestingChain === 'sol'">
           SOLANA Chain
@@ -190,6 +190,7 @@ import { Component, Prop, Provide, Vue } from 'vue-property-decorator'
 import { AppProvider, appProvider } from '../app-providers'
 import { alertController } from './alert/alert-controller'
 import { WalletName } from '../models/EthereumWalletModel'
+import { userAgentHelper } from '@/helpers/user-agent-helper'
 
 @Observer
 @Component({
@@ -203,6 +204,15 @@ export default class extends Vue {
   private readonly SOLLET_WALLET_NAME = 'Sollet'
   @Prop({ default: '' }) btnClass?: string
   WalletName = WalletName
+
+  isMobile = false
+
+  mounted() {
+    const deviceType = userAgentHelper.checkDeviceType()
+    if (deviceType?.device?.type === 'mobile') {
+      this.isMobile = true
+    }
+  }
 
   copyAddress() {
     navigator.clipboard.writeText(this.walletStore?.account || '')
