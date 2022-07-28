@@ -53,6 +53,7 @@ export class AuthStore {
         walletStore.chainType || 'bsc',
         get(this.user, 'hunter.nonce', 0)
       )
+      console.log('saveAttachWallet signature: ', signature)
       const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
         signature,
@@ -176,7 +177,15 @@ export class AuthStore {
         const request = { method: 'personal_sign', params: [message, wallet] }
         return yield window.ethereum.request(request)
       } else {
-        throw new Error(ERROR_MISSING_METAMASK_EXTENSION)
+        if (localdata.walletConnect) {
+          console.log('walletConnect personal_sign')
+          return yield walletStore.walletConnectProvider.request({
+            method: 'personal_sign',
+            params: [message, wallet],
+          })
+        } else {
+          throw new Error(ERROR_MISSING_METAMASK_EXTENSION)
+        }
       }
     }
   }

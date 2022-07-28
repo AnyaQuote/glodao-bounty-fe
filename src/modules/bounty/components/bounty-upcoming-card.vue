@@ -25,7 +25,7 @@
       <div class="ml-n2">
         <v-btn :href="metadata.website" icon><v-icon small color="white">mdi-domain</v-icon></v-btn>
         <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
-          <v-icon small v-html="`mdi-${icon}`" color="white"></v-icon>
+          <v-icon small color="white">{{ displayIcon(icon) }}</v-icon>
         </v-btn>
       </div>
     </div>
@@ -66,6 +66,21 @@ export default class BountyUpcomingCard extends Vue {
       )
     })
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+  get displayIcon() {
+    return (iconKey) => {
+      const key = iconKey.split('-')[0]
+      switch (key) {
+        case 'whitepaper':
+          return 'fas fa-file-alt'
+        case 'others':
+          return 'fas fa-link'
+        case 'website':
+          return 'fas fa-globe'
+        default:
+          return `fab fa-${key}`
+      }
+    }
   }
 }
 </script>

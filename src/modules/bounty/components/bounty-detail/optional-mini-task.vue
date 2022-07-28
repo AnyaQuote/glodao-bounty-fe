@@ -1,6 +1,6 @@
 <template>
   <div>
-    <optional-task :task="task" :step="step" />
+    <custom-optional-task :task="task" v-if="type === 'custom'" :step="step" />
   </div>
 </template>
 
@@ -13,6 +13,8 @@ import { get } from 'lodash-es'
 @Component({
   components: {
     'optional-task': () => import('@/modules/bounty/components/bounty-detail/optional-task/optional-task.vue'),
+    'custom-optional-task': () =>
+      import('@/modules/bounty/components/bounty-detail/optional-task/custom-optional-task.vue'),
   },
 })
 export default class BountyDetail extends Vue {
