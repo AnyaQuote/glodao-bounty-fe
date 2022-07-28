@@ -11,7 +11,12 @@
             name
           }}</span>
           <div class="dot mx-2"></div>
-          <span class="font-weight-bold text-truncate" style="font-size: 1.4em">${{ value | formatNumber(2, 2) }}</span>
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-if="!isRewardTBD"
+            >${{ value | formatNumber(2, 2) }}</span
+          >
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else
+            >${{ value | formatNumber(2, 2) }}</span
+          >
         </div>
         <div class="d-flex text-body-1 font-weight-medium">
           <span>{{ startTime | datetime }}</span>
@@ -80,6 +85,14 @@ export default class BountyUpcomingCard extends Vue {
         default:
           return `fab fa-${key}`
       }
+    }
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
     }
   }
 }

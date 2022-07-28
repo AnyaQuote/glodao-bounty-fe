@@ -90,7 +90,8 @@
         <v-col cols="12">
           <div class="d-flex align-center justify-space-between mt-2">
             <div class="text-body-2">Total reward</div>
-            <div class="font-weight-bold text-body-1">{{ value | usdCustom(2, 2) }}</div>
+            <div class="font-weight-bold text-body-1" v-if="!isRewardTBD">{{ value | usdCustom(2, 2) }}</div>
+            <div class="font-weight-bold text-body-1" v-else>TBD</div>
           </div>
         </v-col>
         <v-col cols="12">
@@ -148,6 +149,14 @@ export default class HuntingHistoryCard extends Vue {
       )
     })
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
+    }
   }
 }
 </script>
