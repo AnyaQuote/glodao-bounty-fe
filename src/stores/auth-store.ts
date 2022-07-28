@@ -48,14 +48,14 @@ export class AuthStore {
   @asyncAction *saveAttachWallet() {
     try {
       this.isWalletUpdating = true
-      const signature = yield this.signMessage(
-        walletStore.account,
-        walletStore.chainType || 'bsc',
-        get(this.user, 'hunter.nonce', 0)
-      )
+      // const signature = yield this.signMessage(
+      //   walletStore.account,
+      //   walletStore.chainType || 'bsc',
+      //   get(this.user, 'hunter.nonce', 0)
+      // )
       const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
-        signature,
+        'signature',
         walletStore.chainType || 'bsc',
         get(this.user, 'hunter.id', '')
       )
