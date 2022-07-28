@@ -176,7 +176,15 @@ export class AuthStore {
         const request = { method: 'personal_sign', params: [message, wallet] }
         return yield window.ethereum.request(request)
       } else {
-        throw new Error(ERROR_MISSING_METAMASK_EXTENSION)
+        if (localdata.walletConnect) {
+          console.log('walletConnect personal_sign')
+          return yield walletStore.walletConnectProvider.request({
+            method: 'personal_sign',
+            params: [message, wallet],
+          })
+        } else {
+          throw new Error(ERROR_MISSING_METAMASK_EXTENSION)
+        }
       }
     }
   }
