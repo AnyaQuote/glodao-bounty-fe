@@ -55,6 +55,14 @@ export default class App extends Vue {
 
   mounted() {
     this.providers.router = this.$router
+    const APP_VERSION = process.env.VUE_APP_VERSION
+    if (!APP_VERSION || !localdata.lastVersion) {
+      localdata.lastVersion = '1.0'
+    } else if (localdata.lastVersion !== APP_VERSION) {
+      localdata.reset()
+      window.location.reload()
+      localdata.lastVersion = APP_VERSION
+    }
     walletStore.start()
   }
 

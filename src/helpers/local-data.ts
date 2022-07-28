@@ -41,6 +41,14 @@ class LocalData {
     else localStorage.removeItem('lastWallet')
   }
 
+  get lastVersion(): string | null {
+    return localStorage.getItem('lastVersion') as string
+  }
+  set lastVersion(value: string | null) {
+    if (value) localStorage.setItem('lastVersion', value)
+    else localStorage.removeItem('lastVersion')
+  }
+
   get referralCode(): string {
     if (localStorage.getItem('ref')) return JSON.parse(localStorage.getItem('ref') || '')
     return ''
