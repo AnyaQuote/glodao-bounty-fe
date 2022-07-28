@@ -115,10 +115,7 @@
                 <v-list-item-group>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div
-                        class="text-decoration-none px-4 text-none text-body-2 d-flex align-center"
-                        @click="openLink('https://app-voting.glodao.io/voting')"
-                      >
+                      <div class="text-decoration-none px-4 text-none text-body-2 d-flex align-center">
                         <img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 mr-1" />
                         Voting
                       </div>
@@ -126,10 +123,7 @@
                   </v-list-item-content>
                   <v-list-item-content>
                     <v-list-item-title>
-                      <div
-                        class="text-decoration-none px-4 text-none text-body-2 d-flex align-center"
-                        @click="openLink('https://app-voting.glodao.io/projects')"
-                      >
+                      <div class="text-decoration-none px-4 text-none text-body-2 d-flex align-center">
                         <img :src="require('@/assets/icons/nav-bar/launchpad.svg')" class="filter-neutral10 mr-1" />
                         Your projects
                       </div>
@@ -290,6 +284,7 @@ export default class NavigationBar extends Vue {
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
+  daoVotingUrl = process.env.VUE_APP_VOTING_HOST
   openLink(url) {
     window.open(url, '_self')
   }
