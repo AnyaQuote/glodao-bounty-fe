@@ -92,14 +92,14 @@
         </div>
         <v-card
           @click="walletStore.connectViaWalletConnect()"
-          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
+          v-if="isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
         >
           <div class="d-flex align-center neutral100--bg">
             <div class="d-flex align-center ma-4">
-              <img width="24" :src="require('@/assets/icons/metamask-fox.svg')" />
+              <img width="24" :src="require('@/assets/images/walletConnect.png')" />
             </div>
             <span>WalletConnect</span>
             <v-spacer></v-spacer>
@@ -111,7 +111,7 @@
         </v-card>
         <v-card
           @click="walletStore.connectSolidity()"
-          v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'"
+          v-else-if="!isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
