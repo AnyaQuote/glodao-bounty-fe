@@ -1,5 +1,7 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { ERROR_MISSING_KARDIA_EXTENSION, ERROR_MISSING_METAMASK_EXTENSION } from '@/constants'
 import { localdata } from '@/helpers/local-data'
+import { WalletName } from '@/models/EthereumWalletModel'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
 import { walletStore } from '@/stores/wallet-store'
@@ -46,11 +48,16 @@ export class AuthStore {
   @asyncAction *saveAttachWallet() {
     try {
       this.isWalletUpdating = true
-      const signature = yield this.signMessage(walletStore.account, 'bsc', get(this.user, 'hunter.nonce', 0))
+      // const signature = yield this.signMessage(
+      //   walletStore.account,
+      //   walletStore.chainType || 'bsc',
+      //   get(this.user, 'hunter.nonce', 0)
+      // )
+      console.log('saveAttachWallet signature: ', 'signature')
       const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
-        signature,
-        'bsc',
+        'signature',
+        walletStore.chainType || 'bsc',
         get(this.user, 'hunter.id', '')
       )
       this.changeUser({ ...this.user, hunter: updatedHunter })
@@ -151,6 +158,16 @@ export class AuthStore {
       //   res = yield a._wallet.signMessage(data)
       // }
       // return Object.values(res?.signature || res)
+    } else if (chainType === 'kai' && walletStore.ethereumConnectedWallet === WalletName.KardiaChain) {
+      if (typeof window === 'undefined') {
+        return ''
+      }
+      if (window.kardiachain) {
+        const request = { method: 'personal_sign', params: [message, wallet] }
+        return yield window.kardiachain.request(request)
+      } else {
+        throw new Error(ERROR_MISSING_KARDIA_EXTENSION)
+      }
     } else {
       //bsc sign message
       if (typeof window === 'undefined') {
@@ -160,7 +177,15 @@ export class AuthStore {
         const request = { method: 'personal_sign', params: [message, wallet] }
         return yield window.ethereum.request(request)
       } else {
-        throw new Error('Plugin Metamask is not installed!')
+        if (localdata.walletConnect) {
+          console.log('walletConnect personal_sign')
+          return yield walletStore.walletConnectProvider.request({
+            method: 'personal_sign',
+            params: [message, wallet],
+          })
+        } else {
+          throw new Error(ERROR_MISSING_METAMASK_EXTENSION)
+        }
       }
     }
   }

@@ -119,7 +119,7 @@
                   target="_blank"
                   depressed
                 >
-                  <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                  <v-icon color="white" dark size="14"> {{ displayIcon(key) }}</v-icon>
                 </v-btn>
               </v-sheet>
             </v-sheet>
@@ -165,7 +165,7 @@
                 target="_blank"
                 depressed
               >
-                <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                <v-icon color="white" dark size="14"> {{ displayIcon(key) }}</v-icon>
               </v-btn>
             </v-sheet>
           </v-sheet>
@@ -595,12 +595,26 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(facebookTask, index) in vm.displayedFacebookTaskData"
+                      :key="'facebook' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Join Discord group" icon="fab fa-discord" />
+                      <facebook-mini-task :facebookTask="facebookTask" :step="index" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      v-for="(optionalTask, index) in vm.displayedOptionalTaskData"
+                      :key="'optional' + index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <optional-mini-task :task="optionalTask" :step="index" />
                     </v-col>
                     <v-col
                       cols="12"
@@ -696,6 +710,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'quiz-mini-task': () => import('@/modules/bounty/components/bounty-detail/quiz-mini-task.vue'),
     'discord-mini-task': () => import('@/modules/bounty/components/bounty-detail/discord-mini-task.vue'),
     'optional-mini-task': () => import('@/modules/bounty/components/bounty-detail/optional-mini-task.vue'),
+    'facebook-mini-task': () => import('@/modules/bounty/components/bounty-detail/facebook-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     VueHcaptcha,
   },
@@ -761,6 +776,22 @@ export default class BountyDetail extends Vue {
   }
   beforeDestroy() {
     this.vm.destroyReaction()
+  }
+
+  get displayIcon() {
+    return (iconKey) => {
+      const key = iconKey.split('-')[0]
+      switch (key) {
+        case 'whitepaper':
+          return 'fas fa-file-alt'
+        case 'others':
+          return 'fas fa-link'
+        case 'website':
+          return 'fas fa-globe'
+        default:
+          return `fab fa-${key}`
+      }
+    }
   }
 }
 </script>
