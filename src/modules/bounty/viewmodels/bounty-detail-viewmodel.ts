@@ -724,6 +724,7 @@ export class BountyDetailViewModel {
   }
 
   @computed get isAccountAgeQualify() {
+    return true
     return authStore.accountAge > ACCOUNT_MIN_AGE_IN_DAYS
   }
 
