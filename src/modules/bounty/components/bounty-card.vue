@@ -38,7 +38,7 @@
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
               <div class="font-weight-bold" v-if="!isRewardTBD">${{ value | formatNumber(2, 2) }}</div>
-              <div class="font-weight-bold" v-else>TBD</div>
+              <div class="font-weight-bold" v-else>TBA</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
               <div>Participants</div>

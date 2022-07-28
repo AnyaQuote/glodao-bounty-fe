@@ -85,7 +85,7 @@
             }"
             v-else
           >
-            TBD
+            TBA
           </div>
         </v-col>
         <v-col cols="6">

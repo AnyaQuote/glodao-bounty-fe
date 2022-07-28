@@ -14,9 +14,7 @@
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-if="!isRewardTBD"
             >${{ value | formatNumber(2, 2) }}</span
           >
-          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else
-            >${{ value | formatNumber(2, 2) }}</span
-          >
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else>TBA</span>
         </div>
         <div class="d-flex text-body-1 font-weight-medium">
           <span>{{ startTime | datetime }}</span>

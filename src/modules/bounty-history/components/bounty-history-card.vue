@@ -91,7 +91,7 @@
           <div class="d-flex align-center justify-space-between mt-2">
             <div class="text-body-2">Total reward</div>
             <div class="font-weight-bold text-body-1" v-if="!isRewardTBD">{{ value | usdCustom(2, 2) }}</div>
-            <div class="font-weight-bold text-body-1" v-else>TBD</div>
+            <div class="font-weight-bold text-body-1" v-else>TBA</div>
           </div>
         </v-col>
         <v-col cols="12">

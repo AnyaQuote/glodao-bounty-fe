@@ -84,7 +84,7 @@
           <div class="medium-caption-text font-weight-bold mt-2" v-if="!isRewardTBD">
             {{ value | usdCustom(2, 2) }}
           </div>
-          <div class="medium-caption-text font-weight-bold mt-2" v-else>TBD</div>
+          <div class="medium-caption-text font-weight-bold mt-2" v-else>TBA</div>
         </div>
       </v-col>
       <v-col
