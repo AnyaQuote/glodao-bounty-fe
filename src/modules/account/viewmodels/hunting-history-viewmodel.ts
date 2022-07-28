@@ -10,6 +10,7 @@ import { ceil, get, isEmpty, isEqual, keys, lowerCase, orderBy } from 'lodash-es
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction, IDisposer } from 'mobx-utils'
 import moment from 'moment'
+import web3 from 'web3'
 
 const PAGE_LIMIT = 6
 const params = { hunter: get(authStore, 'user.hunter.id', '') }
@@ -302,7 +303,10 @@ export class HuntingHistoryViewModel {
   }
 
   @computed get isWalletMatched() {
-    return this.isWalletConnected && isEqual(this.connectedWalletAddress, this.registedWalletAddress)
+    const connectedWalletAddress = web3.utils.toChecksumAddress(this.connectedWalletAddress)
+    const registedWalletAddress = web3.utils.toChecksumAddress(this.registedWalletAddress)
+
+    return this.isWalletConnected && isEqual(connectedWalletAddress, registedWalletAddress)
   }
 
   @computed get remainingBounty() {

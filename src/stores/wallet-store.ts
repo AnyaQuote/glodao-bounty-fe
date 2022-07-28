@@ -27,6 +27,7 @@ import {
   Wallet,
 } from '@solana/wallet-adapter-wallets'
 import { clusterApiUrl, ConfirmOptions, Connection, PublicKey, Transaction } from '@solana/web3.js'
+import WalletConnectProvider from '@walletconnect/web3-provider'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import { Subscription, timer } from 'rxjs'
@@ -38,6 +39,15 @@ export class WalletStore {
 
   network = WalletAdapterNetwork.Mainnet
   @observable showConnectDialog = false
+
+  walletConnectProvider = new WalletConnectProvider({
+    rpc: {
+      97: 'https://speedy-nodes-nyc.moralis.io/1d4b28cac6eaaaa2f3c695d6/bsc/testnet',
+      56: 'https://bsc-dataseed.binance.org/',
+      43114: 'https://api.avax.network/ext/bc/C/rpc',
+      137: 'https://rpc-mainnet.maticvigil.com/',
+    },
+  } as any) as any
 
   @observable solWalletItems = [
     getSolletExtensionWallet(),
@@ -84,6 +94,14 @@ export class WalletStore {
         localdata.lastWallet = x as any
       }
     )
+
+    if (localdata.walletConnect) {
+      const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
+      const walletConnectParsed = JSON.parse(walletConnect)
+      this.web3 = new Web3(this.walletConnectProvider)
+      this.account = walletConnectParsed.accounts[0]
+      this.chainId = walletConnectParsed.chainId
+    }
   }
 
   @action.bound changeShowConnectDialog(value: boolean) {
@@ -125,6 +143,32 @@ export class WalletStore {
       console.error(error)
     }
     this.loaded = true
+  }
+
+  @asyncAction *connectViaWalletConnect() {
+    try {
+      loadingController.increaseRequest()
+      yield this.walletConnectProvider.enable()
+      const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
+      const walletConnectParsed = JSON.parse(walletConnect)
+
+      this.web3 = new Web3(this.walletConnectProvider)
+      this.account = walletConnectParsed.accounts[0]
+      this.chainId = walletConnectParsed.chainId
+
+      this.changeShowConnectDialog(false)
+      this.walletConnectProvider.on('accountsChanged', (accounts: string[]) => {
+        window.location.reload()
+      })
+      this.walletConnectProvider.on('chainChanged', (chainId: number) => {
+        window.location.reload()
+      })
+    } catch (error) {
+      // error.message && snackController.error(error.message)
+      return false
+    } finally {
+      loadingController.decreaseRequest()
+    }
   }
 
   @asyncAction *connectSolidity() {
