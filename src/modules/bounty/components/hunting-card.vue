@@ -67,7 +67,7 @@
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
           >
-            Value {{ isRewardTBD }}
+            Value
           </div>
           <div
             class="font-weight-bold mt-1 font-size-28 text-truncate"
@@ -85,7 +85,7 @@
             }"
             v-else
           >
-            TBD
+            TBA
           </div>
         </v-col>
         <v-col cols="6">

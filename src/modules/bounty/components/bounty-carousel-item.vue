@@ -14,7 +14,7 @@
           <div class="d-flex">
             <div class="flex-shrink-0">Reward</div>
             <div class="font-size-18 flex-1 text-end" v-if="!isRewardTBD">${{ value | formatNumber(2, 2) }}</div>
-            <div class="font-size-18 flex-1 text-end" v-else>TBD</div>
+            <div class="font-size-18 flex-1 text-end" v-else>TBA</div>
           </div>
         </div>
       </div>
