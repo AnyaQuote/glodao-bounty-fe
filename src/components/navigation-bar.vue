@@ -246,6 +246,10 @@
 
                     My account
                   </v-btn>
+                  <v-btn plain block class="menu-btn" height="40" depressed @click="openKYCPage()">
+                    <v-icon width="24" height="24" class="mr-2 ml-0" color="neutral10"> mdi-fingerprint </v-icon>
+                    My KYC
+                  </v-btn>
                   <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()">
                     Log out
                   </v-btn>
@@ -272,6 +276,9 @@ import { walletStore } from '@/stores/wallet-store'
 import { authStore } from '@/stores/auth-store'
 import { AppProvider } from '@/app-providers'
 import { Observer } from 'mobx-vue'
+import { apiService } from '@/services/api-service'
+import { loadingController } from './global-loading/global-loading-controller'
+import { snackController } from './snack-bar/snack-bar-controller'
 
 @Observer
 @Component({
@@ -284,6 +291,8 @@ export default class NavigationBar extends Vue {
   wallet = walletStore
   authStore = authStore
   chainId = process.env.VUE_APP_CHAIN_ID
+  KYC_WEB_HOST = process.env.VUE_APP_KYC_WEB_HOST
+
   daoVotingUrl = process.env.VUE_APP_VOTING_HOST
   openLink(url) {
     window.open(url, '_self')
@@ -302,6 +311,24 @@ export default class NavigationBar extends Vue {
     this.$router.push('/bounty-reward').catch(() => {
       //
     })
+  }
+
+  async openKYCPage() {
+    if (!authStore.kycSessionId) {
+      loadingController.increaseRequest()
+      try {
+        const { sessionId } = await apiService.createSessionId(authStore.jwt)
+        const updatedUser = await apiService.updateUserSessionId(sessionId)
+        authStore.changeUser(updatedUser.data)
+        window.open(`${this.KYC_WEB_HOST}/kyc/${sessionId}`, '_blank')
+      } catch (error) {
+        snackController.error(error as string)
+      } finally {
+        loadingController.decreaseRequest()
+      }
+    } else {
+      window.open(`${this.KYC_WEB_HOST}/kyc/${authStore.kycSessionId}`, '_blank')
+    }
   }
 }
 </script>

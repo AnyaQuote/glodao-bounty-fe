@@ -362,6 +362,10 @@ export class BountyAppTrialViewModel {
     return get(this.task, 'metadata.googlePlayUrl', '')
   }
 
+  @computed get taskWebUrl() {
+    return get(this.task, 'metadata.webUrl', '')
+  }
+
   @computed get totalParticipants() {
     return get(this.task, 'totalParticipants', 0)
   }
