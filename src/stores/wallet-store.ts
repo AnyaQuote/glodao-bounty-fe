@@ -1,9 +1,10 @@
 import { blockchainHandler, ChainType } from '@/blockchainHandlers'
 import { loadingController } from '@/components/global-loading/global-loading-controller'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
-import { Zero } from '@/constants'
+import { ERROR_MISSING_KARDIA_EXTENSION, Zero } from '@/constants'
 import { localdata } from '@/helpers/local-data'
 import Application from '@/libs/models'
+import { WalletName } from '@/models/EthereumWalletModel'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { Provider } from '@project-serum/anchor'
 import { CLUSTER_SLUGS, ENV as SOL_CHAINID } from '@solana/spl-token-registry'
@@ -26,6 +27,7 @@ import {
   Wallet,
 } from '@solana/wallet-adapter-wallets'
 import { clusterApiUrl, ConfirmOptions, Connection, PublicKey, Transaction } from '@solana/web3.js'
+import WalletConnectProvider from '@walletconnect/web3-provider'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import { Subscription, timer } from 'rxjs'
@@ -33,9 +35,19 @@ import Web3 from 'web3'
 
 export class WalletStore {
   ethereum: any = window.ethereum
+  kardiaChain: any = window.kardiachain
 
   network = WalletAdapterNetwork.Mainnet
   @observable showConnectDialog = false
+
+  walletConnectProvider = new WalletConnectProvider({
+    rpc: {
+      97: 'https://speedy-nodes-nyc.moralis.io/1d4b28cac6eaaaa2f3c695d6/bsc/testnet',
+      56: 'https://bsc-dataseed.binance.org/',
+      43114: 'https://api.avax.network/ext/bc/C/rpc',
+      137: 'https://rpc-mainnet.maticvigil.com/',
+    },
+  } as any) as any
 
   @observable solWalletItems = [
     getSolletExtensionWallet(),
@@ -65,6 +77,8 @@ export class WalletStore {
 
   @observable navigationDrawer = false
 
+  @observable ethereumConnectedWallet: WalletName | null = localdata.lastWallet
+
   private _bnbBalanceSubscription: Subscription | undefined
 
   constructor() {
@@ -74,6 +88,20 @@ export class WalletStore {
         localdata.lastChain = x as any
       }
     )
+    reaction(
+      () => this.ethereumConnectedWallet,
+      (x) => {
+        localdata.lastWallet = x as any
+      }
+    )
+
+    if (localdata.walletConnect) {
+      const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
+      const walletConnectParsed = JSON.parse(walletConnect)
+      this.web3 = new Web3(this.walletConnectProvider)
+      this.account = walletConnectParsed.accounts[0]
+      this.chainId = walletConnectParsed.chainId
+    }
   }
 
   @action.bound changeShowConnectDialog(value: boolean) {
@@ -98,11 +126,17 @@ export class WalletStore {
 
   @asyncAction *start() {
     try {
-      if (this.chainType === 'bsc' || this.chainType === 'eth') {
+      if (this.ethereumConnectedWallet === WalletName.MetaMask) {
         this.app.start()
         this.web3 = this.app.web3
         if (yield this.app.getAddress()) {
           yield this.connectSolidity()
+        }
+      } else if (this.ethereumConnectedWallet === WalletName.KardiaChain) {
+        this.app.start()
+        this.web3 = this.app.web3
+        if (yield this.app.getAddress()) {
+          yield this.connectKardiaChainExtension()
         }
       }
     } catch (error) {
@@ -111,18 +145,44 @@ export class WalletStore {
     this.loaded = true
   }
 
+  @asyncAction *connectViaWalletConnect() {
+    try {
+      loadingController.increaseRequest()
+      yield this.walletConnectProvider.enable()
+      const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
+      const walletConnectParsed = JSON.parse(walletConnect)
+
+      this.web3 = new Web3(this.walletConnectProvider)
+      this.account = walletConnectParsed.accounts[0]
+      this.chainId = walletConnectParsed.chainId
+
+      this.changeShowConnectDialog(false)
+      this.walletConnectProvider.on('accountsChanged', (accounts: string[]) => {
+        window.location.reload()
+      })
+      this.walletConnectProvider.on('chainChanged', (chainId: number) => {
+        window.location.reload()
+      })
+    } catch (error) {
+      // error.message && snackController.error(error.message)
+      return false
+    } finally {
+      loadingController.decreaseRequest()
+    }
+  }
+
   @asyncAction *connectSolidity() {
     loadingController.increaseRequest()
     try {
       this.disconnectSolana()
-      if ((this.chainType === 'eth' || this.chainType === 'bsc') && this.account) {
+      if (this.ethereumConnectedWallet === WalletName.MetaMask && this.account) {
         // connected
         return
       }
-
       this.account = ''
       const ok = yield this.app.login()
       this.web3 = this.app?.web3
+
       if (ok && this.web3) {
         this.chainId = +(yield this.web3.eth.getChainId())
         ;(this.web3 as any).chainId = this.chainId
@@ -131,6 +191,9 @@ export class WalletStore {
           case 3:
             this.chainType = 'eth'
             break
+          case 24:
+            this.chainType = 'kai'
+            break
           case 56:
           case 97:
           default:
@@ -138,15 +201,17 @@ export class WalletStore {
             break
         }
         this.account = yield this.app.getAddress()
-        this.ethereum.removeListener('accountsChanged', this.ethereumConfigChanged)
-        this.ethereum.removeListener('chainChanged', this.ethereumConfigChanged)
+
+        this.removeAllWalletListener()
         this.ethereum.once('accountsChanged', this.ethereumConfigChanged)
         this.ethereum.once('chainChanged', this.ethereumConfigChanged)
+
         this._bnbBalanceSubscription?.unsubscribe()
         this._bnbBalanceSubscription = timer(0, 5000).subscribe(() => {
           this.getBnbBalance()
         })
       }
+      this.ethereumConnectedWallet = WalletName.MetaMask
       this.changeShowConnectDialog(false)
       return ok
     } catch (error: any) {
@@ -175,6 +240,37 @@ export class WalletStore {
   //     }
   //   }
   // }
+
+  @asyncAction *connectKardiaChainExtension() {
+    loadingController.increaseRequest()
+    try {
+      if (!window.kardiachain) {
+        snackController.error(ERROR_MISSING_KARDIA_EXTENSION)
+        return
+      }
+      yield window.kardiachain.enable()
+
+      const web3 = new Web3(window.kardiachain)
+      const [accounts] = yield web3.eth.getAccounts()
+      const accountsChecksum = web3.utils.toChecksumAddress(accounts)
+
+      this.removeAllWalletListener()
+      this.kardiaChain.once('accountsChanged', this.ethereumConfigChanged)
+      this.kardiaChain.once('chainChanged', this.ethereumConfigChanged)
+
+      this.web3 = web3
+      this.account = accountsChecksum
+      this.chainType = 'kai'
+      this.chainId = +(yield this.web3.eth.getChainId())
+      ;(this.web3 as any).chainId = this.chainId
+      this.ethereumConnectedWallet = WalletName.KardiaChain
+      this.changeShowConnectDialog(false)
+    } catch (error: any) {
+      error.message && snackController.error(error.message)
+    } finally {
+      loadingController.decreaseRequest()
+    }
+  }
 
   @asyncAction *connectSolana(wallet: Wallet) {
     try {
@@ -240,6 +336,13 @@ export class WalletStore {
     }
   }
 
+  @action removeAllWalletListener() {
+    this.ethereum?.removeListener('accountsChanged', this.ethereumConfigChanged)
+    this.ethereum?.removeListener('chainChanged', this.ethereumConfigChanged)
+    this.kardiaChain?.removeListener('accountsChanged', this.ethereumConfigChanged)
+    this.kardiaChain?.removeListener('chainChanged', this.ethereumConfigChanged)
+  }
+
   @observable requestingChain: ChainType | undefined = undefined;
 
   @asyncAction *switchNetwork(chain: ChainType, chainId: number) {
@@ -252,7 +355,7 @@ export class WalletStore {
               method: 'wallet_switchEthereumChain',
               params: [{ chainId: Web3.utils.toHex(chainId) }],
             })
-          } catch (error) {
+          } catch (error: any) {
             if (error.message.includes('wallet_addEthereumChain')) {
               if (chainId === 56) {
                 this.ethereum.request({
@@ -349,7 +452,7 @@ export class WalletStore {
 
   //#region computed
   @computed get solidityConnected() {
-    return (this.chainType === 'bsc' || this.chainType === 'eth') && this.walletConnected
+    return (this.chainType === 'bsc' || this.chainType === 'eth' || this.chainType === 'kai') && this.walletConnected
   }
 
   @computed get solanaConnected() {
@@ -398,13 +501,18 @@ export class WalletStore {
       case 1:
       case 3:
         return 'eth-icon.svg'
-
+      case 24:
+        return 'kardia-logo.svg'
+      case 56:
+        return 'bsc-icon.svg'
+      case 97:
+        return 'bsc-icon.svg'
       case 101:
       case 102:
       case 103:
         return 'sol-icon.svg'
-      case 56:
-      case 97:
+      case 242:
+        return 'kardia-logo.svg'
       default:
         return 'bsc-icon.svg'
     }

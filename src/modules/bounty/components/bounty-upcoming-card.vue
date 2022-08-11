@@ -11,7 +11,10 @@
             name
           }}</span>
           <div class="dot mx-2"></div>
-          <span class="font-weight-bold text-truncate" style="font-size: 1.4em">${{ value | formatNumber(2, 2) }}</span>
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-if="!isRewardTBD"
+            >${{ value | formatNumber(2, 2) }}</span
+          >
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else>TBA</span>
         </div>
         <div class="d-flex text-body-1 font-weight-medium">
           <span>{{ startTime | datetime }}</span>
@@ -25,7 +28,7 @@
       <div class="ml-n2">
         <v-btn :href="metadata.website" icon><v-icon small color="white">mdi-domain</v-icon></v-btn>
         <v-btn v-for="(link, icon) in metadata.socialLinks" :key="icon" :href="link" icon>
-          <v-icon small v-html="`mdi-${icon}`" color="white"></v-icon>
+          <v-icon small color="white">{{ displayIcon(icon) }}</v-icon>
         </v-btn>
       </div>
     </div>
@@ -66,6 +69,29 @@ export default class BountyUpcomingCard extends Vue {
       )
     })
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+  get displayIcon() {
+    return (iconKey) => {
+      const key = iconKey.split('-')[0]
+      switch (key) {
+        case 'whitepaper':
+          return 'fas fa-file-alt'
+        case 'others':
+          return 'fas fa-link'
+        case 'website':
+          return 'fas fa-globe'
+        default:
+          return `fab fa-${key}`
+      }
+    }
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
+    }
   }
 }
 </script>

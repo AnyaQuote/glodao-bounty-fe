@@ -37,8 +37,6 @@ export default class TwitterAuthenticationPage extends Vue {
     if (callback_url) {
       localdata.callback_url = callback_url
     } else localdata.resetCallbackUrl()
-
-    console.log(`${this.apiEndPoint}connect/twitter`)
     window.open(`${this.apiEndPoint}connect/twitter`, '_self')
   }
 }

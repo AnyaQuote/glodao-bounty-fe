@@ -97,12 +97,43 @@
               </v-list>
             </v-sheet>
           </v-menu>
-          <v-tooltip bottom>
+          <!-- <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <div class="text-none nav-btn-text cursor-pointer px-4" v-bind="attrs" v-on="on">DAO Voting</div>
             </template>
             <span>Coming Soon!</span>
-          </v-tooltip>
+          </v-tooltip> -->
+
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <div class="text-none nav-btn-text d-flex align-center" v-on="on" v-bind="attrs">
+                DAO Voting <v-icon>mdi-chevron-down</v-icon>
+              </div>
+            </template>
+            <v-sheet class="neutral100" width="250">
+              <v-list>
+                <v-list-item-group>
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <div class="text-decoration-none px-4 text-none text-body-2 d-flex align-center">
+                        <img :src="require('@/assets/icons/nav-bar/bounty.svg')" class="filter-neutral10 mr-1" />
+                        Voting
+                      </div>
+                    </v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <div class="text-decoration-none px-4 text-none text-body-2 d-flex align-center">
+                        <img :src="require('@/assets/icons/nav-bar/launchpad.svg')" class="filter-neutral10 mr-1" />
+                        Your projects
+                      </div>
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item-group>
+              </v-list>
+            </v-sheet>
+          </v-menu>
+
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <div class="text-none nav-btn-text d-flex align-center" v-on="on" v-bind="attrs">
@@ -262,6 +293,7 @@ export default class NavigationBar extends Vue {
   chainId = process.env.VUE_APP_CHAIN_ID
   KYC_WEB_HOST = process.env.VUE_APP_KYC_WEB_HOST
 
+  daoVotingUrl = process.env.VUE_APP_VOTING_HOST
   openLink(url) {
     window.open(url, '_self')
   }

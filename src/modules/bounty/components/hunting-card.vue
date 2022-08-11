@@ -74,8 +74,18 @@
             :class="{
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
+            v-if="!isRewardTBD"
           >
             {{ value | usdCustom(2, 2) }}
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+            v-else
+          >
+            TBA
           </div>
         </v-col>
         <v-col cols="6">
@@ -189,6 +199,14 @@ export default class HuntingTimeCard extends Vue {
         return 'white--text blue'
       default:
         return 'Mission'
+    }
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
     }
   }
 }

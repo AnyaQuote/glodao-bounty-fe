@@ -119,7 +119,7 @@
                   target="_blank"
                   depressed
                 >
-                  <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                  <v-icon color="white" dark size="14"> {{ displayIcon(key) }}</v-icon>
                 </v-btn>
               </v-sheet>
             </v-sheet>
@@ -165,7 +165,7 @@
                 target="_blank"
                 depressed
               >
-                <v-icon color="white" dark size="14"> {{ `fab fa-${key}` }}</v-icon>
+                <v-icon color="white" dark size="14"> {{ displayIcon(key) }}</v-icon>
               </v-btn>
             </v-sheet>
           </v-sheet>
@@ -176,7 +176,15 @@
       <v-col cols="12" class="mt-4 mt-md-0" style="background-color: var(--v-neutral15-base)" v-if="vm.isEventMission">
         <div class="row d-flex justify-center">
           <v-sheet class="mb-4 neutral15 col-12">
-            <v-row dense>
+            <v-row
+              dense
+              v-if="vm.missionType !== 'lucky' && vm.missionType !== 'active' && vm.missionType !== 'referral'"
+            >
+              <v-col>
+                <pool-type-container />
+              </v-col>
+            </v-row>
+            <v-row dense v-else>
               <v-col cols="12" sm="3" md="3">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Total reward</div>
@@ -185,7 +193,6 @@
                   </div>
                 </v-sheet>
               </v-col>
-
               <v-col cols="12" sm="3" md="3" v-if="vm.missionType === 'referral'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
@@ -195,7 +202,7 @@
                   </div>
                 </v-sheet>
               </v-col>
-              <v-col cols="12" sm="3" md="3" v-else>
+              <v-col cols="12" sm="3" md="3" v-else-if="vm.missionType === 'active' || vm.missionType === 'lucky'">
                 <v-sheet outlined rounded class="pa-4 neutral100--bg fill-height" elevation="3">
                   <div class="card-subtitle-1">Participants</div>
                   <div class="card-big-title-text font-weight-bold d-flex">
@@ -300,6 +307,10 @@
                             Start hunting
                           </v-btn>
                         </div>
+                        <div class="red--text text-caption font-italic">
+                          You can only participate in <span class="text-uppercase">{{ vm.subEventType }}</span> mission
+                          once
+                        </div>
                       </div>
                     </v-col>
                     <v-sheet class="ba-dotted neutral100--bg fill-width mt-5 border-radius-8 overflow-hidden">
@@ -352,6 +363,18 @@
                           <div class="custom-dash-divider"></div>
                           <quiz-mini-task :task="quizTask" :step="index" />
                         </v-col>
+                        <v-col
+                          cols="12"
+                          class="py-0"
+                          v-for="(optionalTask, index) in vm.displayedOptionalTaskData"
+                          :key="'optional' + index"
+                          :class="{
+                            'px-0': $vuetify.breakpoint.xsOnly,
+                          }"
+                        >
+                          <div class="custom-dash-divider"></div>
+                          <optional-mini-task :task="optionalTask" :step="index" />
+                        </v-col>
                       </v-sheet>
                       <v-divider></v-divider>
                       <v-row class="pa-6">
@@ -367,7 +390,7 @@
                             Apply for priority pool
                           </v-btn>
                         </v-col>
-                        <v-col cols="12" class="text-center ma-0 pa-0">
+                        <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.finishLink">
                           <v-sheet class="neutral15 fill-width pa-6 text-center">
                             <span class="blue--text font-weight-bold" v-html="vm.finishMessage"></span>
                             <div class="d-flex justify-center mt-4">
@@ -572,12 +595,26 @@
                     <v-col
                       cols="12"
                       class="py-0"
+                      v-for="(facebookTask, index) in vm.displayedFacebookTaskData"
+                      :key="'facebook' + index"
                       :class="{
                         'px-0': $vuetify.breakpoint.xsOnly,
                       }"
                     >
                       <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Join Discord group" icon="fab fa-discord" />
+                      <facebook-mini-task :facebookTask="facebookTask" :step="index" />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="py-0"
+                      v-for="(optionalTask, index) in vm.displayedOptionalTaskData"
+                      :key="'optional' + index"
+                      :class="{
+                        'px-0': $vuetify.breakpoint.xsOnly,
+                      }"
+                    >
+                      <div class="custom-dash-divider"></div>
+                      <optional-mini-task :task="optionalTask" :step="index" />
                     </v-col>
                     <v-col
                       cols="12"
@@ -672,6 +709,8 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'telegram-mini-task': () => import('@/modules/bounty/components/bounty-detail/telegram-mini-task.vue'),
     'quiz-mini-task': () => import('@/modules/bounty/components/bounty-detail/quiz-mini-task.vue'),
     'discord-mini-task': () => import('@/modules/bounty/components/bounty-detail/discord-mini-task.vue'),
+    'optional-mini-task': () => import('@/modules/bounty/components/bounty-detail/optional-mini-task.vue'),
+    'facebook-mini-task': () => import('@/modules/bounty/components/bounty-detail/facebook-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     VueHcaptcha,
   },
@@ -737,6 +776,22 @@ export default class BountyDetail extends Vue {
   }
   beforeDestroy() {
     this.vm.destroyReaction()
+  }
+
+  get displayIcon() {
+    return (iconKey) => {
+      const key = iconKey.split('-')[0]
+      switch (key) {
+        case 'whitepaper':
+          return 'fas fa-file-alt'
+        case 'others':
+          return 'fas fa-link'
+        case 'website':
+          return 'fas fa-globe'
+        default:
+          return `fab fa-${key}`
+      }
+    }
   }
 }
 </script>

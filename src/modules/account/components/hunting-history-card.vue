@@ -81,9 +81,10 @@
       >
         <div>
           <div class="small-caption-text">Bounty earned</div>
-          <div class="medium-caption-text font-weight-bold mt-2">
+          <div class="medium-caption-text font-weight-bold mt-2" v-if="!isRewardTBD">
             {{ value | usdCustom(2, 2) }}
           </div>
+          <div class="medium-caption-text font-weight-bold mt-2" v-else>TBA</div>
         </div>
       </v-col>
       <v-col
@@ -201,6 +202,14 @@ export default class HuntingHistoryCard extends Vue {
       )
     })
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
+    }
   }
 }
 </script>

@@ -13,7 +13,8 @@
           <div class="blue--text font-size-18 text-truncate">{{ name }}</div>
           <div class="d-flex">
             <div class="flex-shrink-0">Reward</div>
-            <div class="font-size-18 flex-1 text-end">${{ value | formatNumber(2, 2) }}</div>
+            <div class="font-size-18 flex-1 text-end" v-if="!isRewardTBD">${{ value | formatNumber(2, 2) }}</div>
+            <div class="font-size-18 flex-1 text-end" v-else>TBA</div>
           </div>
         </div>
       </div>
@@ -70,6 +71,14 @@ export default class BountyCarouselItem extends Vue {
       )
     })
     this.value = tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+
+  get isRewardTBD() {
+    try {
+      return FixedNumber.from(`${this.value.substring(0, 4)}`).isZero()
+    } catch (error) {
+      return true
+    }
   }
 }
 </script>

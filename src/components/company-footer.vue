@@ -68,6 +68,9 @@
     >
       Copyright © 2022 GLO DAO. All rights reserved.
     </div>
+    <div class="position-absolute" style="bottom: 0; right: 0; font-size: 10px; font-style: italic">
+      v{{ APP_VERSION }}
+    </div>
   </div>
 </template>
 
@@ -80,6 +83,7 @@ import { AppProvider } from '@/app-providers'
 @Component
 export default class Footer extends Vue {
   @Inject() providers!: AppProvider
+  APP_VERSION = process.env.VUE_APP_VERSION
   changeTheme() {
     this.providers.toggleLightMode(this.$vuetify)
   }
