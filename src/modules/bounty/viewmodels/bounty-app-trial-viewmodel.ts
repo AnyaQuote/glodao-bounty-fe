@@ -388,11 +388,20 @@ export class BountyAppTrialViewModel {
     return merged as DisplayAppTrialData[]
   }
 
-  @computed get taskDescription() {
+  @computed get shortDescription() {
     return get(this.task, 'metadata.shortDescription', '')
   }
 
   @computed get taskAppScreenshots() {
     return get(this.task, 'metadata.screenshots', [])
+  }
+
+  @computed get taskDescription() {
+    return get(this.task, 'metadata.taskDescription', '')
+  }
+
+  @observable uniqueId = ''
+  @action.bound updateUniqueId(value: string) {
+    this.uniqueId = value
   }
 }
