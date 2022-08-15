@@ -1,5 +1,5 @@
 <template>
-  <v-sheet v-if="vm.hasHunterStartedTask" class="mt-10 pa-7" rounded outlined>
+  <v-sheet v-if="vm.hasHunterStartedTask" class="mt-10 pa-7 neutral100--bg" rounded outlined>
     <div class="text-h6 font-weight-bold mb-2">
       <v-icon class="mb-1 mr-2">{{ !!vm.applyUniqueId ? 'mdi-check-circle' : 'mdi-alert-circle' }}</v-icon>
       {{ !!vm.applyUniqueId ? 'All set and ready to go' : 'Before starting' }}
@@ -11,11 +11,11 @@
       </div>
       <div class="mb-2 mb-sm-0 mr-sm-2" />
       <v-text-field
-        solo
         dense
         flat
         outlined
         clearable
+        class="neutral100--bg"
         :value="vm.applyUniqueId"
         :disabled="!!vm.applyUniqueId"
         :loading="vm.updatingUniqueId"
@@ -23,13 +23,14 @@
       />
       <div class="mb-2 mb-sm-0 mr-sm-2" />
       <v-btn
+        depressed
         v-if="!vm.applyUniqueId"
         class="linear-background-blue-main white--text text-none"
         :loading="vm.updatingUniqueId"
         @click="vm.updateUniqueId"
-        depressed
-        >Submit my ID</v-btn
       >
+        Submit my ID
+      </v-btn>
     </div>
     <i class="text-subtitle-2 font-weight-regular"
       >*Read the <strong>Task Description</strong> below on how to find your unique Id</i

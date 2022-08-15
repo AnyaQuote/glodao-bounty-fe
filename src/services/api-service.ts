@@ -421,7 +421,7 @@ export class ApiService {
 
   async mapApplyUniqueId(params) {
     const res = await axios.post(
-      'applies/mapUniqueId',
+      'tasks/mapUniqueId',
       { ...params },
       {
         headers: {
