@@ -275,10 +275,10 @@ export class BountyAppTrialViewModel {
         uniqueId: this.uniqueId,
       })
       if (res.code !== 200) {
-        throw Error(res.error)
+        throw Error(res.error.message)
       } else {
         this.apply = res.data.apply
-        this._snackbar.success(res.message)
+        this._snackbar.success('Unique Id updated')
       }
     } catch (error) {
       this._snackbar.commonError(error)
