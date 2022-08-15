@@ -418,6 +418,19 @@ export class ApiService {
     )
     return res.data
   }
+
+  async mapApplyUniqueId(params) {
+    const res = await axios.post(
+      'applies/mapUniqueId',
+      { ...params },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
 }
 
 export const apiService = new ApiService()
