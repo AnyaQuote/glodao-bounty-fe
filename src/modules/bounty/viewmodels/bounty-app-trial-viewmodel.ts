@@ -270,14 +270,14 @@ export class BountyAppTrialViewModel {
   @action.bound async updateUniqueId() {
     try {
       this.updatingUniqueId = true
-      const res = await this._api.updateApplyUniqueId({
+      const res = await this._api.mapApplyUniqueId({
+        taskId: this.task.id,
         uniqueId: this.uniqueId,
-        applyId: this.apply.id,
       })
       if (res.code !== 200) {
-        throw Error(res.message)
+        throw Error(res.error)
       } else {
-        this.apply = res.data
+        this.apply = res.data.apply
         this._snackbar.success(res.message)
       }
     } catch (error) {
