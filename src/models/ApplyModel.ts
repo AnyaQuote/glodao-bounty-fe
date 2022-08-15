@@ -11,7 +11,7 @@ export interface Apply {
   walletAddress?: string
   status?: string
   data?: ApplyData
-  metadata?: any
+  metadata?: ApplyMetadata
   bounty?: string
   task?: Task
   rejectedReason?: any
@@ -29,6 +29,10 @@ export interface Apply {
 export interface ApplyData {
   twitter?: ApplyDetail[]
   iat?: ApplyDetail[]
+}
+
+export interface ApplyMetadata {
+  uniqueId?: string
 }
 
 export interface ApplyDetail {

@@ -10,6 +10,7 @@
       </v-col>
       <v-col v-else cols="12">
         <at-bounty-info />
+        <at-user-form />
         <at-app-link />
         <at-bounty-task />
         <at-app-info />
@@ -43,6 +44,7 @@ import { BountyAppTrialViewModel } from '../viewmodels/bounty-app-trial-viewmode
     'at-bounty-info': () => import('../components/app-trial/at-bounty-info.vue'),
     'at-app-link': () => import('../components/app-trial/at-app-link.vue'),
     'at-bounty-task': () => import('../components/app-trial/at-bounty-task-stats.vue'),
+    'at-user-form': () => import('../components/app-trial/at-user-form.vue'),
     'at-app-info': () => import('../components/app-trial/at-app-info.vue'),
     're-captcha-dialog': () => import('../../bounty/components/bounty-detail/recaptcha-dialog.vue'),
     'confirm-and-earn-dialog': () => import('../components/app-trial/confirm-and-earn-dialog.vue'),

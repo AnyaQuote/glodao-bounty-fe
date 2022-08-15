@@ -1,9 +1,13 @@
 <template>
   <v-tabs class="mt-10 outlined rounded-lg neutral100--bg" color="bluePrimary">
-    <v-tab>App Description</v-tab>
+    <v-tab>Task description</v-tab>
+    <v-tab>About our app</v-tab>
     <v-tab>App Screenshot</v-tab>
     <v-tab-item class="pa-6">
       <p style="white-space: pre-line">{{ vm.taskDescription }}</p>
+    </v-tab-item>
+    <v-tab-item class="pa-6">
+      <p style="white-space: pre-line">{{ vm.shortDescription }}</p>
     </v-tab-item>
     <v-tab-item class="pa-6">
       <v-slide-group

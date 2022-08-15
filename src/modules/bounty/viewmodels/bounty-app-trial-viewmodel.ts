@@ -30,6 +30,7 @@ export class BountyAppTrialViewModel {
   @observable isStartingProcess = false
   @observable isTaskSubmitting = false
   @observable isHCaptchaLoading = false
+  @observable updatingUniqueId = false
   // =========================================
 
   @observable applyStepData: ApplyData = {}
@@ -38,6 +39,8 @@ export class BountyAppTrialViewModel {
   @observable reCaptchaDialog = false
   @observable hCaptchaToken = ''
   // @observable confirmCaptcha = false
+
+  @observable uniqueId = this.applyUniqueId
 
   @observable currentTime = Date.now()
   private _currentTimeInterval: NodeJS.Timer
@@ -260,6 +263,30 @@ export class BountyAppTrialViewModel {
     this.currentTime = Date.now()
   }
 
+  @action.bound changeUniqueId(value: string) {
+    this.uniqueId = value
+  }
+
+  @action.bound async updateUniqueId() {
+    try {
+      this.updatingUniqueId = true
+      const res = await this._api.mapApplyUniqueId({
+        taskId: this.task.id,
+        uniqueId: this.uniqueId,
+      })
+      if (res.code !== 200) {
+        throw Error(res.error.message)
+      } else {
+        this.apply = res.data.apply
+        this._snackbar.success('Unique Id updated')
+      }
+    } catch (error) {
+      this._snackbar.commonError(error)
+    } finally {
+      this.updatingUniqueId = false
+    }
+  }
+
   @computed get applyStatus() {
     return get(this.apply, 'status', '')
   }
@@ -388,11 +415,20 @@ export class BountyAppTrialViewModel {
     return merged as DisplayAppTrialData[]
   }
 
-  @computed get taskDescription() {
+  @computed get shortDescription() {
     return get(this.task, 'metadata.shortDescription', '')
   }
 
   @computed get taskAppScreenshots() {
     return get(this.task, 'metadata.screenshots', [])
+  }
+
+  @computed get taskDescription() {
+    console.log(this.apply.id)
+    return get(this.task, 'metadata.taskDescription', '')
+  }
+
+  @computed get applyUniqueId() {
+    return get(this.apply, 'metadata.uniqueId', '')
   }
 }
