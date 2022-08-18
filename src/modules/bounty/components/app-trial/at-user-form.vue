@@ -35,6 +35,7 @@
     <i class="text-subtitle-2 font-weight-regular"
       >*Read the <strong>Task Description</strong> below on how to find your unique Id</i
     >
+    <span class="float-right font-italic red--text">You can't change ID after submitted*</span>
   </v-sheet>
 </template>
 
