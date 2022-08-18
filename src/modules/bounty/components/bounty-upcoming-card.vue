@@ -11,8 +11,14 @@
             name
           }}</span>
           <div class="dot mx-2"></div>
-          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-if="!isRewardTBD"
+          <span
+            class="font-weight-bold text-truncate"
+            style="font-size: 1.4em"
+            v-if="!isRewardTBD && shouldShowValueInstead"
             >${{ value | formatNumber(2, 2) }}</span
+          >
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else-if="!shouldShowValueInstead"
+            >{{ rewardAmount }} {{ tokenName }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else>TBA</span>
         </div>
@@ -54,9 +60,10 @@ export default class BountyUpcomingCard extends Vue {
   @Prop({ required: true }) task!: any
   value = 'TBA'
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
-  rewardTokenName = this.metadata?.rewardToken ?? ''
+  tokenName = this.metadata?.rewardToken ?? ''
   projectLogo = this.metadata?.projectLogo ?? ''
   optionalTokens = get(this.task, 'optionalTokens', [])
+  shouldShowValueInstead = this.optionalTokens.length > 0
 
   mounted() {
     const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(

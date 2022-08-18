@@ -246,10 +246,10 @@
 
                     My account
                   </v-btn>
-                  <v-btn plain block class="menu-btn" height="40" depressed @click="openKYCPage()">
+                  <!-- <v-btn plain block class="menu-btn" height="40" depressed @click="openKYCPage()">
                     <v-icon width="24" height="24" class="mr-2 ml-0" color="neutral10"> mdi-fingerprint </v-icon>
                     My KYC
-                  </v-btn>
+                  </v-btn> -->
                   <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()">
                     Log out
                   </v-btn>
