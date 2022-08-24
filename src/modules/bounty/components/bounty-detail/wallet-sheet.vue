@@ -40,7 +40,12 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon right small v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
             </template>
-            <span>Connect to your wallet {{ vm.registeredWalletAdress | shortAddress(4, 4) }} </span>
+            <span v-if="vm.chain === 'bsc'"
+              >Connect to your BSC wallet {{ vm.registeredWalletAddress | shortAddress(4, 4) }}
+            </span>
+            <span v-if="vm.chain === 'sol'"
+              >Connect to your SOLANA wallet {{ vm.registeredSolanaWalletAddress | shortAddress(4, 4) }}
+            </span>
           </v-tooltip>
         </v-chip>
         <v-chip

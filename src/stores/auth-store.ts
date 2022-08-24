@@ -13,6 +13,7 @@ import moment from 'moment'
 
 export class AuthStore {
   @observable attachWalletDialog = false
+  @observable attachSolanaWalletDialog = false
   @observable walletDialogInput = ''
   @observable isWalletUpdating = false
   @observable twitterLoginDialog = false
@@ -35,12 +36,13 @@ export class AuthStore {
     }
   }
 
-  @action.bound changeAttachWalletDialog(value: boolean) {
+  @action.bound changeAttachWalletDialog(value: boolean, chain = 'bsc') {
     if (!value && !this.user.hunter.address) {
       snackController.error('You need to set your main wallet')
       return
     }
-    this.attachWalletDialog = value
+    if (chain === 'bsc') this.attachWalletDialog = value
+    else if (chain === 'sol') this.attachSolanaWalletDialog = value
   }
   @action.bound changeWalletDialogInput(value: string) {
     this.walletDialogInput = value
@@ -69,6 +71,26 @@ export class AuthStore {
       this.isWalletUpdating = false
     }
   }
+
+  @asyncAction *saveSolanaAttachWallet() {
+    try {
+      this.isWalletUpdating = true
+      const updatedHunter = yield apiService.updateSolanaWalletAddress(
+        walletStore.account,
+        'signature',
+        'sol',
+        get(this.user, 'hunter.id', '')
+      )
+      this.changeUser({ ...this.user, hunter: updatedHunter })
+      snackController.updateSuccess()
+      this.changeAttachWalletDialog(false, 'sol')
+    } catch (error) {
+      snackController.error(get(error, 'response.data.message', '') || get(error, 'message', '') || (error as string))
+    } finally {
+      this.isWalletUpdating = false
+    }
+  }
+
   @asyncAction *getUserData() {
     try {
       const res = yield apiService.users.findOne(this.user.id, this.jwt)
@@ -197,6 +219,10 @@ export class AuthStore {
 
   @computed get registeredWallet() {
     return get(this.user, 'hunter.address', '')
+  }
+
+  @computed get registeredSolanaWallet() {
+    return get(this.user, 'hunter.solanaAddress', '')
   }
 
   @computed get userRole() {

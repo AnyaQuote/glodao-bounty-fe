@@ -260,6 +260,25 @@ export class ApiService {
     return res.data
   }
 
+  async updateSolanaWalletAddress(solanaAddress: string, signature: string, chain: string, id: string) {
+    const res = await axios.patch(
+      'hunters/updateSolanaWalletAddress',
+      {
+        solanaAddress,
+        signature,
+        chain,
+        id,
+        hunterId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
+
   async checkStakeStatus(walletAddress: string, hunterId: string, poolId = 0) {
     const res = await axios.get('checkUserStaked', {
       params: {

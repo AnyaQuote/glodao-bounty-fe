@@ -274,6 +274,7 @@ export class BountyDetailViewModel {
   @asyncAction *fetchData() {
     loadingController.increaseRequest()
     yield this.getTaskData()
+    this.checkRequiredSolanaAddress()
     this.initEmptyStepData()
     yield this.getApplyData()
     yield this.getParticipantCount()
@@ -287,6 +288,12 @@ export class BountyDetailViewModel {
       this.task = res
     } catch (error) {
       snackController.error(get(error, 'response.data.message', '') || (error as string))
+    }
+  }
+
+  checkRequiredSolanaAddress() {
+    if (get(localdata.user, 'twitterId') && this.chain === 'sol' && !get(localdata.user, 'hunter.solanaAddress')) {
+      authStore.changeAttachWalletDialog(true, 'sol')
     }
   }
 
@@ -822,10 +829,16 @@ export class BountyDetailViewModel {
   @computed get isCurrentWalletMatchRegistered() {
     if (!walletStore.account || !authStore.registeredWallet) return false
 
-    return isEqual(
-      web3.utils.toChecksumAddress(walletStore.account),
-      web3.utils.toChecksumAddress(authStore.registeredWallet)
-    )
+    if (this.chain === 'bsc') {
+      return isEqual(
+        web3.utils.toChecksumAddress(walletStore.account),
+        web3.utils.toChecksumAddress(authStore.registeredWallet)
+      )
+    } else if (this.chain === 'sol') {
+      return isEqual(walletStore.account, authStore.registeredSolanaWallet)
+    }
+
+    return false
   }
 
   @computed get currentWallet() {
@@ -936,8 +949,12 @@ export class BountyDetailViewModel {
     return false
   }
 
-  @computed get registeredWalletAdress() {
+  @computed get registeredWalletAddress() {
     return authStore.registeredWallet
+  }
+
+  @computed get registeredSolanaWalletAddress() {
+    return authStore.registeredSolanaWallet
   }
 
   @computed get missionType() {
@@ -994,6 +1011,14 @@ export class BountyDetailViewModel {
 
   @computed get isSubTypeTaskUnique() {
     return get(this.task, 'metadata.isSubTypeTaskUnique', false)
+  }
+
+  @computed get chain() {
+    return get(this.task, 'chain', 'bsc')
+  }
+
+  @computed get chainId() {
+    return get(this.task, 'chainId', '97')
   }
 
   @computed get optionalTokensPriorityReward() {
