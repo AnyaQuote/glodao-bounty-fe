@@ -6,7 +6,7 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">Like tweet from {{ page }}</div>
+          <div class="text-body-1 font-weight-600">Retweet from {{ page }}</div>
           <div class="text-caption mt-1">
             Please retweet <a @click="openLink(twitterTask.link)" class="font-italic blue--text"></a> to complete this
             task.
