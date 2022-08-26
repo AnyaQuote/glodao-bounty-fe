@@ -40,7 +40,7 @@
               <div class="font-weight-bold" v-if="!isRewardTBD && shouldShowValueInstead">
                 ${{ value | formatNumber(2, 2) }}
               </div>
-              <div class="font-weight-bold" v-else-if="!shouldShowValueInstead">{{ rewardAmount }} {{ tokenName }}</div>
+              <div class="font-weight-bold" v-else-if="!shouldShowValueInstead">{{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}</div>
               <div class="font-weight-bold" v-else>TBA</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
