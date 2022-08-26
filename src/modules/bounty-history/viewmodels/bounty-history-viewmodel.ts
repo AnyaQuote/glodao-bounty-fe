@@ -179,7 +179,7 @@ export class BountyHistoryViewModel {
       .then((res) => {
         this.suggestedList = res.map((item:any) =>({
           ...item,
-          name:item.name+'_'+item.missionIndex
+          name:item.name+' #'+item.missionIndex
         }))
       })
       .catch((err) => {

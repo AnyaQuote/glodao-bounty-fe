@@ -15,10 +15,10 @@
             class="font-weight-bold text-truncate"
             style="font-size: 1.4em"
             v-if="!isRewardTBD && shouldShowValueInstead"
-            >${{ value | usdCustom(2, 2) }}</span
+            >${{ value | formatNumber(2, 2) }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else-if="!shouldShowValueInstead"
-            >{{ rewardAmount | usdCustom(2, 2) }} {{ tokenName }}</span
+            >{{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else>TBA</span>
         </div>
