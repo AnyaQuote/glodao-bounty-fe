@@ -94,7 +94,7 @@
             }"
             v-else-if="!shouldShowValueInstead"
           >
-            {{ rewardAmount }} {{ tokenName }}
+            {{ rewardAmount | formatNumber(2,2) }} {{ tokenName }}
           </div>
           <div
             class="font-weight-bold mt-1 font-size-28 text-truncate"

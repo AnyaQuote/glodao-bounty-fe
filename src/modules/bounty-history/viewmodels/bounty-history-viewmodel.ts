@@ -177,14 +177,19 @@ export class BountyHistoryViewModel {
         { _limit: 5 }
       )
       .then((res) => {
-        this.suggestedList = res
+        this.suggestedList = res.map((item:any) =>({
+          ...item,
+          name:item.name+' #'+item.missionIndex
+        }))
       })
       .catch((err) => {
         snackController.error(err)
       })
       .finally(() => {
         this.taskNameInputLoading = false
+        
       })
+      
   }
 
   @action.bound goToTaskDetailScreen(id) {

@@ -19,7 +19,7 @@
             >${{ value | formatNumber(2, 2) }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else-if="!shouldShowValueInstead"
-            >{{ rewardAmount }} {{ tokenName }}</span
+            >{{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else>TBA</span>
         </div>
