@@ -152,7 +152,7 @@
                 {{ vm.task | _get('metadata.website') }}
               </a>
             </v-sheet>
-            <v-sheet class="d-flex align-center transparent">
+            <v-sheet class="d-flex align-center transparent" v-if="vm.taskSocialLinks.length > 0">
               <v-sheet class="transparent title-2">Social link:</v-sheet>
               <v-btn
                 v-for="(value, key) in vm.taskSocialLinks"
@@ -169,6 +169,9 @@
               </v-btn>
             </v-sheet>
           </v-sheet>
+          <div class="">
+            <mission-ref-code />
+          </div>
         </div>
       </v-col>
 
@@ -712,6 +715,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'optional-mini-task': () => import('@/modules/bounty/components/bounty-detail/optional-mini-task.vue'),
     'facebook-mini-task': () => import('@/modules/bounty/components/bounty-detail/facebook-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
+    'mission-ref-code': () => import('@/modules/bounty/components/independent-mission-ref-code.vue'),
     VueHcaptcha,
   },
 })
