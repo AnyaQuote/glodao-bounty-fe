@@ -80,6 +80,7 @@ export class BountyDetailViewModel {
     daily: 10000,
     twitter: 100000,
   }
+  @observable missionRef = ''
 
   @observable isStartingProcess = false
   @observable isApplyPrioritying = false
@@ -221,6 +222,10 @@ export class BountyDetailViewModel {
     this.taskId = taskId
   }
 
+  @action missionRefChange(missionRef: string) {
+    this.missionRef = missionRef
+  }
+
   @action.bound startHunting() {
     if (!authStore.jwt) {
       authStore.changeTwitterLoginDialog(true)
@@ -256,6 +261,7 @@ export class BountyDetailViewModel {
         task: this.taskId,
         status: APPLY_STATUS.PROCESSING,
         captchaToken,
+        refCode: isEmpty(this.missionRef) ? undefined : this.missionRef,
       })
 
       if (res) {

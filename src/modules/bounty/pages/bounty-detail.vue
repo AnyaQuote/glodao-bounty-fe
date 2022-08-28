@@ -745,6 +745,11 @@ export default class BountyDetail extends Vue {
       this.vm.taskIdChange(val)
     }
   }
+  @Watch('$route.query.missionRef', { immediate: true }) onMissionRefChange(val: string) {
+    if (val) {
+      this.vm.missionRefChange(val)
+    }
+  }
 
   items = ['Twitter task', 'Telegram task', 'Discord task']
   tab = null
