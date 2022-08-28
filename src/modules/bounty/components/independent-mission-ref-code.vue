@@ -16,7 +16,7 @@
         </v-tooltip>
       </v-sheet>
     </div>
-    <div class="title-2">Users start mission with your link: {{ vm.missionRefCount }}</div>
+    <div class="title-2 mt-2">Users start mission with your link: {{ vm.missionRefCount }}</div>
   </div>
 </template>
 <script lang="ts">
