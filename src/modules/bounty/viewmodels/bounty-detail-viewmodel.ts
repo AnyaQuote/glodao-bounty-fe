@@ -81,6 +81,7 @@ export class BountyDetailViewModel {
     twitter: 100000,
   }
   @observable missionRef = ''
+  @observable missionRefCount = 0
 
   @observable isStartingProcess = false
   @observable isApplyPrioritying = false
@@ -284,6 +285,14 @@ export class BountyDetailViewModel {
     yield this.getApplyData()
     yield this.getParticipantCount()
     yield this.getStakeStatus()
+    apiService.applies
+      .count({ independentReferrerCode: authStore.user.hunter.referralCode })
+      .then((result) => {
+        this.missionRefCount = result
+      })
+      .catch((err) => {
+        snackController.error(err)
+      })
     loadingController.decreaseRequest()
   }
 
