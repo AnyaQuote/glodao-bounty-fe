@@ -80,6 +80,8 @@ export class BountyDetailViewModel {
     daily: 10000,
     twitter: 100000,
   }
+  @observable missionRef = ''
+  @observable missionRefCount = 0
 
   @observable isStartingProcess = false
   @observable isApplyPrioritying = false
@@ -221,6 +223,10 @@ export class BountyDetailViewModel {
     this.taskId = taskId
   }
 
+  @action missionRefChange(missionRef: string) {
+    this.missionRef = missionRef
+  }
+
   @action.bound startHunting() {
     if (!authStore.jwt) {
       authStore.changeTwitterLoginDialog(true)
@@ -256,6 +262,7 @@ export class BountyDetailViewModel {
         task: this.taskId,
         status: APPLY_STATUS.PROCESSING,
         captchaToken,
+        refCode: isEmpty(this.missionRef) ? undefined : this.missionRef,
       })
 
       if (res) {
@@ -278,7 +285,18 @@ export class BountyDetailViewModel {
     yield this.getApplyData()
     yield this.getParticipantCount()
     yield this.getStakeStatus()
+    yield this.getMissionRefCount()
     loadingController.decreaseRequest()
+  }
+
+  @asyncAction *getMissionRefCount() {
+    try {
+      if (isEmpty(get(authStore, 'user.hunter.referralCode', ''))) return
+      const res = yield apiService.applies.count({ independentReferrerCode: authStore.user.hunter.referralCode })
+      this.missionRefCount = res
+    } catch (error) {
+      snackController.error(error as string)
+    }
   }
 
   @asyncAction *getTaskData() {
