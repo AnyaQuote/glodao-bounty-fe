@@ -202,7 +202,7 @@
             <v-list-item-title>
               <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
-                <div><a href="https://tools.glodao.io/locker">Locker</a></div>
+                <div><a href="https://tools.glodao.io/locker" target="_blank">Locker</a></div>
               </div>
             </v-list-item-title>
           </v-list-item>
@@ -210,7 +210,7 @@
             <v-list-item-title>
               <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-cached</v-icon>
-                <div><a href="https://tools.glodao.io/bulksend">Bulksend</a></div>
+                <div><a href="https://tools.glodao.io/bulksend" target="_blank">Bulksend</a></div>
               </div>
             </v-list-item-title>
           </v-list-item>
@@ -218,7 +218,7 @@
             <v-list-item-title>
               <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-flare</v-icon>
-                <div><a href="https://tools.glodao.io/claim/pools">MultiClaim</a></div>
+                <div><a href="https://tools.glodao.io/claim/pools" target="_blank">MultiClaim</a></div>
               </div>
             </v-list-item-title>
           </v-list-item>
