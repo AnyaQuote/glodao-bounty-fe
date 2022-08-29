@@ -285,15 +285,18 @@ export class BountyDetailViewModel {
     yield this.getApplyData()
     yield this.getParticipantCount()
     yield this.getStakeStatus()
-    apiService.applies
-      .count({ independentReferrerCode: authStore.user.hunter.referralCode })
-      .then((result) => {
-        this.missionRefCount = result
-      })
-      .catch((err) => {
-        snackController.error(err)
-      })
+    yield this.getMissionRefCount()
     loadingController.decreaseRequest()
+  }
+
+  @asyncAction *getMissionRefCount() {
+    try {
+      if (isEmpty(get(authStore, 'user.hunter.referralCode', ''))) return
+      const res = yield apiService.applies.count({ independentReferrerCode: authStore.user.hunter.referralCode })
+      this.missionRefCount = res
+    } catch (error) {
+      snackController.error(error as string)
+    }
   }
 
   @asyncAction *getTaskData() {
