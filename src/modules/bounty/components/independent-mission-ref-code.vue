@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isLogin">
     <div class="title-2 mb-2">Invite your friend now:</div>
     <div class="d-flex">
       <v-sheet
@@ -24,7 +24,7 @@ import { Component, Vue, Inject } from 'vue-property-decorator'
 import { Observer } from 'mobx-vue'
 import { promiseHelper } from '@/helpers/promise-helper'
 import { authStore } from '@/stores/auth-store'
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import { BountyDetailViewModel } from '../viewmodels/bounty-detail-viewmodel'
 
 @Observer
@@ -33,6 +33,7 @@ export default class extends Vue {
   @Inject() vm!: BountyDetailViewModel
   webhost = process.env.VUE_APP_WEB_HOST
   referralLink = `${this.webhost}/bounty/${this.vm.taskId}?missionRef=${get(authStore.user, 'hunter.referralCode')}`
+  isLogin = !isEmpty(get(authStore, 'user.hunter.referralCode', ''))
   authStore = authStore
   isCopied = false
   mouseoverEvent = new Event('mouseleave')
