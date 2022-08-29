@@ -58,7 +58,7 @@ export default class extends Vue {
   line-height: 150%;
 }
 .glow {
-  background-image: linear-gradient(-225deg, #231557 0%, #44107a 29%, #ff1361 67%, #fff800 100%);
+  background-image: linear-gradient(-225deg, #231557 0%, #44107a 29%, #dc13ff 67%, #00ff6a 100%);
   background-size: auto auto;
   background-clip: border-box;
   background-size: 200% auto;
