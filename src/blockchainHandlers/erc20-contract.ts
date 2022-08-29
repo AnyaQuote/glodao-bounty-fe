@@ -64,7 +64,7 @@ export class Erc20Contract {
 
   async transfer(account, spenderAddress, amount) {
     const amountWithDecimals = bnHelper.toDecimalString(amount, await this.decimals())
-    return await sendRequest(this.contract.methods.transfer(account, spenderAddress, amountWithDecimals), account)
+    return await sendRequest(this.contract.methods.transfer(spenderAddress, amountWithDecimals), account)
   }
 
   async getTokenAmount(account) {
