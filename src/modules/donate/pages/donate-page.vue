@@ -35,7 +35,9 @@
             </div>
           </div>
           <div class="ml-5">
-            <span>lorem ipsum dolor sit am id urna et ullamcorper lorem ipsum dolor sit am id urna et ull lorem</span>
+            <span class="text-body-2 font-italic text-decoration-underline"
+              >Donate to support us and earn a chance to receive our exclusive NFT</span
+            >
           </div>
           <div class="mt-1 py-4 text-center">
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
