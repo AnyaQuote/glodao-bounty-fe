@@ -50,9 +50,9 @@ export class WalletStore {
   } as any) as any
 
   @observable solWalletItems = [
+    getPhantomWallet(),
     getSolletExtensionWallet(),
     getSolletWallet(),
-    getPhantomWallet(),
     getSolflareWallet(),
     // getLedgerWallet({ derivationPath: getDerivationPath() }),
   ]
@@ -88,12 +88,12 @@ export class WalletStore {
         localdata.lastChain = x as any
       }
     )
-    reaction(
-      () => this.ethereumConnectedWallet,
-      (x) => {
-        localdata.lastWallet = x as any
-      }
-    )
+    // reaction(
+    //   () => this.ethereumConnectedWallet,
+    //   (x) => {
+    //     localdata.lastWallet = x as any
+    //   }
+    // )
 
     if (localdata.walletConnect) {
       const walletConnect = localdata.walletConnect ? localdata.walletConnect : ''
@@ -126,7 +126,7 @@ export class WalletStore {
 
   @asyncAction *start() {
     try {
-      if (this.ethereumConnectedWallet === WalletName.MetaMask) {
+      if (this.chainType === 'bsc' || this.chainType === 'eth') {
         this.app.start()
         this.web3 = this.app.web3
         if (yield this.app.getAddress()) {
@@ -175,7 +175,7 @@ export class WalletStore {
     loadingController.increaseRequest()
     try {
       this.disconnectSolana()
-      if (this.ethereumConnectedWallet === WalletName.MetaMask && this.account) {
+      if ((this.chainType === 'eth' || this.chainType === 'bsc') && this.account) {
         // connected
         return
       }
@@ -428,9 +428,9 @@ export class WalletStore {
           yield this.disconnectSolana()
           this.network = network
           this.solWalletItems = [
+            getPhantomWallet(),
             getSolletExtensionWallet({ network }),
             getSolletWallet({ network }),
-            getPhantomWallet(),
             getSolflareWallet(),
           ]
         }
