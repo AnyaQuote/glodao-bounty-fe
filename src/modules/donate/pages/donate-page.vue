@@ -62,35 +62,34 @@
           </v-container>
         </v-card>
       </div>
-      <div :class="{ 'd-flex align-center justify-space-around ': $vuetify.breakpoint.mdAndUp }">
-        <div class="mt-8" style="min-width: 300px">
-          <!-- <div class="page-title">Donation history</div>
-        <v-card class="pa-8" flat elevation="3">
-          <div>
-            <v-data-table
-              border=""
-              :disable-sort="true"
-              :headers="headers1"
-              :items="desserts1"
-              :hide-default-footer="true"
-            ></v-data-table>
-          </div>
-        </v-card> -->
+      <div class="row">
+        <div class="mt-8 col col-12 col-md-8">
+          <div class="page-title">Donation history</div>
+          <v-card class="pa-8" flat elevation="3">
+            <div>
+              <v-data-table
+                border=""
+                :headers="allDonationHeaders"
+                :items="vm.allDonations"
+                disable-sort
+              ></v-data-table>
+            </div>
+          </v-card>
         </div>
-        <div class="mt-8" style="min-width: 300px">
-          <!-- <div class="page-title">Your donation history</div>
-        <v-card class="pa-8" flat elevation="3">
-          <div>
-            <v-data-table
-              border=""
-              :headers="headers"
-              :items="desserts"
-              :disable-sort="true"
-              :hide-default-footer="true"
-              :sortable="false"
-            ></v-data-table>
-          </div>
-        </v-card> -->
+        <div class="mt-8 col col-12 col-md-4">
+          <div class="page-title">Your donation history</div>
+          <v-card class="pa-8" flat elevation="3">
+            <div>
+              <v-data-table
+                border=""
+                :headers="headers"
+                :items="vm.myDonations"
+                disable-sort
+                hide-default-footer
+                disable-pagination
+              ></v-data-table>
+            </div>
+          </v-card>
         </div>
       </div>
     </v-container>
@@ -112,48 +111,31 @@ import moment from 'moment'
 export default class DonatePage extends Vue {
   @Provide() vm = new DonateViewModel()
   buttonClass = 'rounded linear-background-blue-main white--text'
+  allDonationHeaders = [
+    {
+      text: 'Address',
+      align: 'start',
+      value: 'wallet',
+    },
+    {
+      text: 'Date',
+      value: 'date',
+    },
+    {
+      text: 'Amount',
+      align: 'end',
+      value: 'amount',
+    },
+  ]
   headers = [
-    {
-      text: 'Amount',
-      align: 'start',
-      sortable: false,
-      value: 'amount',
-    },
     { text: 'Date', value: 'date' },
-  ]
-  desserts = [
-    {
-      amount: '600',
-      date: '10/10/2022',
-    },
-    {
-      amount: '600',
-      date: '10/10/2022',
-    },
-  ]
-  headers1 = [
-    {
-      text: 'Amount',
-      align: 'start',
-      sortable: false,
-      value: 'amount',
-    },
-    { text: 'Date', value: 'date' },
-    { text: 'Address', value: 'address' },
-  ]
-  desserts1 = [
-    {
-      amount: '600',
-      date: '10/10/2022',
-      address: '0xb641934f5cD11755581D3587Dfd6cB81109a908bo',
-    },
-    {
-      amount: '600',
-      date: '10/10/2022',
-      address: '0xb641934f5cD11755581D3587Dfd6cB81109a908b',
-    },
-  ]
 
+    {
+      text: 'Amount',
+      align: 'end',
+      value: 'amount',
+    },
+  ]
   walletStore = walletStore
   authStore = authStore
   moment = moment
