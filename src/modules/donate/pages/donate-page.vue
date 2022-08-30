@@ -40,7 +40,7 @@
             </div>
             <div class="ml-5">
               <span class="text-body-2 font-italic text-decoration-underline"
-                >Donate to support us and earn a chance to receive our exclusive NFT</span
+                >Donate BUSD to support us and earn a chance to receive our exclusive NFT</span
               >
             </div>
             <div class="mt-1 py-4 text-center">
