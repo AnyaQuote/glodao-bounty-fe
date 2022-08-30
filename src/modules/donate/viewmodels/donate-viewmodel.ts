@@ -23,7 +23,10 @@ export class DonateViewModel {
   }
 
   @action donate = async () => {
-    if (!BUSD_CONTRACT_ADDRESS || !CHAIN_ID || !DESTINATION_ADDRESS) return
+    if (!BUSD_CONTRACT_ADDRESS || !CHAIN_ID || !DESTINATION_ADDRESS) {
+      snackController.error('Donate is not supported! If you continue to see this error, please contact site admin.')
+      return
+    }
 
     if (isEmpty(this.account) || isEmpty(this.web3)) {
       snackController.error('Please connect to Metamask')
