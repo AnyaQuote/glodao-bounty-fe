@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="fill-width">
-      <v-img :src="require('@/assets/images/donationPageBanner.jpg')"></v-img>
+      <v-img :src="require('@/assets/images/donationPageBanner-2.jpg')"></v-img>
     </div>
     <v-container>
       <div class="d-flex align-center justify-center mt-6">
