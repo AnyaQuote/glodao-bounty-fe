@@ -7,8 +7,17 @@
             <img :src="require('@/assets/images/reward.png')" alt="" />
             <div class="page-title ml-4">Support us</div>
           </div>
-          <div class="mt-4 border-radius-8 py-6 px-2 text-center sub-card">
-            <div :class="{ 'd-flex align-center': $vuetify.breakpoint.smAndUp }">
+          <div class="mt-4 py-2 text-center">
+            <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
+            <span class="address" v-if="$vuetify.breakpoint.smAndUp">
+              {{ walletStore.account }}
+            </span>
+            <span class="address" v-else>
+              {{ walletStore.account | shortAddress(6, 6) }}
+            </span>
+          </div>
+          <div class="py-6 px-2 text-center">
+            <div :class="{ 'd-flex align-center justify-center': $vuetify.breakpoint.mdAndUp }">
               <v-card
                 @click="vm.changeDonationAmount(amount)"
                 class="border-radius-8 py-6 px-2 text-center ma-2"
@@ -23,6 +32,12 @@
                 {{ amount }}$
               </v-card>
             </div>
+          </div>
+          <div class="ml-5">
+            <span>lorem ipsum dolor sit am id urna et ullamcorper lorem ipsum dolor sit am id urna et ull lorem</span>
+          </div>
+          <div class="ml-5">
+            <span>lorem ipsum dolor sit am id urna et ullamcorper lorem ipsum dolor sit am id urna et ull lorem</span>
           </div>
           <div class="mt-1 py-4 text-center">
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
@@ -53,7 +68,6 @@
               :disable-sort="true"
               :headers="headers1"
               :items="desserts1"
-              class="elevation-1"
               :hide-default-footer="true"
             ></v-data-table>
           </div>
@@ -67,7 +81,6 @@
               border=""
               :headers="headers"
               :items="desserts"
-              class="elevation-1"
               :disable-sort="true"
               :hide-default-footer="true"
               :sortable="false"
