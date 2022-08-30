@@ -66,4 +66,8 @@ export class DonateViewModel {
   @computed get chainId() {
     return get(walletStore, 'web3.chainId', '')
   }
+
+  @computed get shouldDisableDonate() {
+    return isEmpty(this.account) || isEmpty(this.web3) || isEmpty(this.amount)
+  }
 }

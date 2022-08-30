@@ -9,11 +9,12 @@
           </div>
           <div class="mt-4 py-2 text-center">
             <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
+            <span v-if="!vm.account">You need to connect your wallet first</span>
             <span class="address" v-if="$vuetify.breakpoint.smAndUp">
-              {{ walletStore.account }}
+              {{ vm.account }}
             </span>
             <span class="address" v-else>
-              {{ walletStore.account | shortAddress(6, 6) }}
+              {{ vm.account | shortAddress(6, 6) }}
             </span>
           </div>
           <div class="py-6 px-2 text-center">
@@ -44,7 +45,7 @@
                   :class="buttonClass"
                   large
                   :block="$vuetify.breakpoint.xs"
-                  :disabled="vm.amount === ''"
+                  :disabled="vm.shouldDisableDonate"
                   @click="vm.donate()"
                 >
                   Donate
