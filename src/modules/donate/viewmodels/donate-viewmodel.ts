@@ -6,6 +6,7 @@ import { action, computed, IReactionDisposer, observable } from 'mobx'
 
 const BUSD_CONTRACT_ADDRESS = process.env.VUE_APP_BUSD_CONTRACT
 const CHAIN_ID = process.env.VUE_APP_DONATION_CHAIN_ID
+const DESTINATION_ADDRESS = process.env.VUE_APP_DONATION_DESTINATION_ADDRESS
 
 export class DonateViewModel {
   _disposers: IReactionDisposer[] = []
@@ -22,7 +23,7 @@ export class DonateViewModel {
   }
 
   @action donate = async () => {
-    if (!BUSD_CONTRACT_ADDRESS || !CHAIN_ID) return
+    if (!BUSD_CONTRACT_ADDRESS || !CHAIN_ID || !DESTINATION_ADDRESS) return
 
     if (isEmpty(this.account) || isEmpty(this.web3)) {
       snackController.error('Please connect to Metamask')
@@ -38,7 +39,7 @@ export class DonateViewModel {
     try {
       await this.sendDonation(
         walletStore.account,
-        '0x8D74682A76195E9E4db9f7EA81Df07Fa6978292C',
+        DESTINATION_ADDRESS,
         BUSD_CONTRACT_ADDRESS,
         this.amount,
         walletStore.web3
@@ -52,7 +53,8 @@ export class DonateViewModel {
   @action sendDonation = async (from: string, to: string, tokenAddress: string, amount: string, web3) => {
     if (isEmpty(from)) throw new Error('Sender address is empty')
     const ercContract = new Erc20Contract(tokenAddress, web3)
-    ercContract.transfer(from, to, amount)
+    const res = await ercContract.transfer(from, to, amount)
+    console.log(res)
   }
 
   @computed get account() {
