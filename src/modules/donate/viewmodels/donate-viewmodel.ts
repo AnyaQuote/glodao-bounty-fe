@@ -11,8 +11,8 @@ const DESTINATION_ADDRESS = process.env.VUE_APP_DONATION_DESTINATION_ADDRESS
 export class DonateViewModel {
   _disposers: IReactionDisposer[] = []
   @observable walletStore = walletStore
-  @observable amountList = ['1', '5', '10', '20']
-  @observable amount = '1'
+  @observable amountList = ['50', '100', '250', '500']
+  @observable amount = this.amountList[0]
 
   constructor() {
     //
