@@ -4,7 +4,7 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { walletStore } from '@/stores/wallet-store'
 import { get, isEmpty, isEqual, toNumber, toString, toLower } from 'lodash-es'
-import { action, computed, IReactionDisposer, observable } from 'mobx'
+import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import moment from 'moment'
 
 const BUSD_CONTRACT_ADDRESS = process.env.VUE_APP_BUSD_CONTRACT
@@ -14,23 +14,28 @@ const DESTINATION_ADDRESS = process.env.VUE_APP_DONATION_DESTINATION_ADDRESS
 export class DonateViewModel {
   _disposers: IReactionDisposer[] = []
   @observable walletStore = walletStore
-  @observable amountList = ['5', '100', '250', '500']
+  @observable amountList = ['5', '10', '250', '500']
   @observable amount = this.amountList[0]
-  @observable allDonations: any[] = []
+  @observable baseAllDonations: any[] = []
 
   constructor() {
     //
     this.loadData()
+    this._disposers = [
+      reaction(
+        () => this.account,
+        () => this.loadData()
+      ),
+    ]
+  }
+
+  @action destroyReaction() {
+    //
+    this._disposers.forEach((d) => d())
   }
 
   @action loadData = async () => {
-    this.allDonations = (await apiService.donationTransactions.find({}, { _limit: -1, _sort: 'amount:DESC' })).map(
-      (x: any) => ({
-        ...x,
-        date: moment(x.date).format('lll'),
-      })
-    )
-    console.log(this.allDonations)
+    this.baseAllDonations = await apiService.donationTransactions.find({}, { _limit: -1, _sort: 'amount:DESC' })
   }
 
   @action changeDonationAmount(amount: string) {
@@ -63,7 +68,8 @@ export class DonateViewModel {
         this.amount,
         walletStore.web3
       )
-      await apiService.recordDonation(transactionHash)
+      const res = await apiService.recordDonation(transactionHash)
+      this.baseAllDonations.push(res)
     } catch (error: any) {
       console.log(error)
       snackController.error(error.message)
@@ -76,6 +82,13 @@ export class DonateViewModel {
     if (isEmpty(from)) throw new Error('Sender address is empty')
     const ercContract = new Erc20Contract(tokenAddress, web3)
     return await ercContract.transfer(from, to, amount)
+  }
+
+  @computed get allDonations() {
+    return this.baseAllDonations.map((x: any) => ({
+      ...x,
+      date: moment(x.date).format('lll'),
+    }))
   }
 
   @computed get myDonations() {

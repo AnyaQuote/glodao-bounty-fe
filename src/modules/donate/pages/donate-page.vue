@@ -65,20 +65,21 @@
       <div class="row">
         <div class="mt-8 col col-12 col-md-8">
           <div class="page-title">Donation history</div>
-          <v-card class="pa-8" flat elevation="3">
+          <v-card class="pa-4 neutral100" flat elevation="3">
             <div>
               <v-data-table
                 border=""
                 :headers="allDonationHeaders"
                 :items="vm.allDonations"
                 disable-sort
+                class="neutral100"
               ></v-data-table>
             </div>
           </v-card>
         </div>
         <div class="mt-8 col col-12 col-md-4">
           <div class="page-title">Your donation history</div>
-          <v-card class="pa-8" flat elevation="3">
+          <v-card class="pa-4 neutral100" flat elevation="3">
             <div>
               <v-data-table
                 border=""
@@ -87,6 +88,7 @@
                 disable-sort
                 hide-default-footer
                 disable-pagination
+                class="neutral100"
               ></v-data-table>
             </div>
           </v-card>
@@ -139,6 +141,10 @@ export default class DonatePage extends Vue {
   walletStore = walletStore
   authStore = authStore
   moment = moment
+
+  beforeDestroy() {
+    this.vm._disposers.forEach((d) => d())
+  }
 }
 </script>
 <style scoped lang="scss">
