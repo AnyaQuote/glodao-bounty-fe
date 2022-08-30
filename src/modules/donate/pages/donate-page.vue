@@ -9,7 +9,7 @@
           <v-container>
             <div class="d-flex align-center justify-center">
               <img :src="require('@/assets/images/reward.png')" alt="" />
-              <div class="page-title ml-4">Support us</div>
+              <div class="page-title ml-4">Donate now</div>
             </div>
             <div class="mt-4 py-2 text-center">
               <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
