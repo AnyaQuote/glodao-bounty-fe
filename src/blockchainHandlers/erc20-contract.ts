@@ -74,7 +74,7 @@ export class Erc20Contract {
 function sendRequest(fx, from): Promise<any> {
   return new Promise((resolve, reject) => {
     fx.send({ from })
-      .on('receipt', () => resolve(''))
+      .on('receipt', (receipt) => resolve(receipt))
       .on('error', (error) => reject(error))
   })
 }
