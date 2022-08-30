@@ -10,9 +10,15 @@ const CHAIN_ID = process.env.VUE_APP_DONATION_CHAIN_ID
 export class DonateViewModel {
   _disposers: IReactionDisposer[] = []
   @observable walletStore = walletStore
+  @observable amountList = ['1', '5', '10', '20']
+  @observable amount = '1'
 
   constructor() {
     //
+  }
+
+  @action changeDonationAmount(amount: string) {
+    this.amount = amount
   }
 
   @action donate = async () => {
@@ -22,22 +28,31 @@ export class DonateViewModel {
       snackController.error('Please connect to Metamask')
       return
     }
+    if (isEmpty(this.amount)) {
+      snackController.error('Please choose donation amount')
+    }
     if (!isEqual(toString(this.chainId), CHAIN_ID)) {
       walletStore.switchNetwork('eth', toNumber(CHAIN_ID))
       return
     }
     try {
-      this.sendDonation(walletStore.account, BUSD_CONTRACT_ADDRESS, '5', walletStore.web3)
+      await this.sendDonation(
+        walletStore.account,
+        '0x8D74682A76195E9E4db9f7EA81Df07Fa6978292C',
+        BUSD_CONTRACT_ADDRESS,
+        this.amount,
+        walletStore.web3
+      )
     } catch (error: any) {
       console.log(error)
       snackController.error(error.message)
     }
   }
 
-  @action sendDonation = async (from: string, tokenAddress: string, amount: string, web3) => {
+  @action sendDonation = async (from: string, to: string, tokenAddress: string, amount: string, web3) => {
     if (isEmpty(from)) throw new Error('Sender address is empty')
     const ercContract = new Erc20Contract(tokenAddress, web3)
-    ercContract.transfer(from, tokenAddress, amount)
+    ercContract.transfer(from, to, amount)
   }
 
   @computed get account() {

@@ -8,45 +8,33 @@
             <div class="page-title ml-4">Support us</div>
           </div>
           <div class="mt-4 border-radius-8 py-6 px-2 text-center sub-card">
-            <div :class="{ 'd-flex align-center': $vuetify.breakpoint.mdAndUp }">
+            <div :class="{ 'd-flex align-center': $vuetify.breakpoint.smAndUp }">
               <v-card
-                @click="changeColor('button')"
+                @click="vm.changeDonationAmount(amount)"
                 class="border-radius-8 py-6 px-2 text-center ma-2"
-                :color="color"
+                :class="{
+                  'linear-background-blue-main white--text': amount === vm.amount,
+                  'neutral100--bg primary--text': amount !== vm.amount,
+                }"
                 style="min-width: 80px"
+                v-for="amount in vm.amountList"
+                :key="amount"
               >
-                1$
-              </v-card>
-              <v-card
-                @click="changeColor('button1')"
-                class="border-radius-8 py-6 px-2 text-center ma-2"
-                :color="color1"
-                style="min-width: 80px"
-              >
-                5$
-              </v-card>
-              <v-card
-                @click="changeColor('button2')"
-                :color="color2"
-                class="border-radius-8 py-6 px-2 text-center ma-2"
-                style="min-width: 80px"
-              >
-                10$
-              </v-card>
-              <v-card
-                @click="changeColor('button3')"
-                :color="color3"
-                class="border-radius-8 py-6 px-2 text-center ma-2"
-                style="min-width: 80px"
-              >
-                20$
+                {{ amount }}$
               </v-card>
             </div>
           </div>
           <div class="mt-1 py-4 text-center">
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div>
-                <v-btn depressed :class="buttonClass" large :block="$vuetify.breakpoint.xs" :disabled="isDonateAble()">
+                <v-btn
+                  depressed
+                  :class="buttonClass"
+                  large
+                  :block="$vuetify.breakpoint.xs"
+                  :disabled="vm.amount === ''"
+                  @click="vm.donate()"
+                >
                   Donate
                 </v-btn>
               </div>
@@ -55,7 +43,7 @@
         </v-container>
       </v-card>
     </div>
-    <div :class="{'d-flex align-center justify-space-around ' : $vuetify.breakpoint.mdAndUp}">
+    <div :class="{ 'd-flex align-center justify-space-around ': $vuetify.breakpoint.mdAndUp }">
       <div class="mt-8" style="min-width: 300px">
         <div class="page-title">Donation history</div>
         <v-card class="pa-8" flat elevation="3">
@@ -105,10 +93,6 @@ import moment from 'moment'
 })
 export default class DonatePage extends Vue {
   @Provide() vm = new DonateViewModel()
-  color = 'white'
-  color1 = 'white'
-  color2 = 'white'
-  color3 = 'white'
   buttonClass = 'rounded linear-background-blue-main white--text'
   headers = [
     {
@@ -151,38 +135,6 @@ export default class DonatePage extends Vue {
       address: '0xb641934f5cD11755581D3587Dfd6cB81109a908b',
     },
   ]
-  isDonateAble() {
-    if (this.color1 === 'white' && this.color2 === 'white' && this.color3 === 'white' && this.color === 'white') {
-      this.buttonClass = 'rounded white--text'
-      return true
-    } else {
-      this.buttonClass = 'rounded linear-background-blue-main white--text'
-      return false
-    }
-  }
-
-  changeColor(type: string) {
-    if (this.color === 'white' && type === 'button') {
-      this.color = 'red'
-    } else {
-      this.color = 'white'
-    }
-    if (this.color1 === 'white' && type === 'button1') {
-      this.color1 = 'red'
-    } else {
-      this.color1 = 'white'
-    }
-    if (this.color2 === 'white' && type === 'button2') {
-      this.color2 = 'red'
-    } else {
-      this.color2 = 'white'
-    }
-    if (this.color3 === 'white' && type === 'button3') {
-      this.color3 = 'red'
-    } else {
-      this.color3 = 'white'
-    }
-  }
 
   walletStore = walletStore
   authStore = authStore
@@ -221,5 +173,8 @@ export default class DonatePage extends Vue {
   line-height: 150%;
   cursor: pointer;
   color: var(--v-bluePrimary-base);
+}
+.v-btn--disabled {
+  background-image: none;
 }
 </style>
