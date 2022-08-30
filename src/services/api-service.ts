@@ -454,8 +454,8 @@ export class ApiService {
     return res.data
   }
 
-  async recordDonation(tx: string) {
-    const res = await axios.post('donation-transactions/recordDonation', { tx })
+  async recordDonation(tx: string, username: string) {
+    const res = await axios.post('donation-transactions/recordDonation', { tx, username })
     return res.data
   }
 }

@@ -3,7 +3,7 @@ import { loadingController } from '@/components/global-loading/global-loading-co
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { walletStore } from '@/stores/wallet-store'
-import { get, isEmpty, isEqual, toLower, toNumber, toString, orderBy } from 'lodash-es'
+import { get, isEmpty, isEqual, toLower, toNumber, toString, orderBy, sum } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import moment from 'moment'
 
@@ -18,6 +18,7 @@ export class DonateViewModel {
   @observable amount = this.amountList[0]
   @observable baseAllDonations: any[] = []
   @observable dialog = false
+  @observable nftUsername = ''
 
   constructor() {
     //
@@ -28,6 +29,10 @@ export class DonateViewModel {
         () => this.loadData()
       ),
     ]
+  }
+
+  @action.bound changeNFTUsername(value: string) {
+    this.nftUsername = value
   }
 
   @action destroyReaction() {
@@ -44,7 +49,7 @@ export class DonateViewModel {
     }
   }
 
-  @action changeDonationAmount(amount: string) {
+  @action.bound changeDonationAmount(amount: string) {
     this.amount = amount
   }
 
@@ -60,6 +65,11 @@ export class DonateViewModel {
     }
     if (isEmpty(this.amount)) {
       snackController.error('Please choose donation amount')
+      return
+    }
+    if (isEmpty(this.nftUsername)) {
+      snackController.error('Please enter your name for NFT')
+      return
     }
     if (!isEqual(toString(this.chainId), CHAIN_ID)) {
       walletStore.switchNetwork('eth', toNumber(CHAIN_ID))
@@ -74,7 +84,7 @@ export class DonateViewModel {
         this.amount,
         walletStore.web3
       )
-      const res = await apiService.recordDonation(transactionHash)
+      const res = await apiService.recordDonation(transactionHash, this.nftUsername)
       this.baseAllDonations.push(res)
       this.dialog = true
       snackController.success('Donation sent! Thank you for your donation!')
@@ -90,6 +100,10 @@ export class DonateViewModel {
     if (isEmpty(from)) throw new Error('Sender address is empty')
     const ercContract = new Erc20Contract(tokenAddress, web3)
     return await ercContract.transfer(from, to, amount)
+  }
+
+  @computed get totalDonationAmount() {
+    return sum(this.allDonations.map((donation: any) => toNumber(donation.amount)))
   }
 
   @computed get allDonations() {

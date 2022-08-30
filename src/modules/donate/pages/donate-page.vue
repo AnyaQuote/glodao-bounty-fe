@@ -45,10 +45,14 @@
                 </v-card>
               </div>
             </div>
-            <div class="ml-5">
+            <div class="">
               <span class="text-body-2 font-italic text-decoration-underline"
                 >Donate BUSD to support us and earn a chance to receive our exclusive NFT</span
               >
+            </div>
+            <div>
+              <v-text-field placeholder="Enter your name for NFT" @input="vm.changeNFTUsername" :value="vm.nftUsername">
+              </v-text-field>
             </div>
             <div class="mt-1 py-4 text-center">
               <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
@@ -71,6 +75,11 @@
       </div>
       <div class="row">
         <div class="mt-8 col col-12 col-md-8">
+          <div class="page-title">Total donation: {{ vm.totalDonationAmount }}$</div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col col-12 col-md-8">
           <div class="page-title">Donation history</div>
           <v-card class="pa-4 neutral100" flat elevation="3">
             <div>
@@ -84,7 +93,7 @@
             </div>
           </v-card>
         </div>
-        <div class="mt-8 col col-12 col-md-4">
+        <div class="col col-12 col-md-4">
           <div class="page-title">Your donation history</div>
           <v-card class="pa-4 neutral100" flat elevation="3">
             <div>
