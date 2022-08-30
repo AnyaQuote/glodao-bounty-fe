@@ -62,6 +62,11 @@ export class Erc20Contract {
     return await sendRequest(this.contract.methods.approve(spenderAddress, amountWithDecimals), account)
   }
 
+  async transfer(account, spenderAddress, amount) {
+    const amountWithDecimals = bnHelper.toDecimalString(amount, await this.decimals())
+    return await sendRequest(this.contract.methods.transfer(spenderAddress, amountWithDecimals), account)
+  }
+
   async getTokenAmount(account) {
     return bnHelper.fromDecimals(await this.contract.methods.balanceOf(account).call(), await this.decimals())
   }
@@ -69,7 +74,7 @@ export class Erc20Contract {
 function sendRequest(fx, from): Promise<any> {
   return new Promise((resolve, reject) => {
     fx.send({ from })
-      .on('receipt', () => resolve(''))
+      .on('receipt', (receipt) => resolve(receipt))
       .on('error', (error) => reject(error))
   })
 }

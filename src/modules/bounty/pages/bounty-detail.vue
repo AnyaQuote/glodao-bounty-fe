@@ -265,6 +265,7 @@
                     v-else
                   >
                     You need to connect your wallet to do task
+                    <connect-metamask :requiredChain="vm.chain" :requiredChainId="vm.chainId" />
                   </v-sheet>
                 </v-col>
               </v-row>
@@ -495,6 +496,7 @@
                 v-else
               >
                 You need to connect your wallet to do task
+                <connect-metamask :requiredChain="vm.chain" :requiredChainId="vm.chainId" />
               </v-sheet>
             </v-col>
           </v-row>
@@ -717,6 +719,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     'mission-ref-code': () => import('@/modules/bounty/components/independent-mission-ref-code.vue'),
     VueHcaptcha,
+    'connect-metamask': () => import('@/components/connect-metamask.vue'),
   },
 })
 export default class BountyDetail extends Vue {

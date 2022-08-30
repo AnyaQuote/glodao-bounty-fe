@@ -5,6 +5,7 @@
     <global-loading />
     <twitter-login-dialog />
     <attach-wallet-dialog />
+    <attach-solana-wallet-dialog />
     <overlay-question-dialog />
     <navigation-bar v-if="$vuetify.breakpoint.mdAndUp" />
     <navigation-drawer />
@@ -39,6 +40,7 @@ import { walletStore } from './stores/wallet-store'
     'twitter-login-dialog': () => import('@/components/twitter-login-dialog.vue'),
     'overlay-question-dialog': () => import('@/components/overlay-question-dialog.vue'),
     'attach-wallet-dialog': () => import('@/components/attach-wallet-dialog.vue'),
+    'attach-solana-wallet-dialog': () => import('@/components/attach-solana-wallet-dialog.vue'),
     'customer-support-btn': () => import('@/components/customer-support-btn.vue'),
   },
 })

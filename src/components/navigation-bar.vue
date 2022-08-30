@@ -155,7 +155,7 @@
                     <v-list-item-title>
                       <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-cached</v-icon>
-                        <div><a href="https://tools.glodao.io/bulksend" target="_blank" >Bulksend</a></div>
+                        <div><a href="https://tools.glodao.io/bulksend" target="_blank">Bulksend</a></div>
                       </div>
                     </v-list-item-title>
                   </v-list-item-content>
