@@ -1,5 +1,12 @@
 <template>
   <div>
+    <v-dialog v-model="vm.dialog">
+      <v-sheet class="overflow-hidden">
+        <div class="fill-width">
+          <v-img :src="require('@/assets/images/donationPageBanner-3.jpg')"></v-img>
+        </div>
+      </v-sheet>
+    </v-dialog>
     <div class="fill-width">
       <v-img :src="require('@/assets/images/donationPageBanner-2.jpg')"></v-img>
     </div>

@@ -3,7 +3,7 @@ import { loadingController } from '@/components/global-loading/global-loading-co
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { walletStore } from '@/stores/wallet-store'
-import { get, isEmpty, isEqual, toNumber, toString, toLower } from 'lodash-es'
+import { get, isEmpty, isEqual, toLower, toNumber, toString } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import moment from 'moment'
 
@@ -17,6 +17,7 @@ export class DonateViewModel {
   @observable amountList = ['5', '10', '250', '500']
   @observable amount = this.amountList[0]
   @observable baseAllDonations: any[] = []
+  @observable dialog = false
 
   constructor() {
     //
@@ -70,6 +71,8 @@ export class DonateViewModel {
       )
       const res = await apiService.recordDonation(transactionHash)
       this.baseAllDonations.push(res)
+      this.dialog = true
+      snackController.success('Donation sent! Thank you for your donation!')
     } catch (error: any) {
       console.log(error)
       snackController.error(error.message)
