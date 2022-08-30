@@ -3,7 +3,7 @@ import { loadingController } from '@/components/global-loading/global-loading-co
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { walletStore } from '@/stores/wallet-store'
-import { get, isEmpty, isEqual, toLower, toNumber, toString } from 'lodash-es'
+import { get, isEmpty, isEqual, toLower, toNumber, toString, orderBy } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import moment from 'moment'
 
@@ -36,7 +36,12 @@ export class DonateViewModel {
   }
 
   @action loadData = async () => {
-    this.baseAllDonations = await apiService.donationTransactions.find({}, { _limit: -1, _sort: 'amount:DESC' })
+    try {
+      this.baseAllDonations = await apiService.donationTransactions.find({}, { _limit: -1, _sort: 'amount:DESC' })
+    } catch (error: any) {
+      snackController.error(error)
+      this.baseAllDonations = []
+    }
   }
 
   @action changeDonationAmount(amount: string) {
@@ -88,7 +93,7 @@ export class DonateViewModel {
   }
 
   @computed get allDonations() {
-    return this.baseAllDonations.map((x: any) => ({
+    return orderBy(this.baseAllDonations, ['amount', 'date'], ['desc', 'desc']).map((x: any) => ({
       ...x,
       date: moment(x.date).format('lll'),
     }))
