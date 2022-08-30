@@ -1,7 +1,8 @@
 <template>
   <v-row dense no-gutters>
     <v-col cols="12">
-      <bounty-banner></bounty-banner>
+      <!-- <bounty-banner></bounty-banner> -->
+      <v-img :src="require('@/assets/images/donationPageBanner.jpg')"></v-img>
     </v-col>
     <!-- <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
       <v-container>
