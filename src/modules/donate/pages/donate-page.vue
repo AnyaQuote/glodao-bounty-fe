@@ -60,7 +60,7 @@
     </div>
     <div :class="{ 'd-flex align-center justify-space-around ': $vuetify.breakpoint.mdAndUp }">
       <div class="mt-8" style="min-width: 300px">
-        <div class="page-title">Donation history</div>
+        <!-- <div class="page-title">Donation history</div>
         <v-card class="pa-8" flat elevation="3">
           <div>
             <v-data-table
@@ -71,10 +71,10 @@
               :hide-default-footer="true"
             ></v-data-table>
           </div>
-        </v-card>
+        </v-card> -->
       </div>
       <div class="mt-8" style="min-width: 300px">
-        <div class="page-title">Your donation history</div>
+        <!-- <div class="page-title">Your donation history</div>
         <v-card class="pa-8" flat elevation="3">
           <div>
             <v-data-table
@@ -86,7 +86,7 @@
               :sortable="false"
             ></v-data-table>
           </div>
-        </v-card>
+        </v-card> -->
       </div>
     </div>
   </v-container>
