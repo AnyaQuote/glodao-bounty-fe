@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar height="100px" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
+  <v-app-bar height="80" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
     <div class="nav-container mx-auto" style="width: 100%; max-width: 1090px">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
@@ -266,14 +266,14 @@
           </div>
         </v-col>
       </v-row>
-      <v-row class="mt-3 d-flex align-center">
+      <!-- <v-row class="mt-3 d-flex align-center">
         <marquee class="pink darken-4 ">
           <router-link to="/donate" class="lime--text text-darken-3 font-weight-600">
            Click here to attend the event "Million Wishes - Thousand Smiles" with the desire to bring the best things
           to children at Mai An Social Protection center in Mid-Autumn Festival.
           </router-link>
         </marquee>
-      </v-row>
+      </v-row> -->
     </div>
   </v-app-bar>
 </template>
