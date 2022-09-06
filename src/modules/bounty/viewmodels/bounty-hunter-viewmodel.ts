@@ -18,7 +18,7 @@ export class BountyHunterViewModel {
   @observable page = 1
   @observable currentApplies: any[] = []
 
-  @observable sortParams = 'createdAt:DESC'
+  @observable sortParams = 'endTime:DESC'
   sortList = [
     {
       text: 'Recently added',
