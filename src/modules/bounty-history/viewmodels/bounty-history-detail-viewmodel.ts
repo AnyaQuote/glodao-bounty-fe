@@ -1,3 +1,4 @@
+import { loadingController } from '@/components/global-loading/global-loading-controller'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { FixedNumber } from '@ethersproject/bignumber'
@@ -49,7 +50,7 @@ export class BountyHistoryDetailViewModel {
   @observable endDateDialog = false
 
   disposes: IReactionDisposer[] = []
-  randomList: any[] = []
+  @observable randomList: any[] = []
   constructor() {
     this.disposes = [
       reaction(
@@ -78,8 +79,27 @@ export class BountyHistoryDetailViewModel {
       ),
     ]
   }
-  random() {
-    for (let i = 0; i < this.task.totalParticipants; i++) {
+  @action async random() {
+    loadingController.increaseRequest()
+    const res = await apiService.applies.find(
+      {
+        _where: [
+          {
+            task: this.taskId,
+          },
+          {
+            _or: [{ status: 'completed' }, { status: 'awarded' }],
+          },
+        ],
+      },
+      {
+        _limit: -1,
+      }
+    )
+    console.log(res)
+    this.randomList=res
+    loadingController.decreaseRequest()
+    for (let i = 0; i < this.task.totalParticipants-res.length; i++) {
       const random = this.getRandomDate(new Date(this.task.startTime), new Date(this.task.endTime))
       const randDate = new Date(random)
       const metadata = {
@@ -94,6 +114,7 @@ export class BountyHistoryDetailViewModel {
         completeTime: randDate,
         data: initEmptyStepData(this.task),
         poolType: 'community',
+        id: rnd(12),
       }
       this.randomList.push(randomData)
     }
@@ -126,9 +147,9 @@ export class BountyHistoryDetailViewModel {
 
   @asyncAction *fetchData() {
     yield this.getTaskData()
-
+    yield this.random()
     this.getTotalCompletedMission()
-    this.random()
+    
     this.getRelatedApplies()
   }
 
@@ -163,6 +184,8 @@ export class BountyHistoryDetailViewModel {
         console.log(limit)
       }
       for (let i = _start; i < limit; i++) {
+        // if (i >= this.randomList.length) break
+        // console.log(this.randomList.length)
         if (this.poolType === '') {
           pageList.push(this.randomList[i])
         } else {
