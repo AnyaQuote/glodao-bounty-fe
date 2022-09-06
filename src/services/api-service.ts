@@ -14,6 +14,7 @@ export type ApiRouteType =
   | 'quizzes'
   | 'quiz-answer-records'
   | 'bounty-rewards'
+  | 'donation-transactions'
 
 const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
 axios.interceptors.request.use((config) => {
@@ -209,6 +210,8 @@ export class ApiService {
   tasks = new ApiHandlerJWT<any>(axios, 'tasks', { find: false, count: false, findOne: false })
   campaigns = new ApiHandlerJWT<any>(axios, 'campaigns')
   bountyRewards = new ApiHandler<any>(axios, 'bounty-rewards')
+  donationTransactions = new ApiHandler<any>(axios, 'donation-transactions')
+
   KYC_API_URL = process.env.VUE_APP_KYC_API_URL
 
   async getFile(id: any) {
@@ -246,6 +249,25 @@ export class ApiService {
       'hunters/updateWalletAddress',
       {
         walletAddress,
+        signature,
+        chain,
+        id,
+        hunterId: id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.jwt}`,
+        },
+      }
+    )
+    return res.data
+  }
+
+  async updateSolanaWalletAddress(solanaAddress: string, signature: string, chain: string, id: string) {
+    const res = await axios.patch(
+      'hunters/updateSolanaWalletAddress',
+      {
+        solanaAddress,
         signature,
         chain,
         id,
@@ -429,6 +451,11 @@ export class ApiService {
         },
       }
     )
+    return res.data
+  }
+
+  async recordDonation(tx: string, username: string) {
+    const res = await axios.post('donation-transactions/recordDonation', { tx, username })
     return res.data
   }
 }

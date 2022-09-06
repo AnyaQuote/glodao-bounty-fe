@@ -11,14 +11,15 @@
             name
           }}</span>
           <div class="dot mx-2"></div>
+          <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-if="isAMA">$450 + 30 NFT</span>
           <span
             class="font-weight-bold text-truncate"
             style="font-size: 1.4em"
-            v-if="!isRewardTBD && shouldShowValueInstead"
+            v-else-if="!isRewardTBD && shouldShowValueInstead"
             >${{ value | formatNumber(2, 2) }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else-if="!shouldShowValueInstead"
-            >{{ rewardAmount }} {{ tokenName }}</span
+            >{{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}</span
           >
           <span class="font-weight-bold text-truncate" style="font-size: 1.4em" v-else>TBA</span>
         </div>
@@ -99,6 +100,11 @@ export default class BountyUpcomingCard extends Vue {
     } catch (error) {
       return true
     }
+  }
+
+  //TODO: remove this fucken wow shit
+  get isAMA() {
+    return this.name === 'AMA Twitter Space Talkshow Event'
   }
 }
 </script>

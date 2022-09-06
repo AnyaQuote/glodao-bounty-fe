@@ -74,7 +74,16 @@
             :class="{
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
-            v-if="!isRewardTBD && shouldShowValueInstead"
+            v-if="isAMA"
+          >
+            $450 + 30 NFT
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+            v-else-if="!isRewardTBD && shouldShowValueInstead"
           >
             {{ value | usdCustom(2, 2) }}
           </div>
@@ -85,7 +94,7 @@
             }"
             v-else-if="!shouldShowValueInstead"
           >
-            {{ rewardAmount }} {{ tokenName }}
+            {{ rewardAmount | formatNumber(2,2) }} {{ tokenName }}
           </div>
           <div
             class="font-weight-bold mt-1 font-size-28 text-truncate"
@@ -218,6 +227,11 @@ export default class HuntingTimeCard extends Vue {
     } catch (error) {
       return true
     }
+  }
+
+  //TODO: remove this fucken wow shit
+  get isAMA() {
+    return this.name === 'AMA Twitter Space Talkshow Event'
   }
 }
 </script>
