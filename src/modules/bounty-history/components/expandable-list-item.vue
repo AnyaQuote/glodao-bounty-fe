@@ -89,18 +89,22 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import * as _ from 'lodash-es'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
+import { BountyHistoryDetailViewModel } from '../viewmodels/bounty-history-detail-viewmodel'
 @Observer
 @Component
 export default class ExpandableListItem extends Vue {
+  @Inject() vm!: BountyHistoryDetailViewModel
   @Prop({ required: true }) data
   expand = false
   linkData: any[] = []
+  task: any = {}
 
   mounted() {
     this.flatArray()
+    this.task = this.vm.task
   }
 
   flatArray() {
@@ -116,9 +120,14 @@ export default class ExpandableListItem extends Vue {
     this.linkData = flattenedArr
   }
   openLink(link: string) {
+    //TODO: remove this shit
+    if (_.get(this.task, 'name', '') === 'Demole' || _.get(this.task, 'name', '') === 'BSClaunch') {
+      snackController.error('Can not navigate to the desired link')
+      return
+    }
     const url = link.trim()
     if (_.isEmpty(url)) {
-      snackController.error('Can not navigate to desired link')
+      snackController.error('Can not navigate to the desired link')
       return
     }
     if (url.startsWith('https://') || url.startsWith('http://')) window.open(url, '_blank')
