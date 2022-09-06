@@ -6,6 +6,9 @@ import * as _ from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
+import fakeDemole from '../../../../fake-demole.json'
+import fakeBsclaunch from '../../../../fake-bsclaunch.json'
+
 const initEmptyStepData = (task) => {
   const tempStepData = {}
   for (const key in task.data) {
@@ -79,55 +82,7 @@ export class BountyHistoryDetailViewModel {
       ),
     ]
   }
-  @action async random() {
-    loadingController.increaseRequest()
-    const res = await apiService.applies.find(
-      {
-        _where: [
-          {
-            task: this.taskId,
-          },
-          {
-            _or: [{ status: 'completed' }, { status: 'awarded' }],
-          },
-        ],
-      },
-      {
-        _limit: -1,
-      }
-    )
-    console.log(res)
-    this.randomList=res
-    loadingController.decreaseRequest()
-    for (let i = 0; i < this.task.totalParticipants-res.length; i++) {
-      const random = this.getRandomDate(new Date(this.task.startTime), new Date(this.task.endTime))
-      const randDate = new Date(random)
-      const metadata = {
-        avatar: 'https://picsum.photos/seed/' + rnd(4) + '/200/300',
-      }
-      const hunter = {
-        name: rnd(12),
-        metadata: metadata,
-      }
-      const randomData = {
-        hunter: hunter,
-        completeTime: randDate,
-        data: initEmptyStepData(this.task),
-        poolType: 'community',
-        id: rnd(12),
-      }
-      this.randomList.push(randomData)
-    }
-    this.randomList = _.orderBy(this.randomList, ['completeTime'], ['asc'])
-    for (let i = 0; i < this.task.maxPriorityParticipants; i++) {
-      this.randomList[i].poolType = 'priority'
-    }
-  }
-  getRandomDate(from: Date, to: Date) {
-    const fromTime = from.getTime()
-    const toTime = to.getTime()
-    return new Date(fromTime + Math.random() * (toTime - fromTime))
-  }
+
   destroyReaction() {
     this.disposes.forEach((d) => d())
   }
@@ -147,9 +102,10 @@ export class BountyHistoryDetailViewModel {
 
   @asyncAction *fetchData() {
     yield this.getTaskData()
-    yield this.random()
+
+    yield this.initFake()
     this.getTotalCompletedMission()
-    
+
     this.getRelatedApplies()
   }
 
@@ -181,11 +137,9 @@ export class BountyHistoryDetailViewModel {
       limit = _start + PAGE_LIMIT
       if (limit - this.randomList.length < 10 && limit - this.randomList.length > 0) {
         limit = listSize
-        console.log(limit)
       }
       for (let i = _start; i < limit; i++) {
         // if (i >= this.randomList.length) break
-        // console.log(this.randomList.length)
         if (this.poolType === '') {
           pageList.push(this.randomList[i])
         } else {
@@ -217,7 +171,6 @@ export class BountyHistoryDetailViewModel {
       this.getTotalRelatedAppliesCount()
     } catch (error) {
       snackController.error(_.get(error, 'response.data.message', '') || (error as string))
-      console.log('1')
     }
   }
 
@@ -240,7 +193,6 @@ export class BountyHistoryDetailViewModel {
           : this.task.maxPriorityParticipants
     } catch (error) {
       snackController.error(_.get(error, 'response.data.message', '') || (error as string))
-      console.log('2')
     }
   }
 
@@ -274,7 +226,57 @@ export class BountyHistoryDetailViewModel {
       this.totalPageCount = _.ceil(res / PAGE_LIMIT)
     } catch (error) {
       snackController.error(_.get(error, 'response.data.message', '') || (error as string))
-      console.log('3')
+    }
+  }
+
+  // TODO: remove this shit
+  @action async initFake() {
+    if (_.get(this.task, 'name', '') === 'Demole') this.randomList = JSON.parse(JSON.stringify(fakeDemole))
+    else if (_.get(this.task, 'name', '') === 'BSClaunch') this.randomList = JSON.parse(JSON.stringify(fakeBsclaunch))
+    else await this.random()
+  }
+
+  @action async random() {
+    loadingController.increaseRequest()
+    const res = await apiService.applies.find(
+      {
+        _where: [
+          {
+            task: this.taskId,
+          },
+          {
+            _or: [{ status: 'completed' }, { status: 'awarded' }],
+          },
+        ],
+      },
+      {
+        _limit: -1,
+      }
+    )
+    this.randomList = res
+    loadingController.decreaseRequest()
+    for (let i = 0; i < this.task.totalParticipants - res.length; i++) {
+      const random = this.getRandomDate(new Date(this.task.startTime), new Date(this.task.endTime))
+      const randDate = new Date(random)
+      const metadata = {
+        avatar: 'https://picsum.photos/seed/' + rnd(4) + '/200/300',
+      }
+      const hunter = {
+        name: rnd(12),
+        metadata: metadata,
+      }
+      const randomData = {
+        hunter: hunter,
+        completeTime: randDate,
+        data: initEmptyStepData(this.task),
+        poolType: 'community',
+        id: rnd(12),
+      }
+      this.randomList.push(randomData)
+    }
+    this.randomList = _.orderBy(this.randomList, ['completeTime'], ['asc'])
+    for (let i = 0; i < this.task.maxPriorityParticipants; i++) {
+      this.randomList[i].poolType = 'priority'
     }
   }
 
@@ -438,5 +440,11 @@ export class BountyHistoryDetailViewModel {
       )
     })
     return tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+
+  getRandomDate(from: Date, to: Date) {
+    const fromTime = from.getTime()
+    const toTime = to.getTime()
+    return new Date(fromTime + Math.random() * (toTime - fromTime))
   }
 }
