@@ -275,8 +275,9 @@ export class BountyHistoryDetailViewModel {
       this.randomList.push(randomData)
     }
     this.randomList = _.orderBy(this.randomList, ['completeTime'], ['asc'])
-    for (let i = 0; i < this.task.maxPriorityParticipants; i++) {
-      this.randomList[i].poolType = 'priority'
+    for (let i = 0; i < this.randomList.length; i++) {
+      if (i < this.task.maxPriorityParticipants) this.randomList[i].poolType = 'priority'
+      else this.randomList[i].poolType = 'community'
     }
   }
 
