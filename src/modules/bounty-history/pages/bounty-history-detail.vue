@@ -102,8 +102,8 @@
                       <tr>
                         <td class="font-weight-600">Total reward</td>
                         <!-- TODO: remove this shit -->
-                        <td class="text-end font-weight-bold" v-if="vm.task.name === 'Demole'">27800 GLD</td>
-                        <td class="text-end font-weight-bold" v-else-if="vm.task.name === 'BSClaunch'">55555 GLD</td>
+                        <td class="text-end font-weight-bold" v-if="vm.task.name === 'Demole'">425000 DMLG</td>
+                        <td class="text-end font-weight-bold" v-else-if="vm.task.name === 'BSClaunch'">54400 BSL</td>
                         <td class="text-end font-weight-bold" v-else>
                           ${{ vm.totalRewardValue | formatNumber(2, 2) }}
                         </td>
