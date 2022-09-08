@@ -8,13 +8,13 @@
             <div class="page-title ml-4">Bounty reward dashboard</div>
           </div>
           <div class="mt-4 py-4 text-center">
-            <div v-if="walletStore.account">
+            <div v-if="authStore.registeredWallet">
               <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
               <span class="address" v-if="$vuetify.breakpoint.smAndUp">
-                {{ walletStore.account }}
+                {{ authStore.registeredWallet }}
               </span>
               <span class="address" v-else>
-                {{ walletStore.account | shortAddress(6, 6) }}
+                {{ authStore.registeredWallet | shortAddress(6, 6) }}
               </span>
             </div>
             <div v-else :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
