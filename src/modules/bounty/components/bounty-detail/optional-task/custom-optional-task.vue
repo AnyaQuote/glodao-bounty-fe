@@ -17,12 +17,12 @@
           </div>
           <div class="text-caption mt-1" style="word-break: break-word">
             {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text">in here</a><br />
-            <span v-if="isLinkRequired"
+            <!-- <span v-if="isLinkRequired"
               >Then paste your link
               <span v-if="false"
                 >with <span class="font-italic font-weight-bold">"{{ requiredContent }}" </span></span
               >below to finish the task</span
-            >
+            > -->
             <div v-if="!isRightTimeToDoTask" class="red--text">This task will open on {{ startDateStr }}</div>
           </div>
         </div>
