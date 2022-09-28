@@ -6,7 +6,15 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">{{ name }}</div>
+          <div class="text-body-1 font-weight-600">
+            {{ name }}
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon size="12" v-on="on" v-bind="attrs">mdi-help-circle-outline</v-icon>
+              </template>
+              <span>{{ tooltip }}</span>
+            </v-tooltip>
+          </div>
           <div class="text-caption mt-1" style="word-break: break-word">
             {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text">in here</a><br />
             <span v-if="isLinkRequired"
@@ -15,6 +23,7 @@
                 >with <span class="font-italic font-weight-bold">"{{ requiredContent }}" </span></span
               >below to finish the task</span
             >
+            <div v-if="!isRightTimeToDoTask" class="red--text">This task will open on {{ startDateStr }}</div>
           </div>
         </div>
         <div
@@ -46,7 +55,7 @@
                   height="100%"
                   @click="submitLink"
                   :loading="!task.finished && vm.isTaskUpdating"
-                  :disabled="vm.shouldDisableTaskProcessing"
+                  :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
                 >
                   Submit
                 </v-btn>
@@ -58,7 +67,7 @@
             elevation="0"
             @click="finishTask"
             :loading="!task.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing"
+            :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
             v-else
           >
             I have finish the task
@@ -135,7 +144,7 @@
                 height="100%"
                 @click="submitLink"
                 :loading="!task.finished && vm.isTaskUpdating"
-                :disabled="vm.shouldDisableTaskProcessing"
+                :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
               >
                 Submit
               </v-btn>
@@ -147,7 +156,7 @@
           elevation="0"
           @click="finishTask"
           :loading="!task.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing"
+          :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
           v-else
         >
           I have finish the task
@@ -163,6 +172,7 @@ import { TWEET_MIN_WORDS_COUNT } from '@/constants'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
 import { Observer } from 'mobx-vue'
+import moment from 'moment'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 
 @Observer
@@ -188,6 +198,8 @@ export default class CustomOptionalTask extends Vue {
   page = get(this.task, 'page', '')
   name = get(this.task, 'name', '')
   requiredContent = get(this.task, 'requiredContent', '')
+  startDate = get(this.task, 'startDate', '')
+  tooltip = get(this.task, 'tooltip', '')
 
   title = ''
 
@@ -208,6 +220,16 @@ export default class CustomOptionalTask extends Vue {
 
   finishTask() {
     this.vm.submitLink('optional', '', this.step)
+  }
+
+  get startDateStr() {
+    if (this.startDate === '') return 'true'
+    return moment(this.startDate).format('YYYY-MM-DD HH:mm:ss')
+  }
+
+  get isRightTimeToDoTask() {
+    if (this.startDate === '') return true
+    return moment(this.startDate).isBefore(moment())
   }
 
   get state() {
