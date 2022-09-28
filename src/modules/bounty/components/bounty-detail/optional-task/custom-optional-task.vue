@@ -17,6 +17,12 @@
           </div>
           <div class="text-caption mt-1" style="word-break: break-word">
             {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text">in here</a><br />
+            <span v-if="afterLinkDescription">
+              {{ afterLinkDescription
+              }}<a :href="afterLinkDescriptionLink" v-if="afterLinkDescriptionLink" class="cursor-pointer blue--text"
+                >here</a
+              ><br />
+            </span>
             <!-- <span v-if="isLinkRequired"
               >Then paste your link
               <span v-if="false"
@@ -195,6 +201,8 @@ export default class CustomOptionalTask extends Vue {
   link = get(this.task, 'link', [])
   isLinkRequired = get(this.task, 'isLinkRequired', false)
   description = get(this.task, 'description', '')
+  afterLinkDescription = get(this.task, 'afterLinkDescription', '')
+  afterLinkDescriptionLink = get(this.task, 'afterLinkDescriptionLink', '')
   page = get(this.task, 'page', '')
   name = get(this.task, 'name', '')
   requiredContent = get(this.task, 'requiredContent', '')
