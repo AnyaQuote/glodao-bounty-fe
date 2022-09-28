@@ -1,5 +1,5 @@
 <template>
-  <v-dialog persistent width="534" value="true" class="overflow-hidden">
+  <v-dialog persistent width="534" v-model="vm.earnDialog" class="overflow-hidden">
     <v-sheet class="position-relative overflow-hidden pb-4 rounded neutral100--bg" outlined>
       <div class="d-flex justify-center align-center py-4 card-title-text font-weight-600 text-uppercase">
         confirm to complete
