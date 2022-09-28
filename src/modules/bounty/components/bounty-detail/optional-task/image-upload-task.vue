@@ -36,16 +36,28 @@
             :value="$_get(vm.projectInfo, 'projectCover', null)"
             @change="onValueChange"
           />
-          <v-btn
-            elevation="0"
-            tile
-            class="fill-width white--text text-none linear-background-blue-main text-caption rounded"
-            @click="submitLink"
-            :loading="!task.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing"
-          >
-            Submit
-          </v-btn>
+          <div class="d-flex justify-space-between">
+            <v-btn
+              elevation="0"
+              tile
+              class="white--text text-none linear-background-blue-main text-caption rounded"
+              @click="submitLink"
+              :loading="!task.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              Submit
+            </v-btn>
+            <v-btn
+              elevation="0"
+              tile
+              class="white--text text-none linear-background-blue-main text-caption rounded"
+              @click="submitLink"
+              :loading="!task.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing || required"
+            >
+              I didn't found any bugs
+            </v-btn>
+          </div>
         </div>
       </v-col>
       <v-col cols="auto" class="ml-auto">
@@ -100,16 +112,28 @@
           :value="$_get(vm.projectInfo, 'projectCover', null)"
           @change="onValueChange"
         />
-        <v-btn
-          elevation="0"
-          tile
-          class="fill-width white--text text-none linear-background-blue-main text-caption rounded"
-          @click="submitLink"
-          :loading="!task.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing"
-        >
-          Submit
-        </v-btn>
+        <div class="d-flex justify-space-between">
+          <v-btn
+            elevation="0"
+            tile
+            class="white--text text-none linear-background-blue-main text-caption rounded"
+            @click="submitLink"
+            :loading="!task.finished && vm.isTaskUpdating"
+            :disabled="vm.shouldDisableTaskProcessing"
+          >
+            Submit
+          </v-btn>
+          <v-btn
+            elevation="0"
+            tile
+            class="white--text text-none linear-background-blue-main text-caption rounded"
+            @click="submitLinkFake"
+            :loading="!task.finished && vm.isTaskUpdating"
+            :disabled="vm.shouldDisableTaskProcessing || required"
+          >
+            I didn't found any bugs
+          </v-btn>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -175,8 +199,14 @@ export default class ImageUploadTask extends Vue {
     else window.open('https://' + url, '_blank')
   }
 
+  async submitLinkFake() {
+    if (!this.required) {
+      await this.vm.submitLink('optional', ' ', this.step)
+      return
+    }
+  }
+
   async submitLink() {
-    console.log(this.value)
     if (!this.required) {
       await this.vm.submitLink('optional', ' ', this.step)
       return
