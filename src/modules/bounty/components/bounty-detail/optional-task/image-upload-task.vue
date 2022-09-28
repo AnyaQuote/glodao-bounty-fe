@@ -11,7 +11,7 @@
       <v-col>
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">
-            {{ name }}
+            {{ name }} <span v-if="!required">(Optional)</span>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon size="12" v-on="on" v-bind="attrs">mdi-help-circle-outline</v-icon>
@@ -152,6 +152,7 @@ export default class ImageUploadTask extends Vue {
   requiredContent = get(this.task, 'requiredContent', '')
   startDate = get(this.task, 'startDate', '')
   tooltip = get(this.task, 'tooltip', '')
+  required = get(this.task, 'required', false)
   title = ''
 
   async onValueChange(value: File) {
@@ -176,6 +177,10 @@ export default class ImageUploadTask extends Vue {
 
   async submitLink() {
     console.log(this.value)
+    if (!this.required) {
+      await this.vm.submitLink('optional', '', this.step)
+      return
+    }
     if (this.value == null) snackController.error('Image cannot be empty')
     else {
       const formData = new FormData()
