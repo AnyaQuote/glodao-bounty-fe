@@ -12,7 +12,9 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-icon size="12" v-on="on" v-bind="attrs">mdi-help-circle-outline</v-icon>
               </template>
-              <span>{{ tooltip }}</span>
+              <div style="max-width: 300px">
+                <span style="font-family: roboto">{{ tooltip }}</span>
+              </div>
             </v-tooltip>
           </div>
           <div class="text-caption mt-1" style="word-break: break-word">
