@@ -247,6 +247,12 @@ export default class PoolTypeContainer extends Vue {
   metadata = get(this.task, 'metadata', {})
   optionalCommunityRewardType = get(this.metadata, 'communityRewardType', '')
   optionalCommunityRewardTypeExplaination = get(this.metadata, 'communityRewardTypeExplaination', '')
+
+  mounted() {
+    console.log(this.metadata)
+    console.log(this.optionalCommunityRewardType)
+    console.log(this.optionalCommunityRewardTypeExplaination)
+  }
 }
 </script>
 
