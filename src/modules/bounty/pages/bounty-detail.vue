@@ -152,7 +152,7 @@
                 {{ vm.task | _get('metadata.website') }}
               </a>
             </v-sheet>
-            <v-sheet class="d-flex align-center transparent" v-if="vm.taskSocialLinks.length > 0">
+            <v-sheet class="d-flex align-center transparent">
               <v-sheet class="transparent title-2">Social link:</v-sheet>
               <v-btn
                 v-for="(value, key) in vm.taskSocialLinks"
