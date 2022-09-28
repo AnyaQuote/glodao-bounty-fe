@@ -1058,4 +1058,16 @@ export class BountyDetailViewModel {
       rewardToken: token.rewardToken,
     }))
   }
+
+  @computed get metadata() {
+    return get(this.task, 'metadata', {})
+  }
+
+  @computed get communityRewardType() {
+    return get(this.metadata, 'communityRewardType', '')
+  }
+
+  @computed get communityRewardTypeExplaination() {
+    return get(this.metadata, 'communityRewardTypeExplaination', '')
+  }
 }
