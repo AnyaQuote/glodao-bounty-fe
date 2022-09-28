@@ -49,7 +49,7 @@
                     flat
                     solo
                     class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                    :placeholder="task.stepLink || 'Enter your link here'"
+                    :placeholder="linkHint || 'Enter your link here'"
                     :value="value"
                     @input="onValueChange"
                   ></v-text-field>
@@ -138,7 +138,7 @@
                   flat
                   solo
                   class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                  :placeholder="task.stepLink || 'Enter your link here'"
+                  :placeholder="linkHint || 'Enter your link here'"
                   :value="value"
                   @input="onValueChange"
                 ></v-text-field>
@@ -210,6 +210,7 @@ export default class CustomOptionalTask extends Vue {
   requiredContent = get(this.task, 'requiredContent', '')
   startDate = get(this.task, 'startDate', '')
   tooltip = get(this.task, 'tooltip', '')
+  linkHint = get(this.task, 'linkHint', '')
 
   title = ''
 
