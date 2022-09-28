@@ -10,7 +10,17 @@
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
-          <div class="text-body-1 font-weight-600">{{ name }}</div>
+          <div class="text-body-1 font-weight-600">
+            {{ name }}
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon size="12" v-on="on" v-bind="attrs">mdi-help-circle-outline</v-icon>
+              </template>
+              <div style="max-width: 300px">
+                <span style="font-family: roboto">{{ tooltip }}</span>
+              </div>
+            </v-tooltip>
+          </div>
           <div class="text-caption mt-1" style="word-break: break-word">
             {{ description }}
           </div>
@@ -140,7 +150,8 @@ export default class ImageUploadTask extends Vue {
   page = get(this.task, 'page', '')
   name = get(this.task, 'name', '')
   requiredContent = get(this.task, 'requiredContent', '')
-
+  startDate = get(this.task, 'startDate', '')
+  tooltip = get(this.task, 'tooltip', '')
   title = ''
 
   async onValueChange(value: File) {
