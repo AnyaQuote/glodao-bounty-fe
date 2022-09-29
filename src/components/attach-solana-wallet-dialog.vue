@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="authStore.attachWalletDialog" content-class=" rounded overflow-hidden" max-width="500" persistent>
+  <v-dialog
+    v-model="authStore.attachSolanaWalletDialog"
+    content-class=" rounded overflow-hidden"
+    max-width="500"
+    persistent
+  >
     <v-sheet
       outlined
       class="position-relative pa-8 text-center dialog-normal-text overflow-hidden rounded neutral100--bg"
@@ -8,7 +13,7 @@
       <v-avatar size="64">
         <img :src="authStore.user.avatar" alt="Avatar" />
       </v-avatar>
-      <div class="mt-3 ml-3 card-title-text font-weight-600">Set the BSC attached wallet</div>
+      <div class="mt-3 ml-3 card-title-text font-weight-600">Set the SOLANA attached wallet</div>
       <!-- </div> -->
       <div class="mt-6 font-weight-600">Connect your wallet to continue:</div>
       <v-sheet outlined class="d-flex align-center justify-center mt-4 pa-1 neutral100--bg rounded">
@@ -28,7 +33,7 @@
           width="100"
           class="dialog-btn rounded white--text linear-background-blue-main text-uppercase"
           depressed
-          @click="authStore.saveAttachWallet()"
+          @click="authStore.saveSolanaAttachWallet()"
           :loading="authStore.isWalletUpdating"
           :disabled="!walletStore.account"
         >
@@ -45,7 +50,7 @@
         > -->
       </div>
       <div class="mt-3">
-        <connect-metamask class="fill-width" requiredChain="bsc" />
+        <connect-metamask class="fill-width" :requiredChain="chain" :requiredChainId="chainId" />
       </div>
       <div class="text-start mt-3 neutral10--text">
         <i>
@@ -65,7 +70,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
 
@@ -77,6 +82,9 @@ import { walletStore } from '@/stores/wallet-store'
   },
 })
 export default class AttachWalletDialog extends Vue {
+  @Prop({ default: 'sol' }) chain!: string
+  @Prop({ default: '101' }) chainId!: string
+
   authStore = authStore
   walletStore = walletStore
 }

@@ -37,7 +37,10 @@
             <div class="custom-dash-divider my-3"></div>
             <div class="d-flex justify-space-between">
               <div>Total reward</div>
-              <div class="font-weight-bold" v-if="!isRewardTBD">${{ value | formatNumber(2, 2) }}</div>
+              <div class="font-weight-bold" v-if="!isRewardTBD && shouldShowValueInstead">
+                ${{ value | formatNumber(2, 2) }}
+              </div>
+              <div class="font-weight-bold" v-else-if="!shouldShowValueInstead">{{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}</div>
               <div class="font-weight-bold" v-else>TBA</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
@@ -78,11 +81,12 @@ export default class BountyCard extends Vue {
   @Prop({ required: true }) task!: any
   value = 'TBD'
   coverImage = this.metadata?.coverImage ?? 'https://diversity-api.contracts.dev/uploads/download_cff108eb0b.png'
-  rewardTokenName = this.metadata?.rewardToken ?? ''
+  tokenName = this.metadata?.rewardToken ?? ''
   isEnded = moment(this.endTime).isBefore(moment())
   projectLogo = this.metadata?.projectLogo ?? ''
   missionType = get(this.task, 'type', '')
   optionalTokens = get(this.task, 'optionalTokens', [])
+  shouldShowValueInstead = this.optionalTokens.length > 0
 
   mounted() {
     const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(

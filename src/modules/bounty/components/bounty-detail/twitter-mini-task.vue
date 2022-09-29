@@ -5,6 +5,7 @@
     <quote-task v-else-if="type === 'quote'" :twitterTask="twitterTask" :step="step" />
     <comment-task v-else-if="type === 'comment'" :twitterTask="twitterTask" :step="step" />
     <like-task v-else-if="type === 'like'" :twitterTask="twitterTask" :step="step" />
+    <retweet-task v-else-if="type === 'retweet'" :twitterTask="twitterTask" :step="step" />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import { get } from 'lodash-es'
     'quote-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/quote-task.vue'),
     'comment-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/comment-task.vue'),
     'like-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/like-task.vue'),
+    'retweet-task': () => import('@/modules/bounty/components/bounty-detail/twitter-task/retweet-task.vue'),
   },
 })
 export default class BountyDetail extends Vue {

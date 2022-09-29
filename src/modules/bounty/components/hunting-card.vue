@@ -74,9 +74,27 @@
             :class="{
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
-            v-if="!isRewardTBD"
+            v-if="isAMA"
+          >
+            $450 + 30 NFT
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+            v-else-if="!isRewardTBD && shouldShowValueInstead"
           >
             {{ value | usdCustom(2, 2) }}
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+            v-else-if="!shouldShowValueInstead"
+          >
+            {{ rewardAmount | formatNumber(2,2) }} {{ tokenName }}
           </div>
           <div
             class="font-weight-bold mt-1 font-size-28 text-truncate"
@@ -154,6 +172,7 @@ export default class HuntingTimeCard extends Vue {
   missionCompleteCount: any = 'TBA'
   missionType = get(this.task, 'type', '')
   optionalTokens = get(this.task, 'optionalTokens', [])
+  shouldShowValueInstead = this.optionalTokens.length > 0
 
   mounted() {
     const tempBaseTokenValue = FixedNumber.from(`${this.rewardAmount}`).mulUnsafe(
@@ -208,6 +227,11 @@ export default class HuntingTimeCard extends Vue {
     } catch (error) {
       return true
     }
+  }
+
+  //TODO: remove this fucken wow shit
+  get isAMA() {
+    return this.name === 'AMA Twitter Space Talkshow Event'
   }
 }
 </script>

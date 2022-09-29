@@ -205,12 +205,14 @@
                 <v-sheet class="d-flex justify-space-between neutral100--bg">
                   <v-sheet class="neutral10--text card-subtitle-1 neutral100--bg">Personal reward:</v-sheet>
                   <v-sheet class="primary--text number-font neutral100--bg">
-                    Sharing pool mission
+                    <span v-if="vm.communityRewardType">{{ vm.communityRewardType }}</span>
+                    <span v-else>Sharing pool mission</span>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
-                        <v-icon color="primary" size="15" v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
+                        <v-icon color="primary" size="18" v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
                       </template>
-                      <span>Pool rewards will be divided equally among all participants</span>
+                      <span v-if="vm.communityRewardTypeExplaination">{{ vm.communityRewardTypeExplaination }}</span>
+                      <span v-else>Pool rewards will be divided equally among all participants</span>
                     </v-tooltip>
                   </v-sheet>
                 </v-sheet>
@@ -227,7 +229,7 @@
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
-
+import { get } from 'lodash-es'
 @Observer
 @Component({
   components: {
@@ -236,6 +238,7 @@ import { BountyDetailViewModel, HUNTING } from '@/modules/bounty/viewmodels/boun
 })
 export default class PoolTypeContainer extends Vue {
   @Inject() vm!: BountyDetailViewModel
+
   HUNTING = HUNTING
 }
 </script>

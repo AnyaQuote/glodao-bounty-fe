@@ -6,6 +6,7 @@ import { get } from 'lodash-es'
 import { computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import { bigNumberHelper } from '@/helpers/bignumber-helper'
+import { authStore } from '@/stores/auth-store'
 
 export class BountyRewardViewModel {
   _disposers: IReactionDisposer[] = []
@@ -15,12 +16,12 @@ export class BountyRewardViewModel {
   @observable rewards: any = []
 
   constructor() {
-    if (walletStore.account) this.loadData()
+    if (authStore.registeredWallet) this.loadData()
     this._disposers.push(
       reaction(
-        () => walletStore.account,
+        () => authStore.registeredWallet,
         () => {
-          if (walletStore.account) this.loadData()
+          if (authStore.registeredWallet) this.loadData()
         }
       )
     )
@@ -33,7 +34,7 @@ export class BountyRewardViewModel {
   @asyncAction *loadData() {
     const res = yield apiService.bountyRewards.find(
       {
-        walletAddress: walletStore.account,
+        walletAddress: authStore.registeredWallet,
       },
       { _limit: 1 }
     )

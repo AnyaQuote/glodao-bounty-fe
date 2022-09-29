@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar height="80px" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
+  <v-app-bar height="80" class="navigation-bar" app flat :color="$vuetify.theme.dark ? 'neutral15' : 'white'">
     <div class="nav-container mx-auto" style="width: 100%; max-width: 1090px">
       <v-row class="d-flex align-center justify-space-between">
         <v-col col="12" sm="12" md="1">
@@ -147,7 +147,7 @@
                     <v-list-item-title>
                       <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
-                        <div>Locker (Coming soon)</div>
+                        <div><a href="https://tools.glodao.io/locker" target="_blank">Locker</a></div>
                       </div>
                     </v-list-item-title>
                   </v-list-item-content>
@@ -155,7 +155,7 @@
                     <v-list-item-title>
                       <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-cached</v-icon>
-                        <div>Bulkclaimer (Coming soon)</div>
+                        <div><a href="https://tools.glodao.io/bulksend" target="_blank">Bulksend</a></div>
                       </div>
                     </v-list-item-title>
                   </v-list-item-content>
@@ -163,7 +163,7 @@
                     <v-list-item-title>
                       <div class="d-flex align-center px-4 neutral10--text text-body-2">
                         <v-icon class="mr-2" size="20">mdi-flare</v-icon>
-                        <div>Claimer (Coming soon)</div>
+                        <div><a href="https://tools.glodao.io/claim/pools" target="_blank">MultiClaim</a></div>
                       </div>
                     </v-list-item-title>
                   </v-list-item-content>
@@ -246,10 +246,10 @@
 
                     My account
                   </v-btn>
-                  <v-btn plain block class="menu-btn" height="40" depressed @click="openKYCPage()">
+                  <!-- <v-btn plain block class="menu-btn" height="40" depressed @click="openKYCPage()">
                     <v-icon width="24" height="24" class="mr-2 ml-0" color="neutral10"> mdi-fingerprint </v-icon>
                     My KYC
-                  </v-btn>
+                  </v-btn> -->
                   <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()">
                     Log out
                   </v-btn>
@@ -266,6 +266,14 @@
           </div>
         </v-col>
       </v-row>
+      <!-- <v-row class="mt-3 d-flex align-center">
+        <marquee class="pink darken-4 ">
+          <router-link to="/donate" class="lime--text text-darken-3 font-weight-600">
+           Click here to attend the event "Million Wishes - Thousand Smiles" with the desire to bring the best things
+          to children at Mai An Social Protection center in Mid-Autumn Festival.
+          </router-link>
+        </marquee>
+      </v-row> -->
     </div>
   </v-app-bar>
 </template>

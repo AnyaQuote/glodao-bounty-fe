@@ -33,8 +33,11 @@
         <v-col cols="6" md="2" class="d-flex align-center">
           <div>
             <div class="small-caption-text">Total reward</div>
-            <div class="d-flex align-center mt-2 font-weight-bold">
+            <div class="d-flex align-center mt-2 font-weight-bold" v-if="shouldShowValueInstead">
               <div>{{ value | usdCustom(2, 2) }}</div>
+            </div>
+            <div class="d-flex align-center mt-2 font-weight-bold" v-if="!shouldShowValueInstead">
+              <div>{{ totalReward }} {{ rewardToken }}</div>
             </div>
           </div>
         </v-col>
@@ -90,7 +93,12 @@
         <v-col cols="12">
           <div class="d-flex align-center justify-space-between mt-2">
             <div class="text-body-2">Total reward</div>
-            <div class="font-weight-bold text-body-1" v-if="!isRewardTBD">{{ value | usdCustom(2, 2) }}</div>
+            <div class="font-weight-bold text-body-1" v-if="!isRewardTBD && shouldShowValueInstead">
+              {{ value | usdCustom(2, 2) }}
+            </div>
+            <div class="font-weight-bold text-body-1" v-else-if="!shouldShowValueInstead">
+              {{ totalReward }} {{ rewardToken }}
+            </div>
             <div class="font-weight-bold text-body-1" v-else>TBA</div>
           </div>
         </v-col>
@@ -137,8 +145,10 @@ export default class HuntingHistoryCard extends Vue {
 
   value = 'TBA'
   optionalTokens = get(this.task, 'optionalTokens', [])
+  shouldShowValueInstead = this.optionalTokens.length > 0
 
   mounted() {
+    console.log('ohno', this.shouldShowValueInstead)
     const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(
       FixedNumber.from(`${this.task.tokenBasePrice}`)
     )

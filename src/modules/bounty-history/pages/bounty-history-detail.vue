@@ -101,7 +101,12 @@
                       </tr>
                       <tr>
                         <td class="font-weight-600">Total reward</td>
-                        <td class="text-end font-weight-bold">${{ vm.totalRewardValue | formatNumber(2, 2) }}</td>
+                        <!-- TODO: remove this shit -->
+                        <td class="text-end font-weight-bold" v-if="vm.task.name === 'Demole'">425000 DMLG</td>
+                        <td class="text-end font-weight-bold" v-else-if="vm.task.name === 'BSClaunch'">54400 BSL</td>
+                        <td class="text-end font-weight-bold" v-else>
+                          ${{ vm.totalRewardValue | formatNumber(2, 2) }}
+                        </td>
                       </tr>
                       <!-- <tr>
                         <td class="font-weight-600">Total shared</td>
@@ -152,7 +157,7 @@
               <v-col cols="12" md="4">
                 <v-sheet width="100%" class="neutral15 pa-6 border-radius-8">
                   <div class="text-h6 font-weight-bold">Filters</div>
-                  <div class="mt-6 d-flex align-center">
+                  <!-- <div class="mt-6 d-flex align-center">
                     <v-btn
                       depressed
                       class="neutral100--bg text-none text-caption fill-width text-start justify-start d-flex position-relative font-weight-regular neutral10--text"
@@ -175,7 +180,7 @@
                       <v-icon left color="neutral10">mdi-calendar-blank-outline</v-icon> To {{ vm.endDate || '' }}
                       <v-icon color="neutral10" class="position-absolute" style="right: 0">mdi-chevron-down</v-icon>
                     </v-btn>
-                  </div>
+                  </div> -->
                   <div class="d-flex align-center">
                     <v-radio-group
                       v-model="vm.poolType"

@@ -87,12 +87,10 @@
           </div>
         </v-card>
 
-        <div class="text-h6" v-if="!walletStore.requestingChain || walletStore.requestingChain !== 'sol'">
-          ETH/BSC Chain
-        </div>
+        <div class="text-h6">ETH/BSC Chain</div>
         <v-card
           @click="walletStore.connectViaWalletConnect()"
-          v-if="isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
+          v-if="isMobile"
           elevation="0"
           outlined
           class="wallet-card neutra100--bg"
@@ -109,13 +107,7 @@
             <v-icon class="mr-2">mdi-chevron-right</v-icon>
           </div>
         </v-card>
-        <v-card
-          @click="walletStore.connectSolidity()"
-          v-else-if="!isMobile && (!walletStore.requestingChain || walletStore.requestingChain !== 'sol')"
-          elevation="0"
-          outlined
-          class="wallet-card neutra100--bg"
-        >
+        <v-card @click="walletStore.connectSolidity()" v-else elevation="0" outlined class="wallet-card neutra100--bg">
           <div class="d-flex align-center neutral100--bg">
             <div class="d-flex align-center ma-4">
               <img width="24" :src="require('@/assets/icons/metamask-fox.svg')" />
@@ -159,7 +151,6 @@
         </div>
         <div v-if="!walletStore.requestingChain || walletStore.requestingChain === 'sol'">
           <v-card
-            disabled
             v-for="(wallet, index) in walletStore.solWalletItems"
             :key="index"
             outlined
@@ -172,8 +163,7 @@
               </div>
               <span>{{ wallet.name }} </span>
               <v-spacer></v-spacer>
-              <!-- <div v-if="walletStore.selectedWallet === wallet" class="error--text">Click to Disconnect</div> -->
-              <div>Coming soon</div>
+              <div v-if="walletStore.selectedWallet === wallet" class="error--text">Click to Disconnect</div>
               <v-icon class="mr-2">mdi-chevron-right</v-icon>
             </div>
           </v-card>
@@ -188,7 +178,6 @@ import { walletStore } from '@/stores/wallet-store'
 import { Observer } from 'mobx-vue'
 import { Component, Prop, Provide, Vue } from 'vue-property-decorator'
 import { AppProvider, appProvider } from '../app-providers'
-import { alertController } from './alert/alert-controller'
 import { WalletName } from '../models/EthereumWalletModel'
 import { userAgentHelper } from '@/helpers/user-agent-helper'
 
@@ -222,16 +211,7 @@ export default class extends Vue {
     if (wallet === walletStore.selectedWallet) {
       walletStore.disconnectSolana()
     } else if (wallet.name === this.SOLLET_WALLET_NAME) {
-      alertController
-        .confirm(
-          'Warning',
-          'The Sollet wallet sometime encounter error when register for whitelist. Are you sure you want to use this wallet?',
-          'Continue',
-          'Cancel'
-        )
-        .then((confirm) => {
-          if (confirm) walletStore.connectSolana(wallet)
-        })
+      walletStore.connectSolana(wallet)
     } else walletStore.connectSolana(wallet)
   }
 }

@@ -2,7 +2,11 @@
   <div>
     <v-row dense no-gutters>
       <v-col cols="auto" class="mr-auto pa-2 pa-sm-3 pa-md-4">
-        <task-icon-container type="web" :color="'purple'" :isActive="vm.isHuntingProcessStarted && state === 0" />
+        <task-icon-container
+          type="image"
+          :color="'indigo accent-1'"
+          :isActive="vm.isHuntingProcessStarted && state === 0"
+        />
       </v-col>
       <v-col>
         <div class="pa-2 pa-sm-4">
@@ -18,20 +22,7 @@
             </v-tooltip>
           </div>
           <div class="text-caption mt-1" style="word-break: break-word">
-            {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text">in here</a><br />
-            <span v-if="afterLinkDescription">
-              {{ afterLinkDescription
-              }}<a :href="afterLinkDescriptionLink" v-if="afterLinkDescriptionLink" class="cursor-pointer blue--text"
-                >here</a
-              ><br />
-            </span>
-            <!-- <span v-if="isLinkRequired"
-              >Then paste your link
-              <span v-if="false"
-                >with <span class="font-italic font-weight-bold">"{{ requiredContent }}" </span></span
-              >below to finish the task</span
-            > -->
-            <div v-if="!isRightTimeToDoTask" class="red--text">This task will open on {{ startDateStr }}</div>
+            {{ description }}
           </div>
         </div>
         <div
@@ -39,46 +30,21 @@
           v-if="vm.isHuntingProcessStarted && task.activeStep && !task.finished"
           v-show="$vuetify.breakpoint.smAndUp"
         >
-          <v-sheet class="neutral100" v-show="$vuetify.breakpoint.smAndUp" v-if="isLinkRequired">
-            <v-row dense no-gutters>
-              <v-col cols="9" sm="10">
-                <v-sheet outlined class="rounded rounded-r-0">
-                  <v-text-field
-                    hide-details
-                    dense
-                    flat
-                    solo
-                    class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                    :placeholder="task.stepLink || 'Enter your link here'"
-                    :value="value"
-                    @input="onValueChange"
-                  ></v-text-field>
-                </v-sheet>
-              </v-col>
-              <v-col cols="3" sm="2">
-                <v-btn
-                  elevation="0"
-                  tile
-                  class="fill-width white--text text-none linear-background-blue-main text-caption rounded rounded-l-0"
-                  height="100%"
-                  @click="submitLink"
-                  :loading="!task.finished && vm.isTaskUpdating"
-                  :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
-                >
-                  Submit
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-sheet>
+          <app-file-upload
+            isImageFile
+            :rules="[$rules.maxSize(MAX_IMAGE_FILE_SIZE), $rules.isImage, $rules.required]"
+            :value="$_get(vm.projectInfo, 'projectCover', null)"
+            @change="onValueChange"
+          />
           <v-btn
-            class="white--text text-none linear-background-blue-main text-caption"
             elevation="0"
-            @click="finishTask"
+            tile
+            class="fill-width white--text text-none linear-background-blue-main text-caption rounded"
+            @click="submitLink"
             :loading="!task.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
-            v-else
+            :disabled="vm.shouldDisableTaskProcessing"
           >
-            I have finish the task
+            Submit
           </v-btn>
         </div>
       </v-col>
@@ -128,46 +94,21 @@
         v-show="$vuetify.breakpoint.xsOnly"
         v-if="vm.isHuntingProcessStarted && task.activeStep && !task.finished"
       >
-        <v-sheet class="neutral100 px-2 px-sm-4" v-if="isLinkRequired">
-          <v-row dense no-gutters>
-            <v-col cols="9" sm="10">
-              <v-sheet outlined class="rounded rounded-r-0">
-                <v-text-field
-                  hide-details
-                  dense
-                  flat
-                  solo
-                  class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                  :placeholder="task.stepLink || 'Enter your link here'"
-                  :value="value"
-                  @input="onValueChange"
-                ></v-text-field>
-              </v-sheet>
-            </v-col>
-            <v-col cols="3" sm="2">
-              <v-btn
-                elevation="0"
-                tile
-                class="fill-width white--text text-none linear-background-blue-main text-caption rounded rounded-l-0"
-                height="100%"
-                @click="submitLink"
-                :loading="!task.finished && vm.isTaskUpdating"
-                :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
-              >
-                Submit
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-sheet>
+        <app-file-upload
+          isImageFile
+          :rules="[$rules.maxSize(MAX_IMAGE_FILE_SIZE), $rules.isImage, $rules.required]"
+          :value="$_get(vm.projectInfo, 'projectCover', null)"
+          @change="onValueChange"
+        />
         <v-btn
-          class="white--text text-none linear-background-blue-main text-caption"
           elevation="0"
-          @click="finishTask"
+          tile
+          class="fill-width white--text text-none linear-background-blue-main text-caption rounded"
+          @click="submitLink"
           :loading="!task.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing || !isRightTimeToDoTask"
-          v-else
+          :disabled="vm.shouldDisableTaskProcessing"
         >
-          I have finish the task
+          Submit
         </v-btn>
       </v-col>
     </v-row>
@@ -175,46 +116,56 @@
 </template>
 
 <script lang="ts">
+import { MAX_IMAGE_FILE_SIZE } from '@/constants'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { TWEET_MIN_WORDS_COUNT } from '@/constants'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
 import { Observer } from 'mobx-vue'
-import moment from 'moment'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
+import { apiService } from '@/services/api-service'
 
 @Observer
 @Component({
   components: {
     'chain-logo': () => import('@/components/chain-logo.vue'),
     'task-icon-container': () => import('@/modules/bounty/components/bounty-detail/task-icon-container.vue'),
+    'app-file-upload': () => import('@/components/app-file-upload.vue'),
   },
 })
-export default class CustomOptionalTask extends Vue {
+export default class ImageUploadTask extends Vue {
   TWEET_MIN_WORDS_COUNT = TWEET_MIN_WORDS_COUNT
+  MAX_IMAGE_FILE_SIZE = MAX_IMAGE_FILE_SIZE
   @Inject() vm!: BountyDetailViewModel
   @Prop({ required: true }) task!: any
   @Prop({ required: true }) step!: number
   type = get(this.task, 'type', '')
-  value = get(this.task, 'stepLink', '')
+  value: any = null
   hashtags = get(this.task, 'hashtag', [])
   content = get(this.task, 'content', '')
   mentions = get(this.task, 'mentions', [])
   link = get(this.task, 'link', [])
   isLinkRequired = get(this.task, 'isLinkRequired', false)
   description = get(this.task, 'description', '')
-  afterLinkDescription = get(this.task, 'afterLinkDescription', '')
-  afterLinkDescriptionLink = get(this.task, 'afterLinkDescriptionLink', '')
   page = get(this.task, 'page', '')
   name = get(this.task, 'name', '')
   requiredContent = get(this.task, 'requiredContent', '')
   startDate = get(this.task, 'startDate', '')
   tooltip = get(this.task, 'tooltip', '')
-
   title = ''
 
-  onValueChange(value: string) {
+  async onValueChange(value: File) {
     this.value = value
+    console.log(this.value)
+    const formData = new FormData()
+    formData.append('files', this.value)
+    formData.append('field', 'image')
+    try {
+      const res = await apiService.uploadFile(formData)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   openLink(link: string) {
@@ -223,23 +174,29 @@ export default class CustomOptionalTask extends Vue {
     else window.open('https://' + url, '_blank')
   }
 
-  submitLink() {
-    if (!this.value.trim()) snackController.error('Link cannot be empty')
-    else this.vm.submitLink('optional', this.value, this.step)
+  async submitLink() {
+    console.log(this.value)
+    if (this.value == null) snackController.error('Image cannot be empty')
+    else {
+      const formData = new FormData()
+      formData.append('files', this.value)
+      formData.append('field', 'image')
+      try {
+        this.vm.changeTaskUpdating(true)
+        const res = await apiService.uploadFile(formData)
+        console.log(res)
+        console.log(res[0].url)
+        await this.vm.submitLink('optional', res[0].url, this.step)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.vm.changeTaskUpdating(true)
+      }
+    }
   }
 
   finishTask() {
     this.vm.submitLink('optional', '', this.step)
-  }
-
-  get startDateStr() {
-    if (this.startDate === '') return 'true'
-    return moment(this.startDate).format('YYYY-MM-DD HH:mm:ss')
-  }
-
-  get isRightTimeToDoTask() {
-    if (this.startDate === '') return true
-    return moment(this.startDate).isBefore(moment())
   }
 
   get state() {

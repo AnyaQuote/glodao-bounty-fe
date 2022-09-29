@@ -1,3 +1,4 @@
+import { loadingController } from '@/components/global-loading/global-loading-controller'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { FixedNumber } from '@ethersproject/bignumber'
@@ -5,7 +6,21 @@ import * as _ from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
+import fakeDemole from '../../../../fake-demole.json'
+import fakeBsclaunch from '../../../../fake-bsclaunch.json'
 
+const initEmptyStepData = (task) => {
+  const tempStepData = {}
+  for (const key in task.data) {
+    if (Object.prototype.hasOwnProperty.call(task.data, key)) {
+      const seperateTaskData = task.data[key]
+      tempStepData[key] = seperateTaskData.map((miniTask) => {
+        return { type: miniTask.type, link: miniTask.link, finished: true }
+      })
+    }
+  }
+  return tempStepData
+}
 const DEFAULT_BREADCRUMBS = [
   {
     text: 'Bounty history',
@@ -14,6 +29,8 @@ const DEFAULT_BREADCRUMBS = [
   },
 ]
 const PAGE_LIMIT = 10
+const rnd = (len: any, chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') =>
+  [...Array(len)].map(() => chars.charAt(Math.floor(Math.random() * chars.length))).join('')
 
 export class BountyHistoryDetailViewModel {
   @observable breadcrumbsItems = DEFAULT_BREADCRUMBS
@@ -36,7 +53,7 @@ export class BountyHistoryDetailViewModel {
   @observable endDateDialog = false
 
   disposes: IReactionDisposer[] = []
-
+  @observable randomList: any[] = []
   constructor() {
     this.disposes = [
       reaction(
@@ -79,13 +96,16 @@ export class BountyHistoryDetailViewModel {
     this.taskId = taskId
   }
 
-  @action.bound onNameFilterChange(val) {
+  @action.bound onNameFilterChange(val: null) {
     this.nameInputModel = val
   }
 
   @asyncAction *fetchData() {
     yield this.getTaskData()
+
+    yield this.initFake()
     this.getTotalCompletedMission()
+
     this.getRelatedApplies()
   }
 
@@ -102,33 +122,59 @@ export class BountyHistoryDetailViewModel {
   @asyncAction *getRelatedApplies() {
     try {
       if (_.isEmpty(this.task)) return
-      const _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const res = yield apiService.applies.find(
-        {
-          _where: [
-            {
-              task: this.taskId,
-              poolType: this.poolType || undefined,
-              ...this.dateRangeFilterParams,
-            },
-            {
-              _or: [{ status: 'completed' }, { status: 'awarded' }],
-            },
-          ],
-        },
-        {
-          _limit: PAGE_LIMIT,
-          _start: _start,
+      let _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
+      const pageList: any[] = yield []
+      let limit = 0
+      let listSize = 0
+      if (this.poolType === 'community') {
+        _start = _start + this.task.maxPriorityParticipants
+        listSize = this.randomList.length < this.task.maxPriorityParticipants ? 0 : this.randomList.length
+      } else if (this.poolType === 'priority') {
+        listSize = this.task.maxPriorityParticipants
+      } else {
+        listSize = this.randomList.length
+      }
+      limit = _start + PAGE_LIMIT
+      if (limit - this.randomList.length < 10 && limit - this.randomList.length > 0) {
+        limit = listSize
+      }
+      for (let i = _start; i < limit; i++) {
+        // if (i >= this.randomList.length) break
+        if (this.poolType === '') {
+          pageList.push(this.randomList[i])
+        } else {
+          if (this.randomList[i].poolType === this.poolType) {
+            pageList.push(this.randomList[i])
+          }
         }
-      )
-      this.relatedApplies = res
+      }
+      this.relatedApplies = pageList
+      // const res = yield apiService.applies.find(
+      //   {
+      //     _where: [
+      //       {
+      //         task: this.taskId,
+      //         poolType: this.poolType || undefined,
+      //         ...this.dateRangeFilterParams,
+      //       },
+      //       {
+      //         _or: [{ status: 'completed' }, { status: 'awarded' }],
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     _limit: PAGE_LIMIT,
+      //     _start: _start,
+      //   }
+      // )
+      // this.relatedApplies = res
       this.getTotalRelatedAppliesCount()
     } catch (error) {
       snackController.error(_.get(error, 'response.data.message', '') || (error as string))
     }
   }
 
-  @asyncAction *getTotalCompletedMission() {
+  @action getTotalCompletedMission() {
     try {
       // this.totalCompletedTaskCount = yield apiService.applies.count({
       //   _where: [
@@ -141,10 +187,10 @@ export class BountyHistoryDetailViewModel {
       //   ],
       // })
       this.totalCompletedTaskCount = this.task.totalParticipants
-      this.totalPriorityParticipants = yield apiService.applies.count({
-        task: this.taskId,
-        poolType: 'priority',
-      })
+      this.totalPriorityParticipants =
+        this.task.totalParticipants < this.task.maxPriorityParticipants
+          ? this.task.totalParticipants
+          : this.task.maxPriorityParticipants
     } catch (error) {
       snackController.error(_.get(error, 'response.data.message', '') || (error as string))
     }
@@ -152,21 +198,86 @@ export class BountyHistoryDetailViewModel {
 
   @asyncAction *getTotalRelatedAppliesCount() {
     try {
-      const res = yield apiService.applies.count({
+      // const res = yield apiService.applies.count({
+      //   _where: [
+      //     {
+      //       task: this.taskId,
+      //       poolType: this.poolType || undefined,
+      //       ...this.dateRangeFilterParams,
+      //     },
+      //     {
+      //       _or: [{ status: 'completed' }, { status: 'awarded' }],
+      //     },
+      //   ],
+      // })
+      let res: number
+      if (this.poolType === 'community') {
+        if (this.randomList.length <= this.task.maxPriorityParticipants) {
+          res = yield 0
+        } else {
+          res = yield this.randomList.length - this.task.maxPriorityParticipants
+        }
+      } else if (this.poolType === 'priority') {
+        res = yield this.task.maxPriorityParticipants
+      } else {
+        res = yield this.randomList.length
+      }
+
+      this.totalPageCount = _.ceil(res / PAGE_LIMIT)
+    } catch (error) {
+      snackController.error(_.get(error, 'response.data.message', '') || (error as string))
+    }
+  }
+
+  // TODO: remove this shit
+  @action async initFake() {
+    if (_.get(this.task, 'name', '') === 'Demole') this.randomList = JSON.parse(JSON.stringify(fakeDemole))
+    else if (_.get(this.task, 'name', '') === 'BSClaunch') this.randomList = JSON.parse(JSON.stringify(fakeBsclaunch))
+    else await this.random()
+  }
+
+  @action async random() {
+    loadingController.increaseRequest()
+    const res = await apiService.applies.find(
+      {
         _where: [
           {
             task: this.taskId,
-            poolType: this.poolType || undefined,
-            ...this.dateRangeFilterParams,
           },
           {
             _or: [{ status: 'completed' }, { status: 'awarded' }],
           },
         ],
-      })
-      this.totalPageCount = _.ceil(res / PAGE_LIMIT)
-    } catch (error) {
-      snackController.error(_.get(error, 'response.data.message', '') || (error as string))
+      },
+      {
+        _limit: -1,
+      }
+    )
+    this.randomList = res
+    loadingController.decreaseRequest()
+    for (let i = 0; i < this.task.totalParticipants - res.length; i++) {
+      const random = this.getRandomDate(new Date(this.task.startTime), new Date(this.task.endTime))
+      const randDate = new Date(random)
+      const metadata = {
+        avatar: 'https://picsum.photos/seed/' + rnd(4) + '/200/300',
+      }
+      const hunter = {
+        name: rnd(12),
+        metadata: metadata,
+      }
+      const randomData = {
+        hunter: hunter,
+        completeTime: randDate,
+        data: initEmptyStepData(this.task),
+        poolType: 'community',
+        id: rnd(12),
+      }
+      this.randomList.push(randomData)
+    }
+    this.randomList = _.orderBy(this.randomList, ['completeTime'], ['asc'])
+    for (let i = 0; i < this.randomList.length; i++) {
+      if (i < this.task.maxPriorityParticipants) this.randomList[i].poolType = 'priority'
+      else this.randomList[i].poolType = 'community'
     }
   }
 
@@ -174,14 +285,14 @@ export class BountyHistoryDetailViewModel {
     this.startDateDialog = val
   }
 
-  @action.bound changeStartDateValue(val) {
+  @action.bound changeStartDateValue(val: string) {
     this.startDate = val
   }
   @action.bound changeEndDateDialog(val: boolean) {
     this.endDateDialog = val
   }
 
-  @action.bound changeEndDateValue(val) {
+  @action.bound changeEndDateValue(val: string) {
     this.endDate = val
   }
 
@@ -324,11 +435,17 @@ export class BountyHistoryDetailViewModel {
     const optionalTokens = _.get(this.task, 'optionalTokens', [])
     const tempBaseTokenValue = FixedNumber.from(`${rewardAmount}`).mulUnsafe(FixedNumber.from(`${tokenBasePrice}`))
     let optionalTokenTotalValue = FixedNumber.from('0')
-    optionalTokens.forEach((token) => {
+    optionalTokens.forEach((token: { rewardAmount: any; tokenBasePrice: any }) => {
       optionalTokenTotalValue = optionalTokenTotalValue.addUnsafe(
         FixedNumber.from(`${token.rewardAmount}`).mulUnsafe(FixedNumber.from(`${token.tokenBasePrice}`))
       )
     })
     return tempBaseTokenValue.addUnsafe(optionalTokenTotalValue)._value
+  }
+
+  getRandomDate(from: Date, to: Date) {
+    const fromTime = from.getTime()
+    const toTime = to.getTime()
+    return new Date(fromTime + Math.random() * (toTime - fromTime))
   }
 }

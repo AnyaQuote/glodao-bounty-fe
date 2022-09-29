@@ -57,10 +57,10 @@
 
           My account
         </v-btn>
-        <v-btn plain block class="menu-btn neutral10--text" height="40" depressed @click="openKYCPage()">
+        <!-- <v-btn plain block class="menu-btn neutral10--text" height="40" depressed @click="openKYCPage()">
           <v-icon width="28" height="28" class="mr-2 ml-0" color="neutral10"> mdi-fingerprint </v-icon>
           My KYC
-        </v-btn>
+        </v-btn> -->
         <v-btn plain block class="menu-btn" height="40" depressed @click="authStore.logout()"> Log out </v-btn>
       </v-sheet>
     </v-sheet>
@@ -202,7 +202,7 @@
             <v-list-item-title>
               <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-lock-outline</v-icon>
-                <div>Locker (Coming soon)</div>
+                <div><a href="https://tools.glodao.io/locker" target="_blank">Locker</a></div>
               </div>
             </v-list-item-title>
           </v-list-item>
@@ -210,7 +210,7 @@
             <v-list-item-title>
               <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-cached</v-icon>
-                <div>Bulkclaimer (Coming soon)</div>
+                <div><a href="https://tools.glodao.io/bulksend" target="_blank">Bulksend</a></div>
               </div>
             </v-list-item-title>
           </v-list-item>
@@ -218,7 +218,7 @@
             <v-list-item-title>
               <div class="d-flex align-center neutral10--text">
                 <v-icon class="mr-2" size="20">mdi-flare</v-icon>
-                <div>Claimer (Coming soon)</div>
+                <div><a href="https://tools.glodao.io/claim/pools" target="_blank">MultiClaim</a></div>
               </div>
             </v-list-item-title>
           </v-list-item>
