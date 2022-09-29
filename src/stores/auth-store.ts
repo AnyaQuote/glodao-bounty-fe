@@ -48,6 +48,10 @@ export class AuthStore {
     this.walletDialogInput = value
   }
   @asyncAction *saveAttachWallet() {
+    if (walletStore.chainType === 'sol') {
+      yield snackController.error('Please switch to an ethereum wallet')
+      return
+    }
     try {
       this.isWalletUpdating = true
       // const signature = yield this.signMessage(
@@ -56,6 +60,8 @@ export class AuthStore {
       //   get(this.user, 'hunter.nonce', 0)
       // )
       console.log('saveAttachWallet signature: ', 'signature')
+      console.log(walletStore.chainType)
+
       const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
         'signature',
