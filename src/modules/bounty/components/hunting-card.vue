@@ -3,7 +3,7 @@
     <v-sheet class="position-relative">
       <div class="position-relative">
         <v-img :src="coverImageUrl" :aspect-ratio="1.5"></v-img>
-        <video
+        <!-- <video
           width="100%"
           height="100%"
           loop
@@ -14,7 +14,7 @@
         >
           <source :src="coverVideo" type="video/mp4" />
           Your browser does not support HTML video.
-        </video>
+        </video> -->
         <div class="position-absolute" style="top: 10px; left: 10px">
           <v-sheet class="rounded-pill flex-center-box text-center px-2" :class="missionTypeTextStyle" height="25"
             >{{ missionTypeText }} #{{ task | _get('missionIndex', 0) }}</v-sheet
