@@ -240,6 +240,10 @@ export class AuthStore {
   @computed get kycSessionId() {
     return get(this.user, 'kycSessionId', '')
   }
+
+  @computed get isLoggedIn() {
+    return this.jwt !== ''
+  }
 }
 
 export const authStore = new AuthStore()
