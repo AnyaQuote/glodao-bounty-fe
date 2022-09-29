@@ -50,7 +50,11 @@
         > -->
       </div>
       <div class="mt-3">
-        <connect-metamask class="fill-width" :requiredChain="chain" :requiredChainId="chainId" />
+        <connect-metamask
+          class="fill-width linear-background-blue-main"
+          :requiredChain="chain"
+          :requiredChainId="chainId"
+        />
       </div>
       <div class="text-start mt-3 neutral10--text">
         <i>
