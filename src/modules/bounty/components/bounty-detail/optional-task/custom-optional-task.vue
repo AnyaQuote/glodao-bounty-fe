@@ -18,12 +18,18 @@
             </v-tooltip>
           </div>
           <div class="text-caption mt-1" style="word-break: break-word">
-            {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text">in here</a><br />
+            {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text" target="_blank">in here</a
+            ><br />
             <span v-if="afterLinkDescription">
-              {{ afterLinkDescription
-              }}<a :href="afterLinkDescriptionLink" v-if="afterLinkDescriptionLink" class="cursor-pointer blue--text"
+              {{ afterLinkDescription }}
+              <a
+                :href="afterLinkDescriptionLink"
+                v-if="afterLinkDescriptionLink"
+                class="cursor-pointer blue--text"
+                target="_blank"
                 >here</a
-              ><br />
+              >
+              <br />
             </span>
             <!-- <span v-if="isLinkRequired"
               >Then paste your link
