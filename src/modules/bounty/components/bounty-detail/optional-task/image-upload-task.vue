@@ -207,10 +207,6 @@ export default class ImageUploadTask extends Vue {
   }
 
   async submitLink() {
-    if (!this.required) {
-      await this.vm.submitLink('optional', ' ', this.step)
-      return
-    }
     if (this.value == null) snackController.error('Image cannot be empty')
     else {
       const formData = new FormData()
