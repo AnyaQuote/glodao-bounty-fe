@@ -647,9 +647,21 @@
                       </v-btn>
                     </v-col>
                     <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.completeTime">
-                      <span
-                        ><a class="blue--text text-caption" :href="vm.finishLink">{{ vm.finishMessage }}</a></span
-                      >
+                      <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.finishLink">
+                        <v-sheet class="neutral15 fill-width pa-6 text-center">
+                          <span class="blue--text font-weight-bold" v-html="vm.finishMessage"></span>
+                          <div class="d-flex justify-center mt-4">
+                            <v-sheet
+                              class="text-body-2 pa-4 cursor-pointer"
+                              outlined
+                              rounded
+                              style="background: transparent"
+                            >
+                              <a :href="vm.finishLink" class="neutral10--text font-weight-600">{{ vm.finishLink }}</a>
+                            </v-sheet>
+                          </div>
+                        </v-sheet>
+                      </v-col>
                     </v-col>
                     <v-col cols="12" class="text-center">
                       <v-btn
