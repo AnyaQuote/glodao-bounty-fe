@@ -8,6 +8,13 @@
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">Explore {{ vm.task.name }}</div>
           <div class="text-caption mt-1">Learn about project and answer our question to complete task.</div>
+          <a
+            class="text-caption mt-1 mb-0 blue--text font-italic"
+            @click="goToQuizDetailScreen"
+            v-if="task.finished && canRepeat"
+          >
+            Redo the quiz here
+          </a>
         </div>
         <div
           class="px-2 px-sm-3 px-md-4 mb-3 mb-md-4 border-radius-8 position-relative ml-4"
@@ -98,8 +105,8 @@
                 class="text-none linear-background-blue-main mt-4 white--text"
                 depressed
               >
-                Learn more</v-btn
-              >
+                Learn more
+              </v-btn>
               <div class="neutral100--bg mt-4 rounded">
                 <v-btn
                   @click="revalidateQuizTask"
@@ -108,8 +115,8 @@
                   :loading="revalidateLoading || (!task.finished && vm.isTaskUpdating)"
                   :disabled="vm.shouldDisableTaskProcessing"
                 >
-                  Continue</v-btn
-                >
+                  Continue
+                </v-btn>
               </div>
             </div>
           </div>
@@ -143,10 +150,11 @@ export default class LearnTask extends Vue {
   page = get(this.task, 'page', '')
   title = ''
   revalidateLoading = false
+  canRepeat = get(this.task, 'canRepeat', false)
 
   mounted() {
     apiService
-      .getQuiz(this.task.quizId)
+      .getQuiz(this.task.quizId, this.task.id)
       .then((res) => {
         this.quiz = res
       })
@@ -158,7 +166,7 @@ export default class LearnTask extends Vue {
     //
     this.revalidateLoading = true
     apiService.quizAnswerRecords
-      .count({ ID: `${this.quiz.id}_${authStore.hunterId}` })
+      .count({ ID: `${this.quiz.id}_${authStore.hunterId}_${this.vm.task.id}` })
       .then((res) => {
         if (res > 0) {
           //

@@ -11,10 +11,10 @@
           <!-- <span class="text-capitalize">{{ vm.currentPoolType }}</span> pool! -->
         </div>
         <div
-          v-if="vm.task.metadata.confirmContent"
+          v-if="vm.confirmContent"
           class="text-body-1 text-center mt-1 red--text text-decoration-underline font-italic"
         >
-          {{ vm.task.metadata.confirmContent }}
+          {{ vm.confirmContent }}
         </div>
         <div v-else>
           <div class="text-body-2 text-center font-weight-bold" v-if="vm.isInPriorityPool">

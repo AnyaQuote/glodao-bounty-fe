@@ -31,6 +31,10 @@
               <v-icon color="bluePrimary"> mdi-school </v-icon>
               <div class="font-weight-600 ml-2 font-size-18">{{ vm.questionList.length }} questions</div>
             </div>
+            <span class="text-italic font-italic text-caption">
+              You need to complete {{ vm.quizPassingCriteriaByQuestions }}/{{ vm.questionList.length }} questions to
+              pass the quiz
+            </span>
             <v-btn
               class="text-uppercase linear-background-blue-main fill-width mt-8 fill-width white--text"
               depressed
@@ -129,8 +133,11 @@
       >
         <div class="position-absolute fill-width fill-height flex-center-box" style="left: 0">
           <div class="primary--text" v-if="$vuetify.breakpoint.smAndUp">
-            Question <span class="bluePrimary--text"> {{ vm.currentStep + 1 > 10 ? 10 : vm.currentStep + 1 }} </span> of
-            10
+            Question
+            <span class="bluePrimary--text">
+              {{ vm.currentStep + 1 > vm.questionList.length ? vm.questionList.length : vm.currentStep + 1 }}
+            </span>
+            of {{ vm.questionList.length }}
           </div>
         </div>
         <v-btn
