@@ -1,7 +1,10 @@
 <template>
   <div>
     <span class="title-2 mt-2">
-      <span class="title-1">Quiz: {{ record | _get('quiz.name', '') }}</span> - Your best answer record</span
+      <span class="title-1 cursor-pointer blue--text" @click="goToQuizDetailScreen"
+        >Quiz: {{ record | _get('quiz.name', '') }}</span
+      >
+      - Your best answer record</span
     >
     <v-data-table
       class="neutral100"
@@ -56,26 +59,9 @@ export default class LearnTask extends Vue {
         console.log(this.record)
       })
   }
-  revalidateQuizTask() {
-    //
-    this.revalidateLoading = true
-    apiService.quizAnswerRecords
-      .count({ ID: `${this.quiz.id}_${authStore.hunterId}_${this.vm.task.id}` })
-      .then((res) => {
-        if (res > 0) {
-          //
-          this.vm.submitQuizRevalidation(this.quiz.id)
-        } else {
-          snackController.error('You have not finished this task yet!')
-        }
-      })
-      .finally(() => {
-        this.revalidateLoading = false
-      })
-  }
 
   goToQuizDetailScreen() {
-    this.$router.push(`/learn/${this.vm.task.id}?quiz=${this.quiz.id}`)
+    this.$router.push(`/learn/${this.vm.task.id}?quiz=${this.record.quiz.id}`)
   }
 
   get coverImage() {
