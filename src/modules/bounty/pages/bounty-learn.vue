@@ -105,24 +105,26 @@ import * as _ from 'lodash-es'
   },
 })
 export default class BountyLearnPage extends Vue {
-  @Provide() vm = new BountyLearnViewModel()
+  taskId = this.$route.params.id
+  quizId = this.$route.query.quiz
+  @Provide() vm = new BountyLearnViewModel(this.taskId, this.quizId)
   walletStore = walletStore
   authStore = authStore
   mouseoverEvent = new Event('mouseleave')
 
-  @Watch('$route.params.id', { immediate: true }) onIdChanged(val: string) {
-    if (val) {
-      if (_.isEmpty(val)) this.$router.back()
-      else this.vm.fetchTaskData(val)
-    }
-  }
+  // @Watch('$route.params.id') onIdChanged(val: string) {
+  //   if (val) {
+  //     if (_.isEmpty(val)) this.$router.back()
+  //     else this.vm.fetchTaskData(val)
+  //   }
+  // }
 
-  @Watch('$route.query', { immediate: true }) onRefChanged(val: string) {
-    if (val) {
-      if (_.isEmpty(val)) this.$router.back()
-      else this.vm.fetchQuizData(_.get(val, 'quiz'))
-    }
-  }
+  // @Watch('$route.query') onRefChanged(val: string) {
+  //   if (val) {
+  //     if (_.isEmpty(val)) this.$router.back()
+  //     else this.vm.fetchQuizData(_.get(val, 'quiz'))
+  //   }
+  // }
 
   mounted() {
     this.vm.initReaction()

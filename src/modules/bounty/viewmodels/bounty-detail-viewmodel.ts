@@ -1063,6 +1063,10 @@ export class BountyDetailViewModel {
     return get(this.task, 'metadata', {})
   }
 
+  @computed get confirmContent() {
+    return get(this.task, 'metadata.confirmContent', '')
+  }
+
   @computed get communityRewardType() {
     return get(this.metadata, 'communityRewardType', '')
   }

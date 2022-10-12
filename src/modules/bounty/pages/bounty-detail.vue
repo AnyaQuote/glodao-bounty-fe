@@ -172,6 +172,16 @@
           <div class="">
             <mission-ref-code />
           </div>
+          <div v-if="vm.missionType === 'learn'">
+            <v-col
+              cols="12"
+              class="py-0 px-0"
+              v-for="(quizTask, index) in vm.displayedQuizTaskData"
+              :key="'quiz' + index"
+            >
+              <quiz-simple-chart :task="quizTask" :step="index" />
+            </v-col>
+          </div>
         </div>
       </v-col>
 
@@ -730,6 +740,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'facebook-mini-task': () => import('@/modules/bounty/components/bounty-detail/facebook-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     'mission-ref-code': () => import('@/modules/bounty/components/independent-mission-ref-code.vue'),
+    'quiz-simple-chart': () => import('@/modules/bounty/components/bounty-detail/learn-task/simple-chart.vue'),
     VueHcaptcha,
     'connect-metamask': () => import('@/components/connect-metamask.vue'),
   },
