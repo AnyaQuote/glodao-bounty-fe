@@ -424,7 +424,6 @@ export class BountyAppTrialViewModel {
   }
 
   @computed get taskDescription() {
-    console.log(this.apply.id)
     return get(this.task, 'metadata.taskDescription', '')
   }
 

@@ -98,7 +98,10 @@
                 :color="questionDataObj.isCorrect ? 'success' : 'error'"
               >
                 <template v-slot:label>
-                  <div class="neutral10--text">{{ option.text }}{{ questionDataObj.isCorrect }}</div>
+                  <div class="neutral10--text">
+                    {{ option.text }}
+                    <img v-if="option.image" :src="option.image" style="max-width: 100%; max-height: 200px" />
+                  </div>
                 </template>
               </v-radio>
             </v-radio-group>
