@@ -61,7 +61,7 @@
             <!-- info header end -->
 
             <!-- slider button start -->
-            <div v-show="!showSide" class="p-absolute t-b-l-r-0 flex-center-end">
+            <div v-show="!showSide" class="p-absolute t-b-l-r-0 flex-center-end" style="pointer-events: none">
               <div class="blur-bg rounded-tl-lg rounded-bl-lg py-8" @click="toggleSide">
                 <v-icon size="40" color="white">mdi-chevron-left</v-icon>
               </div>
