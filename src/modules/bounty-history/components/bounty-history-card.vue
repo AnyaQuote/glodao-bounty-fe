@@ -148,7 +148,6 @@ export default class HuntingHistoryCard extends Vue {
   shouldShowValueInstead = this.optionalTokens.length > 0
 
   mounted() {
-    console.log('ohno', this.shouldShowValueInstead)
     const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(
       FixedNumber.from(`${this.task.tokenBasePrice}`)
     )

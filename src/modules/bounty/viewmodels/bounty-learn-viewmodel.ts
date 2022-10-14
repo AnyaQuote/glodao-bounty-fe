@@ -34,10 +34,8 @@ export class BountyLearnViewModel {
   _disposers: any[] = []
 
   constructor(taskId, quizId) {
-    //
     this.taskId = taskId
     this.quizId = quizId
-    console.log(this.taskId)
     this.initialize()
   }
 
@@ -101,8 +99,6 @@ export class BountyLearnViewModel {
       .then((res) => {
         this.quiz = res
         this.fetchQuizRecordData(quizId)
-        console.log(this.quizSetting)
-        console.log(this.quiz)
       })
       .catch((err) => {
         snackController.error(err)

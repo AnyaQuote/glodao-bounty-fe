@@ -89,7 +89,6 @@ export class DonateViewModel {
       this.dialog = true
       snackController.success('Donation sent! Thank you for your donation!')
     } catch (error: any) {
-      console.log(error)
       snackController.error(error.message)
     } finally {
       loadingController.decreaseRequest()
