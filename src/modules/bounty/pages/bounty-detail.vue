@@ -152,7 +152,7 @@
                 {{ vm.task | _get('metadata.website') }}
               </a>
             </v-sheet>
-            <v-sheet class="d-flex align-center transparent" v-if="vm.taskSocialLinks.length > 0">
+            <v-sheet class="d-flex align-center transparent">
               <v-sheet class="transparent title-2">Social link:</v-sheet>
               <v-btn
                 v-for="(value, key) in vm.taskSocialLinks"
@@ -171,6 +171,16 @@
           </v-sheet>
           <div class="">
             <mission-ref-code />
+          </div>
+          <div v-if="vm.missionType === 'learn'">
+            <v-col
+              cols="12"
+              class="py-0 px-0"
+              v-for="(quizTask, index) in vm.displayedQuizTaskData"
+              :key="'quiz' + index"
+            >
+              <quiz-simple-chart :task="quizTask" :step="index" />
+            </v-col>
           </div>
         </div>
       </v-col>
@@ -647,9 +657,21 @@
                       </v-btn>
                     </v-col>
                     <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.completeTime">
-                      <span
-                        ><a class="blue--text text-caption" :href="vm.finishLink">{{ vm.finishMessage }}</a></span
-                      >
+                      <v-col cols="12" class="text-center ma-0 pa-0" v-if="vm.finishLink">
+                        <v-sheet class="neutral15 fill-width pa-6 text-center">
+                          <span class="blue--text font-weight-bold" v-html="vm.finishMessage"></span>
+                          <div class="d-flex justify-center mt-4">
+                            <v-sheet
+                              class="text-body-2 pa-4 cursor-pointer"
+                              outlined
+                              rounded
+                              style="background: transparent"
+                            >
+                              <a :href="vm.finishLink" class="neutral10--text font-weight-600">{{ vm.finishLink }}</a>
+                            </v-sheet>
+                          </div>
+                        </v-sheet>
+                      </v-col>
                     </v-col>
                     <v-col cols="12" class="text-center">
                       <v-btn
@@ -718,6 +740,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
     'facebook-mini-task': () => import('@/modules/bounty/components/bounty-detail/facebook-mini-task.vue'),
     'coming-soon-task': () => import('@/modules/bounty/components/bounty-detail/coming-soon-task.vue'),
     'mission-ref-code': () => import('@/modules/bounty/components/independent-mission-ref-code.vue'),
+    'quiz-simple-chart': () => import('@/modules/bounty/components/bounty-detail/learn-task/simple-chart.vue'),
     VueHcaptcha,
     'connect-metamask': () => import('@/components/connect-metamask.vue'),
   },

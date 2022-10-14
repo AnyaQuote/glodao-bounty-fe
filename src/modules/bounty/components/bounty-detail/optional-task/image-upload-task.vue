@@ -11,7 +11,7 @@
       <v-col>
         <div class="pa-2 pa-sm-4">
           <div class="text-body-1 font-weight-600">
-            {{ name }}
+            {{ name }} <span v-if="!required">(Optional)</span>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon size="12" v-on="on" v-bind="attrs">mdi-help-circle-outline</v-icon>
@@ -36,16 +36,28 @@
             :value="$_get(vm.projectInfo, 'projectCover', null)"
             @change="onValueChange"
           />
-          <v-btn
-            elevation="0"
-            tile
-            class="fill-width white--text text-none linear-background-blue-main text-caption rounded"
-            @click="submitLink"
-            :loading="!task.finished && vm.isTaskUpdating"
-            :disabled="vm.shouldDisableTaskProcessing"
-          >
-            Submit
-          </v-btn>
+          <div class="d-flex justify-space-between">
+            <v-btn
+              elevation="0"
+              tile
+              class="white--text text-none linear-background-blue-main text-caption rounded"
+              @click="submitLink"
+              :loading="!task.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing"
+            >
+              Submit
+            </v-btn>
+            <v-btn
+              elevation="0"
+              tile
+              class="white--text text-none linear-background-blue-main text-caption rounded"
+              @click="submitLink"
+              :loading="!task.finished && vm.isTaskUpdating"
+              :disabled="vm.shouldDisableTaskProcessing || required"
+            >
+              I didn't found any bugs
+            </v-btn>
+          </div>
         </div>
       </v-col>
       <v-col cols="auto" class="ml-auto">
@@ -100,16 +112,28 @@
           :value="$_get(vm.projectInfo, 'projectCover', null)"
           @change="onValueChange"
         />
-        <v-btn
-          elevation="0"
-          tile
-          class="fill-width white--text text-none linear-background-blue-main text-caption rounded"
-          @click="submitLink"
-          :loading="!task.finished && vm.isTaskUpdating"
-          :disabled="vm.shouldDisableTaskProcessing"
-        >
-          Submit
-        </v-btn>
+        <div class="d-flex justify-space-between">
+          <v-btn
+            elevation="0"
+            tile
+            class="white--text text-none linear-background-blue-main text-caption rounded"
+            @click="submitLink"
+            :loading="!task.finished && vm.isTaskUpdating"
+            :disabled="vm.shouldDisableTaskProcessing"
+          >
+            Submit
+          </v-btn>
+          <v-btn
+            elevation="0"
+            tile
+            class="white--text text-none linear-background-blue-main text-caption rounded"
+            @click="submitLinkFake"
+            :loading="!task.finished && vm.isTaskUpdating"
+            :disabled="vm.shouldDisableTaskProcessing || required"
+          >
+            I didn't found any bugs
+          </v-btn>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -152,19 +176,18 @@ export default class ImageUploadTask extends Vue {
   requiredContent = get(this.task, 'requiredContent', '')
   startDate = get(this.task, 'startDate', '')
   tooltip = get(this.task, 'tooltip', '')
+  required = get(this.task, 'required', false)
   title = ''
 
   async onValueChange(value: File) {
     this.value = value
-    console.log(this.value)
     const formData = new FormData()
     formData.append('files', this.value)
     formData.append('field', 'image')
     try {
       const res = await apiService.uploadFile(formData)
-      console.log(res)
     } catch (error) {
-      console.log(error)
+      //
     }
   }
 
@@ -174,8 +197,14 @@ export default class ImageUploadTask extends Vue {
     else window.open('https://' + url, '_blank')
   }
 
+  async submitLinkFake() {
+    if (!this.required) {
+      await this.vm.submitLink('optional', ' ', this.step)
+      return
+    }
+  }
+
   async submitLink() {
-    console.log(this.value)
     if (this.value == null) snackController.error('Image cannot be empty')
     else {
       const formData = new FormData()
@@ -184,11 +213,9 @@ export default class ImageUploadTask extends Vue {
       try {
         this.vm.changeTaskUpdating(true)
         const res = await apiService.uploadFile(formData)
-        console.log(res)
-        console.log(res[0].url)
         await this.vm.submitLink('optional', res[0].url, this.step)
       } catch (error) {
-        console.log(error)
+        //
       } finally {
         this.vm.changeTaskUpdating(true)
       }

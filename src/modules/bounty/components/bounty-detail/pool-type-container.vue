@@ -211,7 +211,9 @@
                       <template v-slot:activator="{ on, attrs }">
                         <v-icon color="primary" size="18" v-bind="attrs" v-on="on">mdi-help-circle-outline</v-icon>
                       </template>
-                      <span v-if="vm.communityRewardTypeExplaination">{{ vm.communityRewardTypeExplaination }}</span>
+                      <div v-if="vm.communityRewardTypeExplaination" style="max-width: 300px">
+                        <span style="font-family: roboto">{{ vm.communityRewardTypeExplaination }}</span>
+                      </div>
                       <span v-else>Pool rewards will be divided equally among all participants</span>
                     </v-tooltip>
                   </v-sheet>

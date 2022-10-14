@@ -48,6 +48,10 @@ export class AuthStore {
     this.walletDialogInput = value
   }
   @asyncAction *saveAttachWallet() {
+    if (walletStore.chainType === 'sol') {
+      yield snackController.error('Please switch to an ethereum wallet')
+      return
+    }
     try {
       this.isWalletUpdating = true
       // const signature = yield this.signMessage(
@@ -55,7 +59,7 @@ export class AuthStore {
       //   walletStore.chainType || 'bsc',
       //   get(this.user, 'hunter.nonce', 0)
       // )
-      console.log('saveAttachWallet signature: ', 'signature')
+
       const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
         'signature',
@@ -200,7 +204,6 @@ export class AuthStore {
         return yield window.ethereum.request(request)
       } else {
         if (localdata.walletConnect) {
-          console.log('walletConnect personal_sign')
           return yield walletStore.walletConnectProvider.request({
             method: 'personal_sign',
             params: [message, wallet],
@@ -239,6 +242,10 @@ export class AuthStore {
 
   @computed get kycSessionId() {
     return get(this.user, 'kycSessionId', '')
+  }
+
+  @computed get isLoggedIn() {
+    return this.jwt !== ''
   }
 }
 

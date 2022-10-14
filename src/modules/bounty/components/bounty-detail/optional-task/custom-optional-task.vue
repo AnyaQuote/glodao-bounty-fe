@@ -18,12 +18,18 @@
             </v-tooltip>
           </div>
           <div class="text-caption mt-1" style="word-break: break-word">
-            {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text">in here</a><br />
+            {{ description }} <a :href="link" v-if="link" class="cursor-pointer blue--text" target="_blank">in here</a
+            ><br />
             <span v-if="afterLinkDescription">
-              {{ afterLinkDescription
-              }}<a :href="afterLinkDescriptionLink" v-if="afterLinkDescriptionLink" class="cursor-pointer blue--text"
+              {{ afterLinkDescription }}
+              <a
+                :href="afterLinkDescriptionLink"
+                v-if="afterLinkDescriptionLink"
+                class="cursor-pointer blue--text"
+                target="_blank"
                 >here</a
-              ><br />
+              >
+              <br />
             </span>
             <!-- <span v-if="isLinkRequired"
               >Then paste your link
@@ -49,7 +55,7 @@
                     flat
                     solo
                     class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                    :placeholder="task.stepLink || 'Enter your link here'"
+                    :placeholder="linkHint || 'Enter your link here'"
                     :value="value"
                     @input="onValueChange"
                   ></v-text-field>
@@ -138,7 +144,7 @@
                   flat
                   solo
                   class="ma-0 pa-0 text-caption neutral100 link-submit-custom-input"
-                  :placeholder="task.stepLink || 'Enter your link here'"
+                  :placeholder="linkHint || 'Enter your link here'"
                   :value="value"
                   @input="onValueChange"
                 ></v-text-field>
@@ -210,6 +216,7 @@ export default class CustomOptionalTask extends Vue {
   requiredContent = get(this.task, 'requiredContent', '')
   startDate = get(this.task, 'startDate', '')
   tooltip = get(this.task, 'tooltip', '')
+  linkHint = get(this.task, 'linkHint', '')
 
   title = ''
 

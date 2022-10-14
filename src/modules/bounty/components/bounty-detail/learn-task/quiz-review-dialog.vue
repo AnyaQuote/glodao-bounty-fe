@@ -47,7 +47,7 @@
           <div>
             <div class="font-weight-bold text-h5">Congratulations</div>
             <div>
-              This mission has success. You have {{ vm.quizReviewList.length }}/{{ vm.quizReviewList.length }} correct
+              This mission has success. You have {{ correctAnswerCount }}/{{ vm.quizReviewList.length }} correct
               answers.
             </div>
           </div>
@@ -98,7 +98,10 @@
                 :color="questionDataObj.isCorrect ? 'success' : 'error'"
               >
                 <template v-slot:label>
-                  <div class="neutral10--text">{{ option.text }}{{ questionDataObj.isCorrect }}</div>
+                  <div class="neutral10--text">
+                    {{ option.text }}
+                    <img v-if="option.image" :src="option.image" style="max-width: 100%; max-height: 200px" />
+                  </div>
                 </template>
               </v-radio>
             </v-radio-group>
@@ -159,6 +162,8 @@ export default class QuizReviewDialog extends Vue {
   _disposers: any[] = []
   inCorrectAnswerCount = 0
   restartQuizLoading = false
+  passingCriteria = 1
+  questionsPerQuiz = 10
 
   mounted() {
     this._disposers = [
@@ -166,17 +171,26 @@ export default class QuizReviewDialog extends Vue {
         () => this.vm.quizReviewList,
         () => {
           this.inCorrectAnswerCount = this.vm.quizReviewList.filter((x) => !x.isCorrect).length
+          this.passingCriteria = this.vm.quizPassingCriteria
+          this.questionsPerQuiz = this.vm.questionsPerQuiz
         }
       ),
     ]
   }
 
   get isQuizCorrect() {
-    return this.inCorrectAnswerCount === 0
+    return (
+      this.questionsPerQuiz - this.inCorrectAnswerCount >= this.passingCriteriaByQuestions ||
+      this.inCorrectAnswerCount === 0
+    )
   }
 
   get correctAnswerCount() {
-    return this.vm.quizReviewList.length - this.inCorrectAnswerCount
+    return this.questionsPerQuiz - this.inCorrectAnswerCount
+  }
+
+  get passingCriteriaByQuestions() {
+    return _.ceil(this.questionsPerQuiz * this.passingCriteria)
   }
 
   shareOnTwitter() {

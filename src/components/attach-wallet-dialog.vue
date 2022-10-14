@@ -45,7 +45,7 @@
         > -->
       </div>
       <div class="mt-3">
-        <connect-metamask class="fill-width" requiredChain="bsc" />
+        <connect-metamask class="fill-width linear-background-blue-main" requiredChain="bsc" />
       </div>
       <div class="text-start mt-3 neutral10--text">
         <i>

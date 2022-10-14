@@ -35,8 +35,15 @@
           color="error"
           outlined
         >
-          <span class="mr-1">Wrong wallet</span>
-          <v-tooltip bottom>
+          <span class="mr-1" v-if="!isLoggedIn">Not logged in</span>
+          <span class="mr-1" v-else>Wrong wallet</span>
+          <v-tooltip bottom v-if="!isLoggedIn">
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon right small v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
+            </template>
+            <span> You need to login first </span>
+          </v-tooltip>
+          <v-tooltip bottom v-else>
             <template v-slot:activator="{ on, attrs }">
               <v-icon right small v-bind="attrs" v-on="on"> mdi-help-circle-outline </v-icon>
             </template>
@@ -86,6 +93,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { localdata } from '@/helpers/local-data'
+import { authStore } from '@/stores/auth-store'
 
 @Observer
 @Component({
@@ -96,6 +104,11 @@ import { localdata } from '@/helpers/local-data'
 export default class WalletSheet extends Vue {
   @Inject() vm!: BountyDetailViewModel
   chainId = localdata.lastChain
+  authStore = authStore
+
+  get isLoggedIn() {
+    return this.authStore.isLoggedIn
+  }
 }
 </script>
 <style scoped lang="scss"></style>

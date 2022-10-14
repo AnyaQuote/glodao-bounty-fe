@@ -1,5 +1,5 @@
+import { appProvider } from '@/app-providers'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
-import { QUIZ_MIN_ANSWER_COUNT } from '@/constants'
 import { promiseHelper } from '@/helpers/promise-helper'
 import router from '@/router'
 import { apiService } from '@/services/api-service'
@@ -8,7 +8,6 @@ import * as _ from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
-import { appProvider } from '@/app-providers'
 
 const APPLY_STATUS = {
   PROCESSING: 'processing',
@@ -20,6 +19,8 @@ export class BountyLearnViewModel {
   @observable isAnswerProcessStarted = false
   @observable startProcessLoading = false
 
+  @observable taskId = ''
+  @observable quizId = ''
   @observable quizReviewDialog = false
   @observable quizReviewList: any = []
   @observable currentStep = 0
@@ -32,8 +33,15 @@ export class BountyLearnViewModel {
   @observable submitAnswerLoading = false
   _disposers: any[] = []
 
-  constructor() {
-    //
+  constructor(taskId, quizId) {
+    this.taskId = taskId
+    this.quizId = quizId
+    this.initialize()
+  }
+
+  @asyncAction *initialize() {
+    yield this.fetchTaskData(this.taskId)
+    yield this.fetchQuizData(this.quizId)
   }
 
   @action initReaction() {
@@ -87,7 +95,7 @@ export class BountyLearnViewModel {
 
   @action fetchQuizData(quizId: string) {
     apiService
-      .getQuiz(quizId)
+      .getQuiz(quizId, this.taskId)
       .then((res) => {
         this.quiz = res
         this.fetchQuizRecordData(quizId)
@@ -115,7 +123,7 @@ export class BountyLearnViewModel {
   @asyncAction *submitQuizAnswer() {
     try {
       this.submitAnswerLoading = true
-      const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList)
+      const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList, this.taskId)
       const tempAnswerList = JSON.parse(JSON.stringify(this.answerList))
       const tempQuestionList = JSON.parse(JSON.stringify(this.questionList))
 
@@ -162,7 +170,7 @@ export class BountyLearnViewModel {
   }
 
   @action getRandomQuestion() {
-    this.questionList = JSON.parse(JSON.stringify(_.sampleSize(this.quizData, QUIZ_MIN_ANSWER_COUNT)))
+    this.questionList = JSON.parse(JSON.stringify(_.sampleSize(this.quizData, this.questionsPerQuiz)))
   }
 
   @action.bound startQuizAnswerProcess() {
@@ -203,13 +211,30 @@ export class BountyLearnViewModel {
   moveToNext(id) {
     if (!this.clickedMap.get(id)) {
       this.clickedMap.set(id, id)
-      if (this.currentStep === 9 && this.clickedMap.size === 10) this.changeStep(1)
+      if (this.currentStep === this.questionList.length - 1 && this.clickedMap.size === this.questionList.length)
+        this.changeStep(1)
       else if (this.currentStep < 9) this.changeStep(1)
     }
   }
 
-  @computed get taskId() {
-    return _.get(this.task, 'id', '')
+  @computed get quizSetting() {
+    return _.find(_.get(this.task, 'data.quiz', {}), (x) => _.isEqual(x.quizId, this.quizId))
+  }
+
+  @computed get quizPassingCriteria() {
+    return _.get(this.quizSetting, 'passingCriteria', 0)
+  }
+
+  @computed get questionsPerQuiz() {
+    return _.get(this.quizSetting, 'questionsPerQuiz', 0)
+  }
+
+  @computed get quizPassingCriteriaByQuestions() {
+    return _.ceil(this.quizPassingCriteria * this.questionsPerQuiz)
+  }
+
+  @computed get quizCanRepeat() {
+    return _.get(this.quizSetting, 'canRepeat', false)
   }
 
   @computed get quizCoverImage() {
@@ -296,6 +321,6 @@ export class BountyLearnViewModel {
   }
 
   @computed get isQuizCompleted() {
-    return !_.isEmpty(this.quizRecord)
+    return !this.quizCanRepeat && !_.isEmpty(this.quizRecord)
   }
 }

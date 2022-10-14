@@ -7,18 +7,27 @@
       <div class="custom-blue-divider fill-width"></div>
       <div class="mt-7 px-8">
         <div class="text-body-2 text-center font-weight-bold">
-          Congratulations, You have done successfully the Twitter task!
+          Congratulations, You have done successfully the {{ vm.task.name }} task!
           <!-- <span class="text-capitalize">{{ vm.currentPoolType }}</span> pool! -->
         </div>
-        <div class="text-body-2 text-center font-weight-bold" v-if="vm.isInPriorityPool">
-          Your total reward: {{ vm.singlePriorityRewardAsToken | formatNumber(2, 2) }} {{ vm.rewardToken }}
+        <div
+          v-if="vm.confirmContent"
+          class="text-body-1 text-center mt-1 red--text text-decoration-underline font-italic"
+        >
+          {{ vm.confirmContent }}
         </div>
-        <div class="text-caption text-center mt-1" v-if="!vm.isInPriorityPool">
-          Your reward will be calculated exactly when the hunting pool ends. Please wait until then, we will distribute
-          it to the reward wallet address you provided!
-        </div>
-        <div class="text-caption text-center mt-1" v-else>
-          Please wait until when the hunting pool ends, we will distribute it to the reward wallet address you provided!
+        <div v-else>
+          <div class="text-body-2 text-center font-weight-bold" v-if="vm.isInPriorityPool">
+            Your total reward: {{ vm.singlePriorityRewardAsToken | formatNumber(2, 2) }} {{ vm.rewardToken }}
+          </div>
+          <div class="text-caption text-center mt-1" v-if="!vm.isInPriorityPool">
+            Your reward will be calculated exactly when the hunting pool ends. Please wait until then, we will
+            distribute it to the reward wallet address you provided!
+          </div>
+          <div class="text-caption text-center mt-1" v-else>
+            Please wait until when the hunting pool ends, we will distribute it to the reward wallet address you
+            provided!
+          </div>
         </div>
         <!-- <div class="mt-8 small-label">Please enter your reward address and perform KYC to reward</div> -->
         <div class="mt-5 text-body-2">Please enter your reward address</div>

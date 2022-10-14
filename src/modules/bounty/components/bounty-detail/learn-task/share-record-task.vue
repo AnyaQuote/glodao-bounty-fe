@@ -196,7 +196,7 @@ export default class ShareRecordTask extends Vue {
 
   mounted() {
     apiService
-      .getQuiz(this.task.quizId)
+      .getQuiz(this.task.quizId, this.task.id)
       .then((res) => {
         this.quiz = res
       })

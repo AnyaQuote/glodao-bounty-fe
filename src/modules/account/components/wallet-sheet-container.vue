@@ -96,6 +96,10 @@ export default class extends Vue {
     ]
   }
 
+  get isLoggedIn() {
+    return this.authStore.jwt !== ''
+  }
+
   beforeDestroy() {
     this.disposer.forEach((d) => d())
   }
