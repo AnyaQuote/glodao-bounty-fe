@@ -25,7 +25,6 @@ import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
 import { apiService } from '@/services/api-service'
-import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { authStore } from '@/stores/auth-store'
 import moment from 'moment'
 import _ from 'lodash-es'
@@ -56,7 +55,6 @@ export default class LearnTask extends Vue {
       .find({ ID: `${this.task.quizId}_${authStore.hunterId}_${this.vm.task.id}` })
       .then((res) => {
         if (res.length > 0) this.record = res[0]
-        console.log(this.record)
       })
   }
 

@@ -59,8 +59,6 @@ export class AuthStore {
       //   walletStore.chainType || 'bsc',
       //   get(this.user, 'hunter.nonce', 0)
       // )
-      console.log('saveAttachWallet signature: ', 'signature')
-      console.log(walletStore.chainType)
 
       const updatedHunter = yield apiService.updateWalletAddress(
         walletStore.account,
@@ -206,7 +204,6 @@ export class AuthStore {
         return yield window.ethereum.request(request)
       } else {
         if (localdata.walletConnect) {
-          console.log('walletConnect personal_sign')
           return yield walletStore.walletConnectProvider.request({
             method: 'personal_sign',
             params: [message, wallet],

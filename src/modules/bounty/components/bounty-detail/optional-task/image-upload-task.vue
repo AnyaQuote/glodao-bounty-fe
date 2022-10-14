@@ -181,15 +181,13 @@ export default class ImageUploadTask extends Vue {
 
   async onValueChange(value: File) {
     this.value = value
-    console.log(this.value)
     const formData = new FormData()
     formData.append('files', this.value)
     formData.append('field', 'image')
     try {
       const res = await apiService.uploadFile(formData)
-      console.log(res)
     } catch (error) {
-      console.log(error)
+      //
     }
   }
 
@@ -215,11 +213,9 @@ export default class ImageUploadTask extends Vue {
       try {
         this.vm.changeTaskUpdating(true)
         const res = await apiService.uploadFile(formData)
-        console.log(res)
-        console.log(res[0].url)
         await this.vm.submitLink('optional', res[0].url, this.step)
       } catch (error) {
-        console.log(error)
+        //
       } finally {
         this.vm.changeTaskUpdating(true)
       }
