@@ -1,12 +1,11 @@
 <template>
   <v-row dense no-gutters>
-    <div>Website is under maintainance</div>
-    <!-- <v-col cols="12"> -->
-    <!-- <bounty-banner></bounty-banner> -->
-    <!-- <router-link to="/donate" class="cursor-pointer">
+    <v-col cols="12">
+      <bounty-banner></bounty-banner>
+      <!-- <router-link to="/donate" class="cursor-pointer">
         <v-img :src="require('@/assets/images/donationPageBanner.jpg')"></v-img>
       </router-link> -->
-    <!-- </v-col> -->
+    </v-col>
     <!-- <v-col cols="12" v-if="authStore.jwt && vm.currentTaskList.length > 0">
       <v-container>
         <v-row>
@@ -39,7 +38,7 @@
       </v-container>
       <v-divider class="mt-8" />
     </v-col> -->
-    <!-- <v-col cols="12" v-if="vm.convertedUpcomingBountyList.length > 0">
+    <v-col cols="12" v-if="vm.convertedUpcomingBountyList.length > 0">
       <v-container>
         <bounty-upcomming :upcomingPoolList="vm.convertedUpcomingBountyList"></bounty-upcomming>
         <div class="fill-width flex-center-box text-center" v-if="vm.convertedUpcomingBountyList.length === 0">
@@ -155,7 +154,7 @@
           Tasks will be completed very soon! Take your chances and claim the rewards
         </div>
       </v-container>
-    </v-col> -->
+    </v-col>
   </v-row>
 </template>
 
