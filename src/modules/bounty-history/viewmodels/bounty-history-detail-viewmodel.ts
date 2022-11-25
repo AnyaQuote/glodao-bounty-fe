@@ -149,7 +149,6 @@ export class BountyHistoryDetailViewModel {
         }
       }
       this.relatedApplies = pageList
-      console.log(toJS(pageList))
       // const res = yield apiService.applies.find(
       //   {
       //     _where: [
