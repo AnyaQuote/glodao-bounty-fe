@@ -24,19 +24,21 @@
           </v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item v-for="(item, index) in linkData" :key="index">
-        <v-list-item-content class="row">
-          <v-list-item-title class="col col-8 text-body-2 font-weight-600 text-capitalize">
-            <v-icon size="16" class="mr-2 ml-3">mdi-check</v-icon>
-            {{ item.type }} {{ item.taskCategory }} post
-          </v-list-item-title>
-          <v-list-item-title class="col col-4">
-            <div class="bluePrimary--text cursor-pointer text-body-2" @click="openLink(item.link)">
-              Link<v-icon size="14" color="bluePrimary" class="ml-2">mdi-open-in-new</v-icon>
-            </div>
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <div>
+        <v-list-item v-for="(item, index) in linkData" :key="index">
+          <v-list-item-content class="row">
+            <v-list-item-title class="col col-8 text-body-2 font-weight-600 text-capitalize">
+              <v-icon size="16" class="mr-2 ml-3">mdi-check</v-icon>
+              {{ item.type }} {{ item.taskCategory }} post
+            </v-list-item-title>
+            <v-list-item-title class="col col-4">
+              <div class="bluePrimary--text cursor-pointer text-body-2" @click="openLink(item.link)">
+                Link<v-icon size="14" color="bluePrimary" class="ml-2">mdi-open-in-new</v-icon>
+              </div>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
     </v-list-group>
     <v-list-group
       :append-icon="null"
@@ -89,10 +91,11 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
+import { Component, Inject, Prop, Vue, Watch } from 'vue-property-decorator'
 import * as _ from 'lodash-es'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { BountyHistoryDetailViewModel } from '../viewmodels/bounty-history-detail-viewmodel'
+import { toJS } from 'mobx'
 @Observer
 @Component
 export default class ExpandableListItem extends Vue {
@@ -103,7 +106,7 @@ export default class ExpandableListItem extends Vue {
   task: any = {}
 
   mounted() {
-    this.flatArray()
+    // this.flatArray()
     this.task = this.vm.task
   }
 
@@ -118,6 +121,9 @@ export default class ExpandableListItem extends Vue {
       })
     }
     this.linkData = flattenedArr
+  }
+  @Watch('data', { immediate: true }) onDataChanged() {
+    this.flatArray()
   }
   openLink(link: string) {
     //TODO: remove this shit
