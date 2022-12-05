@@ -108,7 +108,6 @@ export default class ExpandableListItem extends Vue {
   mounted() {
     this.flatArray()
     this.task = this.vm.task
-    console.log('detail ')
   }
 
   flatArray() {
