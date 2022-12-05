@@ -107,6 +107,7 @@ export class BountyLearnViewModel {
   }
 
   @action fetchQuizRecordData(quizId) {
+    if (!authStore.hunterId) return
     apiService.quizAnswerRecords
       .find({
         ID: `${quizId}_${authStore.hunterId}`,
