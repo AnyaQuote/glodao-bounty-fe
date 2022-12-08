@@ -106,7 +106,7 @@ export default class ExpandableListItem extends Vue {
   task: any = {}
 
   mounted() {
-    // this.flatArray()
+    this.flatArray()
     this.task = this.vm.task
   }
 

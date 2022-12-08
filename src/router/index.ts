@@ -8,9 +8,9 @@ const routes: Array<RouteConfig> = [
   { path: '/', redirect: '/bounty' },
 
   {
-    path:'/donate',
-    name:'Donate',
-    component: () => import('@/modules/donate/pages/donate-page.vue')
+    path: '/donate',
+    name: 'Donate',
+    component: () => import('@/modules/donate/pages/donate-page.vue'),
   },
   {
     path: '/bounty',
