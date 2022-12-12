@@ -3,11 +3,11 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { FixedNumber } from '@ethersproject/bignumber'
 import * as _ from 'lodash-es'
-import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
+import { action, computed, IReactionDisposer, observable, reaction, toJS } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
-import fakeDemole from '../../../../fake-demole.json'
 import fakeBsclaunch from '../../../../fake-bsclaunch.json'
+import fakeDemole from '../../../../fake-demole.json'
 
 const initEmptyStepData = (task) => {
   const tempStepData = {}
@@ -119,11 +119,11 @@ export class BountyHistoryDetailViewModel {
     }
   }
 
-  @asyncAction *getRelatedApplies() {
+  @action getRelatedApplies() {
     try {
       if (_.isEmpty(this.task)) return
       let _start = ((this.page ?? 1) - 1) * PAGE_LIMIT
-      const pageList: any[] = yield []
+      const pageList: any[] = []
       let limit = 0
       let listSize = 0
       if (this.poolType === 'community') {
@@ -230,15 +230,15 @@ export class BountyHistoryDetailViewModel {
   }
 
   // TODO: remove this shit
-  @action async initFake() {
+  @asyncAction *initFake() {
     if (_.get(this.task, 'name', '') === 'Demole') this.randomList = JSON.parse(JSON.stringify(fakeDemole))
     else if (_.get(this.task, 'name', '') === 'BSClaunch') this.randomList = JSON.parse(JSON.stringify(fakeBsclaunch))
-    else await this.random()
+    else yield this.random()
   }
 
-  @action async random() {
+  @asyncAction *random() {
     loadingController.increaseRequest()
-    const res = await apiService.applies.find(
+    const res = yield apiService.applies.find(
       {
         _where: [
           {

@@ -107,6 +107,7 @@ export class BountyLearnViewModel {
   }
 
   @action fetchQuizRecordData(quizId) {
+    if (!authStore.hunterId) return
     apiService.quizAnswerRecords
       .find({
         ID: `${quizId}_${authStore.hunterId}`,
@@ -126,12 +127,9 @@ export class BountyLearnViewModel {
       const isAnswerCorrect = yield apiService.verifyQuizAnswer(this.quiz.id, this.answerList, this.taskId)
       const tempAnswerList = JSON.parse(JSON.stringify(this.answerList))
       const tempQuestionList = JSON.parse(JSON.stringify(this.questionList))
-
       this.quiz.data = isAnswerCorrect.newQuestion
-
       if (!isAnswerCorrect.status) {
         this.openQuizReviewDialog(tempQuestionList, isAnswerCorrect.wrongAnswerList)
-
         return
       }
       this.quizRecord = isAnswerCorrect.data
@@ -167,6 +165,10 @@ export class BountyLearnViewModel {
     this.isAnswerProcessStarted = false
     this.questionList = []
     this.getRandomQuestion()
+  }
+
+  @action resetQuizReviewList() {
+    this.quizReviewList = []
   }
 
   @action getRandomQuestion() {

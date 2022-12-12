@@ -212,6 +212,7 @@ export default class QuizReviewDialog extends Vue {
         this.vm.reset()
         this.vm.changeQuizReviewDialog(false)
         this.vm.changeQuizAnswerDialog(true)
+        this.vm.resetQuizReviewList()
       })
       .finally(() => {
         this.restartQuizLoading = false
