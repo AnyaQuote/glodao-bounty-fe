@@ -28,11 +28,11 @@
           <v-card class="mt-4 border-radius-8 py-6 px-2 text-center sub-card" outlined>
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div class="d-flex flex-column">
-                Current bounty
+                Lock for claiming
                 <span class="sub-title"> {{ vm.currentBounty | usd }} </span>
               </div>
               <div class="d-flex flex-column">
-                Bounty rewarded
+                Total received
                 <span class="sub-title"> {{ vm.bountyRewarded | usd }} </span>
               </div>
             </div>
