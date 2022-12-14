@@ -314,29 +314,60 @@ export class HuntingHistoryViewModel {
   }
 
   @computed get convertedHuntingHistoryList() {
-    return this.huntingList.map((apply) => {
+    let result: any = []
+    for (let index = 0; index < this.huntingList.length; index++) {
+      const apply = this.huntingList[index]
       const task = apply.task
+      if (!task) continue
       const types = keys(task.data)
       const firstTask = apply.data[types[0]]
-      return {
-        ...apply,
-        task: task,
-        id: apply.id,
-        status: apply.status,
-        name: task.name,
-        shortDescription: task.metadata?.shortDescription,
-        chainId: task.chainId,
-        type: types[0],
-        currentStep: firstTask.filter((step) => step.finished === true).length,
-        totalStep: firstTask.length,
-        coverImage: task.metadata?.coverImage,
-        startTime: apply.createdAt,
-        bountyEarn: apply.bounty ?? 0,
-        rewardToken: task.metadata?.rewardToken,
-        projectLogo: task.metadata?.projectLogo,
-        missionIndex: get(task, 'missionIndex', 0),
-      }
-    })
+      result = [
+        ...result,
+        {
+          ...apply,
+          task: task,
+          id: apply.id,
+          status: apply.status,
+          name: task.name,
+          shortDescription: task.metadata?.shortDescription,
+          chainId: task.chainId,
+          type: types[0],
+          currentStep: firstTask.filter((step) => step.finished === true).length,
+          totalStep: firstTask.length,
+          coverImage: task.metadata?.coverImage,
+          startTime: apply.createdAt,
+          bountyEarn: apply.bounty ?? 0,
+          rewardToken: task.metadata?.rewardToken,
+          projectLogo: task.metadata?.projectLogo,
+          missionIndex: get(task, 'missionIndex', 0),
+        },
+      ]
+    }
+    // return this.huntingList.map((apply) => {
+    //   const task = apply.task
+    //   if (!task) continue
+    //   const types = keys(task.data)
+    //   const firstTask = apply.data[types[0]]
+    //   return {
+    //     ...apply,
+    //     task: task,
+    //     id: apply.id,
+    //     status: apply.status,
+    //     name: task.name,
+    //     shortDescription: task.metadata?.shortDescription,
+    //     chainId: task.chainId,
+    //     type: types[0],
+    //     currentStep: firstTask.filter((step) => step.finished === true).length,
+    //     totalStep: firstTask.length,
+    //     coverImage: task.metadata?.coverImage,
+    //     startTime: apply.createdAt,
+    //     bountyEarn: apply.bounty ?? 0,
+    //     rewardToken: task.metadata?.rewardToken,
+    //     projectLogo: task.metadata?.projectLogo,
+    //     missionIndex: get(task, 'missionIndex', 0),
+    //   }
+    // })
+    return result
   }
 
   @computed get totalPageCount() {
