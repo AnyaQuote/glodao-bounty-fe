@@ -631,16 +631,6 @@
                       <div class="custom-dash-divider"></div>
                       <optional-mini-task :task="optionalTask" :step="index" />
                     </v-col>
-                    <v-col
-                      cols="12"
-                      class="py-0"
-                      :class="{
-                        'px-0': $vuetify.breakpoint.xsOnly,
-                      }"
-                    >
-                      <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Like Facebook page" icon="fab fa-facebook" />
-                    </v-col>
                   </v-sheet>
                   <v-divider></v-divider>
                   <v-row class="pa-6">
