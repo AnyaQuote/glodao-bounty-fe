@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { blockchainHandler, ChainType } from '@/blockchainHandlers'
+import { blockchainHandler } from '@/blockchainHandlers'
 import { walletStore } from '@/stores/wallet-store'
 import { Observer } from 'mobx-vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
@@ -42,7 +42,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 @Observer
 @Component
 export default class ConnectMetamask extends Vue {
-  @Prop() requiredChain!: ChainType
+  // @Prop() requiredChain!: ChainType
   @Prop() requiredChainId!: number
   @Prop({ default: '' }) connectText!: string
   @Prop({ default: '' }) switchText!: string
