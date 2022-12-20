@@ -55,7 +55,6 @@ export class BountyRewardV2ViewModel {
     loadingController.increaseRequest()
     yield Promise.all([this.loadClaimerUserInfos(), this.loadData()])
     loadingController.decreaseRequest()
-    console.log(this.balances)
   }
 
   destroy() {
@@ -73,7 +72,6 @@ export class BountyRewardV2ViewModel {
       )
       this.claimers.forEach((x) => x.loadUserInfo(address))
     }
-    console.log(this.claimers)
   }
 
   @asyncAction *claim(claimer: BountyClaimerStore) {

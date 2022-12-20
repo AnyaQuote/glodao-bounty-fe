@@ -71,7 +71,7 @@ export default class RewardClaimerV1 extends Vue {
   async claim() {
     try {
       loadingController.increaseRequest()
-      // await this.claimer.claim(walletStore.account!)
+      await this.claimer.claim(walletStore.account!)
     } catch (error) {
       console.error(error)
     } finally {
