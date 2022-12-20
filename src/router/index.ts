@@ -80,7 +80,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/bounty-reward',
     name: 'BountyRewardDashboard',
-    component: () => import('@/modules/bounty-reward/pages/bounty-reward-page.vue'),
+    component: () => import('@/modules/bounty-reward/pages/bounty-reward-v2-page.vue'),
   },
   {
     path: '/bounty/iat/:taskId',
