@@ -53,7 +53,7 @@ export class BountyClaimerStore {
 }
 
 const bountyStores = claimers
-  .filter((x) => `${x.chainId}` === process.env.VUE_APP_DONATION_CHAIN_ID)
+  .filter((x) => `${x.chainId}` === process.env.VUE_APP_CHAIN_ID)
   .map((x) => new BountyClaimerStore(x))
 
 export function getClaimerStores() {

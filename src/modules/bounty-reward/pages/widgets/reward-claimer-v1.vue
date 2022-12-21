@@ -48,11 +48,7 @@
         </v-container>
       </v-col>
       <v-col cols="12" class="mt-4">
-        <v-btn
-          class="full-width elevation-0 bluePrimary white--text"
-          @click="claim()"
-          :disabled="claimer.userClaimableAmount == 0"
-        >
+        <v-btn class="full-width elevation-0 bluePrimary white--text" @click="claim()" :disabled="!claimer.canClaim">
           Claim
         </v-btn>
       </v-col>
