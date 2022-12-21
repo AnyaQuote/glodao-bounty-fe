@@ -48,7 +48,13 @@
         </v-container>
       </v-col>
       <v-col cols="12" class="mt-4">
-        <v-btn class="full-width elevation-0 bluePrimary white--text" @click="claim()">Claim</v-btn>
+        <v-btn
+          class="full-width elevation-0 bluePrimary white--text"
+          @click="claim()"
+          :disabled="claimer.userClaimableAmount == 0"
+        >
+          Claim
+        </v-btn>
       </v-col>
     </v-row>
   </v-card>
@@ -56,6 +62,7 @@
 
 <script lang="ts">
 import { loadingController } from '@/components/global-loading/global-loading-controller'
+import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { BountyClaimerStore } from '@/stores/bounty-claimer-stores'
 import { walletStore } from '@/stores/wallet-store'
 import { Observer } from 'mobx-vue'
@@ -73,7 +80,7 @@ export default class RewardClaimerV1 extends Vue {
       loadingController.increaseRequest()
       await this.claimer.claim(walletStore.account!)
     } catch (error) {
-      console.error(error)
+      snackController.error(error as string)
     } finally {
       loadingController.decreaseRequest()
     }
