@@ -38,9 +38,11 @@ export class ClaimerEvmContract {
   }
 
   injectProvider(web3: Web3) {
-    this.web3 = web3
-    this.contract = new web3.eth.Contract(claimerAbi as any, this.info.contract)
-    this.tokenContract.injectProvider(web3)
+    if ((web3 as any).chainId === this.info.chainId) {
+      this.web3 = web3
+      this.contract = new web3.eth.Contract(claimerAbi as any, this.info.contract)
+      this.tokenContract.injectProvider(web3)
+    }
   }
 
   async getUserInfo(address: string) {
