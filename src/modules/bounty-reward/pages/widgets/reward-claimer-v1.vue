@@ -1,5 +1,5 @@
 <template>
-  <v-card style="width: 450px" class="pa-6">
+  <v-card style="width: 450px" class="pa-6" color="neutral100">
     <v-row dense no-gutters>
       <v-col cols="12">
         <div class="d-flex">
@@ -7,7 +7,7 @@
             <v-img :src="require('@/assets/images/busd-logo.png')"></v-img>
           </v-avatar>
           <div class="ml-2 text-truncate">
-            <div class="titile-h4 text-truncate">Xmax #458 Prize</div>
+            <div class="titile-h4 text-truncate">Xmas #458 Prize</div>
             <div class="d-flex text-truncate">
               <span class="text-truncate paragraph-body-bold">
                 {{ claimer.claimerInfo.name }}
@@ -18,7 +18,7 @@
         </div>
       </v-col>
       <v-col cols="12" class="mt-4">
-        <v-container class="blue lighten-1 rounded-lg pa-6">
+        <v-container class="blue lighten-3 rounded-lg pa-6">
           <v-row dense no-gutters>
             <v-col cols="12" dense no-gutters>
               <div class="d-flex justify-space-between">
