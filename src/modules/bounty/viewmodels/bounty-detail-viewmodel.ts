@@ -103,6 +103,11 @@ export class BountyDetailViewModel {
   disposes: IReactionDisposer[] = []
 
   constructor() {
+    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
+    this.initReaction()
+  }
+
+  @action initReaction() {
     this.disposes = [
       reaction(
         () => this.taskId,
@@ -130,7 +135,6 @@ export class BountyDetailViewModel {
         }
       ),
     ]
-    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
 
   destroyReaction() {
