@@ -40,7 +40,9 @@
               <div class="font-weight-bold" v-if="!isRewardTBD && shouldShowValueInstead">
                 ${{ value | formatNumber(2, 2) }}
               </div>
-              <div class="font-weight-bold" v-else-if="!shouldShowValueInstead">{{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}</div>
+              <div class="font-weight-bold" v-else-if="!shouldShowValueInstead">
+                {{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}
+              </div>
               <div class="font-weight-bold" v-else>TBA</div>
             </div>
             <div class="d-flex justify-space-between mt-2">
@@ -85,8 +87,8 @@ export default class BountyCard extends Vue {
   isEnded = moment(this.endTime).isBefore(moment())
   projectLogo = this.metadata?.projectLogo ?? ''
   missionType = get(this.task, 'type', '')
-  optionalTokens = get(this.task, 'optionalTokens', [])
-  shouldShowValueInstead = this.optionalTokens.length > 0
+  optionalTokens = get(this.task, 'optionalTokens', []) ?? []
+  shouldShowValueInstead = this.optionalTokens?.length > 0
 
   mounted() {
     const tempBaseTokenValue = FixedNumber.from(`${this.task.rewardAmount}`).mulUnsafe(
