@@ -178,6 +178,7 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
+import { BountyMixViewModel } from '@/modules/bounty/viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -186,7 +187,7 @@ import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-v
   },
 })
 export default class QuizDialog extends Vue {
-  @Inject() vm!: BountyLearnViewModel
+  @Inject() vm!: BountyLearnViewModel | BountyMixViewModel
 }
 </script>
 

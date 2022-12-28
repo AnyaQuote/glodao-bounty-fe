@@ -134,6 +134,7 @@ import { get } from 'lodash-es'
 import { apiService } from '@/services/api-service'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { authStore } from '@/stores/auth-store'
+import { BountyMixViewModel } from '@/modules/bounty/viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -142,7 +143,7 @@ import { authStore } from '@/stores/auth-store'
   },
 })
 export default class LearnTask extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) task!: any
   @Prop({ required: true }) step!: number
   quiz: any = {}

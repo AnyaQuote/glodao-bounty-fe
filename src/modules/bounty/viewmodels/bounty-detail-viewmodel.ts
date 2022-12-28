@@ -49,6 +49,11 @@ export interface SharePerson {
   link: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IBaseDetailViewModel {
+  //
+}
+
 export class BountyDetailViewModel {
   @observable breadcrumbsItems = DEFAULT_BREADCRUMBS
   @observable hcaptchaSubmitToken = ''
@@ -103,6 +108,11 @@ export class BountyDetailViewModel {
   disposes: IReactionDisposer[] = []
 
   constructor() {
+    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
+    this.initReaction()
+  }
+
+  @action initReaction() {
     this.disposes = [
       reaction(
         () => this.taskId,
@@ -130,7 +140,6 @@ export class BountyDetailViewModel {
         }
       ),
     ]
-    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
 
   destroyReaction() {

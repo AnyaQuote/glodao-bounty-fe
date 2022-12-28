@@ -105,6 +105,7 @@ import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
 import { authStore } from '@/stores/auth-store'
+import { BountyMixViewModel } from '@/modules/bounty/viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -114,7 +115,7 @@ import { authStore } from '@/stores/auth-store'
   },
 })
 export default class TelegramFollowTask extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) telegramTask!: any
   @Prop({ required: true }) step!: number
   type = get(this.telegramTask, 'type', '')

@@ -88,6 +88,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/bounty/pages/bounty-app-trial.vue'),
   },
   {
+    path: '/bounty/mix/:taskId',
+    name: 'BountyMixDetail',
+    component: () => import('@/modules/bounty/pages/bounty-mix.vue'),
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: () => import('@/modules/error/pages/coming-soon.vue'),

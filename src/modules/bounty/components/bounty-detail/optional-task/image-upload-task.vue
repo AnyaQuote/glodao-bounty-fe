@@ -148,6 +148,7 @@ import { get } from 'lodash-es'
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { apiService } from '@/services/api-service'
+import { BountyMixViewModel } from '@/modules/bounty/viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -160,7 +161,7 @@ import { apiService } from '@/services/api-service'
 export default class ImageUploadTask extends Vue {
   TWEET_MIN_WORDS_COUNT = TWEET_MIN_WORDS_COUNT
   MAX_IMAGE_FILE_SIZE = MAX_IMAGE_FILE_SIZE
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) task!: any
   @Prop({ required: true }) step!: number
   type = get(this.task, 'type', '')

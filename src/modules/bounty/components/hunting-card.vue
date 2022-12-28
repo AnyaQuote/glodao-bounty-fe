@@ -208,6 +208,8 @@ export default class HuntingTimeCard extends Vue {
   openLink() {
     if (this.missionType === MissionType.APP_TRIAL) {
       this.$router.push(`/bounty/iat/${this.id}`)
+    } else if (this.missionType === MissionType.MIX) {
+      this.$router.push(`/bounty/mix/${this.id}`)
     } else {
       this.$router.push(`/bounty/${this.id}`)
     }

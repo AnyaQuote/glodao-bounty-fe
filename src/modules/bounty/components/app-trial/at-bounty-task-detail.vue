@@ -32,6 +32,7 @@
           <at-task-status :task="task" />
           <v-divider class="my-4 dashed-border" />
         </div>
+        <social-task-container />
         <!-- --------------------- TASK STATUS LIST END ----------------------- -->
 
         <!-- --------------------- CONFIRM COMPLETE BUTTON START -------------- -->
@@ -57,15 +58,17 @@
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewmodel'
+import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 
 @Observer
 @Component({
   components: {
     'at-task-status': () => import('./at-task-status.vue'),
+    'social-task-container': () => import('@/modules/bounty/components/bounty-detail/social-task-container.vue'),
   },
 })
 export default class AppTrialBountyTaskDetail extends Vue {
-  @Inject() vm!: BountyAppTrialViewModel
+  @Inject() vm!: IBaseDetailViewModel
 }
 </script>
 

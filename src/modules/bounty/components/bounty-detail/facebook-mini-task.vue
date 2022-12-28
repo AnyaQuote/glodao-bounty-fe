@@ -9,6 +9,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -16,8 +17,8 @@ import { get } from 'lodash-es'
     'follow-task': () => import('@/modules/bounty/components/bounty-detail/facebook-task/follow-task.vue'),
   },
 })
-export default class DiscordMiniTask extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+export default class FacebookMiniTask extends Vue {
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) facebookTask!: any
   @Prop({ required: true }) step!: number
   type = get(this.facebookTask, 'type', '')

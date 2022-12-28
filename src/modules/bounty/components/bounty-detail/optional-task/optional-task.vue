@@ -140,6 +140,7 @@
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { TWEET_MIN_WORDS_COUNT } from '@/constants'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
+import { BountyMixViewModel } from '@/modules/bounty/viewmodels/bounty-mix-viewmodel'
 import { get } from 'lodash-es'
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
@@ -153,7 +154,7 @@ import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 })
 export default class OptionalTask extends Vue {
   TWEET_MIN_WORDS_COUNT = TWEET_MIN_WORDS_COUNT
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) task!: any
   @Prop({ required: true }) step!: number
   type = get(this.task, 'type', '')

@@ -7,12 +7,12 @@ import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get, isEmpty, merge, toNumber } from 'lodash-es'
-import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
+import { IReactionDisposer, action, computed, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
-import { IBaseDetailViewModel } from './bounty-detail-viewmodel'
+import { BountyDetailViewModel, IBaseDetailViewModel } from './bounty-detail-viewmodel'
 
-export class BountyAppTrialViewModel implements IBaseDetailViewModel {
+export class BountyMixViewModel extends BountyDetailViewModel implements IBaseDetailViewModel {
   private _api = apiService
   private _auth = authStore
   private _snackbar = snackController
@@ -48,6 +48,7 @@ export class BountyAppTrialViewModel implements IBaseDetailViewModel {
   private _vueHCaptchaCallback: any
 
   constructor() {
+    super()
     this._disposer = [
       reaction(
         () => this.taskId,
@@ -314,10 +315,6 @@ export class BountyAppTrialViewModel implements IBaseDetailViewModel {
 
   @computed get shouldDisableTaskProcessing() {
     return this.isTaskEnded || !this.isTaskStarted
-  }
-
-  @computed get hunterId() {
-    return get(this._auth, 'user.hunter.id', '')
   }
 
   @computed get breadcrumbItems() {
