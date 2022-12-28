@@ -12,7 +12,7 @@
         <at-bounty-info />
         <at-user-form />
         <at-app-link />
-        <at-bounty-task />
+        <at-bounty-task :shouldShowInfo="false" />
         <at-app-info />
       </v-col>
     </v-row>

@@ -15,7 +15,12 @@
     <!-- ======================= TASK STATS END ========================= -->
     <div class="mx-0 mx-sm-3 my-2 my-sm-0" />
     <!-- ======================= POOL STATS START ======================= -->
-    <v-sheet class="order-first order-sm-last neutral100--bg align-self-sm-start" rounded="xl" outlined>
+    <v-sheet
+      class="order-first order-sm-last neutral100--bg align-self-sm-start"
+      rounded="xl"
+      outlined
+      v-if="shouldShowInfo"
+    >
       <div class="pa-4 pa-sm-6 rounded-t-xl">
         <div class="text-h5 font-weight-bold bluePrimary--text mb-6">Pool update</div>
         <div class="d-flex align-center text-h6 justify-space-between">
@@ -48,7 +53,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Inject, Vue } from 'vue-property-decorator'
+import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewmodel'
 import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 
@@ -61,6 +66,7 @@ import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 })
 export default class AppTrialBountyTask extends Vue {
   @Inject() vm!: IBaseDetailViewModel
+  @Prop() shouldShowInfo = true
 }
 </script>
 
