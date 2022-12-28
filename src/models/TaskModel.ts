@@ -70,4 +70,5 @@ export enum MissionType {
   APP_TRIAL = 'iat',
   LUCKY = 'lucky',
   ACTIVE = 'active',
+  MIX = 'mix',
 }
