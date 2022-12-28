@@ -35,6 +35,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
 import { Observer } from 'mobx-vue'
 import { Component, Provide, Ref, Vue, Watch } from 'vue-property-decorator'
 import { BountyAppTrialViewModel } from '../viewmodels/bounty-app-trial-viewmodel'
+import { BountyMixViewModel } from '../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -49,10 +50,11 @@ import { BountyAppTrialViewModel } from '../viewmodels/bounty-app-trial-viewmode
     're-captcha-dialog': () => import('../../bounty/components/bounty-detail/recaptcha-dialog.vue'),
     'confirm-and-earn-dialog': () => import('../components/app-trial/confirm-and-earn-dialog.vue'),
     VueHcaptcha,
+    'social-task-container': () => import('@/modules/bounty/components/bounty-detail/social-task-container.vue'),
   },
 })
-export default class BountyAppTrialPage extends Vue {
-  @Provide() vm = new BountyAppTrialViewModel()
+export default class BountyMixDetailPage extends Vue {
+  @Provide() vm = new BountyMixViewModel()
   @Ref('vueHcaptcha') readonly vueHcaptcha!: VueHcaptcha
   @Watch('$route.params.taskId', { immediate: true })
   onIdChanged(val: string) {

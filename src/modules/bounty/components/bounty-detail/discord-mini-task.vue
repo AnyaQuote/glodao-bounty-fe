@@ -9,6 +9,7 @@ import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { get } from 'lodash-es'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -17,7 +18,7 @@ import { get } from 'lodash-es'
   },
 })
 export default class DiscordMiniTask extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) discordTask!: any
   @Prop({ required: true }) step!: number
   type = get(this.discordTask, 'type', '')

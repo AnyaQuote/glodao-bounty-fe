@@ -94,6 +94,7 @@ import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
 import { localdata } from '@/helpers/local-data'
 import { authStore } from '@/stores/auth-store'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -102,7 +103,7 @@ import { authStore } from '@/stores/auth-store'
   },
 })
 export default class WalletSheet extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   chainId = localdata.lastChain
   authStore = authStore
 

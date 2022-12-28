@@ -38,6 +38,7 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel, HUNTING } from '../../viewmodels/bounty-detail-viewmodel'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -46,7 +47,7 @@ import { BountyDetailViewModel, HUNTING } from '../../viewmodels/bounty-detail-v
   },
 })
 export default class BountyDetail extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
   @Prop({ required: true }) twitterTask!: any
   @Prop({ required: true }) step!: number
   value = this.twitterTask.stepLink ?? ''

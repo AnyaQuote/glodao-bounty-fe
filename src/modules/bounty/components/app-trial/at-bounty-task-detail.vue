@@ -32,6 +32,7 @@
           <at-task-status :task="task" />
           <v-divider class="my-4 dashed-border" />
         </div>
+        <social-task-container />
         <!-- --------------------- TASK STATUS LIST END ----------------------- -->
 
         <!-- --------------------- CONFIRM COMPLETE BUTTON START -------------- -->
@@ -63,6 +64,7 @@ import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 @Component({
   components: {
     'at-task-status': () => import('./at-task-status.vue'),
+    'social-task-container': () => import('@/modules/bounty/components/bounty-detail/social-task-container.vue'),
   },
 })
 export default class AppTrialBountyTaskDetail extends Vue {
