@@ -57,6 +57,7 @@
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewmodel'
+import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 
 @Observer
 @Component({
@@ -65,7 +66,7 @@ import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewm
   },
 })
 export default class AppTrialBountyTaskDetail extends Vue {
-  @Inject() vm!: BountyAppTrialViewModel
+  @Inject() vm!: IBaseDetailViewModel
 }
 </script>
 

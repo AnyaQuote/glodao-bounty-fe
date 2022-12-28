@@ -49,6 +49,11 @@ export interface SharePerson {
   link: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IBaseDetailViewModel {
+  //
+}
+
 export class BountyDetailViewModel {
   @observable breadcrumbsItems = DEFAULT_BREADCRUMBS
   @observable hcaptchaSubmitToken = ''

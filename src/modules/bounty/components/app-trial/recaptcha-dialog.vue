@@ -30,6 +30,8 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
 
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewmodel'
+import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
@@ -39,7 +41,7 @@ import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewm
   },
 })
 export default class RecaptchaDialog extends Vue {
-  @Inject() vm!: BountyAppTrialViewModel
+  @Inject() vm!: BountyAppTrialViewModel | BountyMixViewModel
 
   reset() {
     this.vm.changeRecaptchaConfirm(false)
