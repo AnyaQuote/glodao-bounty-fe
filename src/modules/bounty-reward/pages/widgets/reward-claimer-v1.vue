@@ -7,7 +7,7 @@
             <v-img :src="require('@/assets/images/busd-logo.png')"></v-img>
           </v-avatar>
           <div class="ml-2 text-truncate">
-            <div class="titile-h4 text-truncate">Xmas #458 Prize</div>
+            <div class="titile-h4 text-truncate">Xmas#458 + NewYear#481 + #500 Prize</div>
             <div class="d-flex text-truncate">
               <span class="text-truncate paragraph-body-bold">
                 {{ claimer.claimerInfo.name }}
