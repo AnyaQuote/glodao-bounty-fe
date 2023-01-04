@@ -3,7 +3,7 @@ import router from '@/router'
 import { apiService } from '@/services/api-service'
 import { ceil, get, orderBy } from 'lodash-es'
 import { action, computed, observable, reaction } from 'mobx'
-import { asyncAction, IDisposer } from 'mobx-utils'
+import { IDisposer, asyncAction } from 'mobx-utils'
 import moment from 'moment'
 
 const PAGE_LIMIT = 6
@@ -177,9 +177,9 @@ export class BountyHistoryViewModel {
         { _limit: 5 }
       )
       .then((res) => {
-        this.suggestedList = res.map((item:any) =>({
+        this.suggestedList = res.map((item: any) => ({
           ...item,
-          name:item.name+' #'+item.missionIndex
+          name: item.name + ' #' + item.missionIndex,
         }))
       })
       .catch((err) => {
@@ -187,9 +187,7 @@ export class BountyHistoryViewModel {
       })
       .finally(() => {
         this.taskNameInputLoading = false
-        
       })
-      
   }
 
   @action.bound goToTaskDetailScreen(id) {
@@ -218,7 +216,7 @@ export class BountyHistoryViewModel {
   }
 
   @computed get convertedBountyList() {
-    return orderBy(this.bountyList, 'missionIndex', ['desc']).map((bounty) => {
+    return orderBy(this.bountyList, 'endTime', ['desc']).map((bounty) => {
       return {
         ...bounty,
         name: bounty.name,
