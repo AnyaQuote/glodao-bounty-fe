@@ -172,6 +172,9 @@
           <div class="">
             <mission-ref-code />
           </div>
+          <div class="title-2">
+            Token contract address: <span class="font-weight-regular">{{ vm.tokenContractAddress }}</span>
+          </div>
           <div v-if="vm.missionType === 'learn'">
             <v-col
               cols="12"
