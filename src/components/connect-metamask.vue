@@ -14,7 +14,7 @@
     <span>{{ connectText || 'Connect Wallet' }}</span>
   </v-btn>
   <v-btn
-    class="text-none btn-text rounded"
+    class="text-none btn-text linear-background-blue-main rounded white--text"
     :class="applyClass"
     :disabled="disabled"
     depressed
