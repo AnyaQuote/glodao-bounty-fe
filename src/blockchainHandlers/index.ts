@@ -20,7 +20,7 @@ export interface MarketplaceOrder {
 }
 
 const getChainConfig = (chainId: any) => {
-  chainId = isNumber(chainId) ? +chainId : chainId
+  chainId = +chainId || chainId
   let rpc = ''
   let name = ''
   let explorer = ''
@@ -45,7 +45,7 @@ const getChainConfig = (chainId: any) => {
       break
     case 97:
       name = 'BSC TestNET'
-      rpc = 'https://data-seed-prebsc-2-s2.binance.org:8545/'
+      rpc = 'https://data-seed-prebsc-2-s3.binance.org:8545/'
       explorer = 'https://testnet.bscscan.com/'
       break
     case 103:
@@ -142,7 +142,7 @@ function etherBatchRequest(web3: Web3, methods: any[]) {
   const tasks = Promise.all(
     methods.map(
       (method) =>
-        new Promise((resolve, reject) => {
+        new Promise<any>((resolve, reject) => {
           batch.add(
             method.call.request({}, function (error, result) {
               if (error) {

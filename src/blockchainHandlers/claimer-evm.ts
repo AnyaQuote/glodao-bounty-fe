@@ -1,11 +1,20 @@
 import { bnHelper } from '@/helpers/bignumber-helper'
 import { BountyClaimerInfo } from '@/stores/bounty-claimer-stores'
+import { FixedNumber } from '@ethersproject/bignumber'
 import Web3 from 'web3'
 import { blockchainHandler } from '.'
 import claimerAbi from './abis/claimer.abi.json'
 import { Erc20Contract } from './erc20-contract'
 
-export class ClaimerEvmContract {
+export interface IClaimerEvm {
+  initAsync()
+  injectProvider(web3: Web3)
+  claim(address: string)
+  getUserInfo(address: string): Promise<{ amount: FixedNumber; claimedAmount: FixedNumber }>
+  getUserInfo(address: string, force: boolean): Promise<{ amount: FixedNumber; claimedAmount: FixedNumber }>
+}
+
+export class ClaimerEvmContract implements IClaimerEvm {
   contract: any
   tokenContract!: Erc20Contract
   tokenDecimals!: number
@@ -45,7 +54,7 @@ export class ClaimerEvmContract {
     }
   }
 
-  async getUserInfo(address: string) {
+  async getUserInfo(address: string, force = false) {
     const methods = this.contract.methods
     const { amount, claimedAmount } = await methods.userInfos(address).call()
     return {

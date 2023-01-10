@@ -7,7 +7,7 @@ import { BountyClaimerStore, getClaimerStores } from '@/stores/bounty-claimer-st
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get } from 'lodash-es'
-import { IReactionDisposer, computed, observable, reaction } from 'mobx'
+import { computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 // decimals
 // :
@@ -32,7 +32,7 @@ export class BountyRewardV2ViewModel {
   @observable slicedRewardHistories = []
   @observable rewards: any = []
 
-  claimers = getClaimerStores()
+  @observable claimers: BountyClaimerStore[] = []
 
   constructor() {
     this.firstInit()
@@ -64,6 +64,7 @@ export class BountyRewardV2ViewModel {
   @asyncAction *loadClaimerUserInfos() {
     const address = walletStore.account
     if (address) {
+      this.claimers = yield getClaimerStores()
       yield Promise.all(
         this.claimers.map((x) => {
           x.contract.injectProvider(walletStore.web3!)
