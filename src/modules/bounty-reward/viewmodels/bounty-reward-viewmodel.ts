@@ -16,7 +16,7 @@ export class BountyRewardViewModel {
   @observable slicedRewardHistories = []
   @observable rewards: any = []
 
-  claimers = getClaimerStores()
+  @observable claimers: BountyClaimerStore[] = []
 
   constructor() {
     if (authStore.registeredWallet) this.loadData()
@@ -42,6 +42,7 @@ export class BountyRewardViewModel {
   @asyncAction *loadClaimerUserInfos() {
     const address = walletStore.account
     if (address) {
+      this.claimers = yield getClaimerStores()
       yield Promise.all(
         this.claimers.map((x) => {
           x.contract.injectProvider(walletStore.web3!)

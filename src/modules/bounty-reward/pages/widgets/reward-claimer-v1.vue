@@ -7,7 +7,7 @@
             <v-img :src="require('@/assets/images/busd-logo.png')"></v-img>
           </v-avatar>
           <div class="ml-2 text-truncate">
-            <div class="titile-h4 text-truncate">BUSD reward from missions</div>
+            <div class="titile-h4 text-truncate">{{ claimer.claimerInfo.poolName }}</div>
             <div class="d-flex text-truncate">
               <span class="text-truncate paragraph-body-bold">
                 {{ claimer.claimerInfo.name }}
@@ -64,7 +64,7 @@ import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { BountyClaimerStore } from '@/stores/bounty-claimer-stores'
 import { walletStore } from '@/stores/wallet-store'
 import { Observer } from 'mobx-vue'
-import { Component, Prop, Provide, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Observer
 @Component({
