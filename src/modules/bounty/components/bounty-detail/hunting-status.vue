@@ -47,13 +47,14 @@
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
   components: {},
 })
 export default class HuntingStatusSheet extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
 }
 </script>
 <style scoped lang="scss">

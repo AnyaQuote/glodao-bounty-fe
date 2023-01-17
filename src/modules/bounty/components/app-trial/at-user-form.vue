@@ -43,11 +43,12 @@
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
 import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewmodel'
+import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 
 @Observer
 @Component
 export default class AppTrialUserRequirementForm extends Vue {
-  @Inject() vm!: BountyAppTrialViewModel
+  @Inject() vm!: IBaseDetailViewModel
 }
 </script>
 

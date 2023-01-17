@@ -9,7 +9,7 @@ import { authStore } from '@/stores/auth-store'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { divide, get, gte, isEmpty, isEqual, keys, merge, subtract, sumBy, uniqBy } from 'lodash-es'
-import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
+import { IReactionDisposer, action, computed, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
 import web3 from 'web3'
@@ -47,6 +47,11 @@ export interface SharePerson {
   name: string
   time: string
   link: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IBaseDetailViewModel {
+  //
 }
 
 export class BountyDetailViewModel {
@@ -103,6 +108,11 @@ export class BountyDetailViewModel {
   disposes: IReactionDisposer[] = []
 
   constructor() {
+    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
+    this.initReaction()
+  }
+
+  @action initReaction() {
     this.disposes = [
       reaction(
         () => this.taskId,
@@ -130,7 +140,6 @@ export class BountyDetailViewModel {
         }
       ),
     ]
-    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
   }
 
   destroyReaction() {
@@ -1061,6 +1070,10 @@ export class BountyDetailViewModel {
 
   @computed get metadata() {
     return get(this.task, 'metadata', {})
+  }
+
+  @computed get tokenContractAddress() {
+    return get(this.metadata, 'tokenContractAddress', '') || 'TBA'
   }
 
   @computed get confirmContent() {

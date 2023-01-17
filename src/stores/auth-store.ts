@@ -148,8 +148,13 @@ export class AuthStore {
       this.changeUser(user)
       this.changeTwitterLoginDialog(false)
       localdata.referralCode = ''
-    } catch (error) {
-      snackController.error(get(error, 'response.data.message', '') || (error as string))
+    } catch (error: any) {
+      const errorMessage = get(error, 'response.data.message', '')
+      if (errorMessage) {
+        snackController.error(errorMessage)
+      } else {
+        snackController.error(error as string)
+      }
     } finally {
       router.push('/bounty').catch(() => {
         //

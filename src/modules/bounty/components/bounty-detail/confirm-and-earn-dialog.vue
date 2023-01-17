@@ -91,13 +91,14 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
+import { BountyMixViewModel } from '../../viewmodels/bounty-mix-viewmodel'
 
 @Observer
 @Component({
   components: {},
 })
-export default class Farming extends Vue {
-  @Inject() vm!: BountyDetailViewModel
+export default class ConfirmAndEarnDialog extends Vue {
+  @Inject() vm!: BountyDetailViewModel | BountyMixViewModel
 }
 </script>
 

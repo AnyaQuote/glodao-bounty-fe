@@ -74,6 +74,24 @@
             :class="{
               'text-body-1': $vuetify.breakpoint.smAndDown,
             }"
+          >
+            {{ value | usdCustom(2, 2) }}
+          </div>
+        </v-col>
+        <v-col cols="6">
+          <div
+            class="neutral10--text font-size-20"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            Token
+          </div>
+          <div
+            class="font-weight-bold mt-1 font-size-28 text-truncate"
+            :class="{
+              'text-body-1': $vuetify.breakpoint.smAndDown,
+            }"
             v-if="isAMA"
           >
             $450 + 30 NFT
@@ -94,7 +112,7 @@
             }"
             v-else-if="!shouldShowValueInstead"
           >
-            {{ rewardAmount | formatNumber(2,2) }} {{ tokenName }}
+            {{ rewardAmount | formatNumber(2, 2) }} {{ tokenName }}
           </div>
           <div
             class="font-weight-bold mt-1 font-size-28 text-truncate"
@@ -190,6 +208,8 @@ export default class HuntingTimeCard extends Vue {
   openLink() {
     if (this.missionType === MissionType.APP_TRIAL) {
       this.$router.push(`/bounty/iat/${this.id}`)
+    } else if (this.missionType === MissionType.MIX) {
+      this.$router.push(`/bounty/mix/${this.id}`)
     } else {
       this.$router.push(`/bounty/${this.id}`)
     }

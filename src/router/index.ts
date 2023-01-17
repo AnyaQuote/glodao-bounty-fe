@@ -8,9 +8,9 @@ const routes: Array<RouteConfig> = [
   { path: '/', redirect: '/bounty' },
 
   {
-    path:'/donate',
-    name:'Donate',
-    component: () => import('@/modules/donate/pages/donate-page.vue')
+    path: '/donate',
+    name: 'Donate',
+    component: () => import('@/modules/donate/pages/donate-page.vue'),
   },
   {
     path: '/bounty',
@@ -80,12 +80,17 @@ const routes: Array<RouteConfig> = [
   {
     path: '/bounty-reward',
     name: 'BountyRewardDashboard',
-    component: () => import('@/modules/bounty-reward/pages/bounty-reward-page.vue'),
+    component: () => import('@/modules/bounty-reward/pages/bounty-reward-v2-page.vue'),
   },
   {
     path: '/bounty/iat/:taskId',
     name: 'BountyAppTrialDetail',
     component: () => import('@/modules/bounty/pages/bounty-app-trial.vue'),
+  },
+  {
+    path: '/bounty/mix/:taskId',
+    name: 'BountyMixDetail',
+    component: () => import('@/modules/bounty/pages/bounty-mix.vue'),
   },
   {
     path: '*',

@@ -1,0 +1,16 @@
+[
+  {
+    "chainId": 97,
+    "poolName": "Xmas#458 + NewYear#481 + #500 Prize",
+    "name": "BUSD",
+    "token": "0x1FA6283ec7fBb012407E7A5FC44a78B065b2a1cf",
+    "contract": "0xbd3FAd880ce8D7D49E1BED7f0704279467335A5D"
+  },
+  {
+    "chainId": 56,
+    "poolName": "Xmas#458 + NewYear#481 + #500 Prize",
+    "name": "BUSD",
+    "token": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "contract": "0xAfc6a2c90Fc1a2F0b5d5Fcb878B30379F18DA992"
+  }
+]

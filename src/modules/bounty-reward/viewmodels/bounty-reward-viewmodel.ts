@@ -1,12 +1,13 @@
 import { Zero } from '@/constants'
+import { bigNumberHelper } from '@/helpers/bignumber-helper'
 import { apiService } from '@/services/api-service'
+import { authStore } from '@/stores/auth-store'
+import { BountyClaimerStore, getClaimerStores } from '@/stores/bounty-claimer-stores'
 import { walletStore } from '@/stores/wallet-store'
 import { FixedNumber } from '@ethersproject/bignumber'
 import { get } from 'lodash-es'
 import { computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
-import { bigNumberHelper } from '@/helpers/bignumber-helper'
-import { authStore } from '@/stores/auth-store'
 
 export class BountyRewardViewModel {
   _disposers: IReactionDisposer[] = []
@@ -14,6 +15,8 @@ export class BountyRewardViewModel {
   @observable bountyRewarded = Zero
   @observable slicedRewardHistories = []
   @observable rewards: any = []
+
+  @observable claimers: BountyClaimerStore[] = []
 
   constructor() {
     if (authStore.registeredWallet) this.loadData()
@@ -23,12 +26,35 @@ export class BountyRewardViewModel {
         () => {
           if (authStore.registeredWallet) this.loadData()
         }
+      ),
+      reaction(
+        () => walletStore.account,
+        () => this.loadClaimerUserInfos(),
+        { fireImmediately: true }
       )
     )
   }
 
   destroy() {
     this._disposers.forEach((d) => d())
+  }
+
+  @asyncAction *loadClaimerUserInfos() {
+    const address = walletStore.account
+    if (address) {
+      this.claimers = yield getClaimerStores()
+      yield Promise.all(
+        this.claimers.map((x) => {
+          x.contract.injectProvider(walletStore.web3!)
+          return x.contract.initAsync()
+        })
+      )
+      this.claimers.forEach((x) => x.loadUserInfo(address))
+    }
+  }
+
+  @asyncAction *claim(claimer: BountyClaimerStore) {
+    yield claimer.claim(walletStore.account!)
   }
 
   @asyncAction *loadData() {

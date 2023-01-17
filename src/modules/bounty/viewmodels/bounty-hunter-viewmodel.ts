@@ -79,7 +79,12 @@ export class BountyHunterViewModel {
       this.activeBountyList = yield apiService.tasks.find({ endTime_gt: moment().toISOString() })
     } catch (error) {
       this.activeBountyList = []
-      snackController.error(error as string)
+      const errorMessage = get(error, 'response.data.message', '')
+      if (errorMessage) {
+        snackController.error(errorMessage)
+      } else {
+        snackController.error(error as string)
+      }
     }
   }
 
@@ -115,7 +120,12 @@ export class BountyHunterViewModel {
       this.page += 1
     } catch (error) {
       this.bountyList = []
-      snackController.error(error as string)
+      const errorMessage = get(error, 'response.data.message', '')
+      if (errorMessage) {
+        snackController.error(errorMessage)
+      } else {
+        snackController.error(error as string)
+      }
     }
   }
 
@@ -133,7 +143,12 @@ export class BountyHunterViewModel {
       this.currentApplies = res
     } catch (error) {
       this.currentApplies = []
-      snackController.error(error as string)
+      const errorMessage = get(error, 'response.data.message', '')
+      if (errorMessage) {
+        snackController.error(errorMessage)
+      } else {
+        snackController.error(error as string)
+      }
     }
   }
 
@@ -163,6 +178,7 @@ export class BountyHunterViewModel {
         bounty.type !== MissionType.BOUNTY &&
         bounty.type !== MissionType.LEARN &&
         bounty.type !== MissionType.APP_TRIAL &&
+        bounty.type !== MissionType.MIX &&
         !_.isEmpty(bounty.type)
     )
   }
@@ -193,6 +209,7 @@ export class BountyHunterViewModel {
           bounty.type === MissionType.BOUNTY ||
           bounty.type === MissionType.LEARN ||
           bounty.type === MissionType.APP_TRIAL ||
+          bounty.type === MissionType.MIX ||
           _.isEmpty(bounty.type)
       )
       .map((bounty) => {

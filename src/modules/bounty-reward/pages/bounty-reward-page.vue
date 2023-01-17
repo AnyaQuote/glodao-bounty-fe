@@ -17,22 +17,22 @@
                 {{ authStore.registeredWallet | shortAddress(6, 6) }}
               </span>
             </div>
-            <div v-else :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
+            <!-- <div v-else :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div>
                 <v-icon class="mr-2" left size="24">mdi-wallet-outline</v-icon>
                 <span class="address"> Connect wallet to check your reward </span>
               </div>
               <div class="connect-text" @click="walletStore.changeShowConnectDialog(true)">Connect now</div>
-            </div>
+            </div> -->
           </div>
           <v-card class="mt-4 border-radius-8 py-6 px-2 text-center sub-card" outlined>
             <div :class="{ 'd-flex align-center justify-space-around': $vuetify.breakpoint.mdAndUp }">
               <div class="d-flex flex-column">
-                Current bounty
+                Lock for claiming
                 <span class="sub-title"> {{ vm.currentBounty | usd }} </span>
               </div>
               <div class="d-flex flex-column">
-                Bounty rewarded
+                Total received
                 <span class="sub-title"> {{ vm.bountyRewarded | usd }} </span>
               </div>
             </div>
@@ -40,6 +40,38 @@
               You can claim your reward after TGE. Participate and complete your mission to earn more!
             </div>
           </v-card>
+
+          <div class="mt-6">
+            <v-card v-for="claimer in vm.claimers" :key="claimer.claimerInfo.contract" class="pa-4">
+              <div>
+                <span class="mr-4">Token:</span>
+                <span>{{ claimer.claimerInfo.name }}</span>
+              </div>
+              <div>
+                <span class="mr-4">Total:</span>
+                <span>{{ claimer.userAmount | formatNumber(2, 2) }}</span>
+              </div>
+              <div>
+                <span class="mr-4">Claimed:</span>
+                <span>{{ claimer.userClaimedAmount | formatNumber(2, 2) }}</span>
+              </div>
+              <div>
+                <span class="mr-4">Claimable now:</span>
+                <span>{{ claimer.userClaimableAmount | formatNumber(2, 2) }}</span>
+              </div>
+              <div>
+                <connect-metamask :requiredChainId="claimer.claimerInfo.chainId">
+                  <v-btn
+                    :disabled="!claimer.canClaim"
+                    color="primary"
+                    @click="vm.claim(claimer)"
+                    :loading="claimer.claiming"
+                    >Claim</v-btn
+                  >
+                </connect-metamask>
+              </div>
+            </v-card>
+          </div>
 
           <div v-if="vm.balances.length > 0">
             <div class="sub-title mt-6">Balance details</div>
@@ -84,12 +116,12 @@
 </template>
 
 <script lang="ts">
-import { Observer } from 'mobx-vue'
-import { Component, Vue, Provide } from 'vue-property-decorator'
-import { walletStore } from '@/stores/wallet-store'
-import { authStore } from '@/stores/auth-store'
 import { BountyRewardViewModel } from '@/modules/bounty-reward/viewmodels/bounty-reward-viewmodel'
+import { authStore } from '@/stores/auth-store'
+import { walletStore } from '@/stores/wallet-store'
+import { Observer } from 'mobx-vue'
 import moment from 'moment'
+import { Component, Provide, Vue } from 'vue-property-decorator'
 
 @Observer
 @Component({

@@ -60,13 +60,14 @@
 import { Observer } from 'mobx-vue'
 import { Component, Vue, Inject } from 'vue-property-decorator'
 import { BountyAppTrialViewModel } from '../../viewmodels/bounty-app-trial-viewmodel'
+import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 
 @Observer
 @Component({
   components: {},
 })
 export default class Farming extends Vue {
-  @Inject() vm!: BountyAppTrialViewModel
+  @Inject() vm!: IBaseDetailViewModel
 }
 </script>
 

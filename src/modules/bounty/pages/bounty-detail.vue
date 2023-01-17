@@ -172,6 +172,11 @@
           <div class="">
             <mission-ref-code />
           </div>
+          <div class="title-2 mt-3">
+            Token contract address:
+            <span class="font-weight-regular" v-if="vm.rewardToken !== 'GLD'">{{ vm.tokenContractAddress }}</span>
+            <span class="font-weight-regular" v-else>TBA</span>
+          </div>
           <div v-if="vm.missionType === 'learn'">
             <v-col
               cols="12"
@@ -630,16 +635,6 @@
                     >
                       <div class="custom-dash-divider"></div>
                       <optional-mini-task :task="optionalTask" :step="index" />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      class="py-0"
-                      :class="{
-                        'px-0': $vuetify.breakpoint.xsOnly,
-                      }"
-                    >
-                      <div class="custom-dash-divider"></div>
-                      <coming-soon-task title="Like Facebook page" icon="fab fa-facebook" />
                     </v-col>
                   </v-sheet>
                   <v-divider></v-divider>

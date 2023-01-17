@@ -10,8 +10,9 @@ import { get, isEmpty, merge, toNumber } from 'lodash-es'
 import { action, computed, IReactionDisposer, observable, reaction } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
+import { IBaseDetailViewModel } from './bounty-detail-viewmodel'
 
-export class BountyAppTrialViewModel {
+export class BountyAppTrialViewModel implements IBaseDetailViewModel {
   private _api = apiService
   private _auth = authStore
   private _snackbar = snackController
