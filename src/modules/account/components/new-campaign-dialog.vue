@@ -62,11 +62,11 @@
 </template>
 
 <script lang="ts">
+import { promiseHelper } from '@/helpers/promise-helper'
+import { IReactionDisposer, reaction } from 'mobx'
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Ref, Vue } from 'vue-property-decorator'
-import { promiseHelper } from '@/helpers/promise-helper'
 import { CompanyProfileViewModel } from '../viewmodels/company-profile-viewmodel'
-import { IReactionDisposer, reaction } from 'mobx'
 
 @Observer
 @Component({
@@ -120,7 +120,7 @@ export default class NewCampaignDialog extends Vue {
 }
 .dialog-title-text {
   //styleName: H4;
-  font-family: Proxima Nova;
+  font-family: Montserrat;
   font-size: 18px;
   font-style: normal;
   line-height: 28px;

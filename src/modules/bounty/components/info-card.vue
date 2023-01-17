@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Observer } from 'mobx-vue'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Observer
 @Component({
@@ -85,7 +85,7 @@ export default class CurrentTask extends Vue {
   background: linear-gradient(90deg, #21da6b 0%, #caef62 113.65%);
 }
 .label-font {
-  font-family: 'Proxima Nova';
+  font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -93,7 +93,7 @@ export default class CurrentTask extends Vue {
   color: #5f6267;
 }
 .info-font {
-  font-family: 'Proxima Nova';
+  font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
