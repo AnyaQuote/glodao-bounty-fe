@@ -289,7 +289,7 @@ tbody {
   overflow: hidden !important;
 }
 .font-family-proxima {
-  font-family: 'Proxima Nova' !important;
+  font-family: 'Montserrat' !important;
 }
 .font-family-poppins {
   font-family: 'Poppins';
@@ -369,78 +369,6 @@ tbody {
 }
 .v-item-group {
   background: transparent !important;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Black.ttf) format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-BlackIt.ttf) format('truetype');
-  font-weight: 900;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Bold.ttf) format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-BoldIt.ttf) format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Semibold.ttf) format('truetype');
-  font-weight: 500;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-SemiboldIt.ttf) format('truetype');
-  font-weight: 500;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Regular.ttf) format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-RegularIt.ttf) format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Light.ttf) format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-LightIt.ttf) format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-Thin.ttf) format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Proxima Nova';
-  src: local('Proxima Nova'), url(./assets/fonts/proximanova/ProximaNovaA-ThinIt.ttf) format('truetype');
-  font-weight: 100;
-  font-style: italic;
 }
 .show-prev {
   .v-slide-group__prev {

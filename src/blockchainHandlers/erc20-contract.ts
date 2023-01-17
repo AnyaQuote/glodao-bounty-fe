@@ -28,7 +28,8 @@ export const tokenHelper = {
 
 export class Erc20Contract {
   contract: any
-  private _decimals: any = null
+  _decimals: any = null
+  name = ''
   constructor(public address: string, public web3: Web3, decimal: any = null) {
     try {
       if (decimal) this._decimals = toNumber(decimal)
