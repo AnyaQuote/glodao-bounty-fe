@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import { marked } from 'marked'
-
 export default {
   props: {
     description: String,
@@ -26,10 +24,18 @@ export default {
     },
   },
   methods: {
-    async fetchAndParseMarkdown() {
-      const data = this.description
-      const htmlFromMarkdown = marked(data)
-      return htmlFromMarkdown
+    // async fetchAndParseMarkdown() {
+    //   const data = this.description
+    //   const htmlFromMarkdown = marked(data)
+    //   return htmlFromMarkdown
+    // },
+    getIndent(depth) {
+      if (depth === '2') {
+        return 'pl-2'
+      } else if (depth === '3') {
+        return 'pl-3'
+      }
+      return ''
     },
     generateLinkMarkup($headings) {
       const parsedHeadings = $headings.map((heading) => {
@@ -42,7 +48,7 @@ export default {
       const htmlMarkup = parsedHeadings.map(
         (h) =>
           `
-          <li class="${h.depth > 1 ? 'pl-2 custom-link-item' : 'custom-link-item'}">
+          <li class="${this.getIndent(h.depth) + ' custom-link-item'}">
           	<a headingTag="#${h.id}">${h.title}</a>
           </li>
           `
@@ -63,10 +69,13 @@ export default {
       // Part 1
       const $main = document.querySelector('#markdown-content')
       const $aside = document.querySelector('#markdown-aside')
-      const htmlContent = await this.fetchAndParseMarkdown()
-      $main.innerHTML = htmlContent
+      let id = 0
+      $main.innerHTML = this.description
+      $main.querySelectorAll('h1, h2, h3').forEach((el) => {
+        el.setAttribute('id', id++)
+      })
       // Part 2
-      const $headings = [...$main.querySelectorAll('h1, h2')]
+      const $headings = [...$main.querySelectorAll('h1, h2, h3')]
       const linkHtml = this.generateLinkMarkup($headings)
       $aside.innerHTML = linkHtml
       const $links = [...$aside.querySelectorAll('a')]

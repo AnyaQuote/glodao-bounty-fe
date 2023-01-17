@@ -237,12 +237,12 @@
 </template>
 
 <script lang="ts">
-import { Observer } from 'mobx-vue'
-import { Component, Vue, Provide, Watch } from 'vue-property-decorator'
-import { walletStore } from '@/stores/wallet-store'
-import { authStore } from '@/stores/auth-store'
 import { BountyHistoryViewModel } from '@/modules/bounty-history/viewmodels/bounty-history-viewmodel'
+import { authStore } from '@/stores/auth-store'
+import { walletStore } from '@/stores/wallet-store'
 import { debounce } from 'lodash'
+import { Observer } from 'mobx-vue'
+import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 
 @Observer
 @Component({
@@ -304,7 +304,7 @@ export default class BountyHistoryPage extends Vue {
   background-image: url('~@/assets/images/bounty-history-bg.png');
   background-size: cover;
   .banner-gradient-text {
-    font-family: 'Proxima Nova';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 800;
     font-size: 48px;

@@ -88,12 +88,11 @@
 </template>
 
 <script lang="ts">
-import { Observer } from 'mobx-vue'
-import { Component, Vue, Provide, Watch } from 'vue-property-decorator'
-import { walletStore } from '@/stores/wallet-store'
-import { authStore } from '@/stores/auth-store'
 import { BountyLearnViewModel } from '@/modules/bounty/viewmodels/bounty-learn-viewmodel'
-import * as _ from 'lodash-es'
+import { authStore } from '@/stores/auth-store'
+import { walletStore } from '@/stores/wallet-store'
+import { Observer } from 'mobx-vue'
+import { Component, Provide, Vue } from 'vue-property-decorator'
 
 @Observer
 @Component({

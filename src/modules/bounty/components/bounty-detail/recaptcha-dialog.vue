@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
 import { Observer } from 'mobx-vue'
 import { Component, Inject, Vue } from 'vue-property-decorator'
-import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
 
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { BountyDetailViewModel } from '@/modules/bounty/viewmodels/bounty-detail-viewmodel'
@@ -73,7 +73,7 @@ export default class RecaptchaDialog extends Vue {
 }
 .dialog-title-text {
   //styleName: H4;
-  font-family: Proxima Nova;
+  font-family: Montserrat;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
