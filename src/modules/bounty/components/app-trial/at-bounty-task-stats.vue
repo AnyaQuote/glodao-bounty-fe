@@ -66,7 +66,7 @@ import { IBaseDetailViewModel } from '../../viewmodels/bounty-detail-viewmodel'
 })
 export default class AppTrialBountyTask extends Vue {
   @Inject() vm!: IBaseDetailViewModel
-  @Prop() shouldShowInfo = true
+  @Prop({ default: true }) shouldShowInfo
 }
 </script>
 

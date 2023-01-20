@@ -189,7 +189,7 @@ export default class HuntingTimeCard extends Vue {
   coverVideo = get(this.task, 'metadata.coverVideo', '')
   missionCompleteCount: any = 'TBA'
   missionType = get(this.task, 'type', '')
-  optionalTokens = get(this.task, 'optionalTokens', [])
+  optionalTokens = get(this.task, 'optionalTokens', []) || []
   shouldShowValueInstead = this.optionalTokens.length > 0
 
   mounted() {
@@ -206,6 +206,7 @@ export default class HuntingTimeCard extends Vue {
   }
 
   openLink() {
+    console.log(this.missionType)
     if (this.missionType === MissionType.APP_TRIAL) {
       this.$router.push(`/bounty/iat/${this.id}`)
     } else if (this.missionType === MissionType.MIX) {
