@@ -24,8 +24,8 @@
       <div class="pa-4 pa-sm-6 rounded-t-xl">
         <div class="text-h5 font-weight-bold bluePrimary--text mb-6">Pool update</div>
         <div class="d-flex align-center text-h6 justify-space-between">
-          <span class="font-weight-regular">Participants</span>
-          <span class="font-weight-bold">{{ vm.totalParticipants }}</span>
+          <span class="font-weight-regular">Completed</span>
+          <span class="font-weight-bold">{{ vm.completedParticipants }}</span>
         </div>
         <div class="d-flex align-center text-h6 justify-space-between mt-3">
           <span class="font-weight-regular">Remaining</span>

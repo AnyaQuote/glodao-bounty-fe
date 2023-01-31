@@ -398,7 +398,12 @@ export class BountyAppTrialViewModel implements IBaseDetailViewModel {
     return get(this.task, 'totalParticipants', 0)
   }
 
+  @computed get completedParticipants() {
+    return get(this.task, 'completedParticipants', 0)
+  }
+
   @computed get taskProgressPercentage() {
+    return (toNumber(this.completedParticipants) / toNumber(this.maxParticipants)) * 100
     const totalTasks = get(this.applyStepData, 'iat', [])
     const finishedTasks = totalTasks.filter((step) => step.finished)
     return (finishedTasks.length / totalTasks.length) * 100
@@ -407,7 +412,8 @@ export class BountyAppTrialViewModel implements IBaseDetailViewModel {
   @computed get remainingParticipants() {
     const numMaxParticipants = toNumber(this.maxParticipants)
     const numTotalParticipants = toNumber(this.totalParticipants)
-    return numMaxParticipants - numTotalParticipants
+    const numCompletedParticipants = toNumber(this.completedParticipants)
+    return numMaxParticipants - numCompletedParticipants
   }
 
   @computed get displayAppTrialData() {
