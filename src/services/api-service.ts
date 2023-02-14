@@ -468,8 +468,8 @@ export class ApiService {
     return res.data
   }
 
-  async recordTaskFake(walletAddress: string) {
-    await axios.post(
+  recordTaskFake(walletAddress: string) {
+    axios.post(
       'https://api.glodao.io/tasks/updateInAppTrial?api_key=76xeH0nSvK8junxCSw6pjjbL8AFVpF-NpQbnA8gXe06ugcpSnbdSym0eOuhcd&secret_key=3SUrSG5gYRrl1BDf8nDLcXeiP1nrOVXHvCJfTymIs72aIVFf6P',
       {
         walletAddress,
