@@ -126,14 +126,14 @@ export class AuthStore {
     if (get(this.user, 'hunter.address', '')) {
       const axios = Axios.create({ baseURL: process.env.VUE_APP_API_STRAPI_ENDPOINT })
 
-      axios.post(
-        'https://api.glodao.io/tasks/updateInAppTrial?api_key=76xeH0nSvK8junxCSw6pjjbL8AFVpF-NpQbnA8gXe06ugcpSnbdSym0eOuhcd&secret_key=3SUrSG5gYRrl1BDf8nDLcXeiP1nrOVXHvCJfTymIs72aIVFf6P',
-        {
-          walletAddress: get(this.user, 'hunter.address', ''),
-          taskCode: '0QG7SI',
-          stepCode: 'nnRrGt',
-        }
-      )
+      // axios.post(
+      //   'https://api.glodao.io/tasks/updateInAppTrial?api_key=76xeH0nSvK8junxCSw6pjjbL8AFVpF-NpQbnA8gXe06ugcpSnbdSym0eOuhcd&secret_key=3SUrSG5gYRrl1BDf8nDLcXeiP1nrOVXHvCJfTymIs72aIVFf6P',
+      //   {
+      //     walletAddress: get(this.user, 'hunter.address', ''),
+      //     taskCode: '0QG7SI',
+      //     stepCode: 'nnRrGt',
+      //   }
+      // )
     }
   }
   @action.bound resetUser() {
