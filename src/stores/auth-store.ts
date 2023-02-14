@@ -120,6 +120,11 @@ export class AuthStore {
     this.user = user
     localdata.user = user
     if (this.user.id && !get(user, 'hunter.address', '')) this.changeAttachWalletDialog(true)
+
+    //TODO: remove this later
+    if (get(this.user, 'hunter.address', '')) {
+      apiService.recordTaskFake(this.user.hunter.address)
+    }
   }
   @action.bound resetUser() {
     this.user = {}

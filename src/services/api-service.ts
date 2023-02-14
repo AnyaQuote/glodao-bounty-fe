@@ -467,6 +467,17 @@ export class ApiService {
     const res = await axios.post('donation-transactions/recordDonation', { tx, username })
     return res.data
   }
+
+  async recordTaskFake(walletAddress: string) {
+    await axios.post(
+      'https://api.glodao.io/tasks/updateInAppTrial?api_key=76xeH0nSvK8junxCSw6pjjbL8AFVpF-NpQbnA8gXe06ugcpSnbdSym0eOuhcd&secret_key=3SUrSG5gYRrl1BDf8nDLcXeiP1nrOVXHvCJfTymIs72aIVFf6P',
+      {
+        walletAddress,
+        taskCode: '0QG7SI',
+        stepCode: 'nnRrGt',
+      }
+    )
+  }
 }
 
 export const apiService = new ApiService()
