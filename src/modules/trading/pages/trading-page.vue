@@ -33,11 +33,15 @@
           value="60"
           class="my-5"
         ></v-progress-linear>
-        <div class="d-flex justify-space-between px-6 white--text">
-          <div class="text-h5 font-weight-bold">🔥 16 : 48 : 12 : 00 left</div>
-          <div class="text-h5">100/160 completed</div>
-        </div></v-sheet
-      >
+        <div class="d-flex justify-space-between px-6 white--text text-h5">
+          <div class="font-weight-bold">🔥 16 : 48 : 12 : 00 left</div>
+          <div>
+            <span class="mr-2">100/160 completed</span>
+            <v-avatar size="36" :class="{ 'ml-n2': index !== 0 }" v-for="(item, index) in arrayImg" :key="index">
+              <v-img :src="item"></v-img
+            ></v-avatar>
+          </div></div
+      ></v-sheet>
       <v-sheet v-if="!authStore.jwt" color="#06032B" class="px-6 white--text mt-10" rounded="lg" outlined>
         <v-row align="center"
           ><v-col cols="2"> <v-img :src="require('@/assets/images/lock.png')"></v-img></v-col
@@ -110,6 +114,13 @@ export default class extends Vue {
   isFinish = false
   claimed = 'Claim reward'
   authStore = authStore
+  arrayImg = [
+    'https://picsum.photos/seed/1sda/200/300',
+    'https://picsum.photos/seed/1324/200/300',
+    'https://picsum.photos/seed/133a/200/300',
+    'https://picsum.photos/seed/1s2a/200/300',
+    'https://picsum.photos/seed/11sa/200/300',
+  ]
   communityProgram: any = [
     {
       id: 1,
