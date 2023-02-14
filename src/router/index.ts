@@ -92,6 +92,11 @@ const routes: Array<RouteConfig> = [
     name: 'NotFound',
     component: () => import('@/modules/error/pages/coming-soon.vue'),
   },
+  {
+    path: '/trading',
+    name: 'trading',
+    component: () => import('@/modules/trading/pages/trading-page.vue'),
+  },
 ]
 
 const router = new VueRouter({

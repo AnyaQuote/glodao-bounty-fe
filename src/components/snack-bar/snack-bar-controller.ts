@@ -3,6 +3,7 @@ import { action, observable } from 'mobx'
 
 export interface SnakBarConfig {
   icon?: string
+  title?: string
   message?: string
   color?: string
   timeout?: number
