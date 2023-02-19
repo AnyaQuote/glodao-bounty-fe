@@ -7,6 +7,7 @@
     bottom
     class="plugin__alert"
   >
+    <div class="text-h5">{{ controller.config.title }}</div>
     <v-icon class="mr-3">{{ controller.config.icon }}</v-icon>
     {{ controller.config.message }}
     <template v-slot:action="{ attrs }">
