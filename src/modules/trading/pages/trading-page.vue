@@ -1,12 +1,13 @@
 <template>
   <div>
-    <v-img class="d-flex align-center" height="416" src="@/assets/images/dummy_cover.png">
+    <v-img class="d-flex align-center" height="416" :src="vm.controller.informationController.coverImage">
       <v-container class="white--text">
-        <v-chip size="x-large" color="white" class="font-weight-bold text-subtitle-1 mb-10">Moonfrost</v-chip>
-        <div class="text-h3 font-weight-bold mb-2">Moonfrost</div>
+        <v-chip size="x-large" color="white" class="font-weight-bold text-subtitle-1 mb-10">
+          {{ vm.controller.informationController.coverImage }}
+        </v-chip>
+        <div class="text-h3 font-weight-bold mb-2">{{ vm.controller.informationController.name }}</div>
         <div class="text-h5">
-          Abundant farms and yields galore! Discover yield farming and staking on Dopex, and earn an NFT for all your
-          hard work.
+          {{ vm.controller.informationController.shortDescription }}
         </div>
       </v-container>
     </v-img>
@@ -15,33 +16,45 @@
         <div class="d-flex white--text justify-space-between px-6">
           <div>
             <div class="text-h5">Total reward</div>
-            <div class="font-weight-bold text-h4">100.000 XP</div>
+            <div class="font-weight-bold text-h4">
+              {{ vm.controller.informationController.rewardAmount }}
+              {{ vm.controller.informationController.rewardToken }}
+            </div>
           </div>
           <div>
-            <div class="text-h5">Personal reward<v-icon color="white" right>mdi-information-outline</v-icon></div>
-            <div class="font-weight-bold text-h4">100 XP</div>
+            <div class="text-h5">Personal reward</div>
+            <div class="font-weight-bold text-h4">
+              {{ vm.controller.informationController.personalReward }}
+              {{ vm.controller.informationController.rewardToken }}
+            </div>
           </div>
           <div>
-            <div class="text-h5">Participant<v-icon color="white" right>mdi-information-outline</v-icon></div>
-            <div class="font-weight-bold text-h4">6500</div>
+            <div class="text-h5">Participants</div>
+            <div class="font-weight-bold text-h4">{{ vm.controller.informationController.totalParticipants }}</div>
           </div>
         </div>
         <v-progress-linear
           color="#D6F76B"
-          background-color="#000000
-"
-          value="60"
+          background-color="#000000"
+          :value="vm.controller.informationController.currentProgress"
           class="my-5"
-        ></v-progress-linear>
+        >
+        </v-progress-linear>
         <div class="d-flex justify-space-between px-6 white--text text-h5">
           <div class="font-weight-bold">🔥 16 : 48 : 12 : 00 left</div>
           <div>
-            <span class="mr-2">100/160 completed</span>
+            <span class="mr-2">
+              {{ vm.controller.informationController.totalParticipants }}/{{
+                vm.controller.informationController.maxParticipants
+              }}
+              completed
+            </span>
             <v-avatar size="36" :class="{ 'ml-n2': index !== 0 }" v-for="(item, index) in arrayImg" :key="index">
-              <v-img :src="item"></v-img
-            ></v-avatar>
-          </div></div
-      ></v-sheet>
+              <v-img :src="item"></v-img>
+            </v-avatar>
+          </div>
+        </div>
+      </v-sheet>
       <v-sheet v-if="!authStore.jwt" color="#06032B" class="px-6 white--text mt-10" rounded="lg" outlined>
         <v-row align="center"
           ><v-col cols="2"> <v-img :src="require('@/assets/images/lock.png')"></v-img></v-col
@@ -73,35 +86,15 @@
         :key="item.id"
         :data="item"
       ></project-experience-program-card>
-      <v-sheet
-        class="white--text d-flex justify-space-between align-center background-blue-diversity pa-6 mt-10"
-        rounded="lg"
-        outlined
-      >
-        <div class="text-h5 font-weight-bold">
-          <div>Congratulation you have completed the quest</div>
-          <div>Your reward is <strong>30 xp</strong></div>
-        </div>
-        <div>
-          <v-btn
-            class="font-weight-bold text-none text-h6"
-            :class="claimed !== 'Claim reward' ? 'neutral0--text' : 'blue-diversity--text'"
-            rounded
-            depressed
-            large
-            @click="claimReward"
-            >{{ claimed }}</v-btn
-          >
-        </div>
-      </v-sheet>
     </v-container>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { authStore } from '@/stores/auth-store'
+import { TradingViewModel } from '@/modules/trading/viewmodels/trading-viewmodel'
 
 @Component({
   components: {
@@ -111,15 +104,23 @@ import { authStore } from '@/stores/auth-store'
   },
 })
 export default class extends Vue {
+  @Provide() vm = new TradingViewModel()
+
+  @Watch('$route.params.taskId', { immediate: true }) onIdChanged(val: string) {
+    if (val) {
+      this.vm.taskIdChange(val)
+    }
+  }
+
   isFinish = false
   claimed = 'Claim reward'
   authStore = authStore
   arrayImg = [
-    'https://picsum.photos/seed/1sda/200/300',
-    'https://picsum.photos/seed/1324/200/300',
-    'https://picsum.photos/seed/133a/200/300',
-    'https://picsum.photos/seed/1s2a/200/300',
-    'https://picsum.photos/seed/11sa/200/300',
+    'https://picsum.photos/200/201',
+    'https://picsum.photos/200/202',
+    'https://picsum.photos/200/203',
+    'https://picsum.photos/200/204',
+    'https://picsum.photos/200/205',
   ]
   communityProgram: any = [
     {
