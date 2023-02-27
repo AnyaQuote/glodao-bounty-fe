@@ -17,9 +17,9 @@
             >
           </v-col>
           <v-col cols="9">
-            <div class="text-h5 font-weight-bold">Reply a Twitter post</div>
+            <div class="text-h5 font-weight-bold">Quote a Twitter post</div>
             <div class="mt-2">
-              Reply <a @click="openLink(data.missionInformation.link)" class="font-italic blue--text">tweet</a> from "{{
+              Quote <a @click="openLink(data.missionInformation.link)" class="font-italic blue--text">tweet</a> from "{{
                 data.missionInformation.page
               }}"<span v-if="content">
                 with content: <span class="blue--text">"{{ content }}"</span></span
@@ -33,7 +33,8 @@
                 <span v-if="mentions.length > 0"
                   >, tag<span v-for="user in mentions" :key="user" class="blue--text">&nbsp;@{{ user }}</span></span
                 ></span
-              >, then submit the link to your reply tweet here (At least {{ TWEET_MIN_WORDS_COUNT }} words)
+              >, share why you want to have this project’s primary market exposure. (At least
+              {{ TWEET_MIN_WORDS_COUNT }} words)
             </div>
           </v-col>
           <v-col cols="2" class="text-right" v-if="data.masterController.missionStateController.isMissionProgressAble">
@@ -44,7 +45,7 @@
               depressed
               @click="openLink(data.missionInformation.link)"
             >
-              Tweet
+              Start
             </v-btn>
 
             <span v-else class="neutral0--text text-subtitle-1 font-weight-bold"> Completed </span>
@@ -96,7 +97,7 @@ import { TwitterController } from '../../controllers/twitter-controller'
 import { get } from 'lodash-es'
 
 @Component
-export default class TwiterCommentCard extends Vue {
+export default class TwiterTweetCard extends Vue {
   TWEET_MIN_WORDS_COUNT = TWEET_MIN_WORDS_COUNT
 
   @Prop({ required: true }) data!: TwitterController

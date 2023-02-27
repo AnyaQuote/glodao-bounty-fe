@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="pa-6 mb-6 bluePrimary--border" color="#F0F7FF" rounded="lg" outlined>
-    <v-card elevation="0" outlined rounded="lg">
+    <v-card elevation="0" class="neutral100" outlined rounded="lg">
       <v-card-text>
         <v-row>
           <v-col cols="1">
@@ -55,7 +55,7 @@
       elevation="0"
       outlined
       rounded="lg"
-      class="mt-6"
+      class="mt-6 neutral100"
       v-if="data.masterController.missionStateController.isMissionProgressAble"
     >
       <v-card-text class="d-flex justify-space-between align-center">

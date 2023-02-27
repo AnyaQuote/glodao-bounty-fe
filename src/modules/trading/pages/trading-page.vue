@@ -63,23 +63,14 @@
       <div class="blue-diversity--text font-weight-bold mt-10 text-h5">Community Program</div>
 
       <v-sheet color="#F0F7FF" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined>
-        <!-- <component
-          :key="setting.key"
-          :is="setting.component"
-          :inputConfig="setting"
-          @remove="vm.removeSetting(SocialType.FACEBOOK, setting.key)"
-          @change="vm.updateSetting(SocialType.FACEBOOK, setting.key, $event)"
-        /> -->
         <div v-for="(data, index) in vm.controller.socialTaskControllers" :key="data.controllerType + index">
           <twitter-like-task :data="data" v-if="data.taskType === 'like' && data.controllerType === 'twitter'" />
           <twitter-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'twitter'" />
           <twitter-retweet-task :data="data" v-if="data.taskType === 'retweet' && data.controllerType === 'twitter'" />
           <twitter-comment-task :data="data" v-if="data.taskType === 'comment' && data.controllerType === 'twitter'" />
           <twitter-tweet-task :data="data" v-if="data.taskType === 'tweet' && data.controllerType === 'twitter'" />
+          <twitter-quote-task :data="data" v-if="data.taskType === 'quote' && data.controllerType === 'twitter'" />
         </div>
-
-        <community-program-card v-for="(item, index) in communityProgram" :key="item.id + index" :data="item">
-        </community-program-card>
       </v-sheet>
       <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
       <project-experience-program-card
@@ -110,6 +101,7 @@ import MissionStateContainer from '../components/mission-state-container.vue'
     'twitter-retweet-task': () => import('@/modules/trading/components/twitter-task/twitter-retweet-task.vue'),
     'twitter-comment-task': () => import('@/modules/trading/components/twitter-task/twitter-comment-task.vue'),
     'twitter-tweet-task': () => import('@/modules/trading/components/twitter-task/twitter-tweet-task.vue'),
+    'twitter-quote-task': () => import('@/modules/trading/components/twitter-task/twitter-quote-task.vue'),
   },
 })
 export default class extends Vue {
