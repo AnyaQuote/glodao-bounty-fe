@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-card class="mb-6" elevation="0" outlined rounded="lg"
-      ><v-card-text>
-        <v-row align="center"
-          ><v-col cols="1">
+    <v-card class="mb-6" elevation="0" outlined rounded="lg">
+      <v-card-text>
+        <v-row align="center">
+          <v-col cols="1">
             <v-card
               height="60px"
               width="60px"
@@ -13,13 +13,15 @@
               :class="!isVerify ? 'background-blue-diversity' : 'greenSenamatic--bg'"
               ><span v-if="!isVerify">{{ data.id }}</span
               ><v-icon x-large color="white" v-else>mdi-checkbox-marked-circle-outline</v-icon></v-card
-            ></v-col
-          ><v-col class="col"
-            ><div class="font-weight-bold neutral0--text text-h5 mb-2">{{ data.title }}</div>
+            >
+          </v-col>
+          <v-col class="col">
+            <div class="font-weight-bold neutral0--text text-h5 mb-2">{{ data.title }}</div>
             <div class="text-subtitle-1">
               {{ data.content }}
-            </div></v-col
-          ><v-col class="text-right col-auto">
+            </div>
+          </v-col>
+          <v-col class="text-right col-auto">
             <v-btn
               large
               v-if="data.link"
@@ -39,21 +41,21 @@
               outlined
               depressed
               @click="verify"
-              >Verify</v-btn
-            >
+              >Verify
+            </v-btn>
             <v-btn
               large
               v-if="!data.link && !isVerify"
               class="linear-background-blue-main white--text rounded-lg text-none font-weight-bold py-6"
               outlined
               depressed
-              >Join</v-btn
-            >
+              >Join
+            </v-btn>
             <span v-if="isVerify" class="neutral0--text text-subtitle-1 font-weight-bold">Completed</span>
-          </v-col></v-row
-        >
-      </v-card-text></v-card
-    >
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 

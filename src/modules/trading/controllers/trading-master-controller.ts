@@ -7,6 +7,7 @@ import { get, isEmpty, keys } from 'lodash-es'
 import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import { InformationController } from './information-controller'
+import { MissionStateController } from './mission-state-controller'
 import { TwitterController } from './twitter-controller'
 
 export class TradingMasterController {
@@ -19,10 +20,12 @@ export class TradingMasterController {
   @observable taskLoading = false
 
   informationController: InformationController
+  missionStateController: MissionStateController
 
   constructor() {
     console.log('TradingMasterController')
     this.informationController = new InformationController(this)
+    this.missionStateController = new MissionStateController(this)
   }
 
   @action
@@ -90,6 +93,29 @@ export class TradingMasterController {
     }
   }
 
+  @asyncAction *createApply(captchaToken) {
+    try {
+      const res = yield apiService.startHunting({
+        data: this.initEmptyStepData(),
+        ID: `${this.taskId}_${this.hunterId}`,
+        hunter: this.hunterId,
+        task: this.taskId,
+        status: 'processing',
+        captchaToken,
+      })
+
+      if (res) {
+        this.apply = res
+        this.fetchData()
+      }
+      snackController.success('Apply for bounty hunting successfully')
+    } catch (error) {
+      snackController.error(get(error, 'response.data.message', '') || (error as string))
+    } finally {
+      //
+    }
+  }
+
   getSocialTaskController(
     controllerType: string,
     stepIndex: number,
@@ -99,7 +125,7 @@ export class TradingMasterController {
     let result: ISocialTaskController | null = null
     switch (controllerType) {
       case 'twitter':
-        result = new TwitterController(this, stepIndex, index, taskType)
+        result = new TwitterController(this, index, stepIndex, taskType)
         break
 
       default:
@@ -108,8 +134,22 @@ export class TradingMasterController {
     return result
   }
 
+  @action initEmptyStepData() {
+    const tempStepData: any = {}
+    for (const key in this.task?.data) {
+      if (Object.prototype.hasOwnProperty.call(this.task?.data, key)) {
+        const seperateTaskData = this.task?.data[key]
+        tempStepData[key] = seperateTaskData.map((miniTask) => {
+          return { type: miniTask.type, link: '', finished: false }
+        })
+      }
+    }
+    return tempStepData
+  }
+
   @computed get applyStepData(): any {
-    return this.apply?.data ?? {}
+    const temp = this.initEmptyStepData()
+    return this.apply?.data ?? temp
   }
 
   @computed get hunterId(): string | null {
@@ -121,10 +161,13 @@ export class TradingMasterController {
     const stepTypes = keys(this.applyStepData)
     let outerIndex = 1
     stepTypes.forEach((stepType, index) => {
-      const controller = this.getSocialTaskController(stepType, index, '', outerIndex)
-      if (controller != null) {
-        result.push(controller)
-        outerIndex++
+      for (let miniIndex = 0; miniIndex < this.applyStepData[stepType].length; miniIndex++) {
+        const element = this.applyStepData[stepType][miniIndex]
+        const controller = this.getSocialTaskController(stepType, miniIndex, element.type, outerIndex)
+        if (controller != null) {
+          result.push(controller)
+          outerIndex++
+        }
       }
     })
     return result

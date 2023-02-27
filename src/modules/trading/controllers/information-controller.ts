@@ -1,12 +1,26 @@
+import { appProvider } from '@/app-providers'
 import { get } from 'lodash-es'
-import { computed } from 'mobx'
+import { IReactionDisposer, action, computed, observable } from 'mobx'
 import { TradingMasterController } from './trading-master-controller'
 
 export class InformationController {
   masterController: TradingMasterController
+  currentTimeInterval: NodeJS.Timer
+  disposes: IReactionDisposer[] = []
+  @observable currentTime = Date.now()
 
   constructor(masterController: TradingMasterController) {
     this.masterController = masterController
+    this.currentTimeInterval = setInterval(() => this.setCurrentTime(), 1000)
+  }
+
+  destroyReaction() {
+    this.disposes.forEach((d) => d())
+    if (this.currentTimeInterval) clearInterval(this.currentTimeInterval)
+  }
+
+  @action setCurrentTime() {
+    this.currentTime = Date.now()
   }
 
   @computed get coverImage() {
@@ -47,5 +61,13 @@ export class InformationController {
 
   @computed get currentProgress(): number {
     return (this.totalParticipants / (this.maxParticipants === 0 ? 1 : this.maxParticipants)) * 100
+  }
+
+  @computed get endTime() {
+    return get(this.task, 'endTime') ?? appProvider.currentTime.toISOString()
+  }
+
+  @computed get completedParticipants(): number {
+    return get(this.task, 'completedParticipants') ?? 0
   }
 }

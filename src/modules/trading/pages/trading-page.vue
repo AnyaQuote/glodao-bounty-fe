@@ -41,10 +41,14 @@
         >
         </v-progress-linear>
         <div class="d-flex justify-space-between px-6 white--text text-h5">
-          <div class="font-weight-bold">🔥 16 : 48 : 12 : 00 left</div>
+          <div class="font-weight-bold">
+            <countdown :targetDate="vm.controller.informationController.endTime">
+              <slot name="prepend">🔥</slot>
+            </countdown>
+          </div>
           <div>
             <span class="mr-2">
-              {{ vm.controller.informationController.totalParticipants }}/{{
+              {{ vm.controller.informationController.completedParticipants }}/{{
                 vm.controller.informationController.maxParticipants
               }}
               completed
@@ -55,31 +59,24 @@
           </div>
         </div>
       </v-sheet>
-      <v-sheet v-if="!authStore.jwt" color="#06032B" class="px-6 white--text mt-10" rounded="lg" outlined>
-        <v-row align="center"
-          ><v-col cols="2"> <v-img :src="require('@/assets/images/lock.png')"></v-img></v-col
-          ><v-col cols="8">
-            <div class="font-weight-bold text-h5">You're not signed in</div>
-            <div class="text-subtitle-1">Get access to this Bounty by sign in Glodao</div></v-col
-          ><v-col cols="2">
-            <v-btn
-              depressed
-              class="linear-background-blue-main white--text text-none rounded text-h6 font-weight-bold"
-              x-large
-              @click="authStore.changeTwitterLoginDialog(true)"
-              >Log in</v-btn
-            >
-          </v-col></v-row
-        >
-      </v-sheet>
-      <v-sheet v-else color="#06032B" class="pa-6 d-flex justify-space-between white--text mt-10" rounded="lg" outlined>
-        <div class="font-weight-bold text-h5">You have completed 6/6 missions. Claim reward now</div>
-        <div class="font-weight-bold text-h5">100% quest</div>
-      </v-sheet>
+      <mission-state-container :controller="vm.controller.missionStateController" />
       <div class="blue-diversity--text font-weight-bold mt-10 text-h5">Community Program</div>
-      <v-sheet color="#F0F7FF" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined
-        ><community-program-card v-for="item in communityProgram" :key="item.id" :data="item"></community-program-card
-      ></v-sheet>
+
+      <v-sheet color="#F0F7FF" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined>
+        <!-- <component
+          :key="setting.key"
+          :is="setting.component"
+          :inputConfig="setting"
+          @remove="vm.removeSetting(SocialType.FACEBOOK, setting.key)"
+          @change="vm.updateSetting(SocialType.FACEBOOK, setting.key, $event)"
+        /> -->
+        <div v-for="(data, index) in vm.controller.socialTaskControllers" :key="index">
+          <twitter-like-task :data="data" v-if="data.taskType === 'like' && data.controllerType === 'twitter'" />
+        </div>
+
+        <community-program-card v-for="(item, index) in communityProgram" :key="item.id + index" :data="item">
+        </community-program-card>
+      </v-sheet>
       <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
       <project-experience-program-card
         v-for="item in projectExperienceProgram"
@@ -95,12 +92,16 @@ import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { authStore } from '@/stores/auth-store'
 import { TradingViewModel } from '@/modules/trading/viewmodels/trading-viewmodel'
+import MissionStateContainer from '../components/mission-state-container.vue'
 
 @Component({
   components: {
     'community-program-card': () => import('../components/community-program-card.vue'),
     'project-experience-program-card': () => import('../components/project-experience-program-card.vue'),
     'snack-bar': () => import('@/components/snack-bar/snack-bar.vue'),
+    countdown: () => import('@/modules/bounty/components/countdown.vue'),
+    'mission-state-container': () => import('@/modules/trading/components/mission-state-container.vue'),
+    'twitter-like-task': () => import('@/modules/trading/components/twitter-task/twitter-like-task.vue'),
   },
 })
 export default class extends Vue {
@@ -166,6 +167,10 @@ export default class extends Vue {
     snackController.config = config
     snackController.show = true
     this.claimed = 'Claimed'
+  }
+
+  beforeDestroy() {
+    this.vm.controller.informationController.destroyReaction()
   }
 }
 </script>

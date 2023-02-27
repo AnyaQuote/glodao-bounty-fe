@@ -28,7 +28,11 @@ export class TwitterController implements ISocialTaskController {
   }
 
   @computed get missionInformation() {
-    return this.masterController.applyStepData[this.taskType][this.stepIndex]
+    return this.task.data[this.controllerType][this.stepIndex]
+  }
+
+  @computed get currentApplyState() {
+    return this.masterController.applyStepData[this.controllerType][this.stepIndex]
   }
 }
 
