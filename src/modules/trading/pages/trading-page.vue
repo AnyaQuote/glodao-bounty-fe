@@ -74,6 +74,7 @@
           <twitter-like-task :data="data" v-if="data.taskType === 'like' && data.controllerType === 'twitter'" />
           <twitter-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'twitter'" />
           <twitter-retweet-task :data="data" v-if="data.taskType === 'retweet' && data.controllerType === 'twitter'" />
+          <twitter-comment-task :data="data" v-if="data.taskType === 'comment' && data.controllerType === 'twitter'" />
         </div>
 
         <community-program-card v-for="(item, index) in communityProgram" :key="item.id + index" :data="item">
@@ -106,6 +107,7 @@ import MissionStateContainer from '../components/mission-state-container.vue'
     'twitter-like-task': () => import('@/modules/trading/components/twitter-task/twitter-like-task.vue'),
     'twitter-follow-task': () => import('@/modules/trading/components/twitter-task/twitter-follow-task.vue'),
     'twitter-retweet-task': () => import('@/modules/trading/components/twitter-task/twitter-retweet-task.vue'),
+    'twitter-comment-task': () => import('@/modules/trading/components/twitter-task/twitter-comment-task.vue'),
   },
 })
 export default class extends Vue {
