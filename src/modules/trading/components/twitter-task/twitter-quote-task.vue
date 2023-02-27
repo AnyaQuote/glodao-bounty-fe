@@ -12,7 +12,7 @@
               class="pa-4 white--text font-weight-bold text-h5 d-flex justify-center align-center"
               :class="!data.currentApplyState.finished ? 'background-blue-diversity' : 'greenSenamatic--bg'"
             >
-              <span v-if="!data.currentApplyState.finished">{{ data.stepIndex }} </span>
+              <span v-if="!data.currentApplyState.finished">{{ data.index }} </span>
               <v-icon x-large color="white" v-else>mdi-checkbox-marked-circle-outline </v-icon></v-card
             >
           </v-col>

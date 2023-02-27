@@ -62,7 +62,7 @@
       <mission-state-container :controller="vm.controller.missionStateController" />
       <div class="blue-diversity--text font-weight-bold mt-10 text-h5">Community Program</div>
 
-      <v-sheet color="#F0F7FF" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined>
+      <v-sheet color="bluePrimary lighten-1" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined>
         <div v-for="(data, index) in vm.controller.socialTaskControllers" :key="data.controllerType + index">
           <twitter-like-task :data="data" v-if="data.taskType === 'like' && data.controllerType === 'twitter'" />
           <twitter-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'twitter'" />
