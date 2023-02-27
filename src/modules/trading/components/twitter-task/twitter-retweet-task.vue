@@ -75,7 +75,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { TwitterController } from '../../controllers/twitter-controller'
 
 @Component
-export default class TwitterLikeTask extends Vue {
+export default class TwitterRetweetTask extends Vue {
   @Prop({ required: true }) data!: TwitterController
   verify() {
     this.data.submit('')
