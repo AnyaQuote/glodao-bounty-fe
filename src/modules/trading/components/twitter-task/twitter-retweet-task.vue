@@ -18,10 +18,12 @@
           </v-card>
         </v-col>
         <v-col class="col">
-          <div class="font-weight-bold neutral0--text text-h5 mb-2">Follow {{ data.missionInformation.page }}</div>
+          <div class="font-weight-bold neutral0--text text-h5 mb-2">
+            Retweet from {{ data.missionInformation.page }}
+          </div>
           <div class="text-subtitle-1">
-            Please follow <span class="blue--text">{{ data.missionInformation.page }}</span> Twitter page to complete
-            this task.
+            Please retweet <a @click="openLink(data.missionInformation.link)" class="font-italic blue--text"></a> to
+            complete this task.
           </div>
         </v-col>
         <v-col class="text-right col-auto" v-if="data.masterController.missionStateController.isMissionProgressAble">
@@ -57,7 +59,7 @@
             depressed
             @click="openLink(data.missionInformation.link)"
           >
-            Follow
+            Retweet
           </v-btn>
           <span v-if="data.currentApplyState.finished" class="neutral0--text text-subtitle-1 font-weight-bold">
             Completed

@@ -70,9 +70,10 @@
           @remove="vm.removeSetting(SocialType.FACEBOOK, setting.key)"
           @change="vm.updateSetting(SocialType.FACEBOOK, setting.key, $event)"
         /> -->
-        <div v-for="(data, index) in vm.controller.socialTaskControllers" :key="index">
+        <div v-for="(data, index) in vm.controller.socialTaskControllers" :key="data.controllerType + index">
           <twitter-like-task :data="data" v-if="data.taskType === 'like' && data.controllerType === 'twitter'" />
           <twitter-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'twitter'" />
+          <twitter-retweet-task :data="data" v-if="data.taskType === 'retweet' && data.controllerType === 'twitter'" />
         </div>
 
         <community-program-card v-for="(item, index) in communityProgram" :key="item.id + index" :data="item">
@@ -104,6 +105,7 @@ import MissionStateContainer from '../components/mission-state-container.vue'
     'mission-state-container': () => import('@/modules/trading/components/mission-state-container.vue'),
     'twitter-like-task': () => import('@/modules/trading/components/twitter-task/twitter-like-task.vue'),
     'twitter-follow-task': () => import('@/modules/trading/components/twitter-task/twitter-follow-task.vue'),
+    'twitter-retweet-task': () => import('@/modules/trading/components/twitter-task/twitter-retweet-task.vue'),
   },
 })
 export default class extends Vue {
