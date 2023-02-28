@@ -25,7 +25,6 @@ export class TradingMasterController {
   missionStateController: MissionStateController
 
   constructor() {
-    console.log('TradingMasterController')
     this.informationController = new InformationController(this)
     this.missionStateController = new MissionStateController(this)
   }
@@ -39,15 +38,12 @@ export class TradingMasterController {
   @asyncAction
   *fetchData() {
     yield Promise.all([this.getTaskData(), this.getApplyData()])
-    console.log(this.applyStepData)
-    console.log(this.socialTaskControllers)
   }
 
   @asyncAction *getTaskData() {
     try {
       const res = yield apiService.tasks.findOne(this.taskId)
       this.task = res
-      console.log(res)
     } catch (error) {
       snackController.error(get(error, 'response.data.message', '') || (error as string))
     }

@@ -71,4 +71,5 @@ export enum MissionType {
   LUCKY = 'lucky',
   ACTIVE = 'active',
   MIX = 'mix',
+  TRADING = 'trading',
 }

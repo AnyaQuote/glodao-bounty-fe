@@ -179,6 +179,7 @@ export class BountyHunterViewModel {
         bounty.type !== MissionType.LEARN &&
         bounty.type !== MissionType.APP_TRIAL &&
         bounty.type !== MissionType.MIX &&
+        bounty.type !== MissionType.TRADING &&
         !_.isEmpty(bounty.type)
     )
   }
@@ -210,6 +211,7 @@ export class BountyHunterViewModel {
           bounty.type === MissionType.LEARN ||
           bounty.type === MissionType.APP_TRIAL ||
           bounty.type === MissionType.MIX ||
+          bounty.type === MissionType.TRADING ||
           _.isEmpty(bounty.type)
       )
       .map((bounty) => {
