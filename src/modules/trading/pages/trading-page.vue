@@ -74,12 +74,12 @@
           <telegram-chat-task :data="data" v-if="data.taskType === 'chat' && data.controllerType === 'telegram'" />
         </div>
       </v-sheet>
-      <!-- <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
+      <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
       <project-experience-program-card
         v-for="item in projectExperienceProgram"
         :key="item.id"
         :data="item"
-      ></project-experience-program-card> -->
+      ></project-experience-program-card>
     </v-container>
   </div>
 </template>
