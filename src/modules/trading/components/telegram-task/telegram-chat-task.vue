@@ -22,9 +22,9 @@
           <div class="text-subtitle-1">
             Please
             <a :href="data.missionInformation.link" target="_blank" class="blue--text">
-              join {{ data.missionInformation.page }}
+              chat in {{ data.missionInformation.page }}
             </a>
-            on Telegram to complete this task.
+            to complete this task
           </div>
         </v-col>
         <v-col class="text-right col-auto" v-if="data.masterController.missionStateController.isMissionProgressAble">

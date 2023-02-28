@@ -71,14 +71,15 @@
           <twitter-tweet-task :data="data" v-if="data.taskType === 'tweet' && data.controllerType === 'twitter'" />
           <twitter-quote-task :data="data" v-if="data.taskType === 'quote' && data.controllerType === 'twitter'" />
           <telegram-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'telegram'" />
+          <telegram-chat-task :data="data" v-if="data.taskType === 'chat' && data.controllerType === 'telegram'" />
         </div>
       </v-sheet>
-      <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
+      <!-- <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
       <project-experience-program-card
         v-for="item in projectExperienceProgram"
         :key="item.id"
         :data="item"
-      ></project-experience-program-card>
+      ></project-experience-program-card> -->
     </v-container>
   </div>
 </template>
@@ -104,6 +105,7 @@ import MissionStateContainer from '../components/mission-state-container.vue'
     'twitter-tweet-task': () => import('@/modules/trading/components/twitter-task/twitter-tweet-task.vue'),
     'twitter-quote-task': () => import('@/modules/trading/components/twitter-task/twitter-quote-task.vue'),
     'telegram-follow-task': () => import('@/modules/trading/components/telegram-task/telegram-follow-task.vue'),
+    'telegram-chat-task': () => import('@/modules/trading/components/telegram-task/telegram-chat-task.vue'),
   },
 })
 export default class extends Vue {
