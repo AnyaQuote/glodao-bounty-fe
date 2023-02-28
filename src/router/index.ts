@@ -98,7 +98,7 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/modules/error/pages/coming-soon.vue'),
   },
   {
-    path: '/trading',
+    path: '/trading/:taskId',
     name: 'trading',
     component: () => import('@/modules/trading/pages/trading-page.vue'),
   },

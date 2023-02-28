@@ -1,12 +1,13 @@
 <template>
   <div>
-    <v-img class="d-flex align-center" height="416" src="@/assets/images/dummy_cover.png">
+    <v-img class="d-flex align-center" height="416" :src="vm.controller.informationController.coverImage">
       <v-container class="white--text">
-        <v-chip size="x-large" color="white" class="font-weight-bold text-subtitle-1 mb-10">Moonfrost</v-chip>
-        <div class="text-h3 font-weight-bold mb-2">Moonfrost</div>
+        <v-chip size="x-large" color="white" class="font-weight-bold text-subtitle-1 mb-10">
+          {{ vm.controller.informationController.coverImage }}
+        </v-chip>
+        <div class="text-h3 font-weight-bold mb-2">{{ vm.controller.informationController.name }}</div>
         <div class="text-h5">
-          Abundant farms and yields galore! Discover yield farming and staking on Dopex, and earn an NFT for all your
-          hard work.
+          {{ vm.controller.informationController.shortDescription }}
         </div>
       </v-container>
     </v-img>
@@ -15,111 +16,116 @@
         <div class="d-flex white--text justify-space-between px-6">
           <div>
             <div class="text-h5">Total reward</div>
-            <div class="font-weight-bold text-h4">100.000 XP</div>
+            <div class="font-weight-bold text-h4">
+              {{ vm.controller.informationController.rewardAmount }}
+              {{ vm.controller.informationController.rewardToken }}
+            </div>
           </div>
           <div>
-            <div class="text-h5">Personal reward<v-icon color="white" right>mdi-information-outline</v-icon></div>
-            <div class="font-weight-bold text-h4">100 XP</div>
+            <div class="text-h5">Personal reward</div>
+            <div class="font-weight-bold text-h4">
+              {{ vm.controller.informationController.personalReward }}
+              {{ vm.controller.informationController.rewardToken }}
+            </div>
           </div>
           <div>
-            <div class="text-h5">Participant<v-icon color="white" right>mdi-information-outline</v-icon></div>
-            <div class="font-weight-bold text-h4">6500</div>
+            <div class="text-h5">Participants</div>
+            <div class="font-weight-bold text-h4">{{ vm.controller.informationController.totalParticipants }}</div>
           </div>
         </div>
         <v-progress-linear
           color="#D6F76B"
-          background-color="#000000
-"
-          value="60"
+          background-color="#000000"
+          :value="vm.controller.informationController.currentProgress"
           class="my-5"
-        ></v-progress-linear>
-        <div class="d-flex justify-space-between px-6 white--text text-h5">
-          <div class="font-weight-bold">🔥 16 : 48 : 12 : 00 left</div>
-          <div>
-            <span class="mr-2">100/160 completed</span>
-            <v-avatar size="36" :class="{ 'ml-n2': index !== 0 }" v-for="(item, index) in arrayImg" :key="index">
-              <v-img :src="item"></v-img
-            ></v-avatar>
-          </div></div
-      ></v-sheet>
-      <v-sheet v-if="!authStore.jwt" color="#06032B" class="px-6 white--text mt-10" rounded="lg" outlined>
-        <v-row align="center"
-          ><v-col cols="2"> <v-img :src="require('@/assets/images/lock.png')"></v-img></v-col
-          ><v-col cols="8">
-            <div class="font-weight-bold text-h5">You're not signed in</div>
-            <div class="text-subtitle-1">Get access to this Bounty by sign in Glodao</div></v-col
-          ><v-col cols="2">
-            <v-btn
-              depressed
-              class="linear-background-blue-main white--text text-none rounded text-h6 font-weight-bold"
-              x-large
-              @click="authStore.changeTwitterLoginDialog(true)"
-              >Log in</v-btn
-            >
-          </v-col></v-row
         >
+        </v-progress-linear>
+        <div class="d-flex justify-space-between px-6 white--text text-h5">
+          <div class="font-weight-bold">
+            <countdown :targetDate="vm.controller.informationController.endTime">
+              <slot name="prepend">🔥</slot>
+            </countdown>
+          </div>
+          <div>
+            <span class="mr-2">
+              {{ vm.controller.informationController.completedParticipants }}/{{
+                vm.controller.informationController.maxParticipants
+              }}
+              completed
+            </span>
+            <v-avatar size="36" :class="{ 'ml-n2': index !== 0 }" v-for="(item, index) in arrayImg" :key="index">
+              <v-img :src="item"></v-img>
+            </v-avatar>
+          </div>
+        </div>
       </v-sheet>
-      <v-sheet v-else color="#06032B" class="pa-6 d-flex justify-space-between white--text mt-10" rounded="lg" outlined>
-        <div class="font-weight-bold text-h5">You have completed 6/6 missions. Claim reward now</div>
-        <div class="font-weight-bold text-h5">100% quest</div>
-      </v-sheet>
+      <mission-state-container :controller="vm.controller.missionStateController" />
       <div class="blue-diversity--text font-weight-bold mt-10 text-h5">Community Program</div>
-      <v-sheet color="#F0F7FF" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined
-        ><community-program-card v-for="item in communityProgram" :key="item.id" :data="item"></community-program-card
-      ></v-sheet>
-      <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
+
+      <v-sheet color="bluePrimary lighten-1" class="px-6 pt-6 bluePrimary--border mt-6" rounded="lg" outlined>
+        <div v-for="(data, index) in vm.controller.socialTaskControllers" :key="data.controllerType + index">
+          <twitter-like-task :data="data" v-if="data.taskType === 'like' && data.controllerType === 'twitter'" />
+          <twitter-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'twitter'" />
+          <twitter-retweet-task :data="data" v-if="data.taskType === 'retweet' && data.controllerType === 'twitter'" />
+          <twitter-comment-task :data="data" v-if="data.taskType === 'comment' && data.controllerType === 'twitter'" />
+          <twitter-tweet-task :data="data" v-if="data.taskType === 'tweet' && data.controllerType === 'twitter'" />
+          <twitter-quote-task :data="data" v-if="data.taskType === 'quote' && data.controllerType === 'twitter'" />
+          <telegram-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'telegram'" />
+          <telegram-chat-task :data="data" v-if="data.taskType === 'chat' && data.controllerType === 'telegram'" />
+        </div>
+      </v-sheet>
+      <!-- <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
       <project-experience-program-card
         v-for="item in projectExperienceProgram"
         :key="item.id"
         :data="item"
-      ></project-experience-program-card>
-      <v-sheet
-        class="white--text d-flex justify-space-between align-center background-blue-diversity pa-6 mt-10"
-        rounded="lg"
-        outlined
-      >
-        <div class="text-h5 font-weight-bold">
-          <div>Congratulation you have completed the quest</div>
-          <div>Your reward is <strong>30 xp</strong></div>
-        </div>
-        <div>
-          <v-btn
-            class="font-weight-bold text-none text-h6"
-            :class="claimed !== 'Claim reward' ? 'neutral0--text' : 'blue-diversity--text'"
-            rounded
-            depressed
-            large
-            @click="claimReward"
-            >{{ claimed }}</v-btn
-          >
-        </div>
-      </v-sheet>
+      ></project-experience-program-card> -->
     </v-container>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Provide, Vue, Watch } from 'vue-property-decorator'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { authStore } from '@/stores/auth-store'
+import { TradingViewModel } from '@/modules/trading/viewmodels/trading-viewmodel'
+import MissionStateContainer from '../components/mission-state-container.vue'
 
 @Component({
   components: {
     'community-program-card': () => import('../components/community-program-card.vue'),
     'project-experience-program-card': () => import('../components/project-experience-program-card.vue'),
     'snack-bar': () => import('@/components/snack-bar/snack-bar.vue'),
+    countdown: () => import('@/modules/bounty/components/countdown.vue'),
+    'mission-state-container': () => import('@/modules/trading/components/mission-state-container.vue'),
+    'twitter-like-task': () => import('@/modules/trading/components/twitter-task/twitter-like-task.vue'),
+    'twitter-follow-task': () => import('@/modules/trading/components/twitter-task/twitter-follow-task.vue'),
+    'twitter-retweet-task': () => import('@/modules/trading/components/twitter-task/twitter-retweet-task.vue'),
+    'twitter-comment-task': () => import('@/modules/trading/components/twitter-task/twitter-comment-task.vue'),
+    'twitter-tweet-task': () => import('@/modules/trading/components/twitter-task/twitter-tweet-task.vue'),
+    'twitter-quote-task': () => import('@/modules/trading/components/twitter-task/twitter-quote-task.vue'),
+    'telegram-follow-task': () => import('@/modules/trading/components/telegram-task/telegram-follow-task.vue'),
+    'telegram-chat-task': () => import('@/modules/trading/components/telegram-task/telegram-chat-task.vue'),
   },
 })
 export default class extends Vue {
+  @Provide() vm = new TradingViewModel()
+
+  @Watch('$route.params.taskId', { immediate: true }) onIdChanged(val: string) {
+    if (val) {
+      this.vm.taskIdChange(val)
+    }
+  }
+
   isFinish = false
   claimed = 'Claim reward'
   authStore = authStore
   arrayImg = [
-    'https://picsum.photos/seed/1sda/200/300',
-    'https://picsum.photos/seed/1324/200/300',
-    'https://picsum.photos/seed/133a/200/300',
-    'https://picsum.photos/seed/1s2a/200/300',
-    'https://picsum.photos/seed/11sa/200/300',
+    'https://picsum.photos/200/201',
+    'https://picsum.photos/200/202',
+    'https://picsum.photos/200/203',
+    'https://picsum.photos/200/204',
+    'https://picsum.photos/200/205',
   ]
   communityProgram: any = [
     {
@@ -165,6 +171,10 @@ export default class extends Vue {
     snackController.config = config
     snackController.show = true
     this.claimed = 'Claimed'
+  }
+
+  beforeDestroy() {
+    this.vm.controller.informationController.destroyReaction()
   }
 }
 </script>

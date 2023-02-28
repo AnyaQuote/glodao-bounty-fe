@@ -206,8 +206,9 @@ export default class HuntingTimeCard extends Vue {
   }
 
   openLink() {
-    console.log(this.missionType)
-    if (this.missionType === MissionType.APP_TRIAL) {
+    if (this.missionType === MissionType.TRADING) {
+      this.$router.push(`/trading/${this.id}`)
+    } else if (this.missionType === MissionType.APP_TRIAL) {
       this.$router.push(`/bounty/iat/${this.id}`)
     } else if (this.missionType === MissionType.MIX) {
       this.$router.push(`/bounty/mix/${this.id}`)
@@ -324,7 +325,6 @@ export default class HuntingTimeCard extends Vue {
   border-radius: 16px;
   padding: 2px;
   background: linear-gradient(to right, #0276f0, #0096ff, #00b3ff, #00cdff, #00e5ff);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
