@@ -1,10 +1,10 @@
 import { action, computed, observable } from 'mobx'
 import { ISocialTaskController, TradingMasterController } from './trading-master-controller'
 
-export class TwitterController implements ISocialTaskController {
+export class TelegramController implements ISocialTaskController {
   @observable masterController: TradingMasterController
   stepIndex: number
-  controllerType = 'twitter'
+  controllerType = 'telegram'
   taskType!: string
   index: number
 

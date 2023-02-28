@@ -8,6 +8,7 @@ import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import { InformationController } from './information-controller'
 import { MissionStateController } from './mission-state-controller'
+import { TelegramController } from './telegram-controller'
 import { TwitterController } from './twitter-controller'
 
 export class TradingMasterController {
@@ -127,7 +128,9 @@ export class TradingMasterController {
       case 'twitter':
         result = new TwitterController(this, index, stepIndex, taskType)
         break
-
+      case 'telegram':
+        result = new TelegramController(this, index, stepIndex, taskType)
+        break
       default:
         break
     }

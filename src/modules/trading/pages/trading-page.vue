@@ -70,6 +70,7 @@
           <twitter-comment-task :data="data" v-if="data.taskType === 'comment' && data.controllerType === 'twitter'" />
           <twitter-tweet-task :data="data" v-if="data.taskType === 'tweet' && data.controllerType === 'twitter'" />
           <twitter-quote-task :data="data" v-if="data.taskType === 'quote' && data.controllerType === 'twitter'" />
+          <telegram-follow-task :data="data" v-if="data.taskType === 'follow' && data.controllerType === 'telegram'" />
         </div>
       </v-sheet>
       <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
@@ -102,6 +103,7 @@ import MissionStateContainer from '../components/mission-state-container.vue'
     'twitter-comment-task': () => import('@/modules/trading/components/twitter-task/twitter-comment-task.vue'),
     'twitter-tweet-task': () => import('@/modules/trading/components/twitter-task/twitter-tweet-task.vue'),
     'twitter-quote-task': () => import('@/modules/trading/components/twitter-task/twitter-quote-task.vue'),
+    'telegram-follow-task': () => import('@/modules/trading/components/telegram-task/telegram-follow-task.vue'),
   },
 })
 export default class extends Vue {
