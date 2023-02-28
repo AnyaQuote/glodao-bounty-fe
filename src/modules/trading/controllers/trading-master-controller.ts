@@ -1,3 +1,4 @@
+import { loadingController } from '@/components/global-loading/global-loading-controller'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { localdata } from '@/helpers/local-data'
 import { apiService } from '@/services/api-service'
@@ -115,6 +116,28 @@ export class TradingMasterController {
     } finally {
       //
     }
+  }
+
+  @action.bound submitTaskConfirmation() {
+    loadingController.increaseRequest()
+    apiService
+      .finishHuntingProcess({
+        id: this.apply.id,
+        walletAddress: authStore.user.hunter.address,
+        // captchaToken: this.hcaptchaSubmitToken,
+        captchaToken: '',
+      })
+      .then((res) => {
+        this.apply = res
+        snackController.success('Submit successfully')
+        this.fetchData()
+      })
+      .catch((error) => {
+        snackController.error(get(error, 'response.data.message', '') || (error as string))
+      })
+      .finally(() => {
+        loadingController.decreaseRequest()
+      })
   }
 
   getSocialTaskController(

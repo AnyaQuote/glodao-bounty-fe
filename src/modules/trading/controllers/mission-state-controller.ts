@@ -1,12 +1,12 @@
+import { appProvider } from '@/app-providers'
 import { snackController } from '@/components/snack-bar/snack-bar-controller'
 import { apiService } from '@/services/api-service'
 import { authStore } from '@/stores/auth-store'
-import { get } from 'lodash-es'
+import { get, keys } from 'lodash-es'
 import { action, computed, observable } from 'mobx'
 import { asyncAction } from 'mobx-utils'
 import moment from 'moment'
 import { TradingMasterController } from './trading-master-controller'
-import { appProvider } from '@/app-providers'
 
 export class MissionStateController {
   masterController: TradingMasterController
@@ -45,18 +45,6 @@ export class MissionStateController {
       snackController.error(error as string)
     } finally {
       this.loading = false
-    }
-  }
-
-  @action initEmptyStepData() {
-    const tempStepData: any = {}
-    for (const key in this.task?.data) {
-      if (Object.prototype.hasOwnProperty.call(this.task?.data, key)) {
-        const seperateTaskData = this.task?.data[key]
-        tempStepData[key] = seperateTaskData.map((miniTask) => {
-          return { type: miniTask.type, link: '', finished: false }
-        })
-      }
     }
   }
 
@@ -99,5 +87,32 @@ export class MissionStateController {
 
   @computed get isMissionStartable(): boolean {
     return !this.isUserStartMission && this.isMissionRunning
+  }
+
+  @computed get taskFinishedCount() {
+    const stepTypes = keys(this.masterController.applyStepData)
+    let outerIndex = 0
+    if (!this.masterController.apply) return 0
+
+    stepTypes.forEach((stepType, index) => {
+      for (let miniIndex = 0; miniIndex < this.masterController.apply.data[stepType].length; miniIndex++) {
+        const element = this.masterController.apply.data[stepType][miniIndex]
+        if (element.finished) outerIndex++
+      }
+    })
+    return outerIndex
+  }
+
+  @computed get taskTotalCount() {
+    return this.masterController.socialTaskControllers.length ?? 0
+  }
+
+  @computed get taskCompletePercentage() {
+    return (this.taskFinishedCount / (this.taskTotalCount === 0 ? 1 : this.taskTotalCount)) * 100
+  }
+
+  @computed get isCompleted() {
+    if (this.taskTotalCount === 0 || this.taskFinishedCount === 0) return false
+    return this.taskFinishedCount === this.taskTotalCount
   }
 }
