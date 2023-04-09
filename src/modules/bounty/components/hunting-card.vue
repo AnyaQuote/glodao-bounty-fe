@@ -23,7 +23,8 @@
       </div>
       <div class="fill-width" style="position: absolute; bottom: 0">
         <div class="d-flex justify-center">
-          <div class="rounded-pill mb-3 linear-border-blue-main">
+<!-- //TODO: Add linear border  -->
+          <div class="rounded-pill mb-3">
             <countdown
               class="countdown text-h6 text-sm-body-2 text-md-h6 text-md-h6 white black--text border-radius-16"
               style="border-radius: 16px !important"
