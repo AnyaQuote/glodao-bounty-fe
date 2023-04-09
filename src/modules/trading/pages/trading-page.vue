@@ -2,9 +2,9 @@
   <div>
     <v-img class="d-flex align-center" height="416" :src="vm.controller.informationController.coverImage">
       <v-container class="white--text">
-        <v-chip size="x-large" color="white" class="font-weight-bold text-subtitle-1 mb-10">
+        <!-- <v-chip size="x-large" color="white" class="font-weight-bold text-subtitle-1 mb-10">
           {{ vm.controller.informationController.coverImage }}
-        </v-chip>
+        </v-chip> -->
         <div class="text-h3 font-weight-bold mb-2">{{ vm.controller.informationController.name }}</div>
         <div class="text-h5">
           {{ vm.controller.informationController.shortDescription }}

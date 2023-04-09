@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-6 neutral100" elevation="0" outlined rounded="lg">
+  <v-card class="mb-10 neutral100" elevation="0" outlined rounded="lg">
     <v-card-text>
       <v-row align="center">
         <v-col cols="1">

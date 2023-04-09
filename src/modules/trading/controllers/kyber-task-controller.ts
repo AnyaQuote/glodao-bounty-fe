@@ -5,12 +5,10 @@ export class KyberTaskController {
   @observable masterController: TradingMasterController
   stepIndex: number
   controllerType = 'kyber'
-  taskType: string
 
   constructor(masterController: TradingMasterController, stepIndex: number) {
     this.masterController = masterController
     this.stepIndex = stepIndex
-    this.taskType = this.masterController.task.data['kyber'][stepIndex].type
   }
 
   @action.bound submit(link: string) {
@@ -23,6 +21,15 @@ export class KyberTaskController {
 
   @computed get task(): any {
     return this.masterController.task ?? null
+  }
+
+  @computed get taskType() {
+    try {
+      const result = this.masterController.task.data['kyber'][this.stepIndex].type
+      return result
+    } catch (error) {
+      return ''
+    }
   }
 
   @computed get missionInformation() {

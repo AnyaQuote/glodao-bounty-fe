@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-6 mb-6 bluePrimary--border" color="#E6F1FE" rounded="lg" outlined>
+  <div class="mb-10">
     <v-card elevation="0" class="neutral100" outlined rounded="lg">
       <v-card-text>
         <v-row>
@@ -56,7 +56,7 @@
       elevation="0"
       outlined
       rounded="lg"
-      class="mt-6 neutral100"
+      class="mt-3 neutral100"
       v-if="data.masterController.missionStateController.isMissionProgressAble"
     >
       <v-card-text class="d-flex justify-space-between align-center">
@@ -85,7 +85,7 @@
       >
     </v-card>
     <div v-if="isError" class="unqualify-msg mt-2">Invalid link. Please check and retry!</div>
-  </v-sheet>
+  </div>
 </template>
 
 <script lang="ts">
