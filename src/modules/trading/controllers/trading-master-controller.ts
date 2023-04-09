@@ -11,6 +11,7 @@ import { InformationController } from './information-controller'
 import { MissionStateController } from './mission-state-controller'
 import { TelegramController } from './telegram-controller'
 import { TwitterController } from './twitter-controller'
+import { KyberTaskController } from './kyber-task-controller'
 
 export class TradingMasterController {
   @observable taskId?: string
@@ -192,6 +193,18 @@ export class TradingMasterController {
         }
       }
     })
+    return result
+  }
+
+  @computed get kyberTaskControllers(): KyberTaskController[] {
+    const result: KyberTaskController[] = []
+    const stepTypes = keys(this.applyStepData)
+    if (!this.applyStepData['kyber']) return result
+    for (let index = 0; index < this.applyStepData['kyber'].length; index++) {
+      const element = this.applyStepData['kyber'][index]
+      const controller = new KyberTaskController(this, index)
+      result.push(controller)
+    }
     return result
   }
 }

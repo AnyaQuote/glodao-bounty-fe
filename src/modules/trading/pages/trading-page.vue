@@ -76,8 +76,8 @@
       </v-sheet>
       <div class="blue-diversity--text font-weight-bold text-h5 mt-20 mb-6">Project Experience Program</div>
       <project-experience-program-card
-        v-for="item in projectExperienceProgram"
-        :key="item.id"
+        v-for="(item, index) in vm.controller.kyberTaskControllers"
+        :key="index + 'kyber'"
         :data="item"
       ></project-experience-program-card>
     </v-container>

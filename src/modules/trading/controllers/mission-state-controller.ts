@@ -104,7 +104,10 @@ export class MissionStateController {
   }
 
   @computed get taskTotalCount() {
-    return this.masterController.socialTaskControllers.length ?? 0
+    return (
+      (this.masterController.socialTaskControllers.length ?? 0) +
+      (this.masterController.kyberTaskControllers.length ?? 0)
+    )
   }
 
   @computed get taskCompletePercentage() {
