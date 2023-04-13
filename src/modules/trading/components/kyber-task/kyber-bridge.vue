@@ -38,7 +38,7 @@
               class="linear-background-blue-main white--text rounded-lg text-none font-weight-bold py-6"
               outlined
               depressed
-              @click="openLink('https://kyberswap.com/')"
+              @click="openLink('https://kyberswap.com/bridge')"
             >
               Start
             </v-btn>
