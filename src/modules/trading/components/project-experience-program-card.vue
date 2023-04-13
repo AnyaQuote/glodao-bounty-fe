@@ -2,6 +2,7 @@
   <div>
     <kyber-bridge v-if="data.taskType === 'bridge'" :data="data" />
     <kyber-liquidity v-if="data.taskType === 'liquidity'" :data="data" />
+    <kyber-swap v-if="data.taskType === 'swap'" :data="data" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import { KyberTaskController } from '../controllers/kyber-task-controller'
   components: {
     'kyber-bridge': () => import('@/modules/trading/components/kyber-task/kyber-bridge.vue'),
     'kyber-liquidity': () => import('@/modules/trading/components/kyber-task/kyber-liquidity.vue'),
+    'kyber-swap': () => import('@/modules/trading/components/kyber-task/kyber-swap.vue'),
   },
 })
 export default class ProjectExperienceProgramCard extends Vue {
