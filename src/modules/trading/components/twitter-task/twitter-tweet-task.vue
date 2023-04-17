@@ -63,7 +63,7 @@
           rounded
           dense
           v-if="!data.currentApplyState.finished"
-          placeholder="Enter your transaction hash to verify"
+          placeholder="Enter your link here"
           hide-details="auto"
           :value="value"
           @input="onValueChange"
