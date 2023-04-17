@@ -59,7 +59,7 @@
         </div>
       </v-sheet>
     </v-sheet>
-    <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
+    <!-- <v-sheet class="transparent d-flex justify-space-between align-center px-6 mt-6">
       <v-sheet class="transparent font-weight-600">Total {{ totalTaskOnly ? 'task' : '' }} earning:</v-sheet>
       <v-sheet class="transparent font-weight-bold number-count-text">{{ vm.totalEarning | usdCustom(2, 2) }}</v-sheet>
     </v-sheet>
@@ -68,7 +68,7 @@
       <v-sheet class="transparent font-weight-bold number-count-text">{{
         vm.totalEarningToday | usdCustom(2, 2)
       }}</v-sheet>
-    </v-sheet>
+    </v-sheet> -->
   </v-sheet>
 </template>
 <script lang="ts">
