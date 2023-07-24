@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "serve:prd": "vue-cli-service serve --mode production",
-    "build": "vue-cli-service build --mode production",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --mode production",
     "build:dev": "vue-cli-service build --mode stage",
     "lint": "vue-cli-service lint",
     "format": "prettier-eslint --eslint-config-path ./.eslintrc.js --write '**/*.ts'",
